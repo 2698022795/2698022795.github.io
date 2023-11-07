@@ -82,7 +82,7 @@
 <meta property="og:image" content="d:/study/paper_resume/paper_image/image-20231102150900889.png">
 <meta property="og:image" content="d:/study/paper_resume/paper_image/image-20231102151145540.png">
 <meta property="article:published_time" content="2023-10-31T07:53:44.000Z">
-<meta property="article:modified_time" content="2023-11-02T10:00:30.076Z">
+<meta property="article:modified_time" content="2023-11-07T06:59:23.814Z">
 <meta property="article:author" content="waterdance">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="d:/study/paper_resume/paper_image/image-20231102150338375.png">
@@ -380,7 +380,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  940
+                  3.3k
                 </span>
               
 
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  13
                 </span>
               
             </div>
@@ -477,6 +477,10 @@
 <p>日期时间类型：</p>
 <p><img src="D:/study/paper_resume/paper_image/image-20231102151145540.png" alt="image-20231102151145540"></p>
 </li>
+</ul>
+<hr/>
+
+<ul>
 <li><p>查询</p>
 <ul>
 <li>查询当前数据库所有表：show tables;</li>
@@ -484,6 +488,10 @@
 <li>查询建表语句：show create table 表名；</li>
 </ul>
 </li>
+</ul>
+<hr/>
+
+<ul>
 <li><p>修改</p>
 <ul>
 <li><p>添加字段：alter table 表名 add 字段名 类型（长度） [comment 注释] [约束];</p>
@@ -497,14 +505,13 @@
 <li><p>修改表名：rename table 表名 to 新表名;</p>
 </li>
 <li><p>实例</p>
-<p>– DDL：修改表结构<br>– 修改：为表 tb_emp添加字段 qq varchar(11)<br>alter table tb_emp add qq varchar(11) comment ‘QQ’;</p>
-<p>– 修改：修改表 tb_emp字段类型 qq varchar(13)<br>alter table tb_emp modify qq varchar(11) comment ‘QQ’;</p>
-<p>– 修改： 修改表 tb_emp 字段名 qq为 qq_num  varchar(13)<br>alter table tb_emp change qq qq_num varchar(13) comment ‘QQ’;</p>
-<p>– 修改：删除tb_emp的qq_num字段<br>alter table tb_emp drop column  qq_num;</p>
-<p>– 修改：将tb_emp表修改为 emp<br>rename table tb_emp to emp;</p>
-</li>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- DDL：修改表结构</span></span><br><span class="line"><span class="comment">-- 修改：为表 tb_emp添加字段 qq varchar(11)</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tb_emp <span class="keyword">add</span> qq <span class="type">varchar</span>(<span class="number">11</span>) comment <span class="string">&#x27;QQ&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改：修改表 tb_emp字段类型 qq varchar(13)</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tb_emp modify qq <span class="type">varchar</span>(<span class="number">11</span>) comment <span class="string">&#x27;QQ&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改： 修改表 tb_emp 字段名 qq为 qq_num  varchar(13)</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tb_emp change qq qq_num <span class="type">varchar</span>(<span class="number">13</span>) comment <span class="string">&#x27;QQ&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改：删除tb_emp的qq_num字段</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tb_emp <span class="keyword">drop</span> <span class="keyword">column</span>  qq_num;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改：将tb_emp表修改为 emp</span></span><br><span class="line">rename <span class="keyword">table</span> tb_emp <span class="keyword">to</span> emp;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
+</ul>
+<hr/>
+
+<ul>
 <li><p>删除</p>
 <ul>
 <li>删除表：drop table[if  exists] 表名;</li>
@@ -519,27 +526,312 @@
 <li>批量添加数据（指定字段）：insert into 表名（字段名 1，字段名2） values（值1，值2）（值1，值2）;</li>
 <li>批量添加数据（全部字段）：insert into 表名 values（值1，值2，…)，（值1，值2，…);</li>
 </ul>
-<p>– DML: 数据操作语言<br>– DML：插入数据 - insert<br>– 1. 为 emp 表的username, name, gender字段插入值<br>insert into emp (username,name,gender,create_time,update_time) values (‘wuji’,’张无忌’,1,<em>now</em>(),<em>now</em>());</p>
-<p>– 2. 为emp表的所有字段插入值<br>insert into emp(id, username, password, name, gender, image, job, entrydate, create_time, update_time) values (null, ‘zhiruo’,’123’,’周芷若’,2,’1.jpg’,1,’2010-01-01’,<em>now</em>(),<em>now</em>());</p>
-<p>insert into emp values (null, ‘zhiruo2’,’123’,’周芷若2’,2,’1.jpg’,1,’2010-01-01’,<em>now</em>(),<em>now</em>());</p>
-<p>– 3. 批量为emp表的username, name, gender字段插入值<br>insert into emp(username, name, image,  create_time, update_time) values (‘weifuwang’,’韦一笑’,1,<em>now</em>(),<em>now</em>()),(‘xieshiwang’,’谢逊’,1,<em>now</em>(),<em>now</em>());</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- DML: 数据操作语言</span></span><br><span class="line"><span class="comment">-- DML：插入数据 - insert</span></span><br><span class="line"><span class="comment">-- 1. 为 emp 表的username, name, gender字段插入值</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp (username,name,gender,create_time,update_time) <span class="keyword">values</span> (<span class="string">&#x27;wuji&#x27;</span>,<span class="string">&#x27;张无忌&#x27;</span>,<span class="number">1</span>,<span class="operator">*</span>now<span class="operator">*</span>(),<span class="operator">*</span>now<span class="operator">*</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2. 为emp表的所有字段插入值</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(id, username, password, name, gender, image, job, entrydate, create_time, update_time) <span class="keyword">values</span> (<span class="keyword">null</span>, <span class="string">&#x27;zhiruo&#x27;</span>,<span class="string">&#x27;123&#x27;</span>,<span class="string">&#x27;周芷若&#x27;</span>,<span class="number">2</span>,<span class="string">&#x27;1.jpg&#x27;</span>,<span class="number">1</span>,<span class="string">&#x27;2010-01-01&#x27;</span>,<span class="operator">*</span>now<span class="operator">*</span>(),<span class="operator">*</span>now<span class="operator">*</span>());</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp <span class="keyword">values</span> (<span class="keyword">null</span>, <span class="string">&#x27;zhiruo2&#x27;</span>,<span class="string">&#x27;123&#x27;</span>,<span class="string">&#x27;周芷若2&#x27;</span>,<span class="number">2</span>,<span class="string">&#x27;1.jpg&#x27;</span>,<span class="number">1</span>,<span class="string">&#x27;2010-01-01&#x27;</span>,<span class="operator">*</span>now<span class="operator">*</span>(),<span class="operator">*</span>now<span class="operator">*</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 3. 批量为emp表的username, name, gender字段插入值</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(username, name, image,  create_time, update_time) <span class="keyword">values</span> (<span class="string">&#x27;weifuwang&#x27;</span>,<span class="string">&#x27;韦一笑&#x27;</span>,<span class="number">1</span>,<span class="operator">*</span>now<span class="operator">*</span>(),<span class="operator">*</span>now<span class="operator">*</span>()),(<span class="string">&#x27;xieshiwang&#x27;</span>,<span class="string">&#x27;谢逊&#x27;</span>,<span class="number">1</span>,<span class="operator">*</span>now<span class="operator">*</span>(),<span class="operator">*</span>now<span class="operator">*</span>());</span><br></pre></td></tr></table></figure>
+
+
+
 <p>注意事项：</p>
 <ol>
-<li>插入数据时，指定的字段顺序需要与值的顺序一一对应</li>
-<li>字符串和日期型数据应该包含在引号中</li>
-<li>插入的数据大小，应在字段的规定范围内</li>
+<li><p>插入数据时，指定的字段顺序需要与值的顺序一一对应</p>
+</li>
+<li><p>字符串和日期型数据应该包含在引号中</p>
+</li>
+<li><p>插入的数据大小，应在字段的规定范围内</p>
+</li>
 </ol>
 </li>
+</ul>
+<hr/>
+
+<ul>
 <li><p>更新数据（UPDATE）</p>
 <ul>
 <li><p>修改数据： update 表名 set 字段1&#x3D;值1，字段2&#x3D;值2，… [where 条件]；</p>
-<p>– DML：更新数据 - update<br>– 1. 将emp表的ID为1的员工，姓名name字段更新为‘张三’<br>update emp set name&#x3D;’张三’,update_time&#x3D;<em>now</em>() where  id &#x3D; 1;</p>
-</li>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- DML：更新数据 - update</span></span><br><span class="line"><span class="comment">-- 1. 将emp表的ID为1的员工，姓名name字段更新为‘张三’</span></span><br><span class="line"><span class="keyword">update</span> emp <span class="keyword">set</span> name<span class="operator">=</span><span class="string">&#x27;张三&#x27;</span>,update_time<span class="operator">=</span><span class="operator">*</span>now<span class="operator">*</span>() <span class="keyword">where</span>  id <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<hr/></li>
 </ul>
 </li>
 <li><p>删除数据（DELETE）</p>
 <ul>
 <li>删除数据： delete from 表名 where [条件];</li>
+</ul>
+</li>
+</ul>
+<hr/>  
+
+  
+
+<h1 id="DQL-Data-query-language"><a href="#DQL-Data-query-language" class="headerlink" title="DQL(Data query language)"></a>DQL(Data query language)</h1><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    字段列表</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">    表名列表</span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    条件列表</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span></span><br><span class="line">    分组字段列表</span><br><span class="line"><span class="keyword">having</span></span><br><span class="line">    分组后条件列表</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span></span><br><span class="line">    排序字段列表</span><br><span class="line">limit</span><br><span class="line">    分页参数</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>基本查询</li>
+<li>条件查询（where）</li>
+<li>分组查询（group by）</li>
+<li>排序查询（order by）</li>
+<li>分页查询（limit）</li>
+</ul>
+<hr/>
+
+<ul>
+<li><p>条件查询（where）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表名 <span class="keyword">where</span> 条件列表;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>比较运算符</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>&#x3D;</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>&lt;&gt; 或 !&#x3D;</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>between … and …</td>
+<td>在某个范围之内（含最小，最大值）</td>
+</tr>
+<tr>
+<td>in(…)</td>
+<td>在in之后的列表中的值，多选一</td>
+</tr>
+<tr>
+<td>like 占位符</td>
+<td>模糊匹配（_匹配单个字符，%匹配任意字符）</td>
+</tr>
+<tr>
+<td>is null</td>
+<td>是null</td>
+</tr>
+<tr>
+<td>and 或 &amp;&amp;</td>
+<td>并且（多个条件同时成立）</td>
+</tr>
+<tr>
+<td>or 或 ||</td>
+<td>或者（多个条件任意一个成立）</td>
+</tr>
+<tr>
+<td>not 或 ||</td>
+<td>非，不是</td>
+</tr>
+</tbody></table>
+<hr/>
+</li>
+<li><p>分组查询（group by）</p>
+<p>聚合函数：将一列数据作为一个整体，进行纵向运算。</p>
+<p>聚合查询语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 聚合函数（字段列表） <span class="keyword">from</span> 表名；</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>count</td>
+<td>统计数量</td>
+</tr>
+<tr>
+<td>max</td>
+<td>最大值</td>
+</tr>
+<tr>
+<td>min</td>
+<td>最小值</td>
+</tr>
+<tr>
+<td>avg</td>
+<td>平均值</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>求和</td>
+</tr>
+</tbody></table>
+<p>示例说明：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1、统计该企业的员工数量 -- count</span></span><br><span class="line"><span class="comment">-- A. count(字段）</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(id) <span class="keyword">from</span> tb_emp;</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(job) <span class="keyword">from</span> tb_emp;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- B. count(常量)</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="number">0</span>) <span class="keyword">from</span> tb_emp;</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="number">1</span>) <span class="keyword">from</span> tb_emp;</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="string">&#x27;a&#x27;</span>) <span class="keyword">from</span> tb_emp;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- C. count(*)</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> tb_emp;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2. 统计该企业最早入职的员工 --min</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">min</span>(entrydate) <span class="keyword">from</span> tb_emp;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 3. 统计该企业最晚入职的员工 --max</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">max</span>(entrydate) <span class="keyword">from</span> tb_emp;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 4. 统计该企业员工ID的平均值 --avg</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">avg</span>(id) <span class="keyword">from</span> tb_emp;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意事项：</strong></p>
+<ul>
+<li>null值不参与所有聚合函数运算</li>
+<li>统计数量可以使用：count(*) count(字段) count(常量)，推荐使用count(*)。</li>
+</ul>
+<hr/>
+
+<p>分组查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表名 [<span class="keyword">where</span> 条件] <span class="keyword">group</span> <span class="keyword">by</span> 分组字段名 [<span class="keyword">having</span> 分组过滤条件];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>实例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1. 根据性别分组，统计男性和女性员工的数量 count(*)</span></span><br><span class="line"><span class="keyword">select</span> gender,<span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> tb_emp <span class="keyword">group</span> <span class="keyword">by</span> gender;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2. 先查询入职时间在 ’2015-01-01’(包含）以前的员工，并对结果根据职位分组，获取员工数量大于等于2的职位</span></span><br><span class="line"><span class="keyword">select</span> job, <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> tb_emp <span class="keyword">where</span> entrydate <span class="operator">&lt;=</span> <span class="string">&#x27;2015-01-01&#x27;</span> <span class="keyword">group</span> <span class="keyword">by</span> job <span class="keyword">having</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="operator">&gt;=</span> <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>where和having的区别</p>
+<ol>
+<li>执行时机不同：where是分组之前进行过滤，不满足where条件，不参与分组；而having是分组之后对结果进行过滤。</li>
+<li>判断条件不同：where不能对聚合函数判断，而having可以。</li>
+</ol>
+</li>
+<li><p>注意事项</p>
+<ul>
+<li>分组之后，查询的字段一般为聚合聚合函数和分组字段，查询其他字段无任何意义。</li>
+<li>执行顺序：where &gt; 聚合函数 &gt; having。</li>
+</ul>
+</li>
+</ul>
+<hr/>
+</li>
+<li><p>排序查询（order by）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表名 [<span class="keyword">where</span> 条件] <span class="keyword">group</span> <span class="keyword">by</span> 分组字段名 [<span class="keyword">having</span> 分组过滤条件] <span class="keyword">order</span> <span class="keyword">by</span> 字段<span class="number">1</span> 排序方式<span class="number">1</span>, 字段<span class="number">2</span> 排序方式<span class="number">2</span>, ...;</span><br></pre></td></tr></table></figure>
+
+<p>排序方式</p>
+<ul>
+<li>ASC：升序排序（默认）</li>
+<li>DESC：降序排序</li>
+</ul>
+<p>实例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1. 根据入职时间，对员工进行升序排序 --asc</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp <span class="keyword">order</span> <span class="keyword">by</span> entrydate <span class="keyword">asc</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2. 根据入职时间，对员工进行降序排序 --desc</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp <span class="keyword">order</span> <span class="keyword">by</span> entrydate <span class="keyword">desc</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 1. 根据入职时间，对员工进行升序排序，入职时间相同，再根据更新事件进行降序排序 --asc</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp <span class="keyword">order</span> <span class="keyword">by</span> entrydate, update_time <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+<hr/>
+</li>
+<li><p>分页查询（limit）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表名 limit 起始索引,查询记录数；</span><br></pre></td></tr></table></figure>
+
+<p>实例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1. 从起始索引0开始查询员工数据，每页展示5条数据</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp limit <span class="number">0</span>, <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2. 查询第1页员工数据，每页展示5条数据</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp limit <span class="number">0</span>, <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 3. 查询第2页员工数据，每页展示5条数据</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp limit <span class="number">5</span>, <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 3. 查询第3页员工数据，每页展示5条数据</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp limit <span class="number">10</span>, <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意事项</strong></p>
+<ol>
+<li>起始索引从0开始，起始索引&#x3D;（查询页码 - 1）* 每页显示记录数。</li>
+<li>分页查询是数据库的方言，不同数据库有不同的实现，MySQL是LIMIT。</li>
+<li>如果查询的是第一页的数据，其实索引可以省略，可以简写为limit 10。</li>
+</ol>
+</li>
+</ul>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 案例2-1：根据需求，完成员工性别信息的统计</span></span><br><span class="line"><span class="comment">-- 将1转化为男性员工，2转换为女性员工</span></span><br><span class="line"><span class="comment">-- if(条件表达式, true取值, false取值)</span></span><br><span class="line"><span class="keyword">select</span> if(gender<span class="operator">=</span> <span class="number">1</span>,<span class="string">&#x27;男性员工&#x27;</span>,<span class="string">&#x27;女性员工&#x27;</span>) 性别, <span class="built_in">count</span>(gender) 数量 <span class="keyword">from</span> tb_emp <span class="keyword">group</span> <span class="keyword">by</span> (gender);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 案例2-2：根据需求，完成员工职位信息的统计</span></span><br><span class="line"><span class="comment">-- case 表达式 when 值1 then 结果1 when 值2 then 结果2 ... else ... end</span></span><br><span class="line"><span class="keyword">select</span> (<span class="keyword">case</span> job <span class="keyword">when</span> <span class="number">1</span> <span class="keyword">then</span> <span class="string">&#x27;班主任&#x27;</span> <span class="keyword">when</span> <span class="number">2</span> <span class="keyword">then</span> <span class="string">&#x27;讲师&#x27;</span> <span class="keyword">when</span> <span class="number">3</span> <span class="keyword">then</span> <span class="string">&#x27;学工主管&#x27;</span> <span class="keyword">when</span> <span class="number">4</span> <span class="keyword">then</span> <span class="string">&#x27;教研主管&#x27;</span> <span class="keyword">else</span> <span class="string">&#x27;未分配职位&#x27;</span> <span class="keyword">end</span>) 职位, <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> tb_emp <span class="keyword">group</span> <span class="keyword">by</span> job;</span><br></pre></td></tr></table></figure>
+
+<p>函数：</p>
+<ul>
+<li>if(表达式,tvalue,fvalue):当表达式为true时，取值tvalue；当表达式为false时，取值fvalue;</li>
+<li>case expr when value1 then result1 [when value2 then result2 …][else result] end</li>
+</ul>
+<h1 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h1><ul>
+<li>字段1 [as] 别名1，字段2 [as] 别名2，…</li>
+</ul>
+<h1 id="多表模式"><a href="#多表模式" class="headerlink" title="多表模式"></a>多表模式</h1><ul>
+<li><p>一对多（多对一）</p>
+<p>实现细节：在数据库表中多的一方，添加字段，来关联一的一方的主键。（使用外键约束建立表联系）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建表时的指定方式</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">    字段名 数据类型,</span><br><span class="line">    ...</span><br><span class="line">    [<span class="keyword">constraint</span>][外键名称] <span class="keyword">foreign</span> key(外键字段名) <span class="keyword">references</span> 主表（字段名）</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 建完表后的执行方式，添加外键</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">add</span> <span class="keyword">constraint</span> 外键名称 <span class="keyword">foreign</span> key(外键字段名) <span class="keyword">references</span> 主表（字段名）;</span><br></pre></td></tr></table></figure>
+
+<p><strong>物理外键</strong></p>
+<p>概念：使用foreign  key定义外键关联另外一张表</p>
+<p>缺点：</p>
+<ul>
+<li>影响增、删、改的效率（需要检查外键关系）。</li>
+<li>仅用于单节点数据库 ，不适用与分布式、集群场景。</li>
+<li>容易引发数据库的死锁问题，消耗性能。</li>
+</ul>
+<p><strong>逻辑外键（推荐）</strong></p>
+<p>概念：在业务逻辑中，解决外键关联。</p>
+<p>通过逻辑外键，就可以很方便的解决上述问题。</p>
+</li>
+<li><p>一对一</p>
+<p>案例：用户与身份证信息的关系</p>
+<p>关系：一对一关系，多用于单表拆分，将一张表的基础字段放在一张表中，其他字段放在另一张表中，以提升操作效率</p>
+</li>
+</ul>
+<p>​		实现：在任意一方加入外键，关联另外一方的逐渐，并且设置外键为唯一的（UNIQUE）</p>
+<ul>
+<li><p>多对多</p>
+<p>案例：学生与课程的关系</p>
+<p>关系：一个学生可以选修多门课程，一门课程也可以供多个学生选择</p>
+<p>实现：建立第三张中间表，中间表中至少包含两个外键，分别关联两方主键</p>
+</li>
+</ul>
+<h1 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h1><ul>
+<li><p>多表查询：指从多张表中查询数据</p>
+</li>
+<li><p>笛卡尔积：笛卡尔乘积是指数学中，两个集合的所有组合情况。</p>
+</li>
+<li><p>分类</p>
+<ul>
+<li><p>内连接：相当于查询A、B交集部分数据</p>
+<p>语法：</p>
+<ul>
+<li><p>隐式内连接：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表<span class="number">1</span>，表<span class="number">2</span> <span class="keyword">where</span> 条件 ...;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 实例</span></span><br><span class="line"><span class="comment">-- A. 查询员工的姓名，及所属的部门名称（隐式内连接实现）</span></span><br><span class="line"><span class="keyword">select</span> tb_dept.name,tb_emp.name <span class="keyword">from</span> tb_emp, tb_dept <span class="keyword">where</span> tb_emp.dept_id <span class="operator">=</span> tb_dept.id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 起别名</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp e, tb_dept d <span class="keyword">where</span> e.dept_id <span class="operator">=</span> d.id;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显式内连接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表<span class="number">1</span> [<span class="keyword">inner</span>] <span class="keyword">join</span> 表<span class="number">2</span> <span class="keyword">on</span> 连接条件 ...;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 实例</span></span><br><span class="line"><span class="comment">-- B. 查询员工的姓名，及所属的部门名称（显式内连接实现）</span></span><br><span class="line"><span class="keyword">select</span> tb_emp.name,tb_dept.name <span class="keyword">from</span> tb_emp <span class="keyword">inner</span> <span class="keyword">join</span> tb_dept <span class="keyword">on</span> tb_emp.dept_id <span class="operator">=</span> tb_dept.id;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>外连接：</p>
+<ul>
+<li><p>左外连接：查询左表所有数据（包括两张表交集部分的数据）(经常使用)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表<span class="number">1</span> <span class="keyword">left</span> [<span class="keyword">outer</span>] <span class="keyword">join</span> 表<span class="number">2</span> <span class="keyword">on</span> 连接条件 ...;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- A. 查询员工表所有员工的姓名，相对应的部门名称（左外连接）</span></span><br><span class="line"><span class="keyword">select</span> e.name, d.name <span class="keyword">from</span> tb_emp e  <span class="keyword">left</span> <span class="keyword">join</span> tb_dept d <span class="keyword">on</span> e.dept_id <span class="operator">=</span> d.id;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>右外连接：查询右表所有数据（包括两张表交集部分的数据）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表<span class="number">1</span> <span class="keyword">right</span> [<span class="keyword">outer</span>] <span class="keyword">join</span> 表<span class="number">2</span> <span class="keyword">on</span> 连接条件 ...;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- B. 查询部门表所有部门的名称，和对应的员工名称（右外连接）</span></span><br><span class="line"><span class="keyword">select</span> e.name,d.name <span class="keyword">from</span> tb_emp e <span class="keyword">right</span> <span class="keyword">join</span> tb_dept d <span class="keyword">on</span> e.dept_id <span class="operator">=</span> d.id;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>子查询</p>
+<ul>
+<li><p>SQL语句中嵌套select语句，称为嵌套查询，又称子查询。</p>
+</li>
+<li><p>形式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t1 <span class="keyword">where</span> column1 <span class="operator">=</span> (<span class="keyword">select</span> column1 <span class="keyword">from</span> t2 ... );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子查询外部的语句可以是 insert&#x2F;update&#x2F;delete&#x2F;select中的任何一个，最常见的是select。</p>
+</li>
+<li><p>分类</p>
+<ul>
+<li><p>标量子查询：子查询返回的结果为单个值</p>
+<ul>
+<li><p>子查询返回的结果是单个值（数字、字符串、日期等），最简单的形式</p>
+</li>
+<li><p>最常见的操作符： &#x3D;   &lt;&gt;   &gt;   &gt;&#x3D;   &lt;   &lt;&#x3D;</p>
+<p>实例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- A. 查询 “教研部”的所有员工信息</span></span><br><span class="line"><span class="comment">-- a. 查询教研部的ID - tb_dept（标量子查询）</span></span><br><span class="line"><span class="keyword">select</span>  id  <span class="keyword">from</span> tb_dept <span class="keyword">where</span> name <span class="operator">=</span> <span class="string">&#x27;教研部&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- b. 查询教研部ID下的员工信息 tb_emp</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp <span class="keyword">where</span>  dept_id <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tb_emp <span class="keyword">where</span>  dept_id <span class="operator">=</span> (<span class="keyword">select</span>  id  <span class="keyword">from</span> tb_dept <span class="keyword">where</span> name <span class="operator">=</span> <span class="string">&#x27;教研部&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>列子查询：子查询返回的结果为一列</p>
+</li>
+<li></li>
+<li><p>行子查询：子查询返回的结果为一行</p>
+</li>
+<li><p>表子查询：子查询返回的结果为多行多列</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li></li>
 </ul>
 </li>
 </ul>
@@ -722,7 +1014,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">数据表操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DDL%EF%BC%88%E8%A1%A8%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">DDL（表操作）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DML"><span class="nav-number">4.</span> <span class="nav-text">DML</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">数据表操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DDL%EF%BC%88%E8%A1%A8%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">DDL（表操作）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DML"><span class="nav-number">4.</span> <span class="nav-text">DML</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DQL-Data-query-language"><span class="nav-number">5.</span> <span class="nav-text">DQL(Data query language)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%AB%E5%90%8D"><span class="nav-number">7.</span> <span class="nav-text">别名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">多表模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">9.</span> <span class="nav-text">多表查询</span></a></li></ol></div>
             
 
           </div>
@@ -756,7 +1048,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">1k</span>
+    <span title="Site words total count">3.3k</span>
   
 </div>
 
