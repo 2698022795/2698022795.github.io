@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Mybatis基础操作 配置日志文件的输出位置  编辑application.properties文件内容将其输入至控制台 123456spring.datasource.driver-class-name&#x3D;com.mysql.cj.jdbc.Driverspring.datasource.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;mybatisspring.datasour">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mybatis">
+<meta property="og:url" content="http://2698022795.github.io/2023/11/23/mybatis/index.html">
+<meta property="og:site_name" content="章北海">
+<meta property="og:description" content="Mybatis基础操作 配置日志文件的输出位置  编辑application.properties文件内容将其输入至控制台 123456spring.datasource.driver-class-name&#x3D;com.mysql.cj.jdbc.Driverspring.datasource.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;mybatisspring.datasour">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-23T05:55:18.000Z">
+<meta property="article:modified_time" content="2023-12-07T07:36:02.009Z">
+<meta property="article:author" content="waterdance">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://2698022795.github.io/2023/11/23/mybatis/"/>
+
+
+
+
+
+  <title>mybatis | 章北海</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">章北海</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">轻舟已过万重山</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2023/11/23/mybatis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mybatis</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-11-23T13:55:18+08:00">
+                2023-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mybatis/" itemprop="url" rel="index">
+                    <span itemprop="name">mybatis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  3.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Mybatis基础操作"><a href="#Mybatis基础操作" class="headerlink" title="Mybatis基础操作"></a>Mybatis基础操作</h1><ul>
+<li><p>配置日志文件的输出位置</p>
+<ul>
+<li><p>编辑application.properties文件内容将其输入至控制台</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver</span><br><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/mybatis</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=123456</span><br><span class="line"># 配置mybatis的日志信息，指定输出至控制台</span><br><span class="line">mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再次运行之后得到预编译SQL操作信息（在运行前，后将Parameter写入Preparing中的参数）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">==&gt;  Preparing: delete from emp where id = ?</span><br><span class="line">==&gt; Parameters: 16(Integer)</span><br><span class="line">&lt;==    Updates: 0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>预编译SQL的优势</strong></p>
+<ul>
+<li><p>性能更高</p>
+</li>
+<li><p>更安全（防止SQL注入）</p>
+</li>
+<li><p>普通的java语句-&gt;sql语法解析检查-&gt;优化SQL-&gt;编译sql-&gt;执行sql</p>
+<p>其中，预编译会将“sql语法解析检查-&gt;优化SQL-&gt;编译sql”这几步<strong>缓存</strong>起来，后续如果有大量的SQL语句，则从<strong>缓存</strong>中找是否有对应的预编译好的指令，如果有，就省略这三步操作，直接去执行SQL语句，否则，需要再次执行操作。</p>
+<p><strong>新能更高的具体例子：</strong></p>
+<p>例如，如果我们要执行以下三条语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> emp <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> emp <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> emp <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
+<p>则这三条语句都要进行语法检查，优化，编译。</p>
+<p>如果我们实际执行的是</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> emp <span class="keyword">where</span> id <span class="operator">=</span> ?;</span><br></pre></td></tr></table></figure>
+
+<p>则对应的后两条删除语句可以直接将参数带入，直接执行SQL语句。</p>
+<p><strong>防止SQL注入的具体例子：</strong></p>
+<ul>
+<li><strong>SQL注入</strong>是通过操作输入的数据来修改实现定义好的SQL语句，以达到执行代码对服务器进行<strong>攻击</strong>的方法。</li>
+<li>例如 用户输入的是’waterdance’，password输入的是 ‘ or  ‘1’ &#x3D; ‘1</li>
+</ul>
+</li>
+<li><p>参数占位符类别</p>
+<table>
+<thead>
+<tr>
+<th>#{…}</th>
+<th>${…}</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>执行SQL语句时，会将#{…}替换为？，生成预编译的SQL，会自动设置参数值</td>
+<td>拼接SQL。直接将 参数拼接在SQL语句中，存在SQL注入问题。</td>
+</tr>
+<tr>
+<td>使用时机：参数传递，都使用#{}</td>
+<td>使用时机：如果对表名、列表进行动态设置时使用。</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>准备</p>
+<ul>
+<li><p>准备数据库表emp</p>
+</li>
+<li><p>创建一个新的springboot工程，选择引入对应的起步依赖（mybatis framework，mysql driver，lombok）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--        mybatis起步依赖--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        mysql驱动包--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        lambok依赖--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        springboot做单元测试--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>application.properties中引入数据库连接信息</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://localhost:3306/mybatis</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">123456</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建对应的实体类Emp(实体类属性采用驼峰命名)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Emp</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Short gender;</span><br><span class="line">    <span class="keyword">private</span> String image;</span><br><span class="line">    <span class="keyword">private</span> Short job;</span><br><span class="line">    <span class="keyword">private</span> LocalDate entrydate;</span><br><span class="line">    <span class="keyword">private</span> Integer deptId;</span><br><span class="line">    <span class="keyword">private</span> LocalDateTime createTime;</span><br><span class="line">    <span class="keyword">private</span> LocalDateTime updateTime;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>准备Mapper接口EmpMapper(程序会自动创建该接口的代理对象，并且会将该代理对象放到IOC容器中)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Mapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">empMapper</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>删除（在Mapper中编写删除语句和函数）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Delete;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Mapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EmpMapper</span> &#123;</span><br><span class="line">    <span class="comment">//根据ID删除数据</span></span><br><span class="line">    <span class="meta">@Delete(&quot;delete from emp where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">delete</span><span class="params">(Integer id)</span>;  <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在IDEA中测试编写方法是否正确（在test&#x2F;java&#x2F;类名Tests.java中编写代码）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootmybatiscrud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.mapper.EmpMapper;</span><br><span class="line"><span class="comment">//import com.example.mapper.EmpMapper;</span></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MapperScan(&quot;com/example/mapper&quot;)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpringbootMybatisCrudApplicationTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">contextLoads</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EmpMapper empMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testDelete</span><span class="params">()</span>&#123; <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">delete</span> <span class="operator">=</span> empMapper.delete(<span class="number">16</span>);</span><br><span class="line">        System.out.println(delete);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新增（在Mapper中编写删除语句和函数）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Emp;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Delete;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Insert;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Mapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EmpMapper</span> &#123;</span><br><span class="line">    <span class="comment">//根据ID删除数据</span></span><br><span class="line">    <span class="meta">@Delete(&quot;delete from emp where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delete</span><span class="params">(Integer id)</span>;  <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//新增员工</span></span><br><span class="line">    <span class="meta">@Insert(&quot;insert into emp(username, name, gender, image, job, entrydate, dept_id, create_time, update_time)&quot; +</span></span><br><span class="line"><span class="meta">        &quot; values (#&#123;username&#125;, #&#123;name&#125;, #&#123;gender&#125;, #&#123;image&#125;, #&#123;job&#125;, #&#123;entrydate&#125;, #&#123;deptId&#125;, #&#123;createTime&#125;, #&#123;updateTime&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(Emp emp)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>（在IDEA中测试编写方法是否正确（在test&#x2F;java&#x2F;类名Tests.java中编写代码）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootmybatiscrud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.mapper.EmpMapper;</span><br><span class="line"><span class="comment">//import com.example.mapper.EmpMapper;</span></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Emp;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MapperScan(&quot;com/example/mapper&quot;)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpringbootMybatisCrudApplicationTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">contextLoads</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EmpMapper empMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testDelete</span><span class="params">()</span>&#123; <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line">        empMapper.delete(<span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testInsert</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">Emp</span> <span class="variable">emp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Emp</span>();</span><br><span class="line">        emp.setUsername(<span class="string">&quot;Jerry&quot;</span>);</span><br><span class="line">        emp.setName(<span class="string">&quot;杰瑞&quot;</span>);</span><br><span class="line">        emp.setImage(<span class="string">&quot;1.jpg&quot;</span>);</span><br><span class="line">        emp.setGender((<span class="type">short</span>)<span class="number">1</span>);</span><br><span class="line">        emp.setEntrydate(LocalDate.of(<span class="number">2000</span>,<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line">        emp.setCreateTime(LocalDateTime.now());</span><br><span class="line">        emp.setUpdateTime(LocalDateTime.now());</span><br><span class="line">        emp.setDeptId(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        empMapper.insert(emp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>主键返回</strong></p>
+<p>描述：在数据添加成功后，需要获取插入数据库数据的主键。</p>
+<p>如：添加套餐数据时，还需要维护套餐菜品关系表数据。</p>
+<p>实现方法，在EmpMapper类中对应方法添加新的注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Emp;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Delete;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Insert;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Mapper;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Options;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EmpMapper</span> &#123;</span><br><span class="line">    <span class="comment">//根据ID删除数据</span></span><br><span class="line">    <span class="meta">@Delete(&quot;delete from emp where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delete</span><span class="params">(Integer id)</span>;  <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//新增员工</span></span><br><span class="line">    <span class="meta">@Options(keyProperty = &quot;id&quot;, useGeneratedKeys = true)</span>  <span class="comment">// 获取返回的主键，指定id，说明返回的数据封装到emp.id中</span></span><br><span class="line">    <span class="meta">@Insert(&quot;insert into emp(username, name, gender, image, job, entrydate, dept_id, create_time, update_time)&quot; +</span></span><br><span class="line"><span class="meta">        &quot; values (#&#123;username&#125;, #&#123;name&#125;, #&#123;gender&#125;, #&#123;image&#125;, #&#123;job&#125;, #&#123;entrydate&#125;, #&#123;deptId&#125;, #&#123;createTime&#125;, #&#123;updateTime&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(Emp emp)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在测试中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootmybatiscrud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.mapper.EmpMapper;</span><br><span class="line"><span class="comment">//import com.example.mapper.EmpMapper;</span></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Emp;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MapperScan(&quot;com/example/mapper&quot;)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpringbootMybatisCrudApplicationTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">contextLoads</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EmpMapper empMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testDelete</span><span class="params">()</span>&#123; <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line">        empMapper.delete(<span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testInsert</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">Emp</span> <span class="variable">emp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Emp</span>();</span><br><span class="line">        emp.setUsername(<span class="string">&quot;Jerry3&quot;</span>);</span><br><span class="line">        emp.setName(<span class="string">&quot;杰瑞3&quot;</span>);</span><br><span class="line">        emp.setImage(<span class="string">&quot;1.jpg&quot;</span>);</span><br><span class="line">        emp.setGender((<span class="type">short</span>)<span class="number">1</span>);</span><br><span class="line">        emp.setEntrydate(LocalDate.of(<span class="number">2000</span>,<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line">        emp.setCreateTime(LocalDateTime.now());</span><br><span class="line">        emp.setUpdateTime(LocalDateTime.now());</span><br><span class="line">        emp.setDeptId(<span class="number">1</span>);</span><br><span class="line">        empMapper.insert(emp);</span><br><span class="line">        System.out.println(emp.getId());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新</p>
+<p>在EmpMapper中编辑更新函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Emp;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EmpMapper</span> &#123;</span><br><span class="line">    <span class="comment">//根据ID删除数据</span></span><br><span class="line">    <span class="meta">@Delete(&quot;delete from emp where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delete</span><span class="params">(Integer id)</span>;  <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//新增员工</span></span><br><span class="line">    <span class="meta">@Options(keyProperty = &quot;id&quot;, useGeneratedKeys = true)</span>  <span class="comment">// 获取返回的主键，指定id，说明返回的数据封装到emp.id中</span></span><br><span class="line">    <span class="meta">@Insert(&quot;insert into emp(username, name, gender, image, job, entrydate, dept_id, create_time, update_time)&quot; +</span></span><br><span class="line"><span class="meta">        &quot; values (#&#123;username&#125;, #&#123;name&#125;, #&#123;gender&#125;, #&#123;image&#125;, #&#123;job&#125;, #&#123;entrydate&#125;, #&#123;deptId&#125;, #&#123;createTime&#125;, #&#123;updateTime&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(Emp emp)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新员工</span></span><br><span class="line">    <span class="meta">@Update(&quot;update emp set username = #&#123;username&#125;, name = #&#123;name&#125;, gender = #&#123;gender&#125;, image = #&#123;image&#125;, job = #&#123;job&#125;, entrydate = #&#123;entrydate&#125;,dept_id = #&#123;deptId&#125;, update_time = #&#123;updateTime&#125; where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Emp emp)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在测试代码中编写测试用例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springbootmybatiscrud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.mapper.EmpMapper;</span><br><span class="line"><span class="comment">//import com.example.mapper.EmpMapper;</span></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Emp;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MapperScan(&quot;com/example/mapper&quot;)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpringbootMybatisCrudApplicationTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">contextLoads</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EmpMapper empMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testDelete</span><span class="params">()</span>&#123; <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line">        empMapper.delete(<span class="number">16</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testInsert</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">Emp</span> <span class="variable">emp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Emp</span>();</span><br><span class="line">        emp.setUsername(<span class="string">&quot;Jerry3&quot;</span>);</span><br><span class="line">        emp.setName(<span class="string">&quot;杰瑞3&quot;</span>);</span><br><span class="line">        emp.setImage(<span class="string">&quot;1.jpg&quot;</span>);</span><br><span class="line">        emp.setGender((<span class="type">short</span>)<span class="number">1</span>);</span><br><span class="line">        emp.setEntrydate(LocalDate.of(<span class="number">2000</span>,<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line">        emp.setCreateTime(LocalDateTime.now());</span><br><span class="line">        emp.setUpdateTime(LocalDateTime.now());</span><br><span class="line">        emp.setDeptId(<span class="number">1</span>);</span><br><span class="line">        empMapper.insert(emp);</span><br><span class="line">        System.out.println(emp.getId());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testUpdate</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">Emp</span> <span class="variable">emp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Emp</span>();</span><br><span class="line">        emp.setId(<span class="number">18</span>);</span><br><span class="line">        emp.setUsername(<span class="string">&quot;Tom1&quot;</span>);</span><br><span class="line">        emp.setName(<span class="string">&quot;汤姆1&quot;</span>);</span><br><span class="line">        emp.setImage(<span class="string">&quot;1.jpg&quot;</span>);</span><br><span class="line">        emp.setGender((<span class="type">short</span>)<span class="number">2</span>);</span><br><span class="line">        emp.setJob((<span class="type">short</span>)<span class="number">3</span>);</span><br><span class="line">        emp.setEntrydate(LocalDate.of(<span class="number">2000</span>,<span class="number">1</span>,<span class="number">1</span>));</span><br><span class="line">        emp.setUpdateTime(LocalDateTime.now());</span><br><span class="line">        emp.setDeptId(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        empMapper.update(emp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询（根据ID查询）</p>
+<p>在EmpMapper中编辑查询函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Emp;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EmpMapper</span> &#123;</span><br><span class="line">    <span class="comment">//根据ID删除数据</span></span><br><span class="line">    <span class="meta">@Delete(&quot;delete from emp where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">delete</span><span class="params">(Integer id)</span>;  <span class="comment">//代表此次删除影响的记录数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//新增员工</span></span><br><span class="line">    <span class="meta">@Options(keyProperty = &quot;id&quot;, useGeneratedKeys = true)</span>  <span class="comment">// 获取返回的主键，指定id，说明返回的数据封装到emp.id中</span></span><br><span class="line">    <span class="meta">@Insert(&quot;insert into emp(username, name, gender, image, job, entrydate, dept_id, create_time, update_time)&quot; +</span></span><br><span class="line"><span class="meta">        &quot; values (#&#123;username&#125;, #&#123;name&#125;, #&#123;gender&#125;, #&#123;image&#125;, #&#123;job&#125;, #&#123;entrydate&#125;, #&#123;deptId&#125;, #&#123;createTime&#125;, #&#123;updateTime&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(Emp emp)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新员工</span></span><br><span class="line">    <span class="meta">@Update(&quot;update emp set username = #&#123;username&#125;, name = #&#123;name&#125;, gender = #&#123;gender&#125;, image = #&#123;image&#125;, job = #&#123;job&#125;, entrydate = #&#123;entrydate&#125;,dept_id = #&#123;deptId&#125;, update_time = #&#123;updateTime&#125; where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Emp emp)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//根据ID查询员工</span></span><br><span class="line">    <span class="meta">@Select(&quot;select * from emp where id = #&#123;id&#125;;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Emp <span class="title function_">getById</span><span class="params">(Integer id)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在test中编辑测试样例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">package com.example.springbootmybatiscrud;</span><br><span class="line"></span><br><span class="line">import com.example.mapper.EmpMapper;</span><br><span class="line">//import com.example.mapper.EmpMapper;</span><br><span class="line">import com.example.pojo.Emp;</span><br><span class="line">import org.junit.jupiter.api.Test;</span><br><span class="line">import org.mybatis.spring.annotation.MapperScan;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line">import java.time.LocalDate;</span><br><span class="line">import java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@MapperScan(&quot;com/example/mapper&quot;)</span><br><span class="line">@SpringBootTest</span><br><span class="line">class SpringbootMybatisCrudApplicationTests &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    void contextLoads() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private EmpMapper empMapper;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testDelete()&#123; //代表此次删除影响的记录数</span><br><span class="line">        empMapper.delete(16);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testInsert()&#123;</span><br><span class="line">        Emp emp = new Emp();</span><br><span class="line">        emp.setUsername(&quot;Jerry3&quot;);</span><br><span class="line">        emp.setName(&quot;杰瑞3&quot;);</span><br><span class="line">        emp.setImage(&quot;1.jpg&quot;);</span><br><span class="line">        emp.setGender((short)1);</span><br><span class="line">        emp.setEntrydate(LocalDate.of(2000,1,1));</span><br><span class="line">        emp.setCreateTime(LocalDateTime.now());</span><br><span class="line">        emp.setUpdateTime(LocalDateTime.now());</span><br><span class="line">        emp.setDeptId(1);</span><br><span class="line">        empMapper.insert(emp);</span><br><span class="line">        System.out.println(emp.getId());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testUpdate()&#123;</span><br><span class="line">        Emp emp = new Emp();</span><br><span class="line">        emp.setId(18);</span><br><span class="line">        emp.setUsername(&quot;Tom1&quot;);</span><br><span class="line">        emp.setName(&quot;汤姆1&quot;);</span><br><span class="line">        emp.setImage(&quot;1.jpg&quot;);</span><br><span class="line">        emp.setGender((short)2);</span><br><span class="line">        emp.setJob((short)3);</span><br><span class="line">        emp.setEntrydate(LocalDate.of(2000,1,1));</span><br><span class="line">        emp.setUpdateTime(LocalDateTime.now());</span><br><span class="line">        emp.setDeptId(1);</span><br><span class="line"></span><br><span class="line">        empMapper.update(emp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testGetById()&#123;</span><br><span class="line">        Emp emp = empMapper.getById(20);</span><br><span class="line">        System.out.println(emp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>数据封装</p>
+<ul>
+<li><p>实体类属性名和数据库查询返回的字段名一致，mybatis会自动封装。</p>
+</li>
+<li><p>如果实体类属性名和数据库表查询返回的字段名不一样，不能自动封装。</p>
+</li>
+<li><p>为了解决实体类与数据库表命名不一致的问题，我们有以下方案。</p>
+<ul>
+<li><p>方案一：给字段起别名，让别名与实体类属性一致（修改empmapper类中的select方法）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据ID查询员工</span></span><br><span class="line">   <span class="meta">@Select(&quot;select id, username, password, name, gender, image, job,  entrydate, &quot; +</span></span><br><span class="line"><span class="meta">       &quot; dept_id deptId, create_time createTime, update_time updateTime from emp where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> Emp <span class="title function_">getById</span><span class="params">(Integer id)</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案二：通过MyBatis,@Result注释手动映射封装</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Results(&#123;</span></span><br><span class="line"><span class="meta">        @Result(column = &quot;dept_id&quot;,property = &quot;deptId&quot;),</span></span><br><span class="line"><span class="meta">        @Result(column = &quot;update_time&quot;,property = &quot;updateTime&quot;),</span></span><br><span class="line"><span class="meta">        @Result(column = &quot;create_time&quot;,property = &quot;createTime&quot;)</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br><span class="line">    <span class="meta">@Select(&quot;select * from emp where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Emp <span class="title function_">getById</span><span class="params">(Integer id)</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>（推荐使用）方案三</strong>：开启mybatis的驼峰命名自动映射开关（将a_column这样的数据表字段自动映射到实体类的属性aColumn中,要严格遵循数据表字段是下划线分割，类中的属性名是驼峰命名）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver</span><br><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/mybatis</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=123456</span><br><span class="line"># 配置mybatis的日志，指定其输出到控制台</span><br><span class="line">mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl</span><br><span class="line"></span><br><span class="line"># 开启mybatis的驼峰命名自动映射开关</span><br><span class="line">mybatis.configuration.map-underscore-to-camel-case=true</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>条件查询</p>
+<ul>
+<li><p>在empMapper类中编写接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//条件查询员工</span></span><br><span class="line"><span class="meta">@Select(&quot;select * from emp where name like &#x27;%$&#123;name&#125;%&#x27; and gender = #&#123;gender&#125; and &quot; +</span></span><br><span class="line"><span class="meta">        &quot;entrydate between #&#123;begin&#125; and #&#123;end&#125; order by update_time desc ;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> List&lt;Emp&gt; <span class="title function_">list</span><span class="params">(String name, Short gender, LocalDate begin, LocalDate end)</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在test类中测试接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testList</span><span class="params">()</span>&#123;</span><br><span class="line">    List&lt;Emp&gt; empList = empMapper.list(<span class="string">&quot;张&quot;</span>, (<span class="type">short</span>) <span class="number">1</span>, LocalDate.of(<span class="number">2010</span>, <span class="number">1</span>, <span class="number">1</span>), LocalDate.of(<span class="number">2020</span>, <span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">    System.out.println(empList);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为name使用的是${}而不是#{}，可能存在SQL注入问题。解决办法：empMapper类中编写的接口使用mysql的concat函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//条件查询员工</span></span><br><span class="line"><span class="meta">@Select(&quot;select * from emp where name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;) and gender = #&#123;gender&#125; and &quot; +</span></span><br><span class="line"><span class="meta">        &quot;entrydate between #&#123;begin&#125; and #&#123;end&#125; order by update_time desc ;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> List&lt;Emp&gt; <span class="title function_">list</span><span class="params">(String name, Short gender, LocalDate begin, LocalDate end)</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="XML映射文件"><a href="#XML映射文件" class="headerlink" title="XML映射文件"></a>XML映射文件</h2><p>之前的方式是通过注解的方式配置sql语句，这是通过xml来配置sql语句。</p>
+<ul>
+<li><strong>实际开发时，选择注解来映射简单语句，如果需要实现复杂的SQL功能，还是要通过xml来完成。</strong></li>
+</ul>
+<h3 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h3><ul>
+<li>XML映射文件的名称与Mapper接口名称一致，并且将XML映射文件和Mapper接口放置在<strong>相同包</strong>下(同包同名)。</li>
+<li>XML映射文件的namespace属性与Mapper接口<strong>全限定名</strong>一致。resultType属性要填写的单条记录要封装的类型的<strong>全限定名</strong>。</li>
+<li>XML映射文件中sql语句的id与Mapper接口中的方法名一致，并保持返回类型一致。</li>
+</ul>
+<p>例子：</p>
+<p>在resources目录下创建与EmpMapper想通包的文件EmpMapper.xml，其中的配置如下所示</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.example.mapper.EmpMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;list&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.example.pojo.Emp&quot;</span>&gt;</span></span><br><span class="line">        select * from emp where name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;) and gender = #&#123;gender&#125; and  +</span><br><span class="line">                                entrydate between #&#123;begin&#125; and #&#123;end&#125; order by update_time desc</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装mybatisX插件，mapper类会和对应的xml建立连接。</li>
+</ul>
+<h2 id="MyBatis动态SQL"><a href="#MyBatis动态SQL" class="headerlink" title="MyBatis动态SQL"></a>MyBatis动态SQL</h2><p><strong>动态SQL</strong></p>
+<p>随着用户的输入或外部条件的变化而变化的SQL语句，我们称为动态SQL。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/11/17/junit-reflex-proxy/" rel="next" title="junit-reflex-proxy">
+                <i class="fa fa-chevron-left"></i> junit-reflex-proxy
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/11/27/django/" rel="prev" title="django">
+                django <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mybatis%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">Mybatis基础操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#XML%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">XML映射文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%84%E8%8C%83"><span class="nav-number">1.1.1.</span> <span class="nav-text">规范</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis%E5%8A%A8%E6%80%81SQL"><span class="nav-number">1.2.</span> <span class="nav-text">MyBatis动态SQL</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">waterdance</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">16.1k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+-->
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "topRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
