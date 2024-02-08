@@ -245,10 +245,58 @@
 <p>官方地址：<a href="https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter">https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter</a></p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pom.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line">  <span class="attr">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">  <span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://localhost:3306/mybatis</span></span><br><span class="line">  <span class="attr">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line">  <span class="attr">spring.datasource.password</span>=<span class="string">123456</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">  # 指定数据源类型为Druid</span></span><br><span class="line">  <span class="attr">spring.datasource.type</span>=<span class="string">com.alibaba.druid.pool.DruidDataSource</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># lombok</span></span><br><span class="line"></span><br><span class="line"><span class="attr">问题：原有的类过于臃肿，每个属性都要创建对应的get，set方法。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">![image-20240208193220097](javaweb-day04-mybatis/image-20240208193220097.png)</span></span><br><span class="line"></span><br><span class="line"><span class="attr">+</span> <span class="string">Lombok是一个实用的Java类库，能通过注解的形式自动生成构造器、getter/setter、equals、hashcode、toString等方法，并可以自动化生成日志变量，简化java开发，提高效率。</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">|</span> <span class="string">注解                | 作用                                                         |</span></span><br><span class="line">  <span class="attr">|</span> <span class="string">------------------- | ------------------------------------------------------------ |</span></span><br><span class="line">  <span class="attr">|</span> <span class="string">@Getter/@Setter     | 为所有的属性提供get/set方法                                  |</span></span><br><span class="line">  <span class="attr">|</span> <span class="string">@ToString           | 会为类自动生成易阅读的toString方法                           |</span></span><br><span class="line">  <span class="attr">|</span> <span class="string">@EqualsAndHashCode  | 根据类所拥有的非静态字段自动重写equals方法和hashCode方法     |</span></span><br><span class="line">  <span class="attr">|</span> <span class="string">@Data               | 提供更综合的生成代码功能（@Getter+@Setter+@ToString+@EqualsAndHashCode） |</span></span><br><span class="line">  <span class="attr">|</span> <span class="string">@NoArgsConstructor  | 为实体类生成无参的构造器方法                                 |</span></span><br><span class="line">  <span class="attr">|</span> <span class="string">@AllArgsConstructor | 为实体类生成除了static修饰的字段之外带有各参数的构造器方法   |</span></span><br><span class="line"></span><br><span class="line"><span class="attr">+</span> <span class="string">引入lambok的依赖</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">```xml</span></span><br><span class="line">  <span class="attr">&lt;dependency&gt;</span></span><br><span class="line">  	<span class="attr">&lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span></span><br><span class="line">      <span class="attr">&lt;artifactId&gt;lombok&lt;/artifactId&gt;</span></span><br><span class="line">  <span class="attr">&lt;/dependency&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://localhost:3306/mybatis</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">123456</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 指定数据源类型为Druid</span></span><br><span class="line"><span class="attr">spring.datasource.type</span>=<span class="string">com.alibaba.druid.pool.DruidDataSource</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="lombok"><a href="#lombok" class="headerlink" title="lombok"></a>lombok</h1><p>问题：原有的类过于臃肿，每个属性都要创建对应的get，set方法。</p>
+<p><img src="/2024/02/08/javaweb-day04-mybatis/image-20240208193220097.png" alt="image-20240208193220097"></p>
+<ul>
+<li><p>Lombok是一个实用的Java类库，能通过注解的形式自动生成构造器、getter&#x2F;setter、equals、hashcode、toString等方法，并可以自动化生成日志变量，简化java开发，提高效率。</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Getter&#x2F;@Setter</td>
+<td>为所有的属性提供get&#x2F;set方法</td>
+</tr>
+<tr>
+<td>@ToString</td>
+<td>会为类自动生成易阅读的toString方法</td>
+</tr>
+<tr>
+<td>@EqualsAndHashCode</td>
+<td>根据类所拥有的非静态字段自动重写equals方法和hashCode方法</td>
+</tr>
+<tr>
+<td>@Data</td>
+<td>提供更综合的生成代码功能（@Getter+@Setter+@ToString+@EqualsAndHashCode）</td>
+</tr>
+<tr>
+<td>@NoArgsConstructor</td>
+<td>为实体类生成无参的构造器方法</td>
+</tr>
+<tr>
+<td>@AllArgsConstructor</td>
+<td>为实体类生成除了static修饰的字段之外带有各参数的构造器方法</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>引入lambok的依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>实例代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.pojp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Short age;</span><br><span class="line">    <span class="keyword">private</span> Short gender;</span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.pojp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Short age;</span><br><span class="line">    <span class="keyword">private</span> Short gender;</span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意事项：</p>
+<ul>
+<li><p>lombok在编译时，自动生成对应的java代码，我们使用lombok时，还需要安装一个lombok的插件（idea自带）。</p>
+<p><img src="/2024/02/08/javaweb-day04-mybatis/image-20240208194835391.png" alt="image-20240208194835391"></p>
+</li>
+</ul>
+</li>
 </ul>
 <h1 id="Mybatis基础操作"><a href="#Mybatis基础操作" class="headerlink" title="Mybatis基础操作"></a>Mybatis基础操作</h1><ul>
 <li><p>配置日志文件的输出位置</p>
