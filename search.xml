@@ -142,6 +142,14 @@
       </categories>
   </entry>
   <entry>
+    <title>javaweb-day07-事务管理 &amp; AOP</title>
+    <url>/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/</url>
+    <content><![CDATA[<h1 id="事务管理-AOP"><a href="#事务管理-AOP" class="headerlink" title="事务管理 &amp; AOP"></a>事务管理 &amp; AOP</h1>]]></content>
+      <categories>
+        <category>javaweb</category>
+      </categories>
+  </entry>
+  <entry>
     <title>javeweb-day06-登录认证</title>
     <url>/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/</url>
     <content><![CDATA[<h1 id="基础登录功能"><a href="#基础登录功能" class="headerlink" title="基础登录功能"></a>基础登录功能</h1><p>判断用户输入的用户名和密码是否正确</p>
