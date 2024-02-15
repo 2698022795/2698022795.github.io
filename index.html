@@ -579,7 +579,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  968
+                  2.2k
                 </span>
               
 
@@ -595,7 +595,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  8
                 </span>
               
             </div>
@@ -721,10 +721,105 @@
 <li><p>如果要管理的bean对象来自于第三方（不是自定义的），是无法用@Component及衍生注解声明bean的，就需要用到@Bean注解。</p>
 </li>
 <li><p>若要管理的第三方bean对象，建议对这些bean进行集中分类配置，可以通过@Configuration注解声明一个配置类。</p>
+</li>
+<li><p>将当前方法的返回值对象交给IOC容器管理，称为IOC容器的bean，通过@Bean注解的&#x2F;name&#x2F;value属性指定bean名称，如果为指定，默认方法名即为该第三方bean对象。（完成了控制反转）</p>
 <p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215223531608.png" alt="image-20240215223531608"></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215224343513.png" alt="image-20240215224343513"></p>
+</li>
+<li><p>完成了依赖注入</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215225225131.png" alt="image-20240215225225131"></p>
+</li>
+<li><p>如果第三方bean需要依赖其他bean对象，直接再bean定义方法中设置形参即可，容器会根据类型自动装配。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215225407697.png" alt="image-20240215225407697"></p>
 </li>
 </ul>
-<h1 id="SpringBoot原理"><a href="#SpringBoot原理" class="headerlink" title="SpringBoot原理"></a>SpringBoot原理</h1>
+<h1 id="SpringBoot原理"><a href="#SpringBoot原理" class="headerlink" title="SpringBoot原理"></a>SpringBoot原理</h1><p>Spring全家桶都基于Spring Framework，这个框架比较繁琐（配置pom.xml复杂），基于此，在Spring Framework4.0之后，推出了Spring Boot框架（简化Spring Framework的开发）。</p>
+<p>Spring Boot提供了起步依赖和自动配置。</p>
+<ul>
+<li>起步依赖：大大简化pom.xml中依赖配置，解决spring framework中依赖配置繁琐的问题。</li>
+<li>自动配置：简化spring framework使用时bean的声明和配置。</li>
+</ul>
+<h2 id="起步依赖"><a href="#起步依赖" class="headerlink" title="起步依赖"></a>起步依赖</h2><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215230254400.png" alt="image-20240215230254400"></p>
+<p>spring框加进行web程序开发要引入上述每个依赖，而springboot只需要引入一个依赖，<font color="red">收益于maven的依赖传递（如果a依赖了b，b依赖了c，那么在引入a之后，b和c这两个依赖也都会引入）</font>。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215230457232.png" alt="image-20240215230457232"></p>
+<h2 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h2><ul>
+<li><p>SpringBoot的自动配置就是当spring容器启动后，一些配置类、bean对象就会自动存入到IOC容器中，不需要我们手动去声明，从而简化了开发，省去了繁琐的配置操作。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215231251757.png" alt="image-20240215231251757"></p>
+</li>
+</ul>
+<h3 id="自动配置原理"><a href="#自动配置原理" class="headerlink" title="自动配置原理"></a>自动配置原理</h3><p>springboot当中，我们引入对应的依赖，是如何将依赖中jar包当中所提供的这些bean以及配置类直接加载到当前项目的spring ioc容器当中，然后我们就可以直接使用了。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215231450566.png" alt="image-20240215231450566"></p>
+<ul>
+<li><p>方案一：@ComponentScan组件扫描</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215232814762.png" alt="image-20240215232814762"></p>
+</li>
+<li><p>方案二：@Import导入。使用@Import导入的类会被Spring加载到IOC容器中，导入形式主要有以下几种：</p>
+<ul>
+<li><p>导入普通类</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215233345565.png" alt="image-20240215233345565"></p>
+</li>
+<li><p>导入配置类（@Configuration，这个类中所有的加了@Bean方法返回的对象都会加载到IOC容器中）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215233510157.png" alt="image-20240215233510157"></p>
+</li>
+<li><p>导入ImportSelector接口实现类(<font color="red">selectImports方法，极其重要，决定哪些类可以作为Bean对象导入到IOC容器中</font>)</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215234724430.png" alt="image-20240215234724430"></p>
+</li>
+<li><p>@EnableXxxx注解，封装@Import注解，让第三方库作者来设置要实现哪些bean对象（推荐，方便，优雅）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215235112424.png" alt="image-20240215235112424"></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215235235351.png" alt="image-20240215235235351"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="源码跟踪"><a href="#源码跟踪" class="headerlink" title="源码跟踪"></a>源码跟踪</h3><p>重点&#x2F;关键：@SpringBootApplication(SpringBoot中最为重要的注解)</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216002845192.png" alt="image-20240216002845192"></p>
+<p>技巧：抓关键点，找关键流程</p>
+<ol>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216003918693.png" alt="image-20240216003918693"></p>
+</li>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216004027562.png" alt="image-20240216004027562"></p>
+</li>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216004154608.png" alt="image-20240216004154608"></p>
+</li>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216004548571.png" alt="image-20240216004548571"></p>
+</li>
+<li><p>找到了对应的selectImports方法，该方法会返回要封装到IOC容器的bean对象的全类名的数组。现在要查明数组的具体内容是什么，先进入getAutoConfigurationEntry找到具体的实现细节。<img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216004713347.png" alt="image-20240216004713347"></p>
+</li>
+<li><p>Entry里面返回了哪些信息，在这里可以看到，直接return了一个entry对象，new  entry对象时里面传递了两个参数，分别是configurations，exclusions，通过图5可以知道最终调用的是configurations。我们要去看一下这个configurations如何获取的，是通过调用getCandidateConfigurations方法。<img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216005719506.png" alt="image-20240216005719506"></p>
+</li>
+<li><p>getCandidateConfigurations的代码如下所示，通过调用loadFactoryNames获得configurations，它的具体实现细节暂时可跳过，重点注意下面的断言，如果configurations是空的，就会提示信息，信息描述是说当没有自动配置的类被发现时就会报错，这里有两个文件，首先，第一个文件是META-INF下的spring.factory文件，另一个是META-INF&#x2F;spring&#x2F;org.springframework.boot.autoconfigure.AutoConfiguration.imports，那也就是说，springboot在启动时会自动加载这两个文件中配置的信息，并将其封装到list集合，最终将list集合的内容封装到string类型的数组中，这些数据最终加载到IOC容器的Bean或者配置类。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216010055187.png" alt="image-20240216010055187"></p>
+</li>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216010605951.png" alt="image-20240216010605951"></p>
+</li>
+<li><p>可以看到，这两个文件下的内容都是各个类的全类名<img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216010704636.png" alt="image-20240216010704636"></p>
+</li>
+</ol>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216010819685.png" alt="image-20240216010819685"></p>
+<p>@SpringBootApplication</p>
+<ul>
+<li>该注解表示在SpringBoot工程引导类上，是springboot最最最重要的注解，该注解由三个部分组成。<ul>
+<li>@SpringBootConfiguration：该注解与@Configuration注解作用相同，用来声明当前也是一个配置类。</li>
+<li>@ComponentScan：组件扫描，默认扫描当前引导类所在包及其子包。</li>
+<li>@EnableAutoConfiguration：SpringBoot实现自动化配置的核心注解。</li>
+</ul>
+</li>
+</ul>
+<p>并不是所有的@Bean都会注册为bean对象，@ConditionalOnMissingBean就是用来决定哪些加了@Bean的方法返回的对象可以成为bean对象。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216011245608.png" alt="image-20240216011245608"></p>
+<p>@Conditional</p>
+<ul>
+<li>作用：按照一定的条件进行判断，在满足给定条件后才会注册对应的bean对象到Spring IOC容器中。</li>
+<li>位置：方法、类。</li>
+<li>@Conditional本身是一个父注解， 派生出大量的子注解；<ul>
+<li>@ConditionalOnClass：判断环境中是否有对应的字节码文件，才注册bean到IOC容器。</li>
+<li>@ConditionalOnMissingBean：判断环境中没有对应的bean（类型或名称），才注册bean到IOC容器。</li>
+<li>@ConditionalOnProperty：判断配置文件中有对应属性和值，才注册bean到IOC容器。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216011800342.png" alt="image-20240216011800342"></p>
+
           
         
       
@@ -4895,7 +4990,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">39.8k</span>
+    <span title="Site words total count">41k</span>
   
 </div>
 
