@@ -80,18 +80,27 @@
 
 
 
-<meta name="description" content="springboot原理">
+<meta name="description" content="配置优先级 springboot中支持三种格式的配置文件：  properties的优先级最高  yml的优先级次之  yaml的优先级最后  注意事项：虽然springboot支持多种格式配置文件，但是在项目开发时，推荐统一使用一种格式的配置（yml是主流）  springboot除了支持配置文件属性配置，还支持Java系统属性和命令行参数的方法进行属性配置。   命令行参数（Program a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javaweb-day08-springboot原理篇">
 <meta property="og:url" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/index.html">
 <meta property="og:site_name" content="章北海">
-<meta property="og:description" content="springboot原理">
+<meta property="og:description" content="配置优先级 springboot中支持三种格式的配置文件：  properties的优先级最高  yml的优先级次之  yaml的优先级最后  注意事项：虽然springboot支持多种格式配置文件，但是在项目开发时，推荐统一使用一种格式的配置（yml是主流）  springboot除了支持配置文件属性配置，还支持Java系统属性和命令行参数的方法进行属性配置。   命令行参数（Program a">
 <meta property="og:locale">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195245829.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195550412.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195629992.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195946438.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215200530374.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215201417286.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215201808877.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215223531608.png">
 <meta property="article:published_time" content="2024-02-15T11:41:49.000Z">
-<meta property="article:modified_time" content="2024-02-15T11:42:27.980Z">
+<meta property="article:modified_time" content="2024-02-15T14:36:05.225Z">
 <meta property="article:author" content="waterdance">
 <meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195245829.png">
 
 
 
@@ -389,7 +398,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3
+                  968
                 </span>
               
 
@@ -405,7 +414,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -426,7 +435,113 @@
       
 
       
-        <h1 id="springboot原理"><a href="#springboot原理" class="headerlink" title="springboot原理"></a>springboot原理</h1>
+        <h1 id="配置优先级"><a href="#配置优先级" class="headerlink" title="配置优先级"></a>配置优先级</h1><ul>
+<li><p>springboot中支持三种格式的配置文件：</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195245829.png" alt="image-20240215195245829"></p>
+<p>properties的优先级最高</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195550412.png" alt="image-20240215195550412"></p>
+<p>yml的优先级次之</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195629992.png" alt="image-20240215195629992"></p>
+<p>yaml的优先级最后</p>
+</li>
+<li><p>注意事项：虽然springboot支持多种格式配置文件，但是在项目开发时，推荐统一使用一种格式的配置（yml是主流）</p>
+</li>
+<li><p>springboot除了支持配置文件属性配置，还支持<font color="red">Java系统属性</font>和<font color="red">命令行参数</font>的方法进行属性配置。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195946438.png" alt="image-20240215195946438"></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215200530374.png" alt="image-20240215200530374"></p>
+<p><font color="red">命令行参数（Program argument）的优先级要高于Java系统属性（VM option）设置。</font></p>
+</li>
+</ul>
+<p>目前的设置是在idea中，假如我们使用的不是idea，或者我们的项目已经打包上线了，我们又如何设置java系统属性和命令行参数呢？接下来运行项目打包后运行时如何指定java系统属性和命令行参数。</p>
+<ol>
+<li><p>执行maven打包指令package</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215201417286.png" alt="image-20240215201417286"></p>
+</li>
+<li><p>执行java指令，运行jar包</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dserver.port=<span class="number">9000</span> -jar tlias-web-management-<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT.jar --server.port=<span class="number">10010</span></span><br></pre></td></tr></table></figure>
+
+<p>注意事项：springboot项目进行打包时，需要引入插件spring-boot-maven-plugin（基于官网骨架创建项目，会自动添加该插件）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215201808877.png" alt="image-20240215201808877"></p>
+</li>
+</ol>
+<p>配置优先级（从高到低）</p>
+<ul>
+<li>java系统属性（-Dxxx&#x3D;xxx）</li>
+<li>命令行参数（–xxx&#x3D;xxx）</li>
+<li>application.properties</li>
+<li>application.yml</li>
+<li>application.yaml（忽略）</li>
+</ul>
+<h1 id="Bean管理"><a href="#Bean管理" class="headerlink" title="Bean管理"></a>Bean管理</h1><h2 id="获取bean"><a href="#获取bean" class="headerlink" title="获取bean"></a>获取bean</h2><ul>
+<li><p>默认情况下，Spring项目启动时，会把bean都创建好放在IOC容器中，如果想要主动获取这些bean，可以通过如下方式：</p>
+<ul>
+<li>根据name获取bean：<code>Object getBean(String name)</code></li>
+<li>根据类型获取bean：<code>&lt;T&gt; T getBean(Class&lt;T&gt; requiredType)</code></li>
+<li>根据name获取bean（带类型转换）：<code>&lt;T&gt; T getBean(String name, Class&lt;T&gt; requiredType)</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TliasWebManagementApplicationTests</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DeptService deptService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ApplicationContext applicationContext; <span class="comment">//IOC容器对象</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGetBean</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//根据bean的名称获取</span></span><br><span class="line">        <span class="type">DeptController</span> <span class="variable">bean1</span> <span class="operator">=</span> (DeptController) applicationContext.getBean(<span class="string">&quot;deptController&quot;</span>);</span><br><span class="line">		System.out.println(bean1);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//根据bean的类型获取</span></span><br><span class="line">		<span class="type">DeptController</span> <span class="variable">bean2</span> <span class="operator">=</span> applicationContext.getBean(DeptController.class);</span><br><span class="line">		System.out.println(bean2);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//根据bean的名称及类型获取</span></span><br><span class="line">		<span class="type">DeptController</span> <span class="variable">bean3</span> <span class="operator">=</span> applicationContext.getBean(<span class="string">&quot;deptController&quot;</span>, DeptController.class);</span><br><span class="line">		System.out.println(bean3);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意事项：上述所说的[Spring项目启动时，会把其中的bean都创建好]还会收到作用域及延迟初始化影响，这里主要针对默认的单例非延迟加载的bean而言。</p>
+</li>
+</ul>
+<h2 id="bean作用域"><a href="#bean作用域" class="headerlink" title="bean作用域"></a>bean作用域</h2><ul>
+<li><p>Spring支持五种作用域，后三种在web环境才会生效</p>
+<table>
+<thead>
+<tr>
+<th>作用域</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><font color="red">singleton</font></td>
+<td><font color="red">容器内声明的bean只有一个实例（单例）（默认）</font></td>
+</tr>
+<tr>
+<td><font color="red">prototype</font></td>
+<td><font color="red">每次使用该bean时都会创建新的实例（非单例）</font></td>
+</tr>
+<tr>
+<td>request</td>
+<td>每个请求范围内都会创建新的实例（web环境中，了解）</td>
+</tr>
+<tr>
+<td>session</td>
+<td>每个会话范围内都会创建新的实例（web环境中，了解）</td>
+</tr>
+<tr>
+<td>application</td>
+<td>每个应用范围内都会创建新的实例（web环境中，了解）</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>可以通过@Scope注解来进行配置作用域：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Scope(&quot;prototype&quot;)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/depts&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DeptController</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意事项</p>
+<ul>
+<li>默认singleton的bean，在容器启动时被创建，可以通过@Lazy注解来延迟初始化（延迟到第一次使用时）。</li>
+<li>prototype的bean，每一次使用该bean的时候都会创建一个新的实例。</li>
+<li>实际开发当中，绝大部分的Bean都是单例的，也就是说绝大部分Bean不需要配置scope属性。</li>
+</ul>
+</li>
+</ul>
+<h2 id="第三方bean"><a href="#第三方bean" class="headerlink" title="第三方bean"></a>第三方bean</h2><p>原生Bean</p>
+<ul>
+<li>@Controller</li>
+<li>@Service</li>
+<li>@Repository（@Mapper）</li>
+<li>@Component</li>
+</ul>
+<p>现在有以下情况，需要初始化某些第三方jar包中的某些类对象，而这些第三方jar包的原码默认是read-only的，不能在其类上加注解@Component。</p>
+<ul>
+<li><p>如果要管理的bean对象来自于第三方（不是自定义的），是无法用@Component及衍生注解声明bean的，就需要用到@Bean注解。</p>
+</li>
+<li><p>若要管理的第三方bean对象，建议对这些bean进行集中分类配置，可以通过@Configuration注解声明一个配置类。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215223531608.png" alt="image-20240215223531608"></p>
+</li>
+</ul>
+<h1 id="SpringBoot原理"><a href="#SpringBoot原理" class="headerlink" title="SpringBoot原理"></a>SpringBoot原理</h1>
       
     </div>
     
@@ -671,7 +786,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#springboot%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">springboot原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.</span> <span class="nav-text">配置优先级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bean%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">Bean管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96bean"><span class="nav-number">2.1.</span> <span class="nav-text">获取bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bean%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">2.2.</span> <span class="nav-text">bean作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9bean"><span class="nav-number">2.3.</span> <span class="nav-text">第三方bean</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">SpringBoot原理</span></a></li></ol></div>
             
 
           </div>
@@ -705,7 +820,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">38.8k</span>
+    <span title="Site words total count">39.8k</span>
   
 </div>
 
