@@ -579,7 +579,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  9.4k
+                  10.8k
                 </span>
               
 
@@ -595,7 +595,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  47
+                  52
                 </span>
               
             </div>
@@ -1081,7 +1081,132 @@
 <li><p>在测试接口中测试对应的接口是否正确<img src="/2024/02/18/mybatisplus-day01/image-20240220002059865.png" alt="image-20240220002059865"></p>
 </li>
 </ol>
-<h2 id="逻辑删除"><a href="#逻辑删除" class="headerlink" title="逻辑删除"></a>逻辑删除</h2><h2 id="枚举处理器"><a href="#枚举处理器" class="headerlink" title="枚举处理器"></a>枚举处理器</h2><h2 id="JSON处理器"><a href="#JSON处理器" class="headerlink" title="JSON处理器"></a>JSON处理器</h2><h1 id="插件功能"><a href="#插件功能" class="headerlink" title="插件功能"></a>插件功能</h1>
+<h2 id="逻辑删除"><a href="#逻辑删除" class="headerlink" title="逻辑删除"></a>逻辑删除</h2><p>举例：淘宝购物后会形成订单， 在订单列表中有删除订单功能，在删除数据时，这个订单在后台的数据中并未真正被删除。</p>
+<p><strong>逻辑删除</strong>就是基于代码逻辑模拟删除效果，但并不会真正删除数据。思路如下：</p>
+<ul>
+<li>在表中添加一个字段标记数据是否被删除</li>
+<li>当删除数据时把标记置为1</li>
+<li>查询时只查询标记为0的数据</li>
+</ul>
+<p>例如逻辑删除字段为deleted：</p>
+<ul>
+<li><p>删除操作：</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220105031798.png" alt="image-20240220105031798"></p>
+</li>
+<li><p>查询操作</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220105156527.png" alt="image-20240220105156527"></p>
+</li>
+</ul>
+<p>目前的MP它执行的操作语句不会额外在条件查询处加上这个判断，如果用逻辑删除原先的MP都不能用了。</p>
+<p>Mybatis提供了逻辑删除功能，无需改变方法调用的方式，而是在底层帮我们自动修改CRUD的语句。我们要做的就是在application.yaml文件中配置逻辑删除的字段名称和值即可。</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220105839937.png" alt="image-20240220105839937"></p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220105829649.png" alt="image-20240220105829649"></p>
+<p>注意：</p>
+<p>逻辑删除本身也有自己的问题，比如：</p>
+<ul>
+<li>会导致数据库表垃圾数据越来越多，影响查询效率</li>
+<li>SQL中全都需要对逻辑删除字段做判断，影响查询效率</li>
+</ul>
+<p>因此，我不太推荐采用逻辑删除功能，如果数据不能删除，可以采用把数据迁移到其他表的方法。</p>
+<h2 id="枚举处理器"><a href="#枚举处理器" class="headerlink" title="枚举处理器"></a>枚举处理器</h2><p>User类中有一个用户状态字段：</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220110745823.png" alt="image-20240220110745823"></p>
+<p>当状态数量过多时，对应的数字和状态越多，对编程的要求就更复杂，容易出错。</p>
+<p>既然状态是有限数量的，可以用枚举来表示。</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220111021894.png" alt="image-20240220111021894"></p>
+<p>虽然用了枚举类型，但是我们的status状态还是Integer类型，这导致我们在做状态查询时用的还是数字。解决办法，使用UserStatus枚举类型的数据来表示状态。</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220111232868.png" alt="image-20240220111232868"></p>
+<p>这样操作虽然业务上方便了，但是我们后台的数据库表当中status字段的类型仍然是INT，它接受的仍然是数字。</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220111540493.png" alt="image-20240220111540493"></p>
+<p>Mybatis帮助我们实现了TypeHandler类，常见的POJO中实体类成员变量的类型它都有对应的处理器，因此它能自动实现Java数据类型与数据库类型的转换。其中就包括枚举类型处理器EnumOrdinalTypeHandler，然而，这个处理器对枚举类型的数据处理效果不是很好。</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220111709228.png" alt="image-20240220111709228"></p>
+<p>MP在此基础上做了进一步拓展，其中新增了MyBatisEnumTypeHandler处理器等等</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220111857384.png" alt="image-20240220111857384"></p>
+<p>使用MyBatisEnumTypeHandler处理器可以将实体类中的枚举类型UserStatus转换为数据库表中的数字类型INT。具体实现操作如下：</p>
+<ol>
+<li><p>创建并标记枚举类型，在枚举类中对应的数据库字段的值上添加注释@EnumValue</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220113205152.png" alt="image-20240220113205152"></p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220112222477.png" alt="image-20240220112222477"></p>
+</li>
+<li><p>让枚举处理器生效，在application.yml中配置全局枚举处理器：</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220112340573.png" alt="image-20240220112340573"></p>
+</li>
+<li><p>修改User和UserVo类成员变量status的类型由Integer为UserStatus。</p>
+</li>
+<li><p>加上@JsonValue注解，确保返回的是正常或冻结，而不是NORMAL或FROZEN；</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220113640238.png" alt="image-20240220113640238"></p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220113727515.png" alt="image-20240220113727515"></p>
+</li>
+</ol>
+<p><strong>总结</strong></p>
+<p>如何实现PO类中的枚举类型变量与数据库字段的转换？</p>
+<ol>
+<li><p>给枚举中的与数据库对应value值添加@EnumValue注解</p>
+</li>
+<li><p>在配置文件中配置的枚举处理器，实现类型转换</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220113838932.png" alt="image-20240220113838932"></p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220113858908.png" alt="image-20240220113858908"></p>
+</li>
+</ol>
+<h2 id="JSON处理器"><a href="#JSON处理器" class="headerlink" title="JSON处理器"></a>JSON处理器</h2><p>MP还额外提供了AbstarctJsonTypeHandler数据处理器，它用来解决数据库中的json数据类型与Java类型之间的转化。</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220113944606.png" alt="image-20240220113944606"></p>
+<p>数据库user表中有一个json类型的字段：</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220114120948.png" alt="image-20240220114120948"></p>
+<p>在Java中没有对应的json数据类型，默认使用的是String，mybatis会自动实现json和string的处理。这会导致一个问题，如果我们需要获取string中的键值对呢？一个比较好的处理办法是创建该JSON数据对应的实体类，如下所示：</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220114651876.png" alt="image-20240220114651876"></p>
+<p>成员变量info由string转换为自定义的UserInfo类。这样做可以实现info数据内部查询，但随着而来的是Mybatis并未实现UserInfo类和json格式的数据转换。这时候就要用到<font color="red">MP提供的类型处理器</font>。</p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220115012276.png" alt="image-20240220115012276"></p>
+<p>如上所示，实体类User嵌套了实体类UserInfo。并且在其上方加入了@TableField字段，指定了typeHandler，确定了处理该字段的类型处理器。<font color="red">然而这种实体类的嵌套要求定义复杂的resultmap，如果不想要的话，就在Tablename加上属性autoResultMap &#x3D; false</font></p>
+<p><img src="/2024/02/18/mybatisplus-day01/image-20240220115508545.png" alt="image-20240220115508545"></p>
+<p>实操</p>
+<ol>
+<li><p>创建UserInfo实体类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.domain.po;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor(staticName = &quot;of&quot;)</span>  <span class="comment">//加了staticName，可以通过静态方法UserInfo.of()创建对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String Intro;</span><br><span class="line">    <span class="keyword">private</span> String gender;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改User成员变量对应信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.annotation.IdType;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.annotation.TableField;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.annotation.TableId;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.annotation.TableName;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;</span><br><span class="line"><span class="keyword">import</span> com.example.domain.po.UserInfo;</span><br><span class="line"><span class="keyword">import</span> com.example.enums.UserStatus;</span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@TableName(value = &quot;tb_user&quot;, autoResultMap = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="comment">//用户id</span></span><br><span class="line">    <span class="meta">@TableId(type= IdType.AUTO)</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//用户名</span></span><br><span class="line">    <span class="meta">@TableField(&quot;`username`&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//密码</span></span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="comment">//注册手机号</span></span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">    <span class="comment">//详细信息</span></span><br><span class="line">    <span class="meta">@TableField(typeHandler = JacksonTypeHandler.class)</span></span><br><span class="line">    <span class="keyword">private</span> UserInfo info;</span><br><span class="line">    <span class="comment">//使用状态（1正常2冻结）</span></span><br><span class="line">    <span class="keyword">private</span> UserStatus status;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer balance;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> LocalDateTime createTime;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> LocalDateTime updateTime;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="插件功能"><a href="#插件功能" class="headerlink" title="插件功能"></a>插件功能</h1><p>MybatisPlus提供的内置拦截器有下面这些：</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>拦截器</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>TenantLineInnerInterceptor</td>
+<td>多租户插件</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DynamicTableNameInnerInterceptor</td>
+<td>动态表名插件</td>
+</tr>
+<tr>
+<td>3</td>
+<td>PaginationInnerInterceptor</td>
+<td>分页插件</td>
+</tr>
+<tr>
+<td>4</td>
+<td>OptimisticLockerInnerInterceptor</td>
+<td>乐观锁插件</td>
+</tr>
+<tr>
+<td>5</td>
+<td>IllegalSQLInnerInterceptor</td>
+<td>SQL性能规范插件，检测并拦截垃圾SQL</td>
+</tr>
+<tr>
+<td>6</td>
+<td>BlockAttackInnerInterceptor</td>
+<td>防止全</td>
+</tr>
+</tbody></table>
+<h2 id="分页插件基本用法"><a href="#分页插件基本用法" class="headerlink" title="分页插件基本用法"></a>分页插件基本用法</h2><p>MP</p>
+<h2 id="通用分页实体"><a href="#通用分页实体" class="headerlink" title="通用分页实体"></a>通用分页实体</h2><h2 id="通用分页实体与MP转换"><a href="#通用分页实体与MP转换" class="headerlink" title="通用分页实体与MP转换"></a>通用分页实体与MP转换</h2>
           
         
       
@@ -5396,7 +5521,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">54.1k</span>
+    <span title="Site words total count">55.5k</span>
   
 </div>
 
