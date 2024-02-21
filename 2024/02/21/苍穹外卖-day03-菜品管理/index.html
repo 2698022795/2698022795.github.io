@@ -80,18 +80,25 @@
 
 
 
-<meta name="description" content="和光同尘">
+<meta name="description" content="问题分析和实现思路具体要求：新建菜品、修改菜品、删除菜品、启用禁用菜品，菜品分页查询  公共字段自动填充问题分析业务表中的公共字段：  前面课程开发的员工管理模块和直接导入的分类管理模块，对应两张表，一个是员工表，一个是分类表，两个表中都有这四个字段。菜品表，套餐表这些业务表中都有这几个公共字段，当我们向这些表中插入数据时，需要为这些公共字段赋值。即很有可能会多次看到这种代码。 \  在程序中存在">
 <meta property="og:type" content="article">
 <meta property="og:title" content="苍穹外卖-day03-菜品管理">
 <meta property="og:url" content="http://2698022795.github.io/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="章北海">
-<meta property="og:description" content="和光同尘">
+<meta property="og:description" content="问题分析和实现思路具体要求：新建菜品、修改菜品、删除菜品、启用禁用菜品，菜品分页查询  公共字段自动填充问题分析业务表中的公共字段：  前面课程开发的员工管理模块和直接导入的分类管理模块，对应两张表，一个是员工表，一个是分类表，两个表中都有这四个字段。菜品表，套餐表这些业务表中都有这几个公共字段，当我们向这些表中插入数据时，需要为这些公共字段赋值。即很有可能会多次看到这种代码。 \  在程序中存在">
 <meta property="og:locale">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221223949538.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221224200823.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221224523173.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221224605012.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221224853616.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221231935143.png">
 <meta property="article:published_time" content="2024-02-21T14:37:41.000Z">
-<meta property="article:modified_time" content="2024-02-21T14:38:00.387Z">
+<meta property="article:modified_time" content="2024-02-21T15:19:45.281Z">
 <meta property="article:author" content="waterdance">
 <meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://2698022795.github.io/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221223949538.png">
 
 
 
@@ -389,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  569
                 </span>
               
 
@@ -405,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -426,7 +433,40 @@
       
 
       
-        
+        <h1 id="问题分析和实现思路"><a href="#问题分析和实现思路" class="headerlink" title="问题分析和实现思路"></a>问题分析和实现思路</h1><p>具体要求：新建菜品、修改菜品、删除菜品、启用禁用菜品，菜品分页查询</p>
+<p><img src="/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221223949538.png" alt="image-20240221223949538"></p>
+<h1 id="公共字段自动填充"><a href="#公共字段自动填充" class="headerlink" title="公共字段自动填充"></a>公共字段自动填充</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>业务表中的公共字段：</p>
+<p><img src="/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221224200823.png" alt="image-20240221224200823"></p>
+<p>前面课程开发的员工管理模块和直接导入的分类管理模块，对应两张表，一个是员工表，一个是分类表，两个表中都有这四个字段。菜品表，套餐表这些业务表中都有这几个公共字段，当我们向这些表中插入数据时，需要为这些公共字段赋值。即很有可能会多次看到这种代码。</p>
+<p><img src="/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221224523173.png" alt="image-20240221224523173">\</p>
+<p><img src="/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221224605012.png" alt="image-20240221224605012"></p>
+<p><font color="red">在程序中存在冗余的代码，如果后期表结构发生了变化，这部分的代码都要修改。现在问题是：业务表中存在公共字段，导致Java代码中存在冗余的代码，后期如果发生变更，代码维护复杂。</font></p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><ol>
+<li><p>明确公共字段在什么操作类型下会被修改。</p>
+<p><img src="/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221224853616.png" alt="image-20240221224853616"></p>
+</li>
+<li><p>对于公共字段，该如何处理呢？</p>
+<p>我们可以通过切面的方式处理公共字段。通过切面拦截Mapper层，统一为其赋值。但是Mapper层还有其他方法是不需要切面拦截的，例如Select。通过定义注解，表示当前方法需要被拦截，需要为这几个公共字段赋值，如果不加，则不需要处理。</p>
+</li>
+</ol>
+<p><strong>解决办法</strong></p>
+<ul>
+<li>自定义注解AutoFill，用于标识需要进行公共字段自动填充的方法</li>
+<li>自定义切面类AutoFillAspect，统一拦截加入了AutoFill注解的方法，通过反射为公共字段赋值</li>
+<li>在Mapper的方法上加上AutoFill注解</li>
+</ul>
+<p>技术点：枚举、注解、AOP、反射</p>
+<h2 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h2><ol>
+<li><p>创建自定义注解AutoFill</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.annotation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.enumeration.OperationType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义注解，用于标识某个方法需要进行功能字段自动填充处理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoFill &#123;</span><br><span class="line">    <span class="comment">//数据库操作类型</span></span><br><span class="line">    OperationType <span class="title function_">value</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/image-20240221231935143.png" alt="image-20240221231935143"></p>
+</li>
+<li><p>实现自定义切面类</p>
+</li>
+<li></li>
+</ol>
+<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><h1 id="新增菜品"><a href="#新增菜品" class="headerlink" title="新增菜品"></a>新增菜品</h1><h1 id="菜品分页查询"><a href="#菜品分页查询" class="headerlink" title="菜品分页查询"></a>菜品分页查询</h1><h1 id="删除菜品"><a href="#删除菜品" class="headerlink" title="删除菜品"></a>删除菜品</h1><h1 id="修改菜品"><a href="#修改菜品" class="headerlink" title="修改菜品"></a>修改菜品</h1>
       
     </div>
     
@@ -528,8 +568,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -653,6 +702,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E5%92%8C%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">问题分析和实现思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AC%E5%85%B1%E5%AD%97%E6%AE%B5%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85"><span class="nav-number">2.</span> <span class="nav-text">公共字段自动填充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="nav-number">2.2.</span> <span class="nav-text">实现思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%BC%80%E5%8F%91"><span class="nav-number">2.3.</span> <span class="nav-text">代码开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-number">2.4.</span> <span class="nav-text">功能测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E8%8F%9C%E5%93%81"><span class="nav-number">3.</span> <span class="nav-text">新增菜品</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8F%9C%E5%93%81%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.</span> <span class="nav-text">菜品分页查询</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8F%9C%E5%93%81"><span class="nav-number">5.</span> <span class="nav-text">删除菜品</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%8F%9C%E5%93%81"><span class="nav-number">6.</span> <span class="nav-text">修改菜品</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -680,7 +745,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">70.7k</span>
+    <span title="Site words total count">71.3k</span>
   
 </div>
 
