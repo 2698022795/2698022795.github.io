@@ -491,6 +491,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/" itemprop="url">苍穹外卖-day05-redis</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-24T20:25:37+08:00">
+                2024-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -579,7 +735,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  2.5k
                 </span>
               
 
@@ -595,7 +751,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  12
                 </span>
               
             </div>
@@ -618,7 +774,280 @@
       
         
           
-            
+            <p>完成套餐管理模块所有业务功能，包括：</p>
+<ul>
+<li>新增套餐</li>
+<li>套餐分页查询</li>
+<li>删除套餐</li>
+<li>修改套餐</li>
+<li>起售停售套餐</li>
+</ul>
+<p>要求：</p>
+<ol>
+<li>根据产品原型进行需求分析，分析出业务规则</li>
+<li>设计接口</li>
+<li>梳理表之间的关系（分类表、菜品表、套餐表、口味表、套餐菜品关系表）</li>
+<li>根据接口设计进行代码实现</li>
+<li>分别通过swagger接口文档和前后端联调进行功能测试</li>
+</ol>
+<h3 id="1-1-需求分析和设计"><a href="#1-1-需求分析和设计" class="headerlink" title="1.1 需求分析和设计"></a>1.1 需求分析和设计</h3><p>产品原型：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018135930842-17087774618395.png" alt="image-20221018135930842"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018140833345-17087774618396.png" alt="image-20221018140833345"></p>
+<p>业务规则：</p>
+<ul>
+<li>套餐名称唯一</li>
+<li>套餐必须属于某个分类</li>
+<li>套餐必须包含菜品</li>
+<li>名称、分类、价格、图片为必填项</li>
+<li>添加菜品窗口需要根据分类类型来展示菜品</li>
+<li>新增的套餐默认为停售状态</li>
+</ul>
+<p>接口设计（共涉及到4个接口）：</p>
+<ul>
+<li>根据类型查询分类（已完成）</li>
+<li>根据分类id查询菜品</li>
+<li>图片上传（已完成）</li>
+<li>新增套餐</li>
+</ul>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018141521068-17087774618408.png" alt="image-20221018141521068"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018141606787-17087774618407.png" alt="image-20221018141606787"></p>
+<p>数据库设计：</p>
+<p>setmeal表为套餐表，用于存储套餐的信息。具体表结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>bigint</td>
+<td>主键</td>
+<td>自增</td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(32)</td>
+<td>套餐名称</td>
+<td>唯一</td>
+</tr>
+<tr>
+<td>category_id</td>
+<td>bigint</td>
+<td>分类id</td>
+<td>逻辑外键</td>
+</tr>
+<tr>
+<td>price</td>
+<td>decimal(10,2)</td>
+<td>套餐价格</td>
+<td></td>
+</tr>
+<tr>
+<td>image</td>
+<td>varchar(255)</td>
+<td>图片路径</td>
+<td></td>
+</tr>
+<tr>
+<td>description</td>
+<td>varchar(255)</td>
+<td>套餐描述</td>
+<td></td>
+</tr>
+<tr>
+<td>status</td>
+<td>int</td>
+<td>售卖状态</td>
+<td>1起售 0停售</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+<td></td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>最后修改时间</td>
+<td></td>
+</tr>
+<tr>
+<td>create_user</td>
+<td>bigint</td>
+<td>创建人id</td>
+<td></td>
+</tr>
+<tr>
+<td>update_user</td>
+<td>bigint</td>
+<td>最后修改人id</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>setmeal_dish表为套餐菜品关系表，用于存储套餐和菜品的关联关系。具体表结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>bigint</td>
+<td>主键</td>
+<td>自增</td>
+</tr>
+<tr>
+<td>setmeal_id</td>
+<td>bigint</td>
+<td>套餐id</td>
+<td>逻辑外键</td>
+</tr>
+<tr>
+<td>dish_id</td>
+<td>bigint</td>
+<td>菜品id</td>
+<td>逻辑外键</td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(32)</td>
+<td>菜品名称</td>
+<td>冗余字段</td>
+</tr>
+<tr>
+<td>price</td>
+<td>decimal(10,2)</td>
+<td>菜品单价</td>
+<td>冗余字段</td>
+</tr>
+<tr>
+<td>copies</td>
+<td>int</td>
+<td>菜品份数</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="1-2-代码实现"><a href="#1-2-代码实现" class="headerlink" title="1.2 代码实现"></a>1.2 代码实现</h3><h4 id="1-2-1-DishController"><a href="#1-2-1-DishController" class="headerlink" title="1.2.1 DishController"></a>1.2.1 DishController</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据分类id查询菜品</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> categoryId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;根据分类id查询菜品&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;List&lt;Dish&gt;&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span>&#123;</span><br><span class="line">    List&lt;Dish&gt; list = dishService.list(categoryId);</span><br><span class="line">    <span class="keyword">return</span> Result.success(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2-DishService"><a href="#1-2-2-DishService" class="headerlink" title="1.2.2 DishService"></a>1.2.2 DishService</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据分类id查询菜品</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> categoryId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">List&lt;Dish&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-3-DishServiceImpl"><a href="#1-2-3-DishServiceImpl" class="headerlink" title="1.2.3 DishServiceImpl"></a>1.2.3 DishServiceImpl</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据分类id查询菜品</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> categoryId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> List&lt;Dish&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span> &#123;</span><br><span class="line">    <span class="type">Dish</span> <span class="variable">dish</span> <span class="operator">=</span> Dish.builder()</span><br><span class="line">        .categoryId(categoryId)</span><br><span class="line">        .status(StatusConstant.ENABLE)</span><br><span class="line">        .build();</span><br><span class="line">    <span class="keyword">return</span> dishMapper.list(dish);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-DishMapper"><a href="#1-2-4-DishMapper" class="headerlink" title="1.2.4 DishMapper"></a>1.2.4 DishMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 动态条件查询菜品</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dish</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">List&lt;Dish&gt; <span class="title function_">list</span><span class="params">(Dish dish)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-5-DishMapper-xml"><a href="#1-2-5-DishMapper-xml" class="headerlink" title="1.2.5 DishMapper.xml"></a>1.2.5 DishMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;list&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Dish&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Dish&quot;</span>&gt;</span></span><br><span class="line">    select * from dish</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name != null&quot;</span>&gt;</span></span><br><span class="line">            and name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;categoryId != null&quot;</span>&gt;</span></span><br><span class="line">            and category_id = #&#123;categoryId&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;status != null&quot;</span>&gt;</span></span><br><span class="line">            and status = #&#123;status&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    order by create_time desc</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-6-SetmealController"><a href="#1-2-6-SetmealController" class="headerlink" title="1.2.6 SetmealController"></a>1.2.6 SetmealController</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 套餐管理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/admin/setmeal&quot;)</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;套餐相关接口&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SetmealController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealService setmealService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 新增套餐</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;新增套餐&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">save</span><span class="params">(<span class="meta">@RequestBody</span> SetmealDTO setmealDTO)</span> &#123;</span><br><span class="line">        setmealService.saveWithDish(setmealDTO);</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-7-SetmealService"><a href="#1-2-7-SetmealService" class="headerlink" title="1.2.7 SetmealService"></a>1.2.7 SetmealService</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">SetmealService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 新增套餐，同时需要保存套餐和菜品的关联关系</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealDTO</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">saveWithDish</span><span class="params">(SetmealDTO setmealDTO)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-8-SetmealServiceImpl"><a href="#1-2-8-SetmealServiceImpl" class="headerlink" title="1.2.8 SetmealServiceImpl"></a>1.2.8 SetmealServiceImpl</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 套餐业务实现</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SetmealServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">SetmealService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealDishMapper setmealDishMapper;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 新增套餐，同时需要保存套餐和菜品的关联关系</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealDTO</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">saveWithDish</span><span class="params">(SetmealDTO setmealDTO)</span> &#123;</span><br><span class="line">        <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Setmeal</span>();</span><br><span class="line">        BeanUtils.copyProperties(setmealDTO, setmeal);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//向套餐表插入数据</span></span><br><span class="line">        setmealMapper.insert(setmeal);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取生成的套餐id</span></span><br><span class="line">        <span class="type">Long</span> <span class="variable">setmealId</span> <span class="operator">=</span> setmeal.getId();</span><br><span class="line"></span><br><span class="line">        List&lt;SetmealDish&gt; setmealDishes = setmealDTO.getSetmealDishes();</span><br><span class="line">        setmealDishes.forEach(setmealDish -&gt; &#123;</span><br><span class="line">            setmealDish.setSetmealId(setmealId);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//保存套餐和菜品的关联关系</span></span><br><span class="line">        setmealDishMapper.insertBatch(setmealDishes);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-9-SetmealMapper"><a href="#1-2-9-SetmealMapper" class="headerlink" title="1.2.9 SetmealMapper"></a>1.2.9 SetmealMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 新增套餐</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmeal</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@AutoFill(OperationType.INSERT)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(Setmeal setmeal)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-10-SetmealMapper-xml"><a href="#1-2-10-SetmealMapper-xml" class="headerlink" title="1.2.10 SetmealMapper.xml"></a>1.2.10 SetmealMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insert&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Setmeal&quot;</span> <span class="attr">useGeneratedKeys</span>=<span class="string">&quot;true&quot;</span> <span class="attr">keyProperty</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">    insert into setmeal</span><br><span class="line">    (category_id, name, price, status, description, image, create_time, update_time, create_user, update_user)</span><br><span class="line">    values (#&#123;categoryId&#125;, #&#123;name&#125;, #&#123;price&#125;, #&#123;status&#125;, #&#123;description&#125;, #&#123;image&#125;, #&#123;createTime&#125;, #&#123;updateTime&#125;,</span><br><span class="line">    #&#123;createUser&#125;, #&#123;updateUser&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-11-SetmealDishMapper"><a href="#1-2-11-SetmealDishMapper" class="headerlink" title="1.2.11 SetmealDishMapper"></a>1.2.11 SetmealDishMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批量保存套餐和菜品的关联关系</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealDishes</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">insertBatch</span><span class="params">(List&lt;SetmealDish&gt; setmealDishes)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-12-SetmealDishMapper-xml"><a href="#1-2-12-SetmealDishMapper-xml" class="headerlink" title="1.2.12 SetmealDishMapper.xml"></a>1.2.12 SetmealDishMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertBatch&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;list&quot;</span>&gt;</span></span><br><span class="line">    insert into setmeal_dish</span><br><span class="line">    (setmeal_id,dish_id,name,price,copies)</span><br><span class="line">    values</span><br><span class="line">    <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;setmealDishes&quot;</span> <span class="attr">item</span>=<span class="string">&quot;sd&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span>&gt;</span></span><br><span class="line">        (#&#123;sd.setmealId&#125;,#&#123;sd.dishId&#125;,#&#123;sd.name&#125;,#&#123;sd.price&#125;,#&#123;sd.copies&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-功能测试"><a href="#1-3-功能测试" class="headerlink" title="1.3 功能测试"></a>1.3 功能测试</h3><p>略</p>
+<h2 id="2-套餐分页查询"><a href="#2-套餐分页查询" class="headerlink" title="2. 套餐分页查询"></a>2. 套餐分页查询</h2><h3 id="2-1-需求分析和设计"><a href="#2-1-需求分析和设计" class="headerlink" title="2.1 需求分析和设计"></a>2.1 需求分析和设计</h3><p>产品原型：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018152429246.png" alt="image-20221018152429246"></p>
+<p>业务规则：</p>
+<ul>
+<li>根据页码进行分页展示</li>
+<li>每页展示10条数据</li>
+<li>可以根据需要，按照套餐名称、分类、售卖状态进行查询</li>
+</ul>
+<p>接口设计：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018152731141.png" alt="image-20221018152731141"></p>
+<h3 id="2-2-代码实现"><a href="#2-2-代码实现" class="headerlink" title="2.2 代码实现"></a>2.2 代码实现</h3><h4 id="2-2-1-SetmealController"><a href="#2-2-1-SetmealController" class="headerlink" title="2.2.1 SetmealController"></a>2.2.1 SetmealController</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 分页查询</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealPageQueryDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/page&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;分页查询&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;PageResult&gt; <span class="title function_">page</span><span class="params">(SetmealPageQueryDTO setmealPageQueryDTO)</span> &#123;</span><br><span class="line">    <span class="type">PageResult</span> <span class="variable">pageResult</span> <span class="operator">=</span> setmealService.pageQuery(setmealPageQueryDTO);</span><br><span class="line">    <span class="keyword">return</span> Result.success(pageResult);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-2-SetmealService"><a href="#2-2-2-SetmealService" class="headerlink" title="2.2.2 SetmealService"></a>2.2.2 SetmealService</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 分页查询</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealPageQueryDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">PageResult <span class="title function_">pageQuery</span><span class="params">(SetmealPageQueryDTO setmealPageQueryDTO)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-3-SetmealServiceImpl"><a href="#2-2-3-SetmealServiceImpl" class="headerlink" title="2.2.3 SetmealServiceImpl"></a>2.2.3 SetmealServiceImpl</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 分页查询</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealPageQueryDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> PageResult <span class="title function_">pageQuery</span><span class="params">(SetmealPageQueryDTO setmealPageQueryDTO)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">pageNum</span> <span class="operator">=</span> setmealPageQueryDTO.getPage();</span><br><span class="line">    <span class="type">int</span> <span class="variable">pageSize</span> <span class="operator">=</span> setmealPageQueryDTO.getPageSize();</span><br><span class="line"></span><br><span class="line">    PageHelper.startPage(pageNum, pageSize);</span><br><span class="line">    Page&lt;SetmealVO&gt; page = setmealMapper.pageQuery(setmealPageQueryDTO);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PageResult</span>(page.getTotal(), page.getResult());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-4-SetmealMapper"><a href="#2-2-4-SetmealMapper" class="headerlink" title="2.2.4 SetmealMapper"></a>2.2.4 SetmealMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 分页查询</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealPageQueryDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Page&lt;SetmealVO&gt; <span class="title function_">pageQuery</span><span class="params">(SetmealPageQueryDTO setmealPageQueryDTO)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-5-SetmealMapper-xml"><a href="#2-2-5-SetmealMapper-xml" class="headerlink" title="2.2.5 SetmealMapper.xml"></a>2.2.5 SetmealMapper.xml</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;pageQuery&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.sky.vo.SetmealVO&quot;</span>&gt;</span></span><br><span class="line">    select</span><br><span class="line">    	s.*,c.name categoryName</span><br><span class="line">    from</span><br><span class="line">    	setmeal s</span><br><span class="line">    left join</span><br><span class="line">    	category c</span><br><span class="line">    on</span><br><span class="line">    	s.category_id = c.id</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name != null&quot;</span>&gt;</span></span><br><span class="line">            and s.name like concat(&#x27;%&#x27;,#&#123;name&#125;,&#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;status != null&quot;</span>&gt;</span></span><br><span class="line">            and s.status = #&#123;status&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;categoryId != null&quot;</span>&gt;</span></span><br><span class="line">            and s.category_id = #&#123;categoryId&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    order by s.create_time desc</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-功能测试"><a href="#2-3-功能测试" class="headerlink" title="2.3 功能测试"></a>2.3 功能测试</h3><p>略</p>
+<h2 id="3-删除套餐"><a href="#3-删除套餐" class="headerlink" title="3. 删除套餐"></a>3. 删除套餐</h2><h3 id="3-1-需求分析和设计"><a href="#3-1-需求分析和设计" class="headerlink" title="3.1 需求分析和设计"></a>3.1 需求分析和设计</h3><p>产品原型：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018153756531.png" alt="image-20221018153756531"></p>
+<p>业务规则：</p>
+<ul>
+<li>可以一次删除一个套餐，也可以批量删除套餐</li>
+<li>起售中的套餐不能删除</li>
+</ul>
+<p>接口设计：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018154541067.png" alt="image-20221018154541067"></p>
+<h3 id="3-2-代码实现"><a href="#3-2-代码实现" class="headerlink" title="3.2 代码实现"></a>3.2 代码实现</h3><h4 id="3-2-1-SetmealController"><a href="#3-2-1-SetmealController" class="headerlink" title="3.2.1 SetmealController"></a>3.2.1 SetmealController</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批量删除套餐</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ids</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@DeleteMapping</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;批量删除套餐&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">delete</span><span class="params">(<span class="meta">@RequestParam</span> List&lt;Long&gt; ids)</span>&#123;</span><br><span class="line">    setmealService.deleteBatch(ids);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-2-SetmealService"><a href="#3-2-2-SetmealService" class="headerlink" title="3.2.2 SetmealService"></a>3.2.2 SetmealService</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批量删除套餐</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ids</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">deleteBatch</span><span class="params">(List&lt;Long&gt; ids)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-3-SetmealServiceImpl"><a href="#3-2-3-SetmealServiceImpl" class="headerlink" title="3.2.3 SetmealServiceImpl"></a>3.2.3 SetmealServiceImpl</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批量删除套餐</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ids</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteBatch</span><span class="params">(List&lt;Long&gt; ids)</span> &#123;</span><br><span class="line">    ids.forEach(id -&gt; &#123;</span><br><span class="line">        <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> setmealMapper.getById(id);</span><br><span class="line">        <span class="keyword">if</span>(StatusConstant.ENABLE == setmeal.getStatus())&#123;</span><br><span class="line">            <span class="comment">//起售中的套餐不能删除</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">DeletionNotAllowedException</span>(MessageConstant.SETMEAL_ON_SALE);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    ids.forEach(setmealId -&gt; &#123;</span><br><span class="line">        <span class="comment">//删除套餐表中的数据</span></span><br><span class="line">        setmealMapper.deleteById(setmealId);</span><br><span class="line">        <span class="comment">//删除套餐菜品关系表中的数据</span></span><br><span class="line">        setmealDishMapper.deleteBySetmealId(setmealId);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-4-SetmealMapper"><a href="#3-2-4-SetmealMapper" class="headerlink" title="3.2.4 SetmealMapper"></a>3.2.4 SetmealMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据id查询套餐</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Select(&quot;select * from setmeal where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">Setmeal <span class="title function_">getById</span><span class="params">(Long id)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据id删除套餐</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealId</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Delete(&quot;delete from setmeal where id = #&#123;id&#125;&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">deleteById</span><span class="params">(Long setmealId)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-5-SetmealDishMapper"><a href="#3-2-5-SetmealDishMapper" class="headerlink" title="3.2.5 SetmealDishMapper"></a>3.2.5 SetmealDishMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据套餐id删除套餐和菜品的关联关系</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealId</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Delete(&quot;delete from setmeal_dish where setmeal_id = #&#123;setmealId&#125;&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">deleteBySetmealId</span><span class="params">(Long setmealId)</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-功能测试"><a href="#3-3-功能测试" class="headerlink" title="3.3 功能测试"></a>3.3 功能测试</h3><p>略</p>
+<h2 id="4-修改套餐"><a href="#4-修改套餐" class="headerlink" title="4. 修改套餐"></a>4. 修改套餐</h2><h3 id="4-1-需求分析和设计"><a href="#4-1-需求分析和设计" class="headerlink" title="4.1 需求分析和设计"></a>4.1 需求分析和设计</h3><p>产品原型：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018160214225.png" alt="image-20221018160214225"></p>
+<p>接口设计（共涉及到5个接口）：</p>
+<ul>
+<li>根据id查询套餐</li>
+<li>根据类型查询分类（已完成）</li>
+<li>根据分类id查询菜品（已完成）</li>
+<li>图片上传（已完成）</li>
+<li>修改套餐</li>
+</ul>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018160915177.png" alt="image-20221018160915177"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018160949864.png" alt="image-20221018160949864"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018161046352.png" alt="image-20221018161046352"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018161117780.png" alt="image-20221018161117780"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018161139861.png" alt="image-20221018161139861"></p>
+<h3 id="4-2-代码实现"><a href="#4-2-代码实现" class="headerlink" title="4.2 代码实现"></a>4.2 代码实现</h3><h4 id="4-2-1-SetmealController"><a href="#4-2-1-SetmealController" class="headerlink" title="4.2.1 SetmealController"></a>4.2.1 SetmealController</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据id查询套餐，用于修改页面回显数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;根据id查询套餐&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;SetmealVO&gt; <span class="title function_">getById</span><span class="params">(<span class="meta">@PathVariable</span> Long id)</span> &#123;</span><br><span class="line">    <span class="type">SetmealVO</span> <span class="variable">setmealVO</span> <span class="operator">=</span> setmealService.getByIdWithDish(id);</span><br><span class="line">    <span class="keyword">return</span> Result.success(setmealVO);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改套餐</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@PutMapping</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;修改套餐&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">update</span><span class="params">(<span class="meta">@RequestBody</span> SetmealDTO setmealDTO)</span> &#123;</span><br><span class="line">    setmealService.update(setmealDTO);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-2-SetmealService"><a href="#4-2-2-SetmealService" class="headerlink" title="4.2.2 SetmealService"></a>4.2.2 SetmealService</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据id查询套餐和关联的菜品数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">SetmealVO <span class="title function_">getByIdWithDish</span><span class="params">(Long id)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改套餐</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealDTO</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">update</span><span class="params">(SetmealDTO setmealDTO)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-3-SetmealServiceImpl"><a href="#4-2-3-SetmealServiceImpl" class="headerlink" title="4.2.3 SetmealServiceImpl"></a>4.2.3 SetmealServiceImpl</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据id查询套餐和套餐菜品关系</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> SetmealVO <span class="title function_">getByIdWithDish</span><span class="params">(Long id)</span> &#123;</span><br><span class="line">    <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> setmealMapper.getById(id);</span><br><span class="line">    List&lt;SetmealDish&gt; setmealDishes = setmealDishMapper.getBySetmealId(id);</span><br><span class="line"></span><br><span class="line">    <span class="type">SetmealVO</span> <span class="variable">setmealVO</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SetmealVO</span>();</span><br><span class="line">    BeanUtils.copyProperties(setmeal, setmealVO);</span><br><span class="line">    setmealVO.setSetmealDishes(setmealDishes);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> setmealVO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改套餐</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealDTO</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(SetmealDTO setmealDTO)</span> &#123;</span><br><span class="line">    <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Setmeal</span>();</span><br><span class="line">    BeanUtils.copyProperties(setmealDTO, setmeal);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1、修改套餐表，执行update</span></span><br><span class="line">    setmealMapper.update(setmeal);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//套餐id</span></span><br><span class="line">    <span class="type">Long</span> <span class="variable">setmealId</span> <span class="operator">=</span> setmealDTO.getId();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2、删除套餐和菜品的关联关系，操作setmeal_dish表，执行delete</span></span><br><span class="line">    setmealDishMapper.deleteBySetmealId(setmealId);</span><br><span class="line"></span><br><span class="line">    List&lt;SetmealDish&gt; setmealDishes = setmealDTO.getSetmealDishes();</span><br><span class="line">    setmealDishes.forEach(setmealDish -&gt; &#123;</span><br><span class="line">        setmealDish.setSetmealId(setmealId);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//3、重新插入套餐和菜品的关联关系，操作setmeal_dish表，执行insert</span></span><br><span class="line">    setmealDishMapper.insertBatch(setmealDishes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-4-SetmealDishMapper"><a href="#4-2-4-SetmealDishMapper" class="headerlink" title="4.2.4 SetmealDishMapper"></a>4.2.4 SetmealDishMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 根据套餐id查询套餐和菜品的关联关系</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> setmealId</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Select(&quot;select * from setmeal_dish where setmeal_id = #&#123;setmealId&#125;&quot;)</span></span><br><span class="line">   List&lt;SetmealDish&gt; <span class="title function_">getBySetmealId</span><span class="params">(Long setmealId)</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-3-功能测试"><a href="#4-3-功能测试" class="headerlink" title="4.3 功能测试"></a>4.3 功能测试</h3><p>略</p>
+<h2 id="5-起售停售套餐"><a href="#5-起售停售套餐" class="headerlink" title="5. 起售停售套餐"></a>5. 起售停售套餐</h2><h3 id="5-1-需求分析和设计"><a href="#5-1-需求分析和设计" class="headerlink" title="5.1 需求分析和设计"></a>5.1 需求分析和设计</h3><p>产品原型：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018163720881.png" alt="image-20221018163720881"></p>
+<p>业务规则：</p>
+<ul>
+<li>可以对状态为起售的套餐进行停售操作，可以对状态为停售的套餐进行起售操作</li>
+<li>起售的套餐可以展示在用户端，停售的套餐不能展示在用户端</li>
+<li>起售套餐时，如果套餐内包含停售的菜品，则不能起售</li>
+</ul>
+<p>接口设计：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/image-20221018165055208.png" alt="image-20221018165055208"></p>
+<h3 id="5-2-代码实现"><a href="#5-2-代码实现" class="headerlink" title="5.2 代码实现"></a>5.2 代码实现</h3><h4 id="5-2-1-SetmealController"><a href="#5-2-1-SetmealController" class="headerlink" title="5.2.1 SetmealController"></a>5.2.1 SetmealController</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 套餐起售停售</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> status</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/status/&#123;status&#125;&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;套餐起售停售&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">startOrStop</span><span class="params">(<span class="meta">@PathVariable</span> Integer status, Long id)</span> &#123;</span><br><span class="line">    setmealService.startOrStop(status, id);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-2-SetmealService"><a href="#5-2-2-SetmealService" class="headerlink" title="5.2.2 SetmealService"></a>5.2.2 SetmealService</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 套餐起售、停售</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> status</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">startOrStop</span><span class="params">(Integer status, Long id)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-3-SetmealServiceImpl"><a href="#5-2-3-SetmealServiceImpl" class="headerlink" title="5.2.3 SetmealServiceImpl"></a>5.2.3 SetmealServiceImpl</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 套餐起售、停售</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> status</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">startOrStop</span><span class="params">(Integer status, Long id)</span> &#123;</span><br><span class="line">    <span class="comment">//起售套餐时，判断套餐内是否有停售菜品，有停售菜品提示&quot;套餐内包含未启售菜品，无法启售&quot;</span></span><br><span class="line">    <span class="keyword">if</span>(status == StatusConstant.ENABLE)&#123;</span><br><span class="line">        <span class="comment">//select a.* from dish a left join setmeal_dish b on a.id = b.dish_id where b.setmeal_id = ?</span></span><br><span class="line">        List&lt;Dish&gt; dishList = dishMapper.getBySetmealId(id);</span><br><span class="line">        <span class="keyword">if</span>(dishList != <span class="literal">null</span> &amp;&amp; dishList.size() &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            dishList.forEach(dish -&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span>(StatusConstant.DISABLE == dish.getStatus())&#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">SetmealEnableFailedException</span>(MessageConstant.SETMEAL_ENABLE_FAILED);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> Setmeal.builder()</span><br><span class="line">        .id(id)</span><br><span class="line">        .status(status)</span><br><span class="line">        .build();</span><br><span class="line">    setmealMapper.update(setmeal);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-4-DishMapper"><a href="#5-2-4-DishMapper" class="headerlink" title="5.2.4 DishMapper"></a>5.2.4 DishMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据套餐id查询菜品</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> setmealId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Select(&quot;select a.* from dish a left join setmeal_dish b on a.id = b.dish_id where b.setmeal_id = #&#123;setmealId&#125;&quot;)</span></span><br><span class="line">List&lt;Dish&gt; <span class="title function_">getBySetmealId</span><span class="params">(Long setmealId)</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-功能测试"><a href="#5-3-功能测试" class="headerlink" title="5.3 功能测试"></a>5.3 功能测试</h3><p>略</p>
+
           
         
       
@@ -4212,468 +4641,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/" itemprop="url">javeweb-day06-登录认证</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-12T19:34:18+08:00">
-                2024-02-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaweb/" itemprop="url" rel="index">
-                    <span itemprop="name">javaweb</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  16
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="基础登录功能"><a href="#基础登录功能" class="headerlink" title="基础登录功能"></a>基础登录功能</h1><p>判断用户输入的用户名和密码是否正确</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213121002402.png" alt="image-20240213121002402"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213121908243.png" alt="image-20240213121908243"></p>
-<h1 id="登录校验（重点）"><a href="#登录校验（重点）" class="headerlink" title="登录校验（重点）"></a>登录校验（重点）</h1><p><strong>联调测试</strong></p>
-<p><strong>问题</strong></p>
-<ul>
-<li>在未登录的情况下，我们也可以直接访问部门管理、员工管理等功能。</li>
-</ul>
-<p><strong>理想实现操作</strong></p>
-<ul>
-<li>在服务器接收到浏览器发送过来的请求之后，要先校验用户是否登录，如果用户已经登录了，直接执行业务操作即可。</li>
-<li>如果用户并没有登录，此时不允许执行相关操作，直接给前端响应一个错误的结果，最终跳转到登录页面，要求登录成功之后再来访问相应的数据。</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213122931243.png" alt="image-20240213122931243"></p>
-<p>HTTP请求是无状态的，即上一次业务操作与下一次业务操作是相互分隔的。所以服务器无法判断用户是否登录。</p>
-<p>解决办法：在服务器端存储登录标记，一旦员工登录成功，就存储相应的登录标记。根据用户是否登录执行不同的操作。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213123143360.png" alt="image-20240213123143360"></p>
-<p>每次操作都要判断用户是否登录，会导致后端的代码量上升，因此，我们产生了统一拦截的技术。通过统一拦截，我们可以拦截浏览器发送的所有请求，拦截到之后，就可以对请求进行校验，校验员工是否登录。如果拦截到请求后，没有获取到对应的登录标记，或者登录标记是有问题的，则直接给前端响应错误信息，前端会自动跳转到登录页面。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213123345266.png" alt="image-20240213123345266"></p>
-<p><strong>登陆标记</strong></p>
-<ul>
-<li>用户登录成功之后，每一次请求后，都可以获取到该标记。（会话技术）</li>
-</ul>
-<p><strong>统一拦截</strong></p>
-<ul>
-<li>过滤器Filter（servlet技术）</li>
-<li>拦截器Interceptor（spring技术）</li>
-</ul>
-<h2 id="会话技术"><a href="#会话技术" class="headerlink" title="会话技术"></a>会话技术</h2><ul>
-<li><p>会话：用户打开浏览器，访问web浏览器的资源，会话建立，直到有任何一方断开连接，会话结束。在一次会话中可以包含多次请求和响应。</p>
-</li>
-<li><p>会话跟踪：一种维护浏览器状态的方法，服务器需要识别多次请求是否来自于同一浏览器，以便在同一次会话的多次请求间共享数据。</p>
-</li>
-<li><p>会话跟踪方案：</p>
-<ul>
-<li>客户端会话跟踪技术：Cookie（浏览器）</li>
-<li>服务端会话跟踪技术：Session（服务器）</li>
-<li>令牌技术</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213123837098.png" alt="image-20240213123837098"></p>
-</li>
-</ul>
-<p><strong>会话跟踪方案对比</strong></p>
-<p> 服务器通过响应头直接设置Set-cookie:name&#x3D;value，响应头返回给浏览器，浏览器会自动解析这个响应头，然后拿到响应头对应的cookie，将其存储在浏览器本地，在后续的每一次请求，浏览器都会将存储的cookie值通过请求头携带到服务端，在Tomcat中，提供了cookie操作的api，可以很方便的设置。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213130050761.png" alt="image-20240213130050761"></p>
-<p><strong>SessionController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SessionController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置Cookie（服务器给浏览器设置响应数据）</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/c1&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">cookie1</span><span class="params">(HttpServletResponse response)</span>&#123;</span><br><span class="line">        response.addCookie(<span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;login_username&quot;</span>,<span class="string">&quot;itheima&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/c2&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">cookie2</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">        Cookie[] cookies = request.getCookies();</span><br><span class="line">        <span class="keyword">for</span> (Cookie cookie : cookies) &#123;</span><br><span class="line">            <span class="keyword">if</span>(cookie.getName().equals(<span class="string">&quot;login_username&quot;</span>))&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;login_username:&quot;</span> + cookie.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>优点：HTTP协议中支持的技术</p>
-<p>缺点：</p>
-<ul>
-<li>移动端APP无法使用Cookie</li>
-<li>不安全，用户可以自己禁用Cookie</li>
-<li>Cookie不能跨域</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213131523089.png" alt="image-20240213131523089"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213131651459.png" alt="image-20240213131651459"></p>
-<p>优点：存储在服务端，安全</p>
-<p>缺点：</p>
-<ul>
-<li><p>现在开发的服务器一般都部署在集群上，同一个项目部署多份，用户访问负载均衡的服务器，它负责将请求均匀的发送给后端的服务器。如果使用session，出现单点故障就寄了。</p>
-</li>
-<li><p>Cookie当中的缺点。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213132732677.png" alt="image-20240213132732677"></p>
-</li>
-</ul>
-<p><strong>SessionController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Result;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SessionController</span> &#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/s1&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">session1</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;HttpSession-s1:&#123;&#125;&quot;</span>,session.hashCode());</span><br><span class="line"></span><br><span class="line">        session.setAttribute(<span class="string">&quot;loginUser&quot;</span>,<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/s2&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">session2</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">        <span class="type">HttpSession</span> <span class="variable">session</span> <span class="operator">=</span> request.getSession();</span><br><span class="line">        log.info(<span class="string">&quot;HttpSession-s2:&#123;&#125;&quot;</span>,session.hashCode());</span><br><span class="line"></span><br><span class="line">        <span class="type">Object</span> <span class="variable">loginUser</span> <span class="operator">=</span> session.getAttribute(<span class="string">&quot;loginUser&quot;</span>);</span><br><span class="line">        log.info(<span class="string">&quot;logUser:&#123;&#125;&quot;</span>,loginUser);</span><br><span class="line">        <span class="keyword">return</span> Result.success(loginUser);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="JWT令牌（主流）"><a href="#JWT令牌（主流）" class="headerlink" title="JWT令牌（主流）"></a>JWT令牌（主流）</h2><p>令牌就是用户身份的标识，本质就是一个字符串，通过令牌技术跟踪会话，浏览器发送请求，在请求登录接口的时候，如果登录成功，就生成一个令牌，令牌就是用户的合法身份凭证，在响应数据的时候，就可以把这个令牌响应给前端，接下来前端程序接收到这个令牌之后，就需要将这个令牌存储起来，令牌可以存储在cookie或者其他存储空间，后续的每一次请求，都需要将令牌携带到服务端，服务端需要校验令牌有效性，如果令牌有效，则说明用户已经执行了登录操作，如果令牌是无效的，则用户之前并未执行登录操作。</p>
-<p>如果想要在多次会话之间共享数据，可以将数据存储在令牌当中。</p>
-<p>优点：</p>
-<ul>
-<li>支持PC，移动端</li>
-<li>解决集群环境下的认证问题</li>
-<li>减轻服务器端存储压力</li>
-</ul>
-<p>缺点：需要自己编程实现</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213133400789.png" alt="image-20240213133400789"></p>
-<ul>
-<li><p>全称：JSON Web Token（<a target="_blank" rel="noopener" href="https://jwt.io/%EF%BC%89">https://jwt.io/）</a></p>
-</li>
-<li><p>定义了一种简洁的、自包含的格式，用于在通信双方以json数据格式安全的传输信息。由于数字签名的存在，这些信息是可靠的。</p>
-</li>
-<li><p>组成：</p>
-<ul>
-<li><p>第一部分：Header（头）：记录令牌类型、签名算法等。例如：{“alg”:”HS256”,”type”:”JWT”}</p>
-<p>在生成JWT的时候，要先进行Base64编码（是一种基于64个可打印字符（A-Z a-Z 0-9 + &#x2F;）来表示二进制数据的编码方式。</p>
-</li>
-<li><p>第二部分：Payload（有效载荷），携带了一些自定义信息、默认信息等。例如:{“id”:”1”,”username”:”Tom”}，也进行了Base64编码。</p>
-</li>
-<li><p>第三部分：Signature（签名），防止Token被篡改、确保安全性。将header，payload，并加入指定密钥，通过指定签名算法计算而来。</p>
-</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213134135704.png" alt="image-20240213134135704"></p>
-</li>
-<li><p>场景：登录认证。</p>
-<ul>
-<li><p>登录成功后，生成令牌。</p>
-</li>
-<li><p>后续每个请求，都要携带JWT令牌，系统在每次请求处理之前，先校验令牌，通过后，再处理</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213134329360.png" alt="image-20240213134329360"></p>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>JWT-生成</strong></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213134519464.png" alt="image-20240213134519464"></p>
-<p>pom.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>test单元测试（生成JWT令牌）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGenJwt</span><span class="params">()</span>&#123;</span><br><span class="line">    Map&lt;String,Object&gt; claims = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    claims.put(<span class="string">&quot;id&quot;</span>,<span class="number">1</span>);</span><br><span class="line">    claims.put(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;tom&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">        .signWith(SignatureAlgorithm.HS256, <span class="string">&quot;itheima&quot;</span>) <span class="comment">//签名算法，其中itheima是密钥，用于第三部分加密</span></span><br><span class="line">        .setClaims(claims)  <span class="comment">//自定义内容（载荷）</span></span><br><span class="line">        .setExpiration(<span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis()) <span class="comment">// 设置JWT令牌的有效期为1h</span></span><br><span class="line">        .compact();</span><br><span class="line"></span><br><span class="line">    System.out.println(jwt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>（解析JWT令牌）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testParseJwt</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> Jwts.parser().setSigningKey(<span class="string">&quot;itheima&quot;</span>).parseClaimsJws(<span class="string">&quot;eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidG9tIiwiaWQiOjEsImV4cCI6MTcwNzgwNDA5Mn0.KCv1P2sm4hAMjEfW1OSDhk9iitL-oBlCvotb2OLWavo&quot;</span>).getBody();</span><br><span class="line"></span><br><span class="line">	System.out.println(claims);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>思路</p>
-<ul>
-<li>令牌生成：登录成功后，生成JWT令牌，并返回给前端。</li>
-<li>令牌校验：在请求到达服务端后，对令牌进行统一拦截，校验。</li>
-</ul>
-<p><strong>登录-生成令牌</strong></p>
-<p>步骤</p>
-<ul>
-<li>引入JWT令牌操作工具类。</li>
-<li>登录完成后，调用工具类生成JWT令牌，并返回。</li>
-</ul>
-<p><strong>JwtUtils.java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Claims;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Jwts;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.SignatureAlgorithm;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">signKey</span> <span class="operator">=</span> <span class="string">&quot;itheima&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Long</span> <span class="variable">expire</span> <span class="operator">=</span> <span class="number">43200000L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生成JWT令牌</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> claims JWT第二部分负载 payload 中存储的内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">generateJwt</span><span class="params">(Map&lt;String, Object&gt; claims)</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">                .addClaims(claims)</span><br><span class="line">                .signWith(SignatureAlgorithm.HS256, signKey)</span><br><span class="line">                .setExpiration(<span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis() + expire))</span><br><span class="line">                .compact();</span><br><span class="line">        <span class="keyword">return</span> jwt;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解析JWT令牌</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jwt JWT令牌</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> JWT第二部分负载 payload 中存储的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Claims <span class="title function_">parseJWT</span><span class="params">(String jwt)</span>&#123;</span><br><span class="line">        <span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> Jwts.parser()</span><br><span class="line">                .setSigningKey(signKey)</span><br><span class="line">                .parseClaimsJws(jwt)</span><br><span class="line">                .getBody();</span><br><span class="line">        <span class="keyword">return</span> claims;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213142444360.png" alt="image-20240213142444360"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213142542418.png" alt="image-20240213142542418"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213142641695.png" alt="image-20240213142641695"></p>
-<h2 id="过滤器Filter"><a href="#过滤器Filter" class="headerlink" title="过滤器Filter"></a>过滤器Filter</h2><ul>
-<li><p>概念：Filter过滤器，是JavaWeb三大组件（Servlet、Filter、Linstener）之一。</p>
-</li>
-<li><p>过滤器可以把对资源的请求拦截下来，从而实现一些比较特殊的功能。</p>
-</li>
-<li><p>过滤器一般完成一些通用的操作，比如：登录校验、统一编码处理、敏感字符处理等。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213143033277.png" alt="image-20240213143033277"></p>
-</li>
-</ul>
-<h3 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h3><ol>
-<li><p>定义Filter：定义一个类，实现Filter接口，并重写其所有方法。</p>
-</li>
-<li><p>配置Filter：Filter类上加@WebFilter注解，配置拦截资源的路径。引导类上加@ServletComponentScan开启Servlet组件支持。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213143454407.png" alt="image-20240213143454407"></p>
-</li>
-</ol>
-<h3 id="详解-执行流程、拦截路径、过滤器链"><a href="#详解-执行流程、拦截路径、过滤器链" class="headerlink" title="详解(执行流程、拦截路径、过滤器链)"></a>详解(执行流程、拦截路径、过滤器链)</h3><p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213153026983.png" alt="image-20240213153026983"></p>
-<p>先执行放行前逻辑——放行——执行服务器代码——执行放行后逻辑。</p>
-<p>疑问</p>
-<ul>
-<li>放行后会访问对应资源，资源访问完成后，还会回到Filter中吗？会</li>
-<li>如果回到Filter中，是重新执行还是执行放行之后的逻辑呢？执行放行后逻辑</li>
-</ul>
-<p><strong>Filter拦截路径</strong></p>
-<ul>
-<li><p>Filter可以根据需求，配置不同的拦截资源路径</p>
-<table>
-<thead>
-<tr>
-<th>拦截路径</th>
-<th>urlPatterns值</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>拦截具体路径</td>
-<td>&#x2F;login</td>
-<td>只有访问&#x2F;login路径时，才会被拦截</td>
-</tr>
-<tr>
-<td>目录拦截</td>
-<td>&#x2F;emps&#x2F;*</td>
-<td>访问&#x2F;emps下的所有资源，都会被拦截</td>
-</tr>
-<tr>
-<td>拦截所有</td>
-<td>&#x2F;*</td>
-<td>访问所有资源，都会被拦截</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<p><strong>过滤器链</strong></p>
-<ul>
-<li><p>介绍：一个web应用中，可以配置多个过滤器，这多个过滤器就形成了一个过滤器链。</p>
-</li>
-<li><p>顺序：注解配置的filter，优先级默认是按照过滤器类名（字符串）的自然排序。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213154743954.png" alt="image-20240213154743954"></p>
-</li>
-</ul>
-<p><strong>小结</strong></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213154815641.png" alt="image-20240213154815641"></p>
-<h3 id="登录校验-Filter"><a href="#登录校验-Filter" class="headerlink" title="登录校验-Filter"></a>登录校验-Filter</h3><p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213154957750.png" alt="image-20240213154957750"></p>
-<p>思考</p>
-<ul>
-<li>所有的请求，拦截到了之后，都需要校验令牌吗？有一个例外，登录请求</li>
-<li>拦截到请求后，什么情况下才可以放行，执行业务操作？有令牌，且令牌校验通过（合法）；否则都返回未登录错误结果</li>
-</ul>
-<p>步骤</p>
-<ul>
-<li>获取请求url。</li>
-<li>判断请求url中是否包含login，如果包含，说明是登录操作，放行。</li>
-<li>获取请求头中的令牌（token）。</li>
-<li>判断令牌是否存在，如果不存在，返回错误结果（未登录）。</li>
-<li>解析token，如果解析失败，返回错误结果（未登录）。</li>
-<li>放行。</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213155513342.png" alt="image-20240213155513342"></p>
-<p><strong>LoginCheckFilter类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.filter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Result;</span><br><span class="line"><span class="keyword">import</span> com.example.utils.JwtUtils;</span><br><span class="line"><span class="keyword">import</span> com.github.pagehelper.util.StringUtil;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> netscape.javascript.JSObject;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.StringUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebFilter;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@WebFilter(urlPatterns =  &quot;/*&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginCheckFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="comment">//1. 获取请求url。</span></span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">req</span> <span class="operator">=</span> (HttpServletRequest) servletRequest;</span><br><span class="line">        <span class="type">HttpServletResponse</span> <span class="variable">resp</span> <span class="operator">=</span> (HttpServletResponse) servletResponse;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 判断请求url中是否包含login，如果包含，说明是登录操作，放行。</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> req.getRequestURI().toString();</span><br><span class="line">        log.info(<span class="string">&quot;请求的url：&#123;&#125;&quot;</span>,url);</span><br><span class="line">        <span class="keyword">if</span>(url.contains(<span class="string">&quot;login&quot;</span>))&#123;</span><br><span class="line">            log.info(<span class="string">&quot;登录操作，放行....&quot;</span>);</span><br><span class="line">            filterChain.doFilter(servletRequest, servletResponse);</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3. 获取请求头中的令牌（token）。</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> req.getHeader(<span class="string">&quot;token&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4. 判断令牌是否存在，如果不存在，返回错误结果（未登录）。</span></span><br><span class="line">        <span class="keyword">if</span>(!StringUtils.hasLength(jwt))&#123;</span><br><span class="line">            log.info(<span class="string">&quot;请求头token为空，返回未登录的信息&quot;</span>);</span><br><span class="line">            <span class="type">Result</span> <span class="variable">error</span> <span class="operator">=</span> Result.error(<span class="string">&quot;NOT_LOGIN&quot;</span>);</span><br><span class="line">            <span class="comment">//手动转换 对象 --阿里巴巴fastjson</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">notlogin</span> <span class="operator">=</span> JSONObject.toJSONString(error);</span><br><span class="line">            resp.getWriter().write(notlogin);</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5. 解析token，如果解析失败，返回错误结果（未登录）。</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            JwtUtils.parseJWT(jwt);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123; <span class="comment">//jwt解析失败</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            log.info(<span class="string">&quot;解析令牌失败。返回未登录错误信息&quot;</span>);</span><br><span class="line">            <span class="type">Result</span> <span class="variable">error</span> <span class="operator">=</span> Result.error(<span class="string">&quot;NOT_LOGIN&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">notlogin</span> <span class="operator">=</span> JSONObject.toJSONString(error);</span><br><span class="line">            resp.getWriter().write(notlogin);</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//6. 放行。</span></span><br><span class="line">        log.info(<span class="string">&quot;令牌合法，放行&quot;</span>);</span><br><span class="line">        filterChain.doFilter(servletRequest, servletResponse);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="拦截器Interceptor"><a href="#拦截器Interceptor" class="headerlink" title="拦截器Interceptor"></a>拦截器Interceptor</h2><h3 id="简介-快速入门"><a href="#简介-快速入门" class="headerlink" title="简介 &amp; 快速入门"></a>简介 &amp; 快速入门</h3><ul>
-<li>概念：是一种动态拦截方法调用的机制，类似于过滤器。Spring框架中提供的，用来动态拦截控制器方法的执行。</li>
-<li>作用：拦截请求，在请求的方法调用前后，根据业务需要执行预先设定的代码。</li>
-</ul>
-<ol>
-<li><p>定义拦截器，实现HandlerInterceptor接口，并重写其中所有方法。</p>
-</li>
-<li><p>注册拦截器。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213194352886.png" alt="image-20240213194352886"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213194419268.png" alt="image-20240213194419268"></p>
-<p><strong>LoginCheckInterceptor.java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.interceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginCheckInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//目标资源方法运行前运行，返回true；放行，返回false，不放行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;preHandle...&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//目标资源方法运行后运行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;postHandle...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">// 视图渲染完毕后运行，最后运行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;afterCompletion...&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>WebConfig.java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.interceptor.LoginCheckInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span> <span class="comment">//配置类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> LoginCheckInterceptor loginCheckInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">        registry.addInterceptor(loginCheckInterceptor).addPathPatterns(<span class="string">&quot;/**&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li><p>拦截器可以根据需求，配置不同的拦截路径：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.interceptor.LoginCheckInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span> <span class="comment">//配置类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> LoginCheckInterceptor loginCheckInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;       registry.addInterceptor(loginCheckInterceptor).addPathPatterns(<span class="string">&quot;/**&quot;</span>).excludePathPatterns(<span class="string">&quot;/login&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>拦截路径</th>
-<th>含义</th>
-<th>举例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#x2F;*</td>
-<td>一级路径</td>
-<td>能匹配&#x2F;depts,&#x2F;emps,&#x2F;login，不能匹配&#x2F;depts&#x2F;1</td>
-</tr>
-<tr>
-<td>&#x2F;**</td>
-<td>任意级路径</td>
-<td>能匹配&#x2F;depts,&#x2F;depts&#x2F;1,&#x2F;depts&#x2F;1&#x2F;2</td>
-</tr>
-<tr>
-<td>&#x2F;depts&#x2F;*</td>
-<td>&#x2F;depts下的一级路径</td>
-<td>能匹配&#x2F;depts&#x2F;1，不能匹配&#x2F;depts&#x2F;1&#x2F;2，&#x2F;depts</td>
-</tr>
-<tr>
-<td>&#x2F;depts&#x2F;**</td>
-<td>&#x2F;depts下的任意级路径</td>
-<td>能匹配&#x2F;depts,&#x2F;depts&#x2F;1,depts&#x2F;1&#x2F;2;不能匹配&#x2F;emps</td>
-</tr>
-</tbody></table>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213202921519.png" alt="image-20240213202921519"></p>
-</li>
-</ul>
-<p><strong>Filter与Interceptor</strong></p>
-<ul>
-<li>接口规范不同：过滤器需要实现Filter接口，而拦截器需要实现HandlerInterceptor接口。</li>
-<li>拦截范围不同：过滤器Filter会拦截所有资源，而Interceptor只会拦截Spring环境中的资源。</li>
-</ul>
-<h3 id="登录校验-Interceptor"><a href="#登录校验-Interceptor" class="headerlink" title="登录校验 - Interceptor"></a>登录校验 - Interceptor</h3><p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213203640091.png" alt="image-20240213203640091"></p>
-<p><strong>LoginCheckInterceptor类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.interceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Result;</span><br><span class="line"><span class="keyword">import</span> com.example.utils.JwtUtils;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginCheckInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//目标资源方法运行前运行，返回true；放行，返回false，不放行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;preHandle...&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1. 获取请求url。</span></span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">req</span> <span class="operator">=</span> (HttpServletRequest) request;</span><br><span class="line">        <span class="type">HttpServletResponse</span> <span class="variable">resp</span> <span class="operator">=</span> (HttpServletResponse) response;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 判断请求url中是否包含login，如果包含，说明是登录操作，放行。</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> req.getRequestURI().toString();</span><br><span class="line">        log.info(<span class="string">&quot;请求的url：&#123;&#125;&quot;</span>,url);</span><br><span class="line">        <span class="keyword">if</span>(url.contains(<span class="string">&quot;login&quot;</span>))&#123;</span><br><span class="line">            log.info(<span class="string">&quot;登录操作，放行....&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3. 获取请求头中的令牌（token）。</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> req.getHeader(<span class="string">&quot;token&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4. 判断令牌是否存在，如果不存在，返回错误结果（未登录）。</span></span><br><span class="line">        <span class="keyword">if</span>(!StringUtils.hasLength(jwt))&#123;</span><br><span class="line">            log.info(<span class="string">&quot;请求头token为空，返回未登录的信息&quot;</span>);</span><br><span class="line">            <span class="type">Result</span> <span class="variable">error</span> <span class="operator">=</span> Result.error(<span class="string">&quot;NOT_LOGIN&quot;</span>);</span><br><span class="line">            <span class="comment">//手动转换 对象 --阿里巴巴fastjson</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">notlogin</span> <span class="operator">=</span> JSONObject.toJSONString(error);</span><br><span class="line">            resp.getWriter().write(notlogin);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5. 解析token，如果解析失败，返回错误结果（未登录）。</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            JwtUtils.parseJWT(jwt);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123; <span class="comment">//jwt解析失败</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            log.info(<span class="string">&quot;解析令牌失败。返回未登录错误信息&quot;</span>);</span><br><span class="line">            <span class="type">Result</span> <span class="variable">error</span> <span class="operator">=</span> Result.error(<span class="string">&quot;NOT_LOGIN&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">notlogin</span> <span class="operator">=</span> JSONObject.toJSONString(error);</span><br><span class="line">            resp.getWriter().write(notlogin);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//6. 放行。</span></span><br><span class="line">        log.info(<span class="string">&quot;令牌合法，放行&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//目标资源方法运行后运行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;postHandle...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">// 视图渲染完毕后运行，最后运行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;afterCompletion...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213205958788.png" alt="image-20240213205958788"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213210058206.png" alt="image-20240213210058206"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240214120014045.png" alt="image-20240214120014045"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240214120254171.png" alt="image-20240214120254171"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4728,7 +4695,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -4797,6 +4764,10 @@
 				  
 				  
 					<li class="recent_posts_li">
+					  <a href="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/" title="苍穹外卖-day05-redis" target="_blank">苍穹外卖-day05-redis</a>
+					</li>
+				  
+					<li class="recent_posts_li">
 					  <a href="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/" title="苍穹外卖-day04-套餐管理" target="_blank">苍穹外卖-day04-套餐管理</a>
 					</li>
 				  
@@ -4810,10 +4781,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/02/20/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day01/" title="苍穹外卖-day01-项目概述、环境搭建" target="_blank">苍穹外卖-day01-项目概述、环境搭建</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/02/18/mybatisplus-day01/" title="mybatisplus-day01" target="_blank">mybatisplus-day01</a>
 					</li>
 				  
 				</ul>
@@ -4860,7 +4827,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">78.5k</span>
+    <span title="Site words total count">81k</span>
   
 </div>
 
