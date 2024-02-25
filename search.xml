@@ -142,9 +142,10 @@
       </categories>
   </entry>
   <entry>
-    <title>苍穹外卖-day05-redis</title>
+    <title>苍穹外卖-day05-redis-店铺营业状态设置</title>
     <url>/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="店铺营业状态设置"><a href="#店铺营业状态设置" class="headerlink" title="店铺营业状态设置"></a>店铺营业状态设置</h1><p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240224203009689.png" alt="image-20240224203009689"></p>
+<h1 id="Redis入门"><a href="#Redis入门" class="headerlink" title="Redis入门"></a>Redis入门</h1><h1 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h1><h1 id="Redis常用命令"><a href="#Redis常用命令" class="headerlink" title="Redis常用命令"></a>Redis常用命令</h1><h1 id="在Java中操作Redis"><a href="#在Java中操作Redis" class="headerlink" title="在Java中操作Redis"></a>在Java中操作Redis</h1><h1 id="店铺营业状态设置-1"><a href="#店铺营业状态设置-1" class="headerlink" title="店铺营业状态设置"></a>店铺营业状态设置</h1>]]></content>
       <categories>
         <category>苍穹外卖</category>
       </categories>
