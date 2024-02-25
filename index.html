@@ -579,7 +579,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  31
+                  1.6k
                 </span>
               
 
@@ -595,7 +595,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  5
                 </span>
               
             </div>
@@ -619,7 +619,302 @@
         
           
             <h1 id="店铺营业状态设置"><a href="#店铺营业状态设置" class="headerlink" title="店铺营业状态设置"></a>店铺营业状态设置</h1><p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240224203009689.png" alt="image-20240224203009689"></p>
-<h1 id="Redis入门"><a href="#Redis入门" class="headerlink" title="Redis入门"></a>Redis入门</h1><h1 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h1><h1 id="Redis常用命令"><a href="#Redis常用命令" class="headerlink" title="Redis常用命令"></a>Redis常用命令</h1><h1 id="在Java中操作Redis"><a href="#在Java中操作Redis" class="headerlink" title="在Java中操作Redis"></a>在Java中操作Redis</h1><h1 id="店铺营业状态设置-1"><a href="#店铺营业状态设置-1" class="headerlink" title="店铺营业状态设置"></a>店铺营业状态设置</h1>
+<h1 id="Redis入门"><a href="#Redis入门" class="headerlink" title="Redis入门"></a>Redis入门</h1><h2 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h2><p>Redis是一个基于<strong>内存</strong>的key-value结构数据库。（内存存储）</p>
+<ul>
+<li>基于内存存储，读写性能高</li>
+<li>适合存储热点数据（热点商品、咨询、新闻）（热点数据：在某个点会有大量用户访问该数据）</li>
+<li>企业应用广泛</li>
+</ul>
+<p>官网：<a target="_blank" rel="noopener" href="https://redis.io/">https://redis.io</a></p>
+<p>中文网：<a target="_blank" rel="noopener" href="https://www.redis.net.cn/">https://www.redis.net.cn/</a></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225211637018.png" alt="image-20240225211637018"></p>
+<p><strong>Redis与mysql的区别</strong></p>
+<ol>
+<li>redis将数据存到内存中，mysql将数据存到磁盘的数据文件中。</li>
+<li>redis是基于键值对存储数据，mysql通过二维表的形式存储数据。</li>
+</ol>
+<h2 id="Redis下载与安装"><a href="#Redis下载与安装" class="headerlink" title="Redis下载与安装"></a>Redis下载与安装</h2><p>Redis安装包分为Windows版本和Linux版本：</p>
+<ul>
+<li>Windows版本下载地址：<a target="_blank" rel="noopener" href="https://github.com/microsoftarchive/redis/releases">https://github.com/microsoftarchive/redis/releases</a></li>
+<li>Linux版下载地址：<a target="_blank" rel="noopener" href="https://download.redis.io/releases/">https://download.redis.io/releases/</a></li>
+</ul>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225211828939.png" alt="image-20240225211828939"></p>
+<p>Redis的Windows版属于绿色软件，直接解压即可使用，解压后目录结构如下：</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225212144784.png" alt="image-20240225212144784"></p>
+<h2 id="Redis服务启动与停止"><a href="#Redis服务启动与停止" class="headerlink" title="Redis服务启动与停止"></a>Redis服务启动与停止</h2><p><strong>启动服务</strong>（第一个参数是redis-server.exe，第二个参数是redis.windows.conf）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server.exe redis.windows.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225213141902.png" alt="image-20240225213141902"></p>
+<p><strong>停止服务</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + c</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>通过客户端连接redis服务</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cls.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225214144982.png" alt="image-20240225214144982"></p>
+<p>测试是否连上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keys *</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225214313241.png" alt="image-20240225214313241"></p>
+<p>退出redis</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225214412285.png" alt="image-20240225214412285"></p>
+<p><strong>指定连接主机地址和端口</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli.exe -h localhost -p 6379</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225214532703.png" alt="image-20240225214532703"></p>
+<p>redis配置文件中默认是没有配置密码的，我们的客户端不用密码就可以连接上该redis。</p>
+<p><strong>配置redis.windows.conf文件，给redis设置密码。</strong>（redis中没有用户名的概念）</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225214937198.png" alt="image-20240225214937198"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225215410275.png" alt="image-20240225215410275"></p>
+<p>我们后期经常用的是redis客户端图形界面。</p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225215513434.png" alt="image-20240225215513434"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225215559337.png" alt="image-20240225215559337"></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225215648190.png" alt="image-20240225215648190"></p>
+<p><strong>选择简体中文</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225215828897.png" alt="image-20240225215828897"></p>
+<h1 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h1><h2 id="5种常用数据类型介绍"><a href="#5种常用数据类型介绍" class="headerlink" title="5种常用数据类型介绍"></a>5种常用数据类型介绍</h2><p>Redis存储的是key-value结构的数据，其中key是字符串类型，value有5种常用的数据类型。</p>
+<ul>
+<li>字符串string</li>
+<li>哈希hash</li>
+<li>列表list</li>
+<li>集合set</li>
+<li>有序集合 sorted set &#x2F; zset</li>
+</ul>
+<h2 id="各种数据类型特点"><a href="#各种数据类型特点" class="headerlink" title="各种数据类型特点"></a>各种数据类型特点</h2><p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225220033296.png" alt="image-20240225220033296"></p>
+<ul>
+<li>字符串（string）：普通字符串，Redis中最简单的数据类型</li>
+<li>哈希（hash）：也叫散列，类似于Java中的HashMap结构（适合存储对象，这个值也可以看成键值对）</li>
+<li>列表（list）：按照插入顺序排序，可以有重复元素，类似于Java中的LinkedList（朋友圈点赞的数据可以使用列表存储）</li>
+<li>集合（set）：无序集合，没有重复元素，类似于Java中的HashSet，集合是可以做运算的。（朋友圈的共同朋友）</li>
+<li>有序集合（sorted set &#x2F; zset）：集合中每个元素会关联一个分数（score）,根据分数升序排序，没有重复元素（各种排行榜，视频播放排行榜，投票排行榜等等）</li>
+</ul>
+<h1 id="Redis常用命令"><a href="#Redis常用命令" class="headerlink" title="Redis常用命令"></a>Redis常用命令</h1><p>mysql中操作数据是通过执行sql语句实现。</p>
+<p>redis中操作数据，根据数据类型决定具体的操作语句。</p>
+<p>redis和mysql一样不区分大小写。</p>
+<h2 id="字符串操作命令"><a href="#字符串操作命令" class="headerlink" title="字符串操作命令"></a>字符串操作命令</h2><p>Redis字符串类型常用命令：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SET key value</td>
+<td>设置指定key的值</td>
+</tr>
+<tr>
+<td>GET key</td>
+<td>获取指定key的值</td>
+</tr>
+<tr>
+<td>SETEX key seconds value</td>
+<td>设置指定key的值，并将key的过期时间设为seconds秒</td>
+</tr>
+<tr>
+<td>SETNX key value</td>
+<td>只有在key不存在时设置key的值</td>
+</tr>
+</tbody></table>
+<p>SETEX key seconds value（获取手机号，输入验证码，验证码是有时间有效期的）</p>
+<p>SETNX key value（分布式锁）</p>
+<p><strong>redis编写界面</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225221635635.png" alt="image-20240225221635635"></p>
+<ul>
+<li>set name jack（设置键name的值为jack）</li>
+<li>setex code 30 1234（设置键code的值为1234，有效期为30秒）</li>
+<li>setnx name jack（如果内存中没有键name，那么设置其对应的值为jack）</li>
+<li>get name（获取键name的值）</li>
+</ul>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225222726132.png" alt="image-20240225222726132"></p>
+<h2 id="哈希操作命令"><a href="#哈希操作命令" class="headerlink" title="哈希操作命令"></a>哈希操作命令</h2><p>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象，常用命令：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HSET key field value</td>
+<td>将哈希表key中的字段field的值设为value</td>
+</tr>
+<tr>
+<td>HGET key field</td>
+<td>获取存储在哈希表中指定字段的值</td>
+</tr>
+<tr>
+<td>HDEL key field</td>
+<td>删除存储在哈希表中的指定字段</td>
+</tr>
+<tr>
+<td>HKEYS key</td>
+<td>获取哈希表中所有字段</td>
+</tr>
+<tr>
+<td>HVALS key</td>
+<td>获取哈希表中所有值</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225224022001.png" alt="image-20240225224022001"></p>
+<p><strong>新增键值对</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225225123082.png" alt="image-20240225225123082"></p>
+<p><strong>删除键值对</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225225353214.png" alt="image-20240225225353214"></p>
+<p><strong>查看键值对</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225225551179.png" alt="image-20240225225551179"></p>
+<h2 id="列表操作命令"><a href="#列表操作命令" class="headerlink" title="列表操作命令"></a>列表操作命令</h2><p>Redis列表是简单的字符串列表，按照插入顺序排序，常用命令：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LPUSH key value1 [value2]</td>
+<td>将一个或多个值插入到列表头部（L指的是left）</td>
+</tr>
+<tr>
+<td>LRANGE key start stop</td>
+<td>获取列表指定范围内的元素（类似于sql当中的分页查询）</td>
+</tr>
+<tr>
+<td>RPOP key</td>
+<td>移除并获取列表最后一个元素（从右侧移出元素）</td>
+</tr>
+<tr>
+<td>LLEN key</td>
+<td>获取列表长度（元素的个数）</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225225837799.png" alt="image-20240225225837799"></p>
+<p><strong>LPUSH操作</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225230124699.png" alt="image-20240225230124699"></p>
+<p><strong>LRANGE操作</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225230318256.png" alt="image-20240225230318256"></p>
+<p><strong>RPOP操作</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225230429180.png" alt="image-20240225230429180"></p>
+<p><strong>LLEN操作</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225230507692.png" alt="image-20240225230507692"></p>
+<h2 id="集合操作命令"><a href="#集合操作命令" class="headerlink" title="集合操作命令"></a>集合操作命令</h2><p>Redis set是string类型的无序集合。集合成员是唯一的，集合中不能出现重复的数据，常用命令：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SADD key member1 [member2]</td>
+<td>向集合中添加一个或多个成员</td>
+</tr>
+<tr>
+<td>SMEMBERS key</td>
+<td>返回集合中的所有成员</td>
+</tr>
+<tr>
+<td>SCARD key</td>
+<td>获取集合的成员数</td>
+</tr>
+<tr>
+<td>SINTER key1 [key2]</td>
+<td>返回给定所有集合的交集</td>
+</tr>
+<tr>
+<td>SUNION key1 [key2]</td>
+<td>返回所有给定集合的并集</td>
+</tr>
+<tr>
+<td>SREM key member1 [member2]</td>
+<td>删除集合中一个或多个成员</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225231003667.png" alt="image-20240225231003667"></p>
+<p><strong>创建set</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225231309602.png" alt="image-20240225231309602"></p>
+<p><strong>查看set所有成员</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225231430272.png" alt="image-20240225231430272"></p>
+<p><strong>获取集合成员数</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225231453157.png" alt="image-20240225231453157"></p>
+<p><strong>查看集合交集</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225231554456.png" alt="image-20240225231554456"></p>
+<p><strong>查看集合并集</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225231619565.png" alt="image-20240225231619565"></p>
+<p><strong>删除集合成员</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225231711195.png" alt="image-20240225231711195"></p>
+<h2 id="有序集合操作命令"><a href="#有序集合操作命令" class="headerlink" title="有序集合操作命令"></a>有序集合操作命令</h2><p>Redis有序集合是string类型元素的集合，且不允许有重复成员。每个元素都会关联一个double类型的分数。分数可以用来排序。常用命令：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ZADD key score1 member1 [score2  member2]</td>
+<td>向有序集合添加一个或多个成员</td>
+</tr>
+<tr>
+<td>ZRANGE key start stop [WITHSCORES]</td>
+<td>通过索引区间返回有序集合中指定区间内的成员</td>
+</tr>
+<tr>
+<td>ZINCRBY key increment member</td>
+<td>有序集合中对指定成员的分数加上增量increment</td>
+</tr>
+<tr>
+<td>ZREM key member [member …]</td>
+<td>移除有序集合中的一个或多个成员</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225232001110.png" alt="image-20240225232001110"></p>
+<p><strong>创建有序集合</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225232306448.png" alt="image-20240225232306448"></p>
+<p><strong>查询有序集合的内容（默认按照升序排列）</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225232508385.png" alt="image-20240225232508385"></p>
+<p><strong>增加有序集合中值的权重</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225232631623.png" alt="image-20240225232631623"></p>
+<p><strong>删除有序集合中的元素</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225232737356.png" alt="image-20240225232737356"></p>
+<h2 id="通用命令"><a href="#通用命令" class="headerlink" title="通用命令"></a>通用命令</h2><p>Redis的通用命令是不分数据类型的，都可以使用的命令：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>KEYS pattern</td>
+<td>查找所有符合给定模式（pattern）的key</td>
+</tr>
+<tr>
+<td>EXISTS key</td>
+<td>检查给定key是否存在</td>
+</tr>
+<tr>
+<td>TYPE key</td>
+<td>返回key所存储的值的类型</td>
+</tr>
+<tr>
+<td>DEL key</td>
+<td>该命令用于在key存在时删除key</td>
+</tr>
+</tbody></table>
+<p><strong>查看所有的key</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225233017458.png" alt="image-20240225233017458"></p>
+<p><strong>检查某个key是否存在</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225233046764.png" alt="image-20240225233046764"></p>
+<p><strong>检查key的值类型</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225233128225.png" alt="image-20240225233128225"></p>
+<p><strong>删除key</strong></p>
+<p><img src="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/image-20240225233151433.png" alt="image-20240225233151433"></p>
+<h1 id="在Java中操作Redis"><a href="#在Java中操作Redis" class="headerlink" title="在Java中操作Redis"></a>在Java中操作Redis</h1><h1 id="店铺营业状态设置-1"><a href="#店铺营业状态设置-1" class="headerlink" title="店铺营业状态设置"></a>店铺营业状态设置</h1>
           
         
       
@@ -4850,7 +5145,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">81.1k</span>
+    <span title="Site words total count">82.6k</span>
   
 </div>
 
