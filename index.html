@@ -579,7 +579,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.4k
+                  3k
                 </span>
               
 
@@ -595,7 +595,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  11
                 </span>
               
             </div>
@@ -672,7 +672,135 @@
 <p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227170717321.png" alt="image-20240227170717321"></p>
 <p><strong>介绍</strong></p>
 <p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227170758028.png" alt="image-20240227170758028"></p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h2 id="入门案例-1"><a href="#入门案例-1" class="headerlink" title="入门案例"></a>入门案例</h2><h1 id="微信登录"><a href="#微信登录" class="headerlink" title="微信登录"></a>微信登录</h1><h1 id="导入商品浏览功能代码"><a href="#导入商品浏览功能代码" class="headerlink" title="导入商品浏览功能代码"></a>导入商品浏览功能代码</h1><p>从技术层面来说仍然属于CRUD范围。分析需求，使用的接口。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="注册小程序"><a href="#注册小程序" class="headerlink" title="注册小程序"></a>注册小程序</h3><p>注册地址：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/wxopen/waregister?action=step1">https://mp.weixin.qq.com/wxopen/waregister?action=step1</a></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228114809590.png" alt="image-20240228114809590"></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228115457266.png" alt="image-20240228115457266"></p>
+<h3 id="完善小程序信息"><a href="#完善小程序信息" class="headerlink" title="完善小程序信息"></a>完善小程序信息</h3><p><font color="red">完善小程序信息、小程序类目</font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228115852988.png" alt="image-20240228115852988"></p>
+<p>获取APPID和AppSecret </p>
+<p>（appID：wx1d1f9482fef7f19e）</p>
+<p>（密钥：2aaa22b5aeafd21e2d8742d72e99cdd1）</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228120100017.png" alt="image-20240228120100017"></p>
+<h3 id="下载开发者工具"><a href="#下载开发者工具" class="headerlink" title="下载开发者工具"></a>下载开发者工具</h3><p>下载地址： <a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html">https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html</a></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228120158680.png" alt="image-20240228120158680"></p>
+<p>下载并安装开发者工具</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228120734805.png" alt="image-20240228120734805"></p>
+<p><strong>开发界面介绍</strong></p>
+<p><strong>左侧-模拟器，最终在手机上显示的效果</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228120947976.png" alt="image-20240228120947976"></p>
+<p><strong>右侧-调试器，调试小程序，小程序发送了何种请求，服务端响应回来的数据是什么，它实际上跟浏览器的调试工具是一样的，即它们用的是同一个内核。</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228121022625.png" alt="image-20240228121022625"></p>
+<p><strong>中间-编辑器，主要对代码进行编辑操作的区域</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228121250712.png" alt="image-20240228121250712"></p>
+<p><strong>设置选择显示哪些界面</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228121430392.png" alt="image-20240228121430392"></p>
+<p><font color="red">在本地设置中勾选不校验合法域名，我们现在在开发阶段，小程序有可能要发出请求，最终请求到我们本地后端的tomcat服务器，如果不勾选不校验合法域名，请求是发送不出去的。</font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228121549279.png" alt="image-20240228121549279"></p>
+<h2 id="入门案例-1"><a href="#入门案例-1" class="headerlink" title="入门案例"></a>入门案例</h2><p>操作步骤：</p>
+<ul>
+<li><p>了解小程序目录结构</p>
+</li>
+<li><p>编写小程序代码</p>
+</li>
+<li><p>编译小程序（在开发工具模拟器中可以查看效果）</p>
+</li>
+</ul>
+<h3 id="了解小程序目录结构"><a href="#了解小程序目录结构" class="headerlink" title="了解小程序目录结构"></a>了解小程序目录结构</h3><p>小程序包含一个描述整体程序的app和多个描述各自页面的page。一个小程序主体部分由三个文件组成，必须放在项目的根目录，如下：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>必需</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>app.js</td>
+<td>是</td>
+<td>小程序逻辑</td>
+</tr>
+<tr>
+<td>app.json</td>
+<td>是</td>
+<td>小程序公共配置</td>
+</tr>
+<tr>
+<td>app.wxss</td>
+<td>否</td>
+<td>小程序公共样式表</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228122652914.png" alt="image-20240228122652914"></p>
+<p>一个小程序可能有多个页面，商品浏览页面，购物车页面，订单支付页面，商品详情页面。这些页面会放在pages中。一个小程序页面由四个文件组成：</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>必需</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>js</td>
+<td>是</td>
+<td>页面逻辑</td>
+</tr>
+<tr>
+<td>wxml</td>
+<td>是</td>
+<td>页面结构</td>
+</tr>
+<tr>
+<td>json</td>
+<td>否</td>
+<td>页面配置</td>
+</tr>
+<tr>
+<td>wxss</td>
+<td>否</td>
+<td>页面样式表</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228122700305.png" alt="image-20240228122700305"></p>
+<h3 id="内容讲解"><a href="#内容讲解" class="headerlink" title="内容讲解"></a>内容讲解</h3><p>app.json内容中的pages设置了当前页面的文件路径，实际上是page&#x2F;index目录下的index.wxml文件。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228124635317.png" alt="image-20240228124635317"></p>
+<p>index.wxml就类似于html，模拟器中的Weixin字段是由index.wxml来决定的。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228125651655.png" alt="image-20240228125651655"></p>
+<p>在模拟器中动态设置显示的值，现在index.wxml中编写对应的变量，再在index.js中设置data，编写键值对msg设置对应的值。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228125909677.png" alt="image-20240228125909677"></p>
+<p>在index.wxml中创建获取用户信息按钮，给按钮设置显示样式bind:tag，挂靠方法getUserInfo，在index.js中设置对应的方法实现。</p>
+<p>方法的具体实现细节如下：使用微信小程序内置对象wx，调用这个对象的getUserProfile方法，调用该方法时会在模拟器中弹出获取昵称、头像等页面信息，该方法会获取当前微信用户的信息。success属性对应一个回调函数，类似于lambda表达式，res是返回值，通过console在控制台输出返回值中包含的用户信息。</p>
+<p><font color="red">注：微信版本更新之后，这个小程序会不弹框，要修改基础库，在右上角 详细-&gt;本地设置-&gt;调试基础库 建议选择基础库版本在2.21.2~2.27.0版本之间头像，昵称都能获取。</font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228131640243.png" alt="image-20240228131640243"></p>
+<h3 id="获取用户的昵称、头像"><a href="#获取用户的昵称、头像" class="headerlink" title="获取用户的昵称、头像"></a><strong>获取用户的昵称、头像</strong></h3><p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228133125216.png" alt="image-20240228133125216"></p>
+<p>上述的功能并不是微信登录，微信登录要获取当前微信用户的唯一标识，即openid，要获取openid，就需要微信小程序首先获得授权码（用户授权给我们），然后我们使用获得的授权码向微信服务器发送请求，最终获取到当前微信用户的openId。</p>
+<p>下面演示如何获取微信用户的授权码（只能使用一次，用户每次返回的授权码是不同的）。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228134325727.png" alt="image-20240228134325727"></p>
+<h3 id="向服务器发送GET请求"><a href="#向服务器发送GET请求" class="headerlink" title="向服务器发送GET请求"></a><strong>向服务器发送GET请求</strong></h3><p>在index.wxml中编写发送请求按钮，挂载wxLogin方法，在index.js中实现wxLogin方法，调用wx.request方法，设置url，请求方式method以及成功后获取的值res.data。在模拟器中点击发送请求按钮，会向url地址以method方式发送请求，返回的值Result的json数据格式封装在res.data中。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228152755836.png" alt="image-20240228152755836"></p>
+<h3 id="发布小程序"><a href="#发布小程序" class="headerlink" title="发布小程序"></a>发布小程序</h3><p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228153324209.png" alt="image-20240228153324209"></p>
+<p>目前上传的版本是开发者版本，可以在微信小程序网页端查询。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228153502527.png" alt="image-20240228153502527"></p>
+<p>他是开发版本，我们在微信小程序中是搜索不到这个小程序的。</p>
+<h1 id="微信登录"><a href="#微信登录" class="headerlink" title="微信登录"></a>微信登录</h1><h2 id="导入小程序代码"><a href="#导入小程序代码" class="headerlink" title="导入小程序代码"></a>导入小程序代码</h2><p>开发小程序本质上属于前端的开发。本项目侧重后端开发。对于小程序的代码，我们已经提供好了。直接导入到微信开发者工具中使用即可。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228154535876.png" alt="image-20240228154535876"></p>
+<p><font color="red">确保AppID是自己的ID。</font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228154724267.png" alt="image-20240228154724267"></p>
+<p><strong>项目代码整体结构</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228155000326.png" alt="image-20240228155000326"></p>
+<p>可以通过vendor.js修改对应后端请求的端口号。</p>
+<h2 id="微信登录流程"><a href="#微信登录流程" class="headerlink" title="微信登录流程"></a>微信登录流程</h2><p>微信登录：<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html">https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html</a></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228155242039.png" alt="image-20240228155242039"></p>
+<ol>
+<li>在小程序端，使用wx.login()获取授权码，再使用wx.request()向本地编写的后端服务发送授权码</li>
+<li>后端服务要调用微信接口服务，需要向微信接口传输以下几个参数，appid，appsecret，code。（通过httpclient实现该功能）</li>
+<li>微信接口服务向后端服务返回相应的数据，即session_key和openId（微信用户的唯一标识）。</li>
+<li>后端服务要自定义登录状态，记录当前微信用户的一些信息，如openid存到数据库，同时还可以为微信用户产生一个token，即一个令牌，因为后续小程序还要持续不断的请求后端服务，如添加购物车，下单等，这个时候都需要知道小程序的微信用户是谁。因此，后端服务会将令牌返回给小程序。</li>
+<li>小程序存储自定义登录状态。</li>
+<li>后续发起各种业务请求，如添加购物车，浏览商品，查看订单，查询历史订单，一系列的业务请求，这个时候它就要将自定义的登录状态给他带过去，请求后端服务，也就是开发者服务器。</li>
+<li>后端服务要解析token，解析完之后就知道当前微信用户，进行相应业务操作，返回业务数据。</li>
+</ol>
+<h2 id="需求分析和设计"><a href="#需求分析和设计" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><h2 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h2><h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><h1 id="导入商品浏览功能代码"><a href="#导入商品浏览功能代码" class="headerlink" title="导入商品浏览功能代码"></a>导入商品浏览功能代码</h1><p>从技术层面来说仍然属于CRUD范围。分析需求，使用的接口。</p>
 
           
         
@@ -5026,7 +5154,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">86.8k</span>
+    <span title="Site words total count">88.3k</span>
   
 </div>
 
