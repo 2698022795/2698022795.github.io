@@ -144,7 +144,84 @@
   <entry>
     <title>苍穹外卖-day07-缓存商品、购物车</title>
     <url>/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="需求原因"><a href="#需求原因" class="headerlink" title="需求原因"></a>需求原因</h1><p>通过小程序可以展示菜品和套餐数据，这些都是存储在同一个数据库当中，如果在某个时间段内，有大量的用户来点餐，就会频繁的查询数据库，数据库的访问压力相对来说比较大，造成数据库查询性能下降，用户使用体验不是很好，直观的体验是点击某个分类之后要经过几秒钟才能显示对应数据。</p>
+<p><strong>解决办法</strong>：使用缓存来解决，需要把商品数据缓存至redis当中。这会大大提高系统的查询性能。</p>
+<p><strong>购物车相关功能，点击+号，将商品添加到购物车。</strong></p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229144150227.png" alt="image-20240229144150227"></p>
+<h1 id="缓存菜品"><a href="#缓存菜品" class="headerlink" title="缓存菜品"></a>缓存菜品</h1><h2 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h2><p>从系统的查询性能分析问题，然后通过缓存的方式提高系统的查询性能。</p>
+<ol>
+<li>是不是所有商品都要缓存？</li>
+<li>商品缓存的粒度如何？</li>
+</ol>
+<p>用户端小程序展示的菜品数据都是通过查询数据库获得，如果用户端访问量比较大，数据库访问压力随之增大。系统查询的瓶颈是数据库查询。</p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229151909242.png" alt="image-20240229151909242"></p>
+<p>结果：系统响应慢、用户体验差</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>通过Redis来缓存菜品数据，减少数据库查询操作。</p>
+<p>Redis是基于内存访问数据的，数据库是磁盘IO操作。</p>
+<p>内存操作相对于磁盘操作性能较高。</p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229221904137.png" alt="image-20240229221904137"></p>
+<p><strong>缓存逻辑分析：</strong></p>
+<ul>
+<li><p>每个分类的菜品保存一份缓存数据（key：分类ID，value：分类下具体的菜品数据，使用string字符串保存，右侧的菜品在java中用list表示，我们可以将其序列化，转成redis的字符串）</p>
+</li>
+<li><p>数据库中菜品数据有变更时清理缓存数据。（在商家端改了数据，要清理缓存，不然数据没有更新）</p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229222637493.png" alt="image-20240229222637493"></p>
+</li>
+</ul>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229223752062.png" alt="image-20240229223752062"></p>
+<h2 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>user.dishcontroller</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.user;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController(&quot;userDishController&quot;)</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user/dish&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;C端-菜品浏览接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DishController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishService dishService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据分类id查询菜品</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> categoryId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;根据分类id查询菜品&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;List&lt;DishVO&gt;&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span> &#123;</span><br><span class="line">        <span class="comment">//构造redis中的key，规则：dish_分类id</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;dish_&quot;</span> + categoryId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//查询redis中是否存在菜品数据</span></span><br><span class="line">        List&lt;DishVO&gt; list = (List&lt;DishVO&gt;) redisTemplate.opsForValue().get(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (list != <span class="literal">null</span> &amp;&amp; list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//如果存在，直接返回，无需查询数据库</span></span><br><span class="line">            <span class="keyword">return</span> Result.success(list);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">Dish</span> <span class="variable">dish</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Dish</span>();</span><br><span class="line">        dish.setCategoryId(categoryId);</span><br><span class="line">        dish.setStatus(StatusConstant.ENABLE);<span class="comment">//查询起售中的菜品</span></span><br><span class="line"></span><br><span class="line">        list = dishService.listWithFlavor(dish);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果不存在，查询数据库，将查询到的数据放到redis中</span></span><br><span class="line">        redisTemplate.opsForValue().set(key, list);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改管理端接口DishController的相关方法，加入清理缓存的逻辑，需要改造的方法：</p>
+<ul>
+<li>新增菜品</li>
+<li>修改菜品</li>
+<li>批量删除菜品</li>
+<li>起售、停售菜品</li>
+</ul>
+<p><strong>admin.dishcontroller</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.admin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/admin/dish&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;菜品相关接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DishController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishService dishService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 新增菜品</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dishDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;新增菜品接口&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">save</span><span class="params">(<span class="meta">@RequestBody</span> DishDTO dishDTO)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;新增菜品：&#123;&#125;&quot;</span>, dishDTO);</span><br><span class="line">        dishService.saveWithFlavor(dishDTO);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//清理缓存数据</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;dish_&quot;</span> + dishDTO.getCategoryId();</span><br><span class="line">        redisTemplate.delete(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/page&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;菜品分页查询接口&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;PageResult&gt; <span class="title function_">page</span><span class="params">(DishPageQueryDTO dishPageQueryDTO)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;菜品分页查询:&#123;&#125;&quot;</span>, dishPageQueryDTO);</span><br><span class="line"></span><br><span class="line">        <span class="type">PageResult</span> <span class="variable">pageResult</span> <span class="operator">=</span> dishService.pageQuery(dishPageQueryDTO);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(pageResult);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 菜品批量删除接口</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@DeleteMapping</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;菜品批量删除接口&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">delete</span><span class="params">(<span class="meta">@RequestParam</span> List&lt;Long&gt; ids)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;菜品批量删除：&#123;&#125;&quot;</span>, ids);</span><br><span class="line">        dishService.deleteBatch(ids);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将所有的菜品缓存数据清理掉，所有以dish_下划线开头的key</span></span><br><span class="line">        cleanCache(<span class="string">&quot;dish_*&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;根据id查询菜品&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;DishVO&gt; <span class="title function_">getById</span><span class="params">(<span class="meta">@PathVariable</span> Long id)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;根据id查询菜品：&#123;&#125;&quot;</span>,id);</span><br><span class="line">        <span class="type">DishVO</span> <span class="variable">dishVO</span> <span class="operator">=</span> dishService.getByIdWithFlavor(id);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(dishVO);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PutMapping</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;修改菜品接口&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">update</span><span class="params">(<span class="meta">@RequestBody</span> DishDTO dishDTO)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;修改菜品:&#123;&#125;&quot;</span>,dishDTO);</span><br><span class="line">        dishService.updateWithFlavor(dishDTO);</span><br><span class="line"></span><br><span class="line">        cleanCache(<span class="string">&quot;dish_*&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;根据分类id查询菜品&quot;)</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;List&lt;Dish&gt;&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;根据分类id查询菜品:&#123;&#125;&quot;</span>,categoryId);</span><br><span class="line">        List&lt;Dish&gt; list = dishService.list(categoryId);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(list);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">cleanCache</span><span class="params">(String pattern)</span>&#123;</span><br><span class="line">        <span class="comment">//将所有的菜品缓存数据清理掉，所有以dish_下划线开头的key</span></span><br><span class="line">        <span class="type">Set</span> <span class="variable">keys</span> <span class="operator">=</span> redisTemplate.keys(pattern);</span><br><span class="line">        redisTemplate.delete(keys);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><h1 id="缓存套餐-Spring-Cache"><a href="#缓存套餐-Spring-Cache" class="headerlink" title="缓存套餐_Spring Cache"></a>缓存套餐_Spring Cache</h1><p>新的技术（spring-cache），由spring提供的技术。</p>
+<h2 id="Spring-Cache"><a href="#Spring-Cache" class="headerlink" title="Spring Cache"></a>Spring Cache</h2><p>使用它可以进一步简化代码，提供了注解，要操作缓存数据，只要在方法上加入它提供的注解就可以。这种使用方式类似于事务管理。</p>
+<p>Spring Cache是一个框架，实现了基于注解的缓存功能，只需要简单地加一个注解，就能实现缓存功能。</p>
+<p>Spring Cache提供了一层抽象，底层可以切换不同的缓存实现，例如：</p>
+<ul>
+<li>EHCache</li>
+<li>Caffeine</li>
+<li>Redis</li>
+</ul>
+<p><strong>导入maven坐标</strong>（不同缓存对应不同坐标，用redis就导入redis坐标）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-cache<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!-- redis坐标 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>常用注解：</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@EnableCaching</td>
+<td>开启缓存注解功能，通常加在启动类上</td>
+</tr>
+<tr>
+<td>@Cacheable</td>
+<td>在方法执行前先查询缓存中是否有数据，如果有数据，则直接返回缓存数据；如果没有缓存数据，调用方法并将方法返回值放到缓存中</td>
+</tr>
+<tr>
+<td>@CachePut</td>
+<td>将方法的返回值放到缓存中</td>
+</tr>
+<tr>
+<td>@CacheEvict</td>
+<td>将一条或多条数据从缓存中删除</td>
+</tr>
+</tbody></table>
+<h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><h2 id="代码开发-1"><a href="#代码开发-1" class="headerlink" title="代码开发"></a>代码开发</h2><h2 id="功能测试-1"><a href="#功能测试-1" class="headerlink" title="功能测试"></a>功能测试</h2><h1 id="添加购物车"><a href="#添加购物车" class="headerlink" title="添加购物车"></a>添加购物车</h1><h1 id="查看购物车"><a href="#查看购物车" class="headerlink" title="查看购物车"></a>查看购物车</h1><h1 id="清空购物车"><a href="#清空购物车" class="headerlink" title="清空购物车"></a>清空购物车</h1><h1 id="从购物车中减去某个商品"><a href="#从购物车中减去某个商品" class="headerlink" title="从购物车中减去某个商品"></a>从购物车中减去某个商品</h1>]]></content>
       <categories>
         <category>苍穹外卖</category>
       </categories>
@@ -404,7 +481,8 @@
 <p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229130002753.png" alt="image-20240229130002753"></p>
 <p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229130532936.png" alt="image-20240229130532936"></p>
 <p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229130554697.png" alt="image-20240229130554697"></p>
-<h2 id="代码导入和功能测试"><a href="#代码导入和功能测试" class="headerlink" title="代码导入和功能测试"></a>代码导入和功能测试</h2>]]></content>
+<h2 id="代码导入和功能测试"><a href="#代码导入和功能测试" class="headerlink" title="代码导入和功能测试"></a>代码导入和功能测试</h2><p>(已完成)</p>
+]]></content>
       <categories>
         <category>苍穹外卖</category>
       </categories>
