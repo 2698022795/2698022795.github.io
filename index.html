@@ -536,6 +536,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/" itemprop="url" rel="index">
+                    <span itemprop="name">苍穹外卖</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -557,7 +579,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1.7k
                 </span>
               
 
@@ -573,7 +595,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  7
                 </span>
               
             </div>
@@ -596,7 +618,134 @@
       
         
           
-            
+            <h1 id="用户下单"><a href="#用户下单" class="headerlink" title="用户下单"></a>用户下单</h1><p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301164352182.png" alt="image-20240301164352182"></p>
+<h1 id="导入地址簿功能代码"><a href="#导入地址簿功能代码" class="headerlink" title="导入地址簿功能代码"></a>导入地址簿功能代码</h1><p>从技术层面来说就是单表的增删改查，这块代码不再编写，直接导入即可。</p>
+<h2 id="需求分析和设计"><a href="#需求分析和设计" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p>一个用户可以有多个地址，但是只能有一个默认地址。可以新增收货地址，编辑收货地址，删除收货地址。</p>
+<p><strong>产品原型:</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301164838336.png" alt="image-20240301164838336"></p>
+<ul>
+<li>查询地址列表</li>
+<li>新增收货地址</li>
+<li>修改收货地址（1.根据主键把原先的地址收货信息查出来，用于页面回写 2. 修改内容）</li>
+<li>删除收货地址</li>
+<li>设置默认地址</li>
+<li>查询默认地址</li>
+</ul>
+<p><strong>接口设计：</strong></p>
+<ul>
+<li>新增地址</li>
+<li>查询当前登录用户的所有地址信息</li>
+<li>查询默认地址</li>
+<li>根据id修改地址</li>
+<li>根据id删除地址</li>
+<li>根据id查询地址</li>
+<li>设置默认地址</li>
+</ul>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301165444509.png" alt="image-20240301165444509"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301212740075.png" alt="image-20240301212740075"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301212750229.png" alt="image-20240301212750229"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301212814494.png" alt="image-20240301212814494"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301212933217.png" alt="image-20240301212933217"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301213033647.png" alt="image-20240301213033647"></p>
+<p><strong>数据库设计（address_book表）</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301213223486.png" alt="image-20240301213223486"></p>
+<h2 id="代码导入"><a href="#代码导入" class="headerlink" title="代码导入"></a>代码导入</h2><p>导入课程资料中的地址簿模块功能代码</p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301214000482.png" alt="image-20240301214000482"></p>
+<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301215743474.png" alt="image-20240301215743474"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301215758660.png" alt="image-20240301215758660"></p>
+<h1 id="用户下单-1"><a href="#用户下单-1" class="headerlink" title="用户下单"></a>用户下单</h1><h2 id="需求分析和设计-1"><a href="#需求分析和设计-1" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p>用户下单业务说明：</p>
+<p>在电商系统中，用户是通过下单的方式通知商家，用户已经购买了商品，需要商家进行备货和发货。</p>
+<p>用户下单后会产生订单相关数据，订单数据需要能够体现如下信息：</p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301220047378.png" alt="image-20240301220047378"></p>
+<ul>
+<li>用户购买了哪些商品，每个商品数量是多少？（用户购物车）</li>
+<li>订单总金额是多少？（餐盒费：1元&#x2F;一个菜品，配送费：固定6元）</li>
+<li>收货地址是哪？（地址簿表）</li>
+<li>哪个用户下的单？（地址簿表）</li>
+<li>用户手机号是多少？（地址簿表）</li>
+</ul>
+<p><strong>用户点餐业务流程：</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301222617161.png" alt="image-20240301222617161"></p>
+<p>接口设计（分析）：</p>
+<ul>
+<li><p>请求方式：POST</p>
+</li>
+<li><p>请求路径：&#x2F;user&#x2F;order&#x2F;submit</p>
+</li>
+<li><p>参数：</p>
+<ul>
+<li>地址簿id</li>
+<li>配送状态（立即送出、选择送出时间）</li>
+<li>打包费</li>
+<li>总金额</li>
+<li>备注</li>
+<li>餐具数量</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301222801169.png" alt="image-20240301222801169"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301223059603.png" alt="image-20240301223059603"></p>
+<p>返回数据：</p>
+<ul>
+<li>下单时间</li>
+<li>订单总金额</li>
+<li>订单号</li>
+<li>订单id</li>
+</ul>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301223435368.png" alt="image-20240301223435368"></p>
+<p><strong>数据表设计</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301224540874.png" alt="image-20240301224540874"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301224551523.png" alt="image-20240301224551523"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301225121299.png" alt="image-20240301225121299"></p>
+<h2 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>根据用户下单接口的参数设计DTO</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301233219545.png" alt="image-20240301233219545"></p>
+<p><strong>根据用户下单接口的返回结果设计VO</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240301233254551.png" alt="image-20240301233254551"></p>
+<p><strong>user.OrderController</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.user;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.dto.OrdersSubmitDTO;</span><br><span class="line"><span class="keyword">import</span> com.sky.result.Result;</span><br><span class="line"><span class="keyword">import</span> com.sky.service.OrderService;</span><br><span class="line"><span class="keyword">import</span> com.sky.vo.OrderSubmitVO;</span><br><span class="line"><span class="keyword">import</span> io.swagger.annotations.Api;</span><br><span class="line"><span class="keyword">import</span> io.swagger.annotations.ApiOperation;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PostMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestBody;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController(&quot;userOrderController&quot;)</span> <span class="comment">//给这个类的Bean对象起别名，防止其他包内同名类声明成Bean变量</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user/order&quot;)</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;用户端订单相关接口&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> OrderService orderService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用户下单</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ordersSubmitDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/submit&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;用户下单&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;OrderSubmitVO&gt; <span class="title function_">submit</span><span class="params">(<span class="meta">@RequestBody</span> OrdersSubmitDTO ordersSubmitDTO)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;用户下单：参数为：&#123;&#125;&quot;</span>,ordersSubmitDTO);</span><br><span class="line">        <span class="type">OrderSubmitVO</span> <span class="variable">orderSubmitVO</span> <span class="operator">=</span> orderService.submitOrder(ordersSubmitDTO);</span><br><span class="line">        <span class="keyword">return</span> Result.success(orderSubmitVO);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>orderservice类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.dto.OrdersSubmitDTO;</span><br><span class="line"><span class="keyword">import</span> com.sky.vo.OrderSubmitVO;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用户下单</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ordersSubmitDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    OrderSubmitVO <span class="title function_">submitOrder</span><span class="params">(OrdersSubmitDTO ordersSubmitDTO)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>OrderServiceImpl类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> OrderMapper orderMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> OrderDetailMapper orderDetailMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AddressBookMapper addressBookMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用户下单</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ordersSubmitDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> OrderSubmitVO <span class="title function_">submitOrder</span><span class="params">(OrdersSubmitDTO ordersSubmitDTO)</span> &#123;</span><br><span class="line">        <span class="comment">//处理各种业务异常(地址簿为空、购物车数据为空）</span></span><br><span class="line">        <span class="type">AddressBook</span> <span class="variable">addressBook</span> <span class="operator">=</span> addressBookMapper.getById(ordersSubmitDTO.getAddressBookId());</span><br><span class="line">        <span class="keyword">if</span>(addressBook == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="comment">//抛出业务异常</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AddressBookBusinessException</span>(MessageConstant.ADDRESS_BOOK_IS_NULL);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//查询当前用户的购物车数据</span></span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line">        <span class="type">ShoppingCart</span> <span class="variable">shoppingCart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ShoppingCart</span>();</span><br><span class="line">        shoppingCart.setUserId(userId);</span><br><span class="line">        List&lt;ShoppingCart&gt; shoppingCartList = shoppingCartMapper.list(shoppingCart);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(shoppingCartList == <span class="literal">null</span> || shoppingCartList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ShoppingCartBusinessException</span>(MessageConstant.SHOPPING_CART_IS_NULL);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//向订单表插入1条数据</span></span><br><span class="line">        <span class="type">Orders</span> <span class="variable">orders</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Orders</span>();</span><br><span class="line">        BeanUtils.copyProperties(ordersSubmitDTO, orders);</span><br><span class="line">        orders.setOrderTime(LocalDateTime.now());</span><br><span class="line">        orders.setPayStatus(Orders.UN_PAID);</span><br><span class="line">        orders.setStatus(Orders.PENDING_PAYMENT);</span><br><span class="line">        orders.setNumber(String.valueOf(System.currentTimeMillis()));</span><br><span class="line">        orders.setPhone(addressBook.getPhone());</span><br><span class="line">        orders.setConsignee(addressBook.getConsignee());</span><br><span class="line">        orders.setUserId(userId);</span><br><span class="line">        orderMapper.insert(orders);</span><br><span class="line"></span><br><span class="line">        List&lt;OrderDetail&gt; orderDetailList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//向订单明细表插入n条数据</span></span><br><span class="line">        <span class="keyword">for</span> (ShoppingCart cart : shoppingCartList) &#123;</span><br><span class="line">            <span class="type">OrderDetail</span> <span class="variable">orderDetail</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OrderDetail</span>();</span><br><span class="line">            BeanUtils.copyProperties(cart,orderDetail);</span><br><span class="line">            orderDetail.setOrderId(orders.getId()); <span class="comment">//设置当前订单明细关联的订单ID</span></span><br><span class="line">            orderDetailList.add(orderDetail);</span><br><span class="line">        &#125;</span><br><span class="line">        orderDetailMapper.insertBatch(orderDetailList);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//清空当前用户的购物车数据</span></span><br><span class="line">        shoppingCartMapper.deleteByUserId(userId);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//封装VO返回结果</span></span><br><span class="line">        <span class="type">OrderSubmitVO</span> <span class="variable">orderSubmitVO</span> <span class="operator">=</span> OrderSubmitVO.builder()</span><br><span class="line">            .id(orders.getId())</span><br><span class="line">            .orderTime(orders.getOrderTime())</span><br><span class="line">            .orderNumber(orders.getNumber())</span><br><span class="line">            .orderAmount(orders.getAmount())</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> orderSubmitVO;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>OrderDetailMapper</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.entity.OrderDetail;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">OrderDetailMapper</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批量插入订单明细数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> orderDetailList</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">insertBatch</span><span class="params">(List&lt;OrderDetail&gt; orderDetailList)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>OrderMapper.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.sky.mapper.OrderMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span> = <span class="string">&quot;insert&quot;</span> <span class="attr">useGeneratedKeys</span>=<span class="string">&quot;true&quot;</span> <span class="attr">keyProperty</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">        insert into orders (number, status, user_id, address_book_id, order_time, checkout_time, pay_method, pay_status, amount, remark, phone, address, user_name, consignee, cancel_reason, rejection_reason, cancel_time, estimated_delivery_time, delivery_status, delivery_time, pack_amount, tableware_number, tableware_status) VALUES</span><br><span class="line">            (#&#123;number&#125;, #&#123;status&#125;, #&#123;userId&#125;, #&#123;addressBookId&#125;, #&#123;orderTime&#125;, #&#123;checkoutTime&#125;, #&#123;payMethod&#125;, #&#123;payStatus&#125;, #&#123;amount&#125;, #&#123;remark&#125;, #&#123;phone&#125;, #&#123;address&#125;, #&#123;userName&#125;, #&#123;consignee&#125;, #&#123;cancelReason&#125;, #&#123;rejectionReason&#125;, #&#123;cancelTime&#125;, #&#123;estimatedDeliveryTime&#125;, #&#123;deliveryStatus&#125;, #&#123;deliveryTime&#125;, #&#123;packAmount&#125;, #&#123;tablewareNumber&#125;, #&#123;tablewareStatus&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>OrderDetailMapper类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.entity.OrderDetail;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">OrderDetailMapper</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批量插入订单明细数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> orderDetailList</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">insertBatch</span><span class="params">(List&lt;OrderDetail&gt; orderDetailList)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>OrderDetailMapper.xml</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span><br><span class="line">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">&quot;com.sky.mapper.OrderDetailMapper&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;insert id=<span class="string">&quot;insertBatch&quot;</span>&gt;</span><br><span class="line">        insert into <span class="title function_">order_detail</span> <span class="params">(name, image, order_id, dish_id, setmeal_id, dish_flavor, amount)</span> VALUES</span><br><span class="line">        &lt;foreach collection=<span class="string">&quot;orderDetailList&quot;</span> separator=<span class="string">&quot;,&quot;</span> item=<span class="string">&quot;od&quot;</span>&gt;</span><br><span class="line">            (#&#123;od.name&#125;, #&#123;od.image&#125;, #&#123;od.orderId&#125;, #&#123;od.dishId&#125;, #&#123;od.setmealId&#125;, #&#123;od.dishFlavor&#125;, #&#123;od.amount&#125;)</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">    &lt;/insert&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="功能测试-1"><a href="#功能测试-1" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302004333856.png" alt="image-20240302004333856"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302004348098.png" alt="image-20240302004348098"></p>
+<h1 id="订单支付"><a href="#订单支付" class="headerlink" title="订单支付"></a>订单支付</h1><h2 id="微信支付介绍"><a href="#微信支付介绍" class="headerlink" title="微信支付介绍"></a>微信支付介绍</h2><p>要实现微信支付，要注册微信支付的商户号，注册商户号是有要求的，比如说必须要有一家企业，并且需要有正规的企业营业执照。只有具备这些资质，才能注册商户号，才能开通支付权限。</p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302005600308.png" alt="image-20240302005600308"></p>
+<p><strong>微信支付接入流程：</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302010033959.png" alt="image-20240302010033959"></p>
+<p><strong>微信小程序支付时序图</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302010600013.png" alt="image-20240302010600013"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302010735321.png" alt="image-20240302010735321"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302011129869.png" alt="image-20240302011129869"></p>
+<p>JSAP下单：商户系统调用该接口在微信支付服务后台生成预支付交易单</p>
+<p>适用对象：直连商户</p>
+<p>请求URL：<a target="_blank" rel="noopener" href="https://api/mch.weixin.qq.com/v3/pay/transactions/jsapi">https://api/mch.weixin.qq.com/v3/pay/transactions/jsapi</a></p>
+<p>请求方式：POST</p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302011421383.png" alt="image-20240302011421383"></p>
+<p>微信小程序调起支付：通过JSAPI下单接口获取到发起支付的必要参数prepay_id，然后使用微信支付提供的小程序方法调用小程序支付</p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302011805064.png" alt="image-20240302011805064"></p>
+<h2 id="微信支付准备工作"><a href="#微信支付准备工作" class="headerlink" title="微信支付准备工作"></a>微信支付准备工作</h2><p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302012338158.png" alt="image-20240302012338158"></p>
+<p><strong>获取临时域名：支付成功后微信服务通过该域名回调我们的程序</strong></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302012549593.png" alt="image-20240302012549593"></p>
+<p><img src="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/image-20240302014347118.png" alt="image-20240302014347118"></p>
+<h2 id="阅读订单支付功能代码"><a href="#阅读订单支付功能代码" class="headerlink" title="阅读订单支付功能代码"></a>阅读订单支付功能代码</h2><h2 id="导入功能代码"><a href="#导入功能代码" class="headerlink" title="导入功能代码"></a>导入功能代码</h2><h2 id="功能测试-2"><a href="#功能测试-2" class="headerlink" title="功能测试"></a>功能测试</h2>
           
         
       
@@ -4878,7 +5027,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">94.5k</span>
+    <span title="Site words total count">96.1k</span>
   
 </div>
 
