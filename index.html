@@ -491,6 +491,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/" itemprop="url">苍穹外卖-day08-用户下单、订单支付</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-01T16:39:40+08:00">
+                2024-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -579,7 +735,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.5k
+                  4k
                 </span>
               
 
@@ -595,7 +751,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  19
                 </span>
               
             </div>
@@ -695,7 +851,149 @@
 <td>将一条或多条数据从缓存中删除</td>
 </tr>
 </tbody></table>
-<h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><h2 id="代码开发-1"><a href="#代码开发-1" class="headerlink" title="代码开发"></a>代码开发</h2><h2 id="功能测试-1"><a href="#功能测试-1" class="headerlink" title="功能测试"></a>功能测试</h2><h1 id="添加购物车"><a href="#添加购物车" class="headerlink" title="添加购物车"></a>添加购物车</h1><h1 id="查看购物车"><a href="#查看购物车" class="headerlink" title="查看购物车"></a>查看购物车</h1><h1 id="清空购物车"><a href="#清空购物车" class="headerlink" title="清空购物车"></a>清空购物车</h1><h1 id="从购物车中减去某个商品"><a href="#从购物车中减去某个商品" class="headerlink" title="从购物车中减去某个商品"></a>从购物车中减去某个商品</h1>
+<h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><ol>
+<li><p>在启动类加上@EnableCaching注解，开启缓存注解功能。</p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301112330973.png" alt="image-20240301112330973"></p>
+</li>
+<li><p>使用@CachePut注解，将对应方法的返回值放入redis缓存中。</p>
+<p>该返回值的键，可以由#user.id或#result.id决定。</p>
+<p><strong>UserController类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span></span><br><span class="line"><span class="comment">//    @CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#user.id&quot;) //如果使用spring Cache缓存数据，key的生成：userCache::2,</span></span><br><span class="line"><span class="comment">//    @CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#result.id&quot;) //对象导航</span></span><br><span class="line"><span class="comment">//    @CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#p0.id&quot;) //拿到当前方法的第一个参数</span></span><br><span class="line"><span class="comment">//    @CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#a0.id&quot;) //拿到当前方法的第一个参数</span></span><br><span class="line"><span class="meta">@CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#root.args[0].id&quot;)</span> <span class="comment">//拿到当前方法的第一个参数</span></span><br><span class="line"><span class="keyword">public</span> User <span class="title function_">save</span><span class="params">(<span class="meta">@RequestBody</span> User user)</span>&#123;</span><br><span class="line">    <span class="comment">//插入数据时要将数据放到缓存中</span></span><br><span class="line">    userMapper.insert(user);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用@Cacheable注解，如果查到数据，会把它直接放到缓存中。</p>
+<p>（Spring Cache底层是基于代理技术，即加入注解之后，Spring Cache会为当前的controller创建代理对象，我们在请求方法前是先进入代理对象，而在代理对象中查询redis）</p>
+<p><strong>UserController类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Cacheable(cacheNames = &quot;userCache&quot;,key=&quot;#id&quot;)</span>  <span class="comment">//key的生成 userCache::id</span></span><br><span class="line"><span class="meta">@GetMapping</span></span><br><span class="line"><span class="keyword">public</span> User <span class="title function_">getById</span><span class="params">(Long id)</span>&#123;</span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userMapper.getById(id);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用@CacheEvict注解，方法结束完之后会删除缓存中的单条数据或全部数据</p>
+<p><strong>UserController类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;userCache&quot;,key=&quot;#id&quot;)</span></span><br><span class="line"><span class="meta">@DeleteMapping</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteById</span><span class="params">(Long id)</span>&#123;</span><br><span class="line">    userMapper.deleteById(id);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;userCache&quot;,allEntries = true)</span> <span class="comment">//删除redis缓存中userCache下的所有键值对</span></span><br><span class="line"><span class="meta">@DeleteMapping(&quot;/delAll&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteAll</span><span class="params">()</span>&#123;</span><br><span class="line">    userMapper.deleteAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="代码开发-1"><a href="#代码开发-1" class="headerlink" title="代码开发"></a>代码开发</h2><h3 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h3><p>具体实现思路如下：</p>
+<ul>
+<li>导入Spring Cache和Redis相关的maven坐标</li>
+<li>在启动类上加入@EnableCaching注解，开启缓存注解功能</li>
+<li>在用户端接口SetmealController的list方法上加入@Cacheable注解</li>
+<li>在管理端接口SetmealController的save、delete、update、startOrStop等方法上加入CacheEvit注解</li>
+</ul>
+<p><strong>检查pom文件</strong></p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301132623493.png" alt="image-20240301132623493"></p>
+<p><strong>开启缓存功能</strong></p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301132649067.png" alt="image-20240301132649067"></p>
+<p><strong>修改user&#x2F;setmealcontroller类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 条件查询</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> categoryId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;根据分类id查询套餐&quot;)</span></span><br><span class="line"><span class="meta">@Cacheable(cacheNames = &quot;setmealCache&quot;, key = &quot;#categoryId&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;List&lt;Setmeal&gt;&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span> &#123;</span><br><span class="line">    <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Setmeal</span>();</span><br><span class="line">    setmeal.setCategoryId(categoryId);</span><br><span class="line">    setmeal.setStatus(StatusConstant.ENABLE);</span><br><span class="line"></span><br><span class="line">    List&lt;Setmeal&gt; list = setmealService.list(setmeal);</span><br><span class="line">    <span class="keyword">return</span> Result.success(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301132834586.png" alt="image-20240301132834586"></p>
+<p><strong>修改admin&#x2F;setmealcontroller类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span></span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;setmealCache&quot;, key = &quot;#setmealDTO.categoryId&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;新增套餐接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">add</span><span class="params">(<span class="meta">@RequestBody</span> SetmealDTO setmealDTO)</span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;新增套餐接口:&#123;&#125;&quot;</span>,setmealDTO);</span><br><span class="line">    setmealService.saveWithDish(setmealDTO);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@DeleteMapping</span></span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;setmealCache&quot;,allEntries = true)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;批量删除套餐&quot;)</span></span><br><span class="line"><span class="keyword">public</span>  Result <span class="title function_">delete</span><span class="params">(<span class="meta">@RequestParam</span> List&lt;Long&gt; ids)</span>&#123;</span><br><span class="line">    setmealService.deleteBatch(ids);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@PutMapping</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;修改套餐&quot;)</span></span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;setmealCache&quot;,allEntries = true)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">update</span><span class="params">(<span class="meta">@RequestBody</span> SetmealDTO setmealDTO)</span> &#123;</span><br><span class="line">    setmealService.update(setmealDTO);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@PostMapping(&quot;/status/&#123;status&#125;&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;套餐起售停售&quot;)</span></span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;setmealCache&quot;,allEntries = true)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">startOrStop</span><span class="params">(<span class="meta">@PathVariable</span> Integer status, Long id)</span> &#123;</span><br><span class="line">    setmealService.startOrStop(status, id);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">给user&#x2F;admin端的dishcontroller类中也修改对应的注释。</font></p>
+<h2 id="功能测试-1"><a href="#功能测试-1" class="headerlink" title="功能测试"></a>功能测试</h2><p>管理端前端登录，修改菜品价格，会发现redis中对应的缓存数据被删除。</p>
+<p>客户端根据分类查询菜品，会发现redis中保存了菜品的对应数据。</p>
+<h1 id="添加购物车"><a href="#添加购物车" class="headerlink" title="添加购物车"></a>添加购物车</h1><h2 id="需求分析和设计"><a href="#需求分析和设计" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><strong>产品原型：</strong></p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301135115767.png" alt="image-20240301135115767"></p>
+<p><strong>接口设计</strong></p>
+<ul>
+<li>请求方式：POST</li>
+<li>请求路径：&#x2F;user&#x2F;shoppingCart&#x2F;add</li>
+<li>请求参数：套餐id、菜品id、口味</li>
+<li>返回结果：code、data、msg</li>
+</ul>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301135634271.png" alt="image-20240301135634271"></p>
+<p><strong>数据库设计</strong></p>
+<ul>
+<li>作用：暂时存放所选商品的地方</li>
+<li>选的什么商品</li>
+<li>每个商品都买了几个</li>
+<li>不同用户的购物车需要区分开</li>
+</ul>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301140329045.png" alt="image-20240301140329045"></p>
+<p>加点冗余字段，不用联表查询，单表查询，提高查询速度。</p>
+<h2 id="代码开发-2"><a href="#代码开发-2" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>shoppingCartController类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.user;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user/shoppingCart&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;C端-购物车相关接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartService shoppingCartService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCartDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/add&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;添加购物车&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">add</span><span class="params">(<span class="meta">@RequestBody</span> ShoppingCartDTO shoppingCartDTO)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;添加购物车，商品信息为：&#123;&#125;&quot;</span>,shoppingCartDTO);</span><br><span class="line"></span><br><span class="line">        shoppingCartService.addShoppingCart(shoppingCartDTO);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartService接口</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.dto.ShoppingCartDTO;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCartDTO</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addShoppingCart</span><span class="params">(ShoppingCartDTO shoppingCartDTO)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartServiceImpl类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加购物车</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCartDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addShoppingCart</span><span class="params">(ShoppingCartDTO shoppingCartDTO)</span> &#123;</span><br><span class="line">        <span class="comment">//判断当前加入到购物车中的商品是否已经存在了</span></span><br><span class="line">        <span class="type">ShoppingCart</span> <span class="variable">shoppingCart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ShoppingCart</span>();</span><br><span class="line">        BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);</span><br><span class="line">        <span class="type">Long</span> <span class="variable">currentId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line">        shoppingCart.setUserId(currentId);</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; list = shoppingCartMapper.list(shoppingCart);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果已经存在了，只需要将数量加一</span></span><br><span class="line">        <span class="comment">//要么查不到，要么对于同一用户的的同一商品的同一口味，只有可能获得一条数据</span></span><br><span class="line">        <span class="keyword">if</span> (list != <span class="literal">null</span> &amp;&amp; list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">ShoppingCart</span> <span class="variable">cart</span> <span class="operator">=</span> list.get(<span class="number">0</span>);  <span class="comment">//查到数据</span></span><br><span class="line">            cart.setNumber(cart.getNumber() + <span class="number">1</span>); <span class="comment">//update shopping_car set number = ? and id = ?</span></span><br><span class="line">            shoppingCartMapper.updateNumberById(cart);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//如果不存在，需要插入一条购物车数据</span></span><br><span class="line">            <span class="comment">//判断本次添加到购物车的是菜品还是套餐</span></span><br><span class="line">            <span class="type">Long</span> <span class="variable">dishId</span> <span class="operator">=</span> shoppingCartDTO.getDishId();</span><br><span class="line">            <span class="type">Long</span> <span class="variable">setmealId</span> <span class="operator">=</span> shoppingCartDTO.getSetmealId();</span><br><span class="line">            <span class="keyword">if</span> (dishId != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">//本次添加到购物车的是菜品</span></span><br><span class="line">                <span class="type">Dish</span> <span class="variable">dish</span> <span class="operator">=</span> dishMapper.getById(dishId);</span><br><span class="line">                shoppingCart.setName(dish.getName());</span><br><span class="line">                shoppingCart.setImage(dish.getImage());</span><br><span class="line">                shoppingCart.setAmount(dish.getPrice());</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//本次添加到购物车的是套餐</span></span><br><span class="line">                <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> setmealMapper.getById(setmealId);</span><br><span class="line">                shoppingCart.setName(setmeal.getName());</span><br><span class="line">                shoppingCart.setImage(setmeal.getImage());</span><br><span class="line">                shoppingCart.setAmount(setmeal.getPrice());</span><br><span class="line">            &#125;</span><br><span class="line">            shoppingCart.setNumber(<span class="number">1</span>);</span><br><span class="line">            shoppingCart.setCreateTime(LocalDateTime.now());</span><br><span class="line"></span><br><span class="line">            shoppingCartMapper.insert(shoppingCart);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartMapper类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.entity.ShoppingCart;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Insert;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Update;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartMapper</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 动态条件查询</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCart</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    List&lt;ShoppingCart&gt; <span class="title function_">list</span><span class="params">(ShoppingCart shoppingCart)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Update(&quot;update shopping_cart set number = #&#123;number&#125; where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">updateNumberById</span><span class="params">(ShoppingCart shoppingCart)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入购物车数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCart</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Insert(&quot;insert into shopping_cart (name, image, user_id, dish_id, setmeal_id, dish_flavor, amount, create_time) &quot; +</span></span><br><span class="line"><span class="meta">        &quot;values (#&#123;name&#125;,#&#123;userId&#125;,#&#123;dishId&#125;,#&#123;setmealId&#125;,#&#123;dishFlavor&#125;,#&#123;amount&#125;,#&#123;createTime&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(ShoppingCart shoppingCart)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartMapper.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.sky.mapper.ShoppingCartMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;list&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span>&gt;</span></span><br><span class="line">        select * from shopping_cart</span><br><span class="line">        <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userId != null&quot;</span>&gt;</span>user_id = #&#123;userId&#125;,<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;setmealId != null&quot;</span>&gt;</span>setmeal_id = #&#123;setmealId&#125;,<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishId != null&quot;</span>&gt;</span>dish_id = #&#123;dishId&#125;,<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishFlavor != null&quot;</span>&gt;</span>dish_flavor = #&#123;dishFlavor&#125;,<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="功能测试-2"><a href="#功能测试-2" class="headerlink" title="功能测试"></a>功能测试</h2><p>正常测试即可。</p>
+<h1 id="查看购物车"><a href="#查看购物车" class="headerlink" title="查看购物车"></a>查看购物车</h1><h2 id="需求分析和设计-1"><a href="#需求分析和设计-1" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301151804526.png" alt="image-20240301151804526"></p>
+<p><strong>接口设计</strong></p>
+<ul>
+<li>请求方式：GET方式</li>
+<li>请求路径：&#x2F;user&#x2F;shoppingCart&#x2F;list</li>
+<li>请求参数：无</li>
+</ul>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301153218027.png" alt="image-20240301153218027"></p>
+<h2 id="代码开发-3"><a href="#代码开发-3" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>ShoppingCartController类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查看购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;查看购物车&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;List&lt;ShoppingCart&gt;&gt; <span class="title function_">list</span><span class="params">()</span>&#123;</span><br><span class="line">    List&lt;ShoppingCart&gt; list = shoppingCartService.showShoppingCart();</span><br><span class="line">    <span class="keyword">return</span> Result.success(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartService类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查看购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">List&lt;ShoppingCart&gt; <span class="title function_">showShoppingCart</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartServiceImpl类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查看购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;ShoppingCart&gt; <span class="title function_">showShoppingCart</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line"></span><br><span class="line">        <span class="type">ShoppingCart</span> <span class="variable">shoppingCart</span> <span class="operator">=</span> ShoppingCart.builder()</span><br><span class="line">            .userId(userId)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; list = shoppingCartMapper.list(shoppingCart);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartMapper.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.sky.mapper.ShoppingCartMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;list&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span>&gt;</span></span><br><span class="line">        select * from shopping_cart</span><br><span class="line">        <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userId != null&quot;</span>&gt;</span>user_id = #&#123;userId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;setmealId != null&quot;</span>&gt;</span>and setmeal_id = #&#123;setmealId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishId != null&quot;</span>&gt;</span>and dish_id = #&#123;dishId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishFlavor != null&quot;</span>&gt;</span>and dish_flavor = #&#123;dishFlavor&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="功能测试-3"><a href="#功能测试-3" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301154323794.png" alt="image-20240301154323794"></p>
+<h1 id="清空购物车"><a href="#清空购物车" class="headerlink" title="清空购物车"></a>清空购物车</h1><h2 id="需求分析与设计"><a href="#需求分析与设计" class="headerlink" title="需求分析与设计"></a>需求分析与设计</h2><p><strong>产品原型：</strong></p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301154620724.png" alt="image-20240301154620724"></p>
+<p><strong>接口设计</strong></p>
+<ul>
+<li><p>请求方式：DELETE</p>
+</li>
+<li><p>请求路径：&#x2F;user&#x2F;shoppingCart&#x2F;clean</p>
+</li>
+<li><p>请求参数：无</p>
+</li>
+<li><p>返回结果：Result.sucess()</p>
+</li>
+</ul>
+<p>把当前用户所有购物车数据删除即可。</p>
+<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301154809669.png" alt="image-20240301154809669"></p>
+<h2 id="代码开发-4"><a href="#代码开发-4" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>ShoppingCartController类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.user;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user/shoppingCart&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;C端-购物车相关接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartService shoppingCartService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 清空购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@DeleteMapping(&quot;/clean&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;清空购物车&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">clean</span><span class="params">()</span>&#123;</span><br><span class="line">        shoppingCartService.cleanShoppingCart();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartService类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.dto.ShoppingCartDTO;</span><br><span class="line"><span class="keyword">import</span> com.sky.entity.ShoppingCart;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 清空购物车</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">cleanShoppingCart</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartServiceImpl类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 清空购物车</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">cleanShoppingCart</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line"></span><br><span class="line">        shoppingCartMapper.deleteByUserId(userId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartMapper类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartMapper</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据UserId删除数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Delete(&quot;delete from shopping_cart where user_id = #&#123;userId&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">deleteByUserId</span><span class="params">(Long userId)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="功能测试-4"><a href="#功能测试-4" class="headerlink" title="功能测试"></a>功能测试</h2><p>已测试</p>
+<h1 id="从购物车中减去某个商品"><a href="#从购物车中减去某个商品" class="headerlink" title="从购物车中减去某个商品"></a>从购物车中减去某个商品</h1><p><strong>ShoppingCartController</strong>类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从购物车中减去某个商品</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/sub&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;从购物车中减去某个商品&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">sub</span><span class="params">(<span class="meta">@RequestBody</span> ShoppingCartDTO shoppingCartDTO)</span>&#123;</span><br><span class="line">    shoppingCartService.subShoppingCart(shoppingCartDTO);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartService类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartService</span>  &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">subShoppingCart</span><span class="params">(ShoppingCartDTO shoppingCartDTO)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartServiceImpl类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">subShoppingCart</span><span class="params">(ShoppingCartDTO shoppingCartDTO)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line">        <span class="type">ShoppingCart</span> <span class="variable">shoppingCart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ShoppingCart</span>();</span><br><span class="line">        BeanUtils.copyProperties(shoppingCartDTO,shoppingCart);</span><br><span class="line">        shoppingCart.setUserId(userId);</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; list = shoppingCartMapper.list(shoppingCart);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果已经存在了，只需要将数量加一</span></span><br><span class="line">        <span class="comment">//要么查不到，要么对于同一用户的的同一商品的同一口味，只有可能获得一条数据</span></span><br><span class="line">        <span class="keyword">if</span> (list != <span class="literal">null</span> &amp;&amp; list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">ShoppingCart</span> <span class="variable">cart</span> <span class="operator">=</span> list.get(<span class="number">0</span>);  <span class="comment">//查到数据</span></span><br><span class="line">            <span class="keyword">if</span> (cart.getNumber() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                cart.setNumber(cart.getNumber() - <span class="number">1</span>); <span class="comment">//update shopping_car set number = ? and id = ?</span></span><br><span class="line">                shoppingCartMapper.updateNumberById(cart);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                shoppingCartMapper.delByUserInfo(cart);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartMapper类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartMapper</span> &#123;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">delByUserInfo</span><span class="params">(ShoppingCart cart)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ShoppingCartMapper.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.sky.mapper.ShoppingCartMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">&quot;delByUserInfo&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span>&gt;</span></span><br><span class="line">        delete from shopping_cart</span><br><span class="line">        <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userId != null&quot;</span>&gt;</span>user_id = #&#123;userId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;setmealId != null&quot;</span>&gt;</span>and setmeal_id = #&#123;setmealId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishId != null&quot;</span>&gt;</span>and dish_id = #&#123;dishId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishFlavor != null&quot;</span>&gt;</span>and dish_flavor = #&#123;dishFlavor&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
           
         
       
@@ -4394,415 +4692,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/" itemprop="url">javaweb-day09-maven高级</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-16T16:26:39+08:00">
-                2024-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaweb/" itemprop="url" rel="index">
-                    <span itemprop="name">javaweb</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  9
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="分模块设计与开发"><a href="#分模块设计与开发" class="headerlink" title="分模块设计与开发"></a>分模块设计与开发</h1><ul>
-<li><p>为什么？</p>
-<ul>
-<li>（一个电商项目可能包含多个业务功能，商品、搜索、购物车、订单等等模块，所有的代码都在一个java项目中，这个项目的管理和维护会很困难）</li>
-<li>（在项目中定义了通用的工具类和组件，公司其他项目组也想使用这些工具类和组件，这种情况也不太方便，代码难以复用）</li>
-</ul>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216183352534.png" alt="image-20240216183352534"></p>
-</li>
-<li><p>分模块设计：将项目按照功能拆分为若干个子模块，方便项目的管理维护、拓展，也方便模块间的相互调用，资源共享。（商品、搜索、购物车、订单、实体类|通用组件模块等）</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216183456409.png" alt="image-20240216183456409"></p>
-</li>
-<li><p>实践</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216213219458.png" alt="image-20240216213219458"></p>
-</li>
-<li><p>步骤</p>
-<ul>
-<li><p>创建maven模块 tlias-pojo，存放实体类。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216214402332.png" alt="image-20240216214402332"></p>
-<p>给tlias-pojo的pom.xml文件加上对应的依赖，确保其中的pojo类方法能正常运行。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216214515180.png" alt="image-20240216214515180"></p>
-</li>
-<li><p>创建maven模块tlias-utils，存放相关工具类。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216214900547.png" alt="image-20240216214900547"></p>
-</li>
-<li><p>在主程序中引入这两个模块</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216215548913.png" alt="image-20240216215548913"></p>
-<p><font color="red">注意事项：分模块开发需要先针对模块功能进行设计，再进行编码。不会先将工程开发完毕，然后进行拆分。</font></p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="继承与聚合"><a href="#继承与聚合" class="headerlink" title="继承与聚合"></a>继承与聚合</h1><h2 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h2><p><strong>问题</strong></p>
-<p>不同模块的配置引入了多个相同依赖。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216220009702.png" alt="image-20240216220009702"></p>
-<p><strong>继承</strong></p>
-<ul>
-<li>概念：继承描述的是两个工程间的关系，与Java中的继承相似，子工程可以继承父工程中的配置信息，常见于依赖关系的继承。（将各个子工程中的公共依赖放到父工程依赖中）。</li>
-<li>作用：简化依赖配置，统一管理依赖。</li>
-<li>实现：&lt;parent&gt; … &lt;&#x2F;parent&gt;</li>
-</ul>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216220347887.png" alt="image-20240216220347887"></p>
-<p><strong>步骤</strong></p>
-<ol>
-<li><p>创建maven模块tlias-parent，该工程为父工程，设置打包方式pom（默认jar）。</p>
-<ul>
-<li>jar：普通模块打包，springboot项目基本都是jar包（内嵌tomcat运行）</li>
-<li>war：普通web程序打包，需要部署在外部的tomcat服务器中运行</li>
-<li>pom：父工程或聚合工程，该模块不写代码，仅进行依赖管理</li>
-</ul>
-<p>注意：在maven当中，一个工程只能继承一个父工程。我们原始的tlias-web-management已经有父工程spring-boot-starter-parent。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221111872.png" alt="image-20240216221111872"></p>
-<p>解决办法：让tlias-parent继承spring-boot-starter-parent，再让tlias-web-management继承tlias-parent。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221158176.png" alt="image-20240216221158176"></p>
-<p>设置tlias-parent的pom.xml内容，设置了parent父工程，packaging打包方式。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221232706.png" alt="image-20240216221232706"></p>
-</li>
-<li><p>在子工程的pom.xml文件中，配置继承关系。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216223213319.png" alt="image-20240216223213319"></p>
-<ul>
-<li>在子工程中，配置了继承关系之后，坐标中的groupId是可以省略的，因为会自动继承父工程的。</li>
-<li>relativePath指定父工程的pom文件的相对位置（如果不指定，将从本地仓库&#x2F;远程仓库中查找该工程）。</li>
-</ul>
-</li>
-<li><p>在父工程中配置各个工程共有的依赖（子工程会自动继承父工程的依赖）。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216223346649.png" alt="image-20240216223346649"></p>
-<ul>
-<li><font color="red">若父子工程都配置了同一个依赖的不同版本，以子工程的为准。</font></li>
-</ul>
-</li>
-</ol>
-<p><strong>实操</strong></p>
-<ol>
-<li>创建tlias-parent模块作为父工程。</li>
-</ol>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221627518.png" alt="image-20240216221627518"></p>
-<ol start="2">
-<li><p>设置tlias-parent模块的打包方式和父工程，删除无用的src目录（仅做依赖管理）</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221919180.png" alt="image-20240216221919180"></p>
-</li>
-<li><p>设置子工程的pom.xml</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216222504798.png" alt="image-20240216222504798"></p>
-</li>
-<li><p>在父工程中配置子工程中相同的配置</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216222918026.png" alt="image-20240216222918026"></p>
-</li>
-</ol>
-<p><strong>真实的项目模块结构</strong>（有图所示）</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216223542356.png" alt="image-20240216223542356"></p>
-<h2 id="版本锁定"><a href="#版本锁定" class="headerlink" title="版本锁定"></a>版本锁定</h2><p>分模块之后，子工程可以继承父工程的依赖。</p>
-<p>问题：存在多个（非全部）子工程使用同一个依赖。这个依赖无法直接添加到父工程中。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216223913990.png" alt="image-20240216223913990"></p>
-<p>解决办法：</p>
-<p>在maven中，可以在父工程的pom文件中通过&lt;dependencyManagement&gt;来统一管理依赖版本。（仅仅代表我们要统一管理这个依赖的版本，但是不将其添加至父工程的依赖中，实际上配置时还是在子工程中配置依赖，但是不用再在子工程中指定依赖版本）</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216224152871.png" alt="image-20240216224152871"></p>
-<p>注意事项：</p>
-<ul>
-<li>子工程引入依赖时，无需指定&lt;version&gt;版本号，父工程统一管理。变更依赖版本，只需在父工程中统一变更。</li>
-</ul>
-<p><strong>自定义属性&#x2F;引用属性</strong></p>
-<p>在yml文件的properties属性中设置依赖版本</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216225128520.png" alt="image-20240216225128520"></p>
-<ol>
-<li>&lt;dependencyManagement&gt;与&lt;dependencies&gt;的区别是什么？</li>
-</ol>
-<ul>
-<li>&lt;dependencies&gt;是直接依赖，在父工程配置了依赖，子工程会直接继承下来。</li>
-<li>&lt;dependencyManagement&gt;是统一管理依赖版本，不会直接依赖，还需要在子工程中引入所需依赖（无需指定版本）</li>
-</ul>
-<h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><p>问题：要将tlias-web-management打包，得先将tlias-parent，tlias-pojo，tlias-utils执行install，然后才能打包tlias-web-management。</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216231527264.png" alt="image-20240216231527264"></p>
-<p>maven的聚合操作就是来解决这个问题：一键编译、打包、安装。</p>
-<ul>
-<li><p>聚合</p>
-<p>将多个模块组织成一个整体，同时进行项目的构建。</p>
-</li>
-<li><p>聚合工程</p>
-<p>一个不具有业务功能的“空”工程（有且仅有一个pom文件）（目前项目中就有，是tlias-parent，因此tlias-parent既是父工程，也是聚合工程）</p>
-</li>
-<li><p>作用</p>
-<p>快速构建项目（无需根据依赖关系手动构建，直接在聚合工程上构建即可）</p>
-</li>
-</ul>
-<p>maven可以通过在pom.xml中设置&lt;modules&gt;，从而设置当前聚合工程所包含的子模块名称</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216231953596.png" alt="image-20240216231953596"></p>
-<p>注意事项：</p>
-<ul>
-<li>聚合工程中所包含的模块，在构建时，会根据模块间的依赖关系设置构建顺序，与聚合工程中模块的配置书写位置无关。</li>
-</ul>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216232244285.png" alt="image-20240216232244285"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>作用<ul>
-<li>聚合用于快速构建项目</li>
-<li>继承用于简化依赖配置、统一管理依赖</li>
-</ul>
-</li>
-<li>相同点<ul>
-<li>聚合与继承的pom.xml文件打包方式均为pom，可以将两种关系制作到同一个pom文件中</li>
-<li>聚合与继承均属于设计型模块， 并无实际的模块内容</li>
-</ul>
-</li>
-<li>不同点<ul>
-<li>聚合是在聚合工程中配置关系，聚合可以感知到参与聚合的模块有哪些</li>
-<li>继承是在子模块中配置关系，父模块无法感知哪些子模块继承了自己</li>
-</ul>
-</li>
-</ul>
-<h1 id="私服"><a href="#私服" class="headerlink" title="私服"></a>私服</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217011547756.png" alt="image-20240217011547756"></p>
-<p>问题：怎么将A中的jar包导入至B的项目中？</p>
-<p>解决办法：搭建私服。私服从中央仓库下载第三方依赖，确保A和B能使用对方的依赖和中央仓库的依赖。</p>
-<ul>
-<li><p>私服是一种特殊的远程仓库，它是架设在局域网内的仓库服务，用来代理位于外部的中央仓库，用于解决团队内部的资源共享与资源同步问题。</p>
-</li>
-<li><p>依赖查找顺序：</p>
-<ul>
-<li>本地仓库</li>
-<li>私服</li>
-<li>中央仓库</li>
-</ul>
-</li>
-<li><p>注意事项：私服在企业项目开发中，一个项目&#x2F;公司，只需要一台即可（<font color="red">无需我们搭建，会使用即可</font>）</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217011926163.png" alt="image-20240217011926163"></p>
-</li>
-</ul>
-<h2 id="资源上传与下载"><a href="#资源上传与下载" class="headerlink" title="资源上传与下载"></a>资源上传与下载</h2><p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217012323930.png" alt="image-20240217012323930"></p>
-<p><strong>私服的仓库</strong></p>
-<ul>
-<li>RELEASE(发行版本)：功能趋于稳定，当前更新停止，可以用于发行的版本，存储在私服的RELEASE仓库中。</li>
-<li>SNAPSHOT（快照版本）：功能不稳定、尚处于开发中的版本，即快照版本，存储在私服的SNAPSHOT仓库中。</li>
-</ul>
-<ol>
-<li><p>配置访问私服的用户名&#x2F;密码（settings.xml中的servers中配置）</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013612624.png" alt="image-20240217013612624"></p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013535822.png" alt="image-20240217013535822"></p>
-</li>
-<li><p>IDEA的maven工程的pom文件中配置上传（发布）地址</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013625786.png" alt="image-20240217013625786"></p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013643914.png" alt="image-20240217013643914"></p>
-</li>
-<li><p>设置私服依赖下载的仓库组地址（仓库组挂载了所有仓库，settings.xml中的mirrors、profiles中配置）</p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013820947.png" alt="image-20240217013820947"></p>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013850809.png" alt="image-20240217013850809"></p>
-</li>
-</ol>
-<h2 id="私服配置说明"><a href="#私服配置说明" class="headerlink" title="私服配置说明"></a>私服配置说明</h2><p>访问私服：<a target="_blank" rel="noopener" href="http://192.168.150.101:8081/">http://192.168.150.101:8081</a></p>
-<p>访问密码：admin&#x2F;admin</p>
-<p>使用私服，需要在maven的settings.xml配置文件中，做如下配置：</p>
-<ol>
-<li><p>需要在 <strong>servers</strong> 标签中，配置访问私服的个人凭证(访问的用户名和密码)</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>在 <strong>mirrors</strong> 中只配置我们自己私服的连接地址(如果之前配置过阿里云，需要直接替换掉)</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-public<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.150.101:8081/repository/maven-public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>需要在 <strong>profiles</strong> 中，增加如下配置，来指定snapshot快照版本的依赖，依然允许使用</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>allow-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-public<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.150.101:8081/repository/maven-public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>如果需要上传自己的项目到私服上，需要在项目的pom.xml文件中，增加如下配置，来配置项目发布的地址(也就是私服的地址)</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">distributionManagement</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- release版本的发布地址 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.150.101:8081/repository/maven-releases/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- snapshot版本的发布地址 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.150.101:8081/repository/maven-snapshots/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">distributionManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>发布项目，直接运行 deploy 生命周期即可 (发布时，建议跳过单元测试)</p>
-</li>
-</ol>
-<p>​		</p>
-<h2 id="启动本地私服"><a href="#启动本地私服" class="headerlink" title="启动本地私服"></a>启动本地私服</h2><ol>
-<li><p>解压： apache-maven-nexus.zip</p>
-</li>
-<li><p>进入目录： apache-maven-nexus\nexus-3.39.0-01\bin</p>
-</li>
-<li><p>启动服务：双击 start.bat </p>
-</li>
-<li><p>访问服务：localhost:8081</p>
-</li>
-<li><p>私服配置说明：将上述配置私服信息的 192.168.150.101 改为 localhost</p>
-</li>
-</ol>
-<h1 id="Web开发完结"><a href="#Web开发完结" class="headerlink" title="Web开发完结"></a>Web开发完结</h1><p>接下来的学习路线</p>
-<ol>
-<li>MyBatis-Plus</li>
-<li>瑞吉外卖项目</li>
-<li>微服务技术栈</li>
-<li>学成在线项目</li>
-</ol>
-<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217015500978.png" alt="image-20240217015500978"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4857,7 +4746,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -4926,6 +4815,10 @@
 				  
 				  
 					<li class="recent_posts_li">
+					  <a href="/2024/03/01/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day08-%E7%94%A8%E6%88%B7%E4%B8%8B%E5%8D%95%E3%80%81%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98/" title="苍穹外卖-day08-用户下单、订单支付" target="_blank">苍穹外卖-day08-用户下单、订单支付</a>
+					</li>
+				  
+					<li class="recent_posts_li">
 					  <a href="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/" title="苍穹外卖-day07-缓存商品、购物车" target="_blank">苍穹外卖-day07-缓存商品、购物车</a>
 					</li>
 				  
@@ -4939,10 +4832,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day04-%E5%A5%97%E9%A4%90%E7%AE%A1%E7%90%86/" title="苍穹外卖-day04-套餐管理" target="_blank">苍穹外卖-day04-套餐管理</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/02/21/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day03-%E8%8F%9C%E5%93%81%E7%AE%A1%E7%90%86/" title="苍穹外卖-day03-菜品管理" target="_blank">苍穹外卖-day03-菜品管理</a>
 					</li>
 				  
 				</ul>
@@ -4989,7 +4878,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">92k</span>
+    <span title="Site words total count">94.5k</span>
   
 </div>
 
