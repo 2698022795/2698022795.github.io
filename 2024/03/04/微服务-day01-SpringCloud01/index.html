@@ -80,16 +80,28 @@
 
 
 
-<meta name="description" content="和光同尘">
-<meta property="og:type" content="website">
-<meta property="og:title" content="章北海">
-<meta property="og:url" content="http://2698022795.github.io/archives/2023/11/index.html">
+<meta name="description" content="认识微服务单体架构 单体架构：将业务的所有功能集中在一个项目中开发，打包成一个包部署。 优点：  架构简单  部署成本低     缺点：  耦合度高  分布式架构 分布式架构：根据业务功能对系统进行拆分，每个业务模块作为独立项目开发，称为一个服务。 优点：  降低服务耦合 有利于服务升级拓展   服务治理  单体服务时，各个模块之间是可以直接调用代码的，但是分布式架构之后，不同模块之间的代码是不能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务-day01-SpringCloud01">
+<meta property="og:url" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/index.html">
 <meta property="og:site_name" content="章北海">
-<meta property="og:description" content="和光同尘">
+<meta property="og:description" content="认识微服务单体架构 单体架构：将业务的所有功能集中在一个项目中开发，打包成一个包部署。 优点：  架构简单  部署成本低     缺点：  耦合度高  分布式架构 分布式架构：根据业务功能对系统进行拆分，每个业务模块作为独立项目开发，称为一个服务。 优点：  降低服务耦合 有利于服务升级拓展   服务治理  单体服务时，各个模块之间是可以直接调用代码的，但是分布式架构之后，不同模块之间的代码是不能">
 <meta property="og:locale">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222010702.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222021542.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222326798.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222345181.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304223012163.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304223338889.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304224025830.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304224755309.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304224900377.png">
+<meta property="article:published_time" content="2024-03-04T14:14:29.000Z">
+<meta property="article:modified_time" content="2024-03-04T14:50:47.435Z">
 <meta property="article:author" content="waterdance">
 <meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222010702.png">
 
 
 
@@ -119,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://2698022795.github.io/archives/2023/11/"/>
+  <link rel="canonical" href="http://2698022795.github.io/2024/03/04/微服务-day01-SpringCloud01/"/>
 
 
 
 
 
-  <title>归档 | 章北海</title>
+  <title>微服务-day01-SpringCloud01 | 章北海</title>
   
 
 
@@ -144,7 +156,7 @@
     
   
 
-  <div class="container sidebar-position-right page-archive">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -282,74 +294,328 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 28 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2023">2023</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2023/11/17/junit-reflex-proxy/" itemprop="url">
-              
-                <span itemprop="name">junit-reflex-proxy</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">微服务-day01-SpringCloud01</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-11-17T13:52:50+08:00"
-              content="2023-11-17" >
-          11-17
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-04T22:14:29+08:00">
+                2024-03-04
+              </time>
+            
 
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  747
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <h1 id="认识微服务"><a href="#认识微服务" class="headerlink" title="认识微服务"></a>认识微服务</h1><p><strong>单体架构</strong></p>
+<p><strong>单体架构</strong>：将业务的所有功能集中在一个项目中开发，打包成一个包部署。</p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li><p>架构简单</p>
+</li>
+<li><p>部署成本低</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222010702.png" alt="image-20240304222010702"></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222021542.png" alt="image-20240304222021542"></p>
+</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>耦合度高</li>
+</ul>
+<p><strong>分布式架构</strong></p>
+<p><strong>分布式架构</strong>：根据业务功能对系统进行拆分，每个业务模块作为独立项目开发，称为一个服务。</p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>降低服务耦合</li>
+<li>有利于服务升级拓展</li>
+</ul>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222326798.png" alt="image-20240304222326798"></p>
+<p><strong>服务治理</strong></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304222345181.png" alt="image-20240304222345181"></p>
+<p>单体服务时，各个模块之间是可以直接调用代码的，但是分布式架构之后，不同模块之间的代码是不能直接调用的。</p>
+<p>分布式架构要考虑的问题：</p>
+<ul>
+<li>服务拆分粒度如何？</li>
+<li>服务集群地址如何维护？</li>
+<li>服务之间如何实现远程调用？</li>
+<li>服务健康状态如何感知？</li>
+</ul>
+<p><strong>微服务</strong></p>
+<p>微服务是一种经过良好架构设计的<strong>分布式</strong>架构方案，微服务架构特征：</p>
+<ul>
+<li>单一职责：微服务拆分力度更小，每个服务都对应唯一的业务能力，做到单一职责，避免重复开发</li>
+<li>面向服务：微服务对外暴露业务接口</li>
+<li>自治：团队独立、技术独立、数据独立、部署独立</li>
+<li>隔离性强：服务调用做好隔离、容错、降级，避免出现级联问题</li>
+</ul>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304223012163.png" alt="image-20240304223012163"></p>
+<p><strong>总结：</strong></p>
+<p>单体架构特点？</p>
+<ul>
+<li>简单方便，高度耦合，扩展性差，适合小型项目。例如：学生管理系统</li>
+</ul>
+<p>分布式架构特点？</p>
+<ul>
+<li>松耦合，扩展性好，但架构复杂，难度大。适合大型互联网项目，例如：京东、淘宝</li>
+</ul>
+<p>微服务：一种良好的分布式架构方案</p>
+<ul>
+<li>优点：拆分粒度更小、服务更独立、耦合度更低</li>
+<li>缺点：架构非常复杂，运维、监控、部署难度提高</li>
+</ul>
+<h2 id="微服务结构"><a href="#微服务结构" class="headerlink" title="微服务结构"></a><strong>微服务结构</strong></h2><p>微服务这种方案需要技术框架来落地，全球的互联网公司都在积极尝试自己的微服务落地技术。在国内最知名的就是SpringCloud和阿里巴巴的Dubbo。</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304223338889.png" alt="image-20240304223338889"></p>
+<h2 id="微服务技术对比"><a href="#微服务技术对比" class="headerlink" title="微服务技术对比"></a><strong>微服务技术对比</strong></h2><table>
+<thead>
+<tr>
+<th></th>
+<th>Dubbo</th>
+<th>SpringCloud</th>
+<th>SpringCloudAlibaba</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>注册中心</strong></td>
+<td>zookeeper、Redis</td>
+<td>Eureka、Consul</td>
+<td>Nacos、Eureka</td>
+</tr>
+<tr>
+<td><strong>服务远程调用</strong></td>
+<td>Dubbo协议</td>
+<td>Feign(http协议)</td>
+<td>Dubbo、Feign</td>
+</tr>
+<tr>
+<td><strong>配置中心</strong></td>
+<td>无</td>
+<td>SpringCloudConfig</td>
+<td>SpringCloudConfig、Nacos</td>
+</tr>
+<tr>
+<td><strong>服务网关</strong></td>
+<td>无</td>
+<td>SpringCloudGateway、Zuul</td>
+<td>SpringCloudGateway、Zuul</td>
+</tr>
+<tr>
+<td><strong>服务监控和保护</strong></td>
+<td>dubbo-admin，功能弱</td>
+<td>Hystrix</td>
+<td>Sentinel</td>
+</tr>
+</tbody></table>
+<h2 id="企业需求"><a href="#企业需求" class="headerlink" title="企业需求"></a><strong>企业需求</strong></h2><p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304224025830.png" alt="image-20240304224025830"></p>
+<h2 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h2><ul>
+<li><p>SpringCloud是目前国内使用最广泛的微服务框架。官网地址：<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud%E3%80%82">https://spring.io/projects/spring-cloud。</a></p>
+</li>
+<li><p>SpringCloud集成了各种微服务功能组件，并基于SpringBoot实现了这些组件的自动装配，从而提供了良好的开箱即用体验：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304224755309.png" alt="image-20240304224755309"></p>
+</li>
+</ul>
+<h3 id="认识微服务-1"><a href="#认识微服务-1" class="headerlink" title="认识微服务"></a>认识微服务</h3><p>SpringCloud与SpringBoot的版本兼容关系如下所示：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304224900377.png" alt="image-20240304224900377"></p>
+<p>我们课堂使用的版本是Hoxton.SR10，因此对应的SpringBoot版本是2.3.x版本。</p>
+<h2 id="服务拆分及远程调用"><a href="#服务拆分及远程调用" class="headerlink" title="服务拆分及远程调用"></a>服务拆分及远程调用</h2><h1 id="分布式服务架构案例"><a href="#分布式服务架构案例" class="headerlink" title="分布式服务架构案例"></a>分布式服务架构案例</h1><h1 id="eureka注册中心"><a href="#eureka注册中心" class="headerlink" title="eureka注册中心"></a>eureka注册中心</h1><h1 id="Ribbon负载均衡原理"><a href="#Ribbon负载均衡原理" class="headerlink" title="Ribbon负载均衡原理"></a>Ribbon负载均衡原理</h1><h1 id="nacos注册中心"><a href="#nacos注册中心" class="headerlink" title="nacos注册中心"></a>nacos注册中心</h1>
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/" rel="next" title="苍穹外卖-day12-数据统计">
+                <i class="fa fa-chevron-left"></i> 苍穹外卖-day12-数据统计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
   
+  
+  
+  </article>
 
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -357,6 +623,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -377,8 +647,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -501,6 +780,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">认识微服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">微服务结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8A%80%E6%9C%AF%E5%AF%B9%E6%AF%94"><span class="nav-number">1.2.</span> <span class="nav-text">微服务技术对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%81%E4%B8%9A%E9%9C%80%E6%B1%82"><span class="nav-number">1.3.</span> <span class="nav-text">企业需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud"><span class="nav-number">1.4.</span> <span class="nav-text">Spring Cloud</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86%E5%BE%AE%E6%9C%8D%E5%8A%A1-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">认识微服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%E5%8F%8A%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">服务拆分及远程调用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E6%A1%88%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">分布式服务架构案例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#eureka%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83"><span class="nav-number">3.</span> <span class="nav-text">eureka注册中心</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ribbon%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">Ribbon负载均衡原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nacos%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83"><span class="nav-number">5.</span> <span class="nav-text">nacos注册中心</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -673,6 +968,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
