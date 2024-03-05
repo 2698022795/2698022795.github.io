@@ -579,7 +579,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  747
+                  4.1k
                 </span>
               
 
@@ -595,7 +595,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  16
                 </span>
               
             </div>
@@ -727,7 +727,330 @@
 <h3 id="认识微服务-1"><a href="#认识微服务-1" class="headerlink" title="认识微服务"></a>认识微服务</h3><p>SpringCloud与SpringBoot的版本兼容关系如下所示：</p>
 <p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240304224900377.png" alt="image-20240304224900377"></p>
 <p>我们课堂使用的版本是Hoxton.SR10，因此对应的SpringBoot版本是2.3.x版本。</p>
-<h2 id="服务拆分及远程调用"><a href="#服务拆分及远程调用" class="headerlink" title="服务拆分及远程调用"></a>服务拆分及远程调用</h2><h1 id="分布式服务架构案例"><a href="#分布式服务架构案例" class="headerlink" title="分布式服务架构案例"></a>分布式服务架构案例</h1><h1 id="eureka注册中心"><a href="#eureka注册中心" class="headerlink" title="eureka注册中心"></a>eureka注册中心</h1><h1 id="Ribbon负载均衡原理"><a href="#Ribbon负载均衡原理" class="headerlink" title="Ribbon负载均衡原理"></a>Ribbon负载均衡原理</h1><h1 id="nacos注册中心"><a href="#nacos注册中心" class="headerlink" title="nacos注册中心"></a>nacos注册中心</h1>
+<h1 id="分布式服务架构案例"><a href="#分布式服务架构案例" class="headerlink" title="分布式服务架构案例"></a>分布式服务架构案例</h1><h2 id="服务拆分及远程调用"><a href="#服务拆分及远程调用" class="headerlink" title="服务拆分及远程调用"></a>服务拆分及远程调用</h2><p>需求是查询订单，同时也要获取用户和商品关联信息。</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305110043023.png" alt="image-20240305110043023"></p>
+<p><strong>服务拆分注意事项</strong>：</p>
+<ol>
+<li>不同微服务，不要重复开发相同业务</li>
+<li>微服务数据独立，不要访问其他微服务的数据库</li>
+<li>微服务可以将自己的业务暴露为借口，供其他微服务使用</li>
+</ol>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305110236577.png" alt="o"></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305125822645.png" alt="l"></p>
+<p>这边cloud_user和cloud_order分别存放了具体的表内容</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305130639108.png" alt="image-20240305130639108"></p>
+<p>Cloud_order数据库和表结构</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> Navicat Premium Data Transfer</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> Source Server         : local</span></span><br><span class="line"><span class="comment"> Source Server Type    : MySQL</span></span><br><span class="line"><span class="comment"> Source Server Version : 50622</span></span><br><span class="line"><span class="comment"> Source Host           : localhost:3306</span></span><br><span class="line"><span class="comment"> Source Schema         : heima</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> Target Server Type    : MySQL</span></span><br><span class="line"><span class="comment"> Target Server Version : 50622</span></span><br><span class="line"><span class="comment"> File Encoding         : 65001</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> Date: 01/04/2021 14:57:18</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">create</span> database if <span class="keyword">not</span> <span class="keyword">exists</span> cloud_order ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> NAMES utf8mb4;</span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for tb_order</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `tb_order`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `tb_order`  (</span><br><span class="line">                             `id` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT COMMENT <span class="string">&#x27;订单id&#x27;</span>,</span><br><span class="line">                             `user_id` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;用户id&#x27;</span>,</span><br><span class="line">                             `name` <span class="type">varchar</span>(<span class="number">100</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;商品名称&#x27;</span>,</span><br><span class="line">                             `price` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;商品价格&#x27;</span>,</span><br><span class="line">                             `num` <span class="type">int</span>(<span class="number">10</span>) <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> COMMENT <span class="string">&#x27;商品数量&#x27;</span>,</span><br><span class="line">                             <span class="keyword">PRIMARY</span> KEY (`id`) <span class="keyword">USING</span> BTREE,</span><br><span class="line">                             <span class="keyword">UNIQUE</span> INDEX `username`(`name`) <span class="keyword">USING</span> BTREE</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB AUTO_INCREMENT <span class="operator">=</span> <span class="number">109</span> <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8_general_ci ROW_FORMAT <span class="operator">=</span> Compact;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of tb_order</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_order` <span class="keyword">VALUES</span> (<span class="number">101</span>, <span class="number">1</span>, <span class="string">&#x27;Apple 苹果 iPhone 12 &#x27;</span>, <span class="number">699900</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_order` <span class="keyword">VALUES</span> (<span class="number">102</span>, <span class="number">2</span>, <span class="string">&#x27;雅迪 yadea 新国标电动车&#x27;</span>, <span class="number">209900</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_order` <span class="keyword">VALUES</span> (<span class="number">103</span>, <span class="number">3</span>, <span class="string">&#x27;骆驼（CAMEL）休闲运动鞋女&#x27;</span>, <span class="number">43900</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_order` <span class="keyword">VALUES</span> (<span class="number">104</span>, <span class="number">4</span>, <span class="string">&#x27;小米10 双模5G 骁龙865&#x27;</span>, <span class="number">359900</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_order` <span class="keyword">VALUES</span> (<span class="number">105</span>, <span class="number">5</span>, <span class="string">&#x27;OPPO Reno3 Pro 双模5G 视频双防抖&#x27;</span>, <span class="number">299900</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_order` <span class="keyword">VALUES</span> (<span class="number">106</span>, <span class="number">6</span>, <span class="string">&#x27;美的（Midea) 新能效 冷静星II &#x27;</span>, <span class="number">544900</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_order` <span class="keyword">VALUES</span> (<span class="number">107</span>, <span class="number">2</span>, <span class="string">&#x27;西昊/SIHOO 人体工学电脑椅子&#x27;</span>, <span class="number">79900</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_order` <span class="keyword">VALUES</span> (<span class="number">108</span>, <span class="number">3</span>, <span class="string">&#x27;梵班（FAMDBANN）休闲男鞋&#x27;</span>, <span class="number">31900</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Cloud_user数据库和对应表结构</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> Navicat Premium Data Transfer</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> Source Server         : local</span></span><br><span class="line"><span class="comment"> Source Server Type    : MySQL</span></span><br><span class="line"><span class="comment"> Source Server Version : 50622</span></span><br><span class="line"><span class="comment"> Source Host           : localhost:3306</span></span><br><span class="line"><span class="comment"> Source Schema         : heima</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> Target Server Type    : MySQL</span></span><br><span class="line"><span class="comment"> Target Server Version : 50622</span></span><br><span class="line"><span class="comment"> File Encoding         : 65001</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> Date: 01/04/2021 14:57:18</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">create database <span class="keyword">if</span> not exists cloud_user;</span><br><span class="line"></span><br><span class="line">SET NAMES utf8mb4;</span><br><span class="line"><span class="type">SET</span> <span class="variable">FOREIGN_KEY_CHECKS</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">-- ----------------------------</span><br><span class="line">-- Table structure <span class="keyword">for</span> tb_user</span><br><span class="line">-- ----------------------------</span><br><span class="line">DROP TABLE IF EXISTS `tb_user`;</span><br><span class="line">CREATE TABLE `tb_user`  (</span><br><span class="line">                            `id` bigint(<span class="number">20</span>) NOT NULL AUTO_INCREMENT,</span><br><span class="line">                            `username` varchar(<span class="number">100</span>) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT <span class="string">&#x27;收件人&#x27;</span>,</span><br><span class="line">                            `address` varchar(<span class="number">255</span>) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT <span class="string">&#x27;地址&#x27;</span>,</span><br><span class="line">                            PRIMARY <span class="title function_">KEY</span> <span class="params">(`id`)</span> USING BTREE,</span><br><span class="line">                            UNIQUE INDEX `username`(`username`) USING BTREE</span><br><span class="line">) ENGINE = <span class="type">InnoDB</span> <span class="variable">AUTO_INCREMENT</span> <span class="operator">=</span> <span class="number">109</span> <span class="type">CHARACTER</span> <span class="variable">SET</span> <span class="operator">=</span> <span class="type">utf8</span> <span class="variable">COLLATE</span> <span class="operator">=</span> <span class="type">utf8_general_ci</span> <span class="variable">ROW_FORMAT</span> <span class="operator">=</span> Compact;</span><br><span class="line"></span><br><span class="line">-- ----------------------------</span><br><span class="line">-- Records of tb_user</span><br><span class="line">-- ----------------------------</span><br><span class="line">INSERT INTO `tb_user` VALUES (<span class="number">1</span>, <span class="string">&#x27;柳岩&#x27;</span>, <span class="string">&#x27;湖南省衡阳市&#x27;</span>);</span><br><span class="line">INSERT INTO `tb_user` VALUES (<span class="number">2</span>, <span class="string">&#x27;文二狗&#x27;</span>, <span class="string">&#x27;陕西省西安市&#x27;</span>);</span><br><span class="line">INSERT INTO `tb_user` VALUES (<span class="number">3</span>, <span class="string">&#x27;华沉鱼&#x27;</span>, <span class="string">&#x27;湖北省十堰市&#x27;</span>);</span><br><span class="line">INSERT INTO `tb_user` VALUES (<span class="number">4</span>, <span class="string">&#x27;张必沉&#x27;</span>, <span class="string">&#x27;天津市&#x27;</span>);</span><br><span class="line">INSERT INTO `tb_user` VALUES (<span class="number">5</span>, <span class="string">&#x27;郑爽爽&#x27;</span>, <span class="string">&#x27;辽宁省沈阳市大东区&#x27;</span>);</span><br><span class="line">INSERT INTO `tb_user` VALUES (<span class="number">6</span>, <span class="string">&#x27;范兵兵&#x27;</span>, <span class="string">&#x27;山东省青岛市&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">SET</span> <span class="variable">FOREIGN_KEY_CHECKS</span> <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>总结：</p>
+<ol>
+<li>微服务需要根据业务模块拆分，做到单一职责，不要重复开发相同业务</li>
+<li>微服务可以将业务暴露为接口，供其他微服务使用</li>
+<li>不同微服务都应该有自己独立的数据库</li>
+</ol>
+<h2 id="案例：根据订单id查询订单功能"><a href="#案例：根据订单id查询订单功能" class="headerlink" title="案例：根据订单id查询订单功能"></a>案例：根据订单id查询订单功能</h2><p>需求：根据订单id查询订单的同时，把订单所属的用户信息一起返回</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305131615122.png" alt="image-20240305131615122"></p>
+<p><font color="red">我们从浏览器可以访问不同模块，那同一个模块能不能用类似的方式访问另一个模块，获取需要的数据呢？</font></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305131727010.png" alt="image-20240305131727010"></p>
+<p>要想实现跨服务远程调用，其实是发送Http请求，首先要向Spring容器注入RestTemplate对象。</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305132430060.png" alt="image-20240305132430060"></p>
+<p>利用ResTemplate对象中的getForObject方法，告诉该对象请求的浏览路径和返回的数据的数据类型。修改order-service中的OrderService的queryOrderById方法。</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305132532322.png" alt="image-20240305132532322"></p>
+<p>总结：</p>
+<ol>
+<li>微服务调用方式<ul>
+<li>基于RestTemplate发起的http请求实现远程调用</li>
+<li>http请求做远程调用是与语言无关的调用，只要知道对方的ip、端口、接口路径、请求参数即可。</li>
+</ul>
+</li>
+</ol>
+<h1 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h1><h2 id="提供者与消费者"><a href="#提供者与消费者" class="headerlink" title="提供者与消费者"></a>提供者与消费者</h2><ul>
+<li>服务提供者：一次业务中，被其他微服务调用的服务。（提供接口给其他微服务）</li>
+<li>服务消费者：一次业务中，调用其他微服务的服务。（调用其他微服务提供的接口）</li>
+<li>提供者和消费者角色其实是<strong>相对</strong>的</li>
+</ul>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305132830113.png" alt="image-20240305132830113"></p>
+<p>思考：服务A调用了服务B，服务B调用了服务C，那么服务B是什么角色呢？</p>
+<p><font color="red">一个服务既可以是提供者也可以是消费者。</font></p>
+<h2 id="远程调用的问题"><a href="#远程调用的问题" class="headerlink" title="远程调用的问题"></a>远程调用的问题</h2><p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305133142579-17096167028611.png" alt="image-20240305133142579"></p>
+<p>消费者向提供者请求服务时，请求地址是硬编码的方式。</p>
+<ol>
+<li><p>对于维护请求地址很困难。</p>
+</li>
+<li><p>为了应对高并发，user服务可能会部署为多实例，形成一个集群，这个时候硬编码该写谁的地址呢？</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305133409858.png" alt="image-20240305133409858"></p>
+</li>
+</ol>
+<p><strong>问题</strong>：</p>
+<p>服务消费者该如何获取服务提供者的地址信息？</p>
+<ul>
+<li>服务提供者启动时向eureka注册自己的信息</li>
+<li>eureka保存这些信息</li>
+<li>消费者根据服务名称向eureka拉取提供者信息</li>
+</ul>
+<p>如果有多个服务提供者，消费者该如何选择？</p>
+<ul>
+<li>服务消费者利用负载均衡算法，从服务列表中挑选一个</li>
+</ul>
+<p>消费者如何得知服务提供者的健康状态？</p>
+<ul>
+<li>服务提供者每隔30秒向EurekaServer发送心跳请求，报告健康状态</li>
+<li>eureka会更新记录服务列表信息，心跳不正常会被剔除</li>
+<li>消费者就可以拉取到最新的消息</li>
+</ul>
+<h2 id="eureka原理"><a href="#eureka原理" class="headerlink" title="eureka原理"></a>eureka原理</h2><p>eureka-server：注册中心（记录和管理微服务）</p>
+<p>eureka-client：客户端</p>
+<ol>
+<li><p>只要是eureka的客户端，每一个服务启动时都会向eureka-server注册服务信息。</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305133643568.png" alt="image-20240305133643568"></p>
+</li>
+<li><p>服务消费者会去拉取服务user-service的信息，利用负载均衡的方式从中选择一个链接远程调用服务提供者提供的方法。</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305134002828.png" alt="image-20240305134002828"></p>
+</li>
+<li><p>服务提供者每隔30秒会向注册中心中更新服务信息</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305134036204.png" alt="image-20240305134036204"></p>
+</li>
+</ol>
+<p><strong>总结：</strong></p>
+<p>在Eureka架构中，微服务角色有两类：</p>
+<ul>
+<li>EurekaServer：服务端，注册中心<ul>
+<li>记录服务信息</li>
+<li>心跳监控</li>
+</ul>
+</li>
+<li>EurekaClient：客户端<ul>
+<li>Provider：服务提供者，例如案例中的user-service<ul>
+<li>注册自己的信息到EurekaServer</li>
+<li>每隔30秒向EurekaServer发送心跳</li>
+</ul>
+</li>
+<li>Consumer：服务消费者，例如案例中的order-service<ul>
+<li>根据服务名称从EurekaServer中拉去服务列表</li>
+<li>基于服务列表做负载均衡，选中一个微服务后发起远程调用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="搭建EurekaService"><a href="#搭建EurekaService" class="headerlink" title="搭建EurekaService"></a>搭建EurekaService</h2><p><strong>动手实践</strong></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305134609345.png" alt="image-20240305134609345"></p>
+<p>搭建EurekaServer服务步骤如下：</p>
+<ol>
+<li><p>创建项目，引入spring-cloud-starter-netflix-eureka-server的依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写启动类，添加@EnableEurekaServer注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableEurekaServer</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EurekaApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(EurekaApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加application.yml文件，编写下面的配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">10086</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">eurekaserver</span> <span class="comment"># eureka的服务名称</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span> <span class="comment"># eureka的地址信息</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://127.0.0.1:10086/eureka/</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><font color="red">eureka也是微服务，它启动时会将自己注册到eureka上。多个eureka集群会相互交流。</font></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305144137305.png" alt="image-20240305144137305"></p>
+<p><strong>总结</strong>：</p>
+<ol>
+<li>搭建EurekaServer<ul>
+<li>引入eureka-server依赖</li>
+<li>添加@EnableEurekaServer注解</li>
+<li>在application.yml中配置eureka地址</li>
+</ul>
+</li>
+</ol>
+<h2 id="服务注册"><a href="#服务注册" class="headerlink" title="服务注册"></a>服务注册</h2><p>将user-service服务注册到EurekaServer步骤如下：</p>
+<ol>
+<li><p>在user-service项目中引入spring-cloud-starter-netflix-eureka-client的依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在application.yml文件，编写下面的配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">userservice</span> <span class="comment"># eureka的服务名称</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span> <span class="comment"># eureka的地址信息</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://127.0.0.1:10086/eureka/</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>另外，我们可以将user-service多次启动，模拟多实例部署，但为了避免端口冲突，需要修改端口设置：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305150330649.png" alt="image-20240305150330649"></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305150617320.png" alt="image-20240305150617320"></p>
+<p><strong>总结</strong>：</p>
+<ol>
+<li>服务注册</li>
+</ol>
+<ul>
+<li>引入eureka-client依赖</li>
+<li>在application.yml中配置eureka地址</li>
+</ul>
+<ol start="2">
+<li>无论是消费者还是提供者，引入eureka-client依赖，知道eureka地址后，都可以完成服务注册。</li>
+</ol>
+<h2 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h2><p>服务拉取是基于服务名称获取服务列表，然后对列表服务做负载均衡。</p>
+<ol>
+<li><p>修改OrderService的代码，修改访问的url路径，用服务名代替ip、端口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;http://userservice/user/&quot;</span> + order.getUserId();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在order-service项目的启动OrderApplication中的RestTemplate添加<strong>负载均衡</strong>注释：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@LoadBalanced</span></span><br><span class="line"><span class="keyword">public</span> RestTempalte <span class="title function_">restTemplate</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>总结</strong></p>
+<ol>
+<li><p>搭建EurekaServer</p>
+<ul>
+<li>引入eureka-server依赖</li>
+<li>添加@EnableEurekaServer注解</li>
+<li>在application.yml中配置eureka地址</li>
+</ul>
+</li>
+<li><p>服务注册</p>
+<ul>
+<li>引入eureka-client依赖</li>
+<li>在application.yml中配置eureka地址</li>
+</ul>
+</li>
+<li><p>服务发现</p>
+<ul>
+<li>引入eureka-client依赖</li>
+<li>在application.yml中配置eureka地址</li>
+<li>给RestTemplate添加@LoadBalanced注解</li>
+<li>用服务提供者提供的服务远程名称远程调用</li>
+</ul>
+</li>
+</ol>
+<h1 id="Ribbon负载均衡"><a href="#Ribbon负载均衡" class="headerlink" title="Ribbon负载均衡"></a>Ribbon负载均衡</h1><p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305152722949.png" alt="image-20240305152722949"></p>
+<h2 id="负载均衡原理"><a href="#负载均衡原理" class="headerlink" title="负载均衡原理"></a>负载均衡原理</h2><p><font color="red">@LoadBalanced标记restTemplate发起的请求会被ribbon拦截。</font></p>
+<p>当请求进入ribbon时，会被LoadBalanceInterceptor负载均衡拦截器拦截，拦截之后得到请求中的服务名称，即userservice，并将其交给RibbonLoadBalanceClient，它会将服务id交给DynamicServerListLoadBalancer，它回去eureka-server中拉去服务列表，并从IRule中执行服务负载均衡并返回某个服务，最终发送url。</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305154036947.png" alt="image-20240305154036947"></p>
+<h2 id="负载均衡策略"><a href="#负载均衡策略" class="headerlink" title="负载均衡策略"></a>负载均衡策略</h2><p>Ribbon的负载均衡规则是一个叫做IRule的接口来定义的，每一个子接口多是一种规则。</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305154210711.png" alt="image-20240305154210711"></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305154229387.png" alt="image-20240305154229387"></p>
+<p>通过定义IRule实现可以修改负载均衡规则，有两种方式：</p>
+<ol>
+<li><p>代码方式：在order-service中的OrderApplication类中，定义一个新的Rule：（上述是全局配置，表示访问任何服务时均执行同种负载均衡策略）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> IRule <span class="title function_">randomRule</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RandomRule</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置文件方式：在order-service的application.yml文件，添加新的配置也可以修改规则：（上述是针对userservice服务单独设置的负载均衡策略）</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">userservice:</span></span><br><span class="line">  <span class="attr">ribbon:</span></span><br><span class="line">    <span class="attr">NFLoadBalanceRuleClassName:</span> <span class="string">com.netflex.loadbalancer.RandomRule</span> <span class="comment"># 负载均衡规则</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h2><p>Ribbon默认是采用懒加载，即第一次访问时才会去创建LoadBalanceClient，请求时间较长。</p>
+<p>而饥饿加载则会在项目启动时创建，降低第一次访问的耗时，通过下面配置开启饥饿加载：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ribbon:</span><br><span class="line">  eager-load:</span><br><span class="line">    enabled: <span class="literal">true</span> # 开启饥饿加载</span><br><span class="line">    clients: </span><br><span class="line">      - userservice # 指定对userservice这个服务饥饿加载</span><br><span class="line">      # - xxx</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>总结</strong></p>
+<ol>
+<li>Ribbon负载均衡规则<ul>
+<li>规则接口时IRule</li>
+<li>默认实现是ZoneAvoidanceRule，根据zone选择服务列表，然后轮询</li>
+</ul>
+</li>
+<li>负载均衡自定义方式<ul>
+<li>代码方式：配置灵活，但修改时需要重新打包发布</li>
+<li>配置方式：直观、方便，无需重新打包发布，但无法做到全局配置</li>
+</ul>
+</li>
+<li>饥饿加载<ul>
+<li>开启饥饿加载</li>
+<li>指定饥饿加载的微服务名称</li>
+</ul>
+</li>
+</ol>
+<h1 id="Nacos"><a href="#Nacos" class="headerlink" title="Nacos"></a>Nacos</h1><h2 id="认识和安装Nacos"><a href="#认识和安装Nacos" class="headerlink" title="认识和安装Nacos"></a>认识和安装Nacos</h2><p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305161140438.png" alt="image-20240305161140438"></p>
+<p>开发阶段采用单机安装即可。</p>
+<h2 id="1-1-下载安装包"><a href="#1-1-下载安装包" class="headerlink" title="1.1.下载安装包"></a>1.1.下载安装包</h2><p>在Nacos的GitHub页面，提供有下载链接，可以下载编译好的Nacos服务端或者源代码：</p>
+<p>GitHub主页：<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos">https://github.com/alibaba/nacos</a></p>
+<p>GitHub的Release下载页：<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/releases">https://github.com/alibaba/nacos/releases</a></p>
+<p>如图：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402161102887.png" alt="image-20210402161102887"></p>
+<p>本课程采用1.4.1.版本的Nacos，课前资料已经准备了安装包：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402161130261.png" alt="image-20210402161130261"></p>
+<p>windows版本使用<code>nacos-server-1.4.1.zip</code>包即可。</p>
+<h2 id="1-2-解压"><a href="#1-2-解压" class="headerlink" title="1.2.解压"></a>1.2.解压</h2><p>将这个包解压到任意非中文目录下，如图：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402161843337.png" alt="image-20210402161843337"></p>
+<p>目录说明：</p>
+<ul>
+<li>bin：启动脚本</li>
+<li>conf：配置文件</li>
+</ul>
+<h2 id="1-3-端口配置"><a href="#1-3-端口配置" class="headerlink" title="1.3.端口配置"></a>1.3.端口配置</h2><p>Nacos的默认端口是8848，如果你电脑上的其它进程占用了8848端口，请先尝试关闭该进程。</p>
+<p><strong>如果无法关闭占用8848端口的进程</strong>，也可以进入nacos的conf目录，修改配置文件中的端口：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402162008280.png" alt="image-20210402162008280"></p>
+<p>修改其中的内容：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402162251093.png" alt="image-20210402162251093"></p>
+<h2 id="1-4-启动"><a href="#1-4-启动" class="headerlink" title="1.4.启动"></a>1.4.启动</h2><p>启动非常简单，进入bin目录，结构如下：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402162350977.png" alt="image-20210402162350977"></p>
+<p>然后执行命令即可：</p>
+<ul>
+<li><p>windows命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startup.cmd -m standalone</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>执行后的效果如图：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402162526774.png" alt="image-20210402162526774"></p>
+<h2 id="1-5-访问"><a href="#1-5-访问" class="headerlink" title="1.5.访问"></a>1.5.访问</h2><p>在浏览器输入地址：<a target="_blank" rel="noopener" href="http://127.0.0.1:8848/nacos%E5%8D%B3%E5%8F%AF%EF%BC%9A">http://127.0.0.1:8848/nacos即可：</a></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402162630427.png" alt="image-20210402162630427"></p>
+<p>默认的账号和密码都是nacos，进入后：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20210402162709515.png" alt="image-20210402162709515"></p>
+<h2 id="Nacos快速入门"><a href="#Nacos快速入门" class="headerlink" title="Nacos快速入门"></a>Nacos快速入门</h2><ol>
+<li><p>在cloud-demo父工程中添加spring-cloud-alibaba的管理依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-alibaba-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.5.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注释掉order-service和user-service中原有的eureka依赖。</p>
+</li>
+<li><p>添加nacos的客户端依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- nacos客户端依赖包 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改user-service&amp;order-service中的application.yml文件，注释掉eureka地址，添加nacos地址：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305163148480.png" alt="image-20240305163148480"></p>
+</li>
+<li><p>启动并测试</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305163846124.png" alt="image-20240305163846124"></p>
+</li>
+</ol>
+<p><strong>总结</strong></p>
+<ol>
+<li>Nacos服务搭建<ol>
+<li>下载安装包</li>
+<li>解压</li>
+<li>在bin目录下运行指令：startup.cmd -m standalone</li>
+</ol>
+</li>
+<li>Nacos服务注册或发现<ol>
+<li>引入nacos.discovery依赖</li>
+<li>配置nacos地址spring.cloud.nacos.server-addr</li>
+</ol>
+</li>
+</ol>
+<h2 id="Nacos服务分级存储模型"><a href="#Nacos服务分级存储模型" class="headerlink" title="Nacos服务分级存储模型"></a>Nacos服务分级存储模型</h2><p>所有实例放在一个机房，如果机房宕机，整个服务都停了。</p>
+<p><font color="red">同在一个机房的多个实例作为一个集群。</font></p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305164414812.png" alt="image-20240305164414812"></p>
+<p>服务调用尽可能选择本地集群的服务，跨集群调用延迟较高。</p>
+<p>本地集群不可访问时，再去访问其他集群。</p>
+<p> <img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305164535787.png" alt="image-20240305164535787"></p>
+<p>配置服务集群属性：</p>
+<ol>
+<li><p>修改application.yml，添加如下内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">cloud:</span></span><br><span class="line">		<span class="attr">nacos:</span></span><br><span class="line">			<span class="attr">server-addr:</span> <span class="string">localhost:8848</span> <span class="comment"># nacos 服务器地址</span></span><br><span class="line">			<span class="attr">discovery:</span></span><br><span class="line">				<span class="attr">cluster-name:</span> <span class="string">HZ</span> <span class="comment">#配置集群名称，也就是机房位置，例如：HZ，杭州  </span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在Nacos控制台可以看到集群变化：</p>
+<p><img src="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/image-20240305165037959.png" alt="image-20240305165037959"></p>
+</li>
+</ol>
+<p><strong>总结</strong>：</p>
+<ol>
+<li>Nacos服务分级存储模型<ol>
+<li>一级是服务，例如userservice</li>
+<li>二级是集群，例如杭州或上海</li>
+<li>三级是实例，例如杭州机房的某台部署了userservice的服务器</li>
+</ol>
+</li>
+<li>如何设置实例的集群属性<ol>
+<li>修改application.yml文件，添加spring.cloud.nacos.discovery.cluster-name属性即可</li>
+</ol>
+</li>
+</ol>
+<h2 id="Nacos环境隔离"><a href="#Nacos环境隔离" class="headerlink" title="Nacos环境隔离"></a>Nacos环境隔离</h2>
           
         
       
@@ -4054,7 +4377,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">109.2k</span>
+    <span title="Site words total count">112.5k</span>
   
 </div>
 
