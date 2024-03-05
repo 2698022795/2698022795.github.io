@@ -579,7 +579,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  443
                 </span>
               
 
@@ -618,7 +618,60 @@
       
         
           
-            
+            <h1 id="Nacos配置管理"><a href="#Nacos配置管理" class="headerlink" title="Nacos配置管理"></a>Nacos配置管理</h1><h2 id="统一配置管理"><a href="#统一配置管理" class="headerlink" title="统一配置管理"></a>统一配置管理</h2><ul>
+<li><p>配置更改热更新</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240305224009346.png" alt="image-20240305224009346"></p>
+</li>
+</ul>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240305224130659.png" alt="image-20240305224130659"></p>
+<p>Data ID的命名规范：userservice-prod.yaml</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240305224607825.png" alt="image-20240305224607825"></p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240305224836105.png" alt="image-20240305224836105"></p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240305224845391.png" alt="image-20240305224845391"></p>
+<h2 id="微服务配置拉取"><a href="#微服务配置拉取" class="headerlink" title="微服务配置拉取"></a>微服务配置拉取</h2><p>在没有nacos之前，配置获取的步骤：</p>
+<ol>
+<li>项目启动</li>
+<li>读取本地配置文件application.yaml</li>
+<li>创建spring容器</li>
+<li>加载bean</li>
+</ol>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240305225022405.png" alt="image-20240305225022405"></p>
+<p>在有了nacos之后，配置的获取步骤如下所示：</p>
+<ol>
+<li>项目启动</li>
+<li>先读取nacos中配置文件</li>
+<li>读取本地配置文件application.yaml</li>
+<li>创建spring容器</li>
+<li>加载bean</li>
+</ol>
+<p><font color="red">这里有一个问题：去哪儿读取nacos地址，读取谁，之前我们是将nacos地址放在了本地配置文件application.yml中，但是现在是先读取nacos地址，再读取本地配置文件。</font></p>
+<p><font color="red">解决办法：与nacos地址和配置文件信息放在bootstrap.yml</font></p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240305230658657.png" alt="image-20240305230658657"></p>
+<ol>
+<li><p>引入Nacos的配置管理客户端依赖：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--        nacos的配置管理依赖--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在userservice中的resource目录添加一个bootstrap.yml文件，这个文件是引导文件，优先级高于application.yml；</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240305225938225.png" alt="image-20240305225938225"></p>
+<p>这三者决定了nacos的data Id。</p>
+</li>
+</ol>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306003053003.png" alt="image-20240306003053003"></p>
+<p><strong>总结</strong></p>
+<p>将配置交给Nacos管理的步骤</p>
+<ol>
+<li>在Nacos中添加配置文件</li>
+<li>在微服务中引入nacos的config依赖</li>
+<li>在微服务中添加bootstrap.yml，配置nacos地址、当前环境、服务名称、文件后缀名。这些决定了程序启动时去nacos读取哪个文件。</li>
+</ol>
+<h2 id="配置热更新"><a href="#配置热更新" class="headerlink" title="配置热更新"></a>配置热更新</h2><p>Nacos中的配置文件变更后，微服务无需重启就可以感知。不过需要通过下面两种配置实现：</p>
+<ul>
+<li><p>方式一：在@Value注入的变量所在类上添加注解@RefreshScope</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306003722529.png" alt="image-20240306003722529"></p>
+</li>
+</ul>
+<h2 id="配置共享"><a href="#配置共享" class="headerlink" title="配置共享"></a>配置共享</h2><h2 id="搭建Nacos集群"><a href="#搭建Nacos集群" class="headerlink" title="搭建Nacos集群"></a>搭建Nacos集群</h2><h1 id="Feign远程调用"><a href="#Feign远程调用" class="headerlink" title="Feign远程调用"></a>Feign远程调用</h1><p>代替restemplate调用</p>
+<h1 id="Gateway服务网关"><a href="#Gateway服务网关" class="headerlink" title="Gateway服务网关"></a>Gateway服务网关</h1>
           
         
       
@@ -4062,7 +4115,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">113.5k</span>
+    <span title="Site words total count">113.9k</span>
   
 </div>
 
