@@ -142,6 +142,14 @@
       </categories>
   </entry>
   <entry>
+    <title>微服务-day03-入门1</title>
+    <url>/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>微服务</category>
+      </categories>
+  </entry>
+  <entry>
     <title>微服务-day02-SpringCloud02</title>
     <url>/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/</url>
     <content><![CDATA[<h1 id="Nacos配置管理"><a href="#Nacos配置管理" class="headerlink" title="Nacos配置管理"></a>Nacos配置管理</h1><h2 id="统一配置管理"><a href="#统一配置管理" class="headerlink" title="统一配置管理"></a>统一配置管理</h2><ul>
@@ -305,7 +313,7 @@
 
 
 <p>然后修改application.properties文件，添加数据库配置</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.datasource.platform</span>=<span class="string">mysql</span></span><br><span class="line"></span><br><span class="line"><span class="attr">db.num</span>=<span class="string">1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">db.url.0</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="attr">db.user.0</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">db.password.0</span>=<span class="string">123</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.datasource.platform</span>=<span class="string">mysql</span></span><br><span class="line"></span><br><span class="line"><span class="attr">db.num</span>=<span class="string">1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">db.url.0</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="attr">db.user.0</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">db.password.0</span>=<span class="string">123456</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -349,8 +357,202 @@
 <li><p>Nacos的各个节点应该部署到多个不同服务器，做好容灾和隔离</p>
 </li>
 </ul>
-<h1 id="Feign远程调用"><a href="#Feign远程调用" class="headerlink" title="Feign远程调用"></a>Feign远程调用</h1><p>代替restemplate调用</p>
-<h1 id="Gateway服务网关"><a href="#Gateway服务网关" class="headerlink" title="Gateway服务网关"></a>Gateway服务网关</h1>]]></content>
+<h1 id="Feign远程调用"><a href="#Feign远程调用" class="headerlink" title="Feign远程调用"></a>Feign远程调用</h1><p>代替restTemplate调用</p>
+<h2 id="Feign代替RestTemplate"><a href="#Feign代替RestTemplate" class="headerlink" title="Feign代替RestTemplate"></a>Feign代替RestTemplate</h2><p>先来看一下我们以前使用RestTemplate发起远程调用的代码：</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306114716134.png" alt="image-20240306114716134"></p>
+<p>存在下面的问题：</p>
+<ul>
+<li>代码可读性差，编码体验不统一</li>
+<li>复杂的url难以维护</li>
+</ul>
+<p>Feign是一个声明式的http客户端，官方地址：<a href="https://github.com/OpenFeign/feign">https://github.com/OpenFeign/feign</a></p>
+<p>其作用就是帮助我们优雅的实现http请求的发送，解决上面提到的问题。</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306114940285.png" alt="image-20240306114940285"></p>
+<p>使用Feign的步骤如下：</p>
+<ol>
+<li><p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--        feign客户端依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--加入spring-cloud-loadbalancer依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-loadbalancer<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在order-service的启动类添加注解开启Feign的功能：</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306115729311.png" alt="image-20240306115729311"></p>
+</li>
+<li><p>编写Feign的客户端</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.itcast.order.clients;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.itcast.order.pojo.User;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"></span><br><span class="line"><span class="meta">@FeignClient(&quot;userservice&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/user/&#123;id&#125;&quot;)</span></span><br><span class="line">    User <span class="title function_">findById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306120014392.png" alt="image-20240306120014392"></p>
+</li>
+<li><p>主要是基于SpringMVC的注解来声明远程调用的信息，比如：</p>
+<ul>
+<li>请求名称：userservice</li>
+<li>请求方式：GET</li>
+<li>请求路径：&#x2F;user&#x2F;{id}</li>
+<li>请求参数：Long id</li>
+<li>返回值类型：User</li>
+</ul>
+</li>
+</ol>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306120656496.png" alt="image-20240306120656496"></p>
+<p><font color="red">注意：早期的feign依赖中引入了ribbon，但是最新版的feign已经不使用ribbon做负载均衡了，所以在pom.xml文件中要做如下修改：</font></p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306123225620.png" alt="image-20240306123225620"></p>
+<p>由于SpringCloud Feign在Hoxton.M2 RELEASED版本之后不再使用Ribbon而是使用spring-cloud-loadbalancer，所以不引入spring-cloud-loadbalancer会报错<br><strong>解决方法</strong><br>加入spring-cloud-loadbalancer依赖 并且在nacos中排除ribbon依赖，不然loadbalancer无效。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;</span><br><span class="line">    &lt;exclusions&gt;</span><br><span class="line">        &lt;exclusion&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-netflix-ribbon&lt;/artifactId&gt;</span><br><span class="line">        &lt;/exclusion&gt;</span><br><span class="line">    &lt;/exclusions&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!--加入spring-cloud-loadbalancer依赖--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-loadbalancer&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>总结</strong></p>
+<p>Feign的使用步骤</p>
+<ol>
+<li>引入依赖</li>
+<li>添加@EnableFeignClients注解</li>
+<li>编写FeignClient接口</li>
+<li>使用FeignClient中定义的方法代替RestTemplate</li>
+</ol>
+<h2 id="自定义配置"><a href="#自定义配置" class="headerlink" title="自定义配置"></a>自定义配置</h2><p>Fegin运行自定义配置来覆盖默认配置，可以修改的配置如下：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>feign.Logger.Level</td>
+<td>修改日志级别</td>
+<td>包含四种不同的级别：NONE、BASIC、HEADERS、FULL</td>
+</tr>
+<tr>
+<td>fegin.codec.Decoder</td>
+<td>响应结果的解析器</td>
+<td>http远程调用的结果做解析，例如解析json字符串做java对象</td>
+</tr>
+<tr>
+<td>feign.codec.Encoder</td>
+<td>请求参数编码</td>
+<td>将请求参数编码，便于通过http请求发送</td>
+</tr>
+<tr>
+<td>feign.Contract</td>
+<td>支持的注解格式</td>
+<td>默认是SpringMVC的注解</td>
+</tr>
+<tr>
+<td>feign.Retryer</td>
+<td>失败重试机制</td>
+<td>请求失败的重试机制，默认是没有，不过会使用Ribbon的重试</td>
+</tr>
+</tbody></table>
+<p>一般我们需要配置的就是日志级别。</p>
+<p>配置Feign日志有两种方式：</p>
+<p>方式一：配置文件方式</p>
+<ol>
+<li><p>全局生效（针对一切访问的微服务都生效）：</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306125024026.png" alt="image-20240306125024026"></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">default:</span></span><br><span class="line">        <span class="attr">logger-level:</span> <span class="string">FULL</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>局部生效：</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306125038151.png" alt="image-20240306125038151"></p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306125316960.png" alt="image-20240306125316960"></p>
+</li>
+</ol>
+<p>方式二：java代码方式，需要先声明一个Bean：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.itcast.order.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> feign.Logger;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DefaultFeignConfiguration</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Logger.Level <span class="title function_">logLevel</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Logger.Level.BASIC;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而后如果是全局配置，则把它放到@EnableFeignClient这个注解中：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@EnableFeignClients(defaultConfiguration = DefaultFeignConfiguration.class)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306125910273.png" alt="image-20240306125910273"></p>
+<p>如果是局部配置，则把他放到FeignClient接口的@FeignClient这个注解中：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;userservice&quot;,configuration = FeignClientProperties.FeignClientConfiguration.class)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306130216664.png" alt="image-20240306130216664"></p>
+<p><strong>总结：</strong></p>
+<p>Feign的日志配置</p>
+<ol>
+<li>方式一是配置文件，feign.client.config.xxx.LoggerLevel<ol>
+<li>如果xxx是default则代表全局</li>
+<li>如果xxx是服务名称，例如userservice则代表某服务</li>
+</ol>
+</li>
+<li>方式二是Java代码配置Logger.Level这个Bean<ol>
+<li>如果在@EnableFeignClients注解声明则代表全局</li>
+<li>如果在@FeignClient注解中声明则代表某服务</li>
+</ol>
+</li>
+</ol>
+<h2 id="Feign使用优化"><a href="#Feign使用优化" class="headerlink" title="Feign使用优化"></a>Feign使用优化</h2><p>Feign底层的客户端实现：（把我们的声明变成http请求，最终发http请求还是会用到别的客户端，默认用的是URLConnection）</p>
+<ul>
+<li>URLConnection：默认实现，不支持连接池</li>
+<li>Apache HttpClient：支持连接池</li>
+<li>OKHttp：支持连接池</li>
+</ul>
+<p>不适用连接池，那么每次请求都要三次握手，资源消耗挺多。</p>
+<p>因此优化Feign的性能主要包括：</p>
+<ol>
+<li>使用连接池代替默认的URLConnection</li>
+<li>日志级别，最好用basic或none</li>
+</ol>
+<p>Feign添加HttpClient的支持：</p>
+<p>引入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.github.openfeign<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>feign-httpclient<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置连接池：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">default:</span> <span class="comment"># default全局的配置</span></span><br><span class="line">        <span class="attr">logger-level:</span> <span class="string">BASIC</span> <span class="comment"># 日志级别，BASIC就是基本的请求和响应信息</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">httpclient:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 开启feign对HttpClient的支持</span></span><br><span class="line">    <span class="attr">max-connections:</span> <span class="number">200</span> <span class="comment"># 最大的连接数</span></span><br><span class="line">    <span class="attr">max-connections-per-route:</span> <span class="number">50</span> <span class="comment"># 每个路径的最大连接数</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306131850349.png" alt="image-20240306131850349"></p>
+<h2 id="最佳实践分析"><a href="#最佳实践分析" class="headerlink" title="最佳实践分析"></a>最佳实践分析</h2><p>企业在不断踩坑中总结的最佳实验方式。</p>
+<p>方式一（继承）：给消费者的FeignClient和提供者的controller定义统一的父接口作为标准。</p>
+<blockquote>
+<p>在Spring Cloud中，使用Feign作为声明式的HTTP客户端来调用远程服务时，一个常见的设计模式是定义一个公共的接口，然后在服务提供者（Provider）和服务消费者（Consumer）之间共享这个接口。服务提供者实现这个接口，而服务消费者通过Feign Client使用这个接口发起远程调用。</p>
+<p>当你提到“父接口参数列表中的映射不会被继承”，这里的“映射”指的是使用Spring MVC注解（如<code>@RequestMapping</code>、<code>@GetMapping</code>等）来映射HTTP请求路径及其参数的配置。在这种方式中，父接口定义了一系列的方法和相应的映射注解，旨在为服务提供者和消费者提供一个统一的API契约。</p>
+<p>缺点是，尽管服务消费者和服务提供者都继承了这个父接口，使得服务的方法签名保持一致，但是继承自父接口的方法在子接口（实现类）中并不会自动继承其映射注解。这意味着，即使服务消费者和服务提供者都实现了相同的方法，服务提供者还是需要显式地在其控制器（Controller）方法上重新声明这些映射注解，以确保Spring能够正确地将HTTP请求映射到相应的方法上。</p>
+<p>这种情况下的具体影响是：</p>
+<ol>
+<li><strong>代码冗余</strong>：服务提供者需要在控制器中重复声明路径和参数映射，即使这些已经在共享的接口中定义过。</li>
+<li><strong>维护成本提高</strong>：如果共享接口的定义发生变化，服务提供者需要手动更新控制器中的映射注解，这增加了维护的复杂性和出错的风险。</li>
+</ol>
+</blockquote>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306150829020.png" alt="image-20240306150829020"></p>
+<p>方式二（抽取）：将FeignClient抽取为独立模块，并且将接口相关的POJO，默认的Feign配置都放在这个模块中，提供给所有消费者使用。</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306151345971.png" alt="image-20240306151345971"></p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306151409095.png" alt="image-20240306151409095"></p>
+<h2 id="实现Feign最佳实践"><a href="#实现Feign最佳实践" class="headerlink" title="实现Feign最佳实践"></a>实现Feign最佳实践</h2><p>实现最佳实践方式二的步骤如下：</p>
+<ol>
+<li>首先创建一个module，命名为feign-api，然后引入feign的starter依赖</li>
+<li>将order-service中编写的UserClient、User、DefaultFeignConfiguration都复制到feign-api项目中</li>
+<li>在order-service中引入feign-api的依赖</li>
+<li>修改order-service中的所有与上述三个组件有关的import部分，改成导入feign-api中的包</li>
+<li>重启测试</li>
+</ol>
+<p>当定义的FeignClient不在SpringBootApplication的扫描包范围时，这些FeignClient无法使用。有两种方式解决：</p>
+<p>方式一：指定FeignClient所在包</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306153035072.png" alt="image-20240306153035072"></p>
+<p>方式二：指定FeignClient字节码（个人推荐）</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306153042951.png" alt="image-20240306153042951"></p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306154309373.png" alt="image-20240306154309373"></p>
+<h1 id="Gateway服务网关"><a href="#Gateway服务网关" class="headerlink" title="Gateway服务网关"></a>Gateway服务网关</h1><p>微服务内部调用使用Feign即可，但是外部调用要使用网关身份认证，确保安全。</p>
+<p>为什么需要网关？</p>
+<p>网关功能：</p>
+<ul>
+<li>身份认证和权限校验</li>
+<li>服务路由、负载均衡</li>
+<li>请求限流</li>
+</ul>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306154754436.png" alt="image-20240306154754436"></p>
+<p>在SpringCloud中网关的实现包括两种：</p>
+<ul>
+<li>gateway</li>
+<li>zuul</li>
+</ul>
+<p>Zuul是基于Servlet的实现，属于阻塞式编程。而SpringCloudGateway则是基于Spring5中提供的WebFlux，属于是响应式编程的实现，具有更好的性能。</p>
+<p><img src="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/image-20240306154943029.png" alt="image-20240306154943029"></p>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>搭建网关服务的步骤：</p>
+<ol>
+<li><p>创建新的module，引入SpringCloudGateway的依赖和nacos的服务发现依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-gateway<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写路由配置及nacos地址</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">10010</span> <span class="comment"># 网关端口</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">gateway</span> <span class="comment"># 服务名称</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="string">localhost:8848</span> <span class="comment"># nacos地址</span></span><br><span class="line">    <span class="attr">gateway:</span></span><br><span class="line">      <span class="attr">routes:</span> <span class="comment"># 网关路由配置</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">id:</span> <span class="string">user-service</span> <span class="comment"># 路由id，自定义，只要唯一即可</span></span><br><span class="line">          <span class="comment"># url: http:127.0.0.1:8081 # 路由的目标地址 http就是固定地址</span></span><br><span class="line">          <span class="attr">uri:</span> <span class="string">lb://userservice</span> <span class="comment"># 路由的目标地址 lb就是负载均衡。后面跟服务名称</span></span><br><span class="line">          <span class="attr">predicates:</span> <span class="comment"># 路由断言，也就是判断请求是否符合路由规则的条件</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">Path=/user/**</span> <span class="comment"># 这个是按照路径匹配，只要以/user/开头就符合要求</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
       <categories>
         <category>微服务</category>
       </categories>
