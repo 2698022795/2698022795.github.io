@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Linux环境搭建 1.准备Linux环境 首先，我们要准备一个Linux的系统，成本最低的方式就是在本地安装一台虚拟机。为了统一学习环境，不管是使用MacOS还是Windows系统的同学，都建议安装一台虚拟机。 windows采用VMware，Mac则采用Fusion 1.1. 安装VMware VMware是业界最好用的虚拟机软件之一。 windows版本的网站如下： [该类型的内容暂不支持下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务-day03-docker">
+<meta property="og:url" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/index.html">
+<meta property="og:site_name" content="章北海">
+<meta property="og:description" content="Linux环境搭建 1.准备Linux环境 首先，我们要准备一个Linux的系统，成本最低的方式就是在本地安装一台虚拟机。为了统一学习环境，不管是使用MacOS还是Windows系统的同学，都建议安装一台虚拟机。 windows采用VMware，Mac则采用Fusion 1.1. 安装VMware VMware是业界最好用的虚拟机软件之一。 windows版本的网站如下： [该类型的内容暂不支持下">
+<meta property="og:locale">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image002.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image004.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image006.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image008.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image010.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image012.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image014.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image016.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image018.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image020.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image022.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image024.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image026.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image028.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image030.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image032.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image034.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image036.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image038.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image040.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image042.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image044.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image046.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image048.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image050.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image052.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image054.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image056.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image058.gif">
+<meta property="og:image" content="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image060.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image062.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image064.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image066.gif">
+<meta property="og:image" content="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image068.gif">
+<meta property="og:image" content="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image070.gif">
+<meta property="og:image" content="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image072.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image074.gif">
+<meta property="og:image" content="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image076.gif">
+<meta property="og:image" content="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image078.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image080.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image082.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image084.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image086.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image088.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image090.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image092.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image094.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image096.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image098.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image100.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image102.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image104.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image106.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image108.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image110.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image112.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image114.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image116.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image118.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image002-17097250992521.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image004-17097250992532.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image006-17097250992534.gif">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image008-17097250992533.gif">
+<meta property="article:published_time" content="2024-03-06T09:20:13.000Z">
+<meta property="article:modified_time" content="2024-03-06T11:38:25.207Z">
+<meta property="article:author" content="waterdance">
+<meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image002.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://2698022795.github.io/2024/03/06/微服务-day03-docker/"/>
+
+
+
+
+
+  <title>微服务-day03-docker | 章北海</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">章北海</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">轻舟已过万重山</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务-day03-docker</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-06T17:20:13+08:00">
+                2024-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Linux环境搭建</p>
+<p><strong>1.准备Linux环境</strong></p>
+<p>首先，我们要准备一个Linux的系统，成本最低的方式就是在本地安装一台虚拟机。为了统一学习环境，不管是使用MacOS还是Windows系统的同学，都建议安装一台虚拟机。</p>
+<p>windows采用VMware，Mac则采用Fusion</p>
+<p><strong>1.1. 安装VMware</strong></p>
+<p>VMware是业界最好用的虚拟机软件之一。</p>
+<p>windows版本的网站如下：</p>
+<p><strong>[<strong><strong>该类型的内容暂不支持下载</strong></strong>]</strong></p>
+<p>Mac下也有对应版本，叫做VMware Fusion：</p>
+<p><strong>[<strong><strong>该类型的内容暂不支持下载</strong></strong>]</strong></p>
+<p>  特别注意，Windows10以上版本操作系统需要下载安装VMware Workstation Pro16及以上版本，安装方式此处略。  </p>
+<p>如果自己电脑上已经有了低版本的VMware，则需要先卸载，再重新安装。卸载过程比较麻烦。</p>
+<p>*<em>1.1.1.<strong><strong>卸载旧版</strong></strong>VMware</em>*<strong>（可选）</strong></p>
+<p>首先，在控制面板找到程序和功能选项，找到VMware，进行卸载操作：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image002.gif" alt="img"></p>
+<p>弹出确认框, 点击”下一步”:</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image004.gif" alt="img"></p>
+<p>下一步之后, 选择删除:</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image006.gif" alt="img"></p>
+<p>接下来，按照提示完成卸载操作即可。</p>
+<p>卸载完成后，还需要看看VMware的安装目录是否有旧数据，一并清理掉。</p>
+<p>比如安装在*<em>C</em><em><strong>盘的</strong></em>*Program Files(x86)**：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image008.gif" alt="img"></p>
+<p>则需要直接删除整个VMware目录：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image010.gif" alt="img"></p>
+<p>接下来要清理注册表：</p>
+<p>首先，按住Windows + R , 在弹出框中输入 “regedit” 调出注册表：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image012.gif" alt="img"></p>
+<p>进入注册表编辑器，如图：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image014.gif" alt="img"></p>
+<p>打开<strong>HKEY_CURRENT_USER</strong>文件夹，找到<strong>Software</strong>文件夹并打开</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image016.gif" alt="img"></p>
+<p>找到“VMware.Inc”，右键删除：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image018.gif" alt="img"></p>
+<p>*<em>1.1.2.<strong><strong>安装</strong></strong>VMware</em>*</p>
+<p>安装步骤略。。</p>
+<p>安装以后可以免费试用，大家可以去官网购买正版许可证，或者去网上看看有没有好心人赠送你一个许可证。启动后的界面如图所示：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image020.gif" alt="img"></p>
+<p>**1.1.3.**<strong>常见错误</strong></p>
+<p>如果VMware虚拟机运行报错，例如：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image022.gif" alt="img"></p>
+<p>这个是由于英特尔的虚拟化技术, 没有开启, 需要进入系统的BIOS界面 , 开启英特尔的虚拟化技术 ; 不同的电脑型号 , 进入BIOS界面的方式不同, 需要百度查询一下自己电脑的型号 , 如何进BIOS ;</p>
+<p>windows10系统可以参考: <a target="_blank" rel="noopener" href="https://blog.csdn.net/biu_code/article/details/107504627">https://blog.csdn.net/biu_code/article/details/107504627</a></p>
+<p>以ThinkPad为例，如图：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image024.gif" alt="img"></p>
+<p>**1.2.**<strong>创建虚拟机</strong></p>
+<p>Centos7是比较常用的一个Linux发行版本，在国内的使用比例还是比较高的。</p>
+<p>大家首先要下载一个Centos7的iso文件，我在资料中给大家准备了一个mini的版本，体积不到1G，推荐大家使用：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image026.gif" alt="img"></p>
+<p>我们在VMware《主页》界面中点击《创建新的虚拟机》按钮：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image028.gif" alt="img"></p>
+<p>然后会弹出一个窗口，我们直接点击下一步：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image030.gif" alt="img"></p>
+<p>然后页面中选择你准备好的ISO文件，继续点击下一步：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image032.gif" alt="img"></p>
+<p>然后填写虚拟机的名称以及虚拟机将来保存的位置：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image034.gif" alt="img"></p>
+<p>再次下一步，填写虚拟机磁盘大小。这里建议给大一点，否则将来不够用调整起来麻烦。而且这里设置大小并不是立刻占用这么多，而是设置一个上限：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image036.gif" alt="img"></p>
+<p>继续下一步，然后选择虚拟机硬件设置：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image038.gif" alt="img"></p>
+<p>在弹出的窗口中设置虚拟机硬件，建议CPU给到4核，内存给到8G：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image040.gif" alt="img"></p>
+<p>配置完成后，点击关闭，回到上一页面，继续点击完成：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image042.gif" alt="img"></p>
+<p>虚拟机就创建完毕了：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image044.gif" alt="img"></p>
+<p>*<em>1.3.<strong><strong>安装</strong></strong>Centos7</em>*</p>
+<p>接下来，我们启动刚刚创建的虚拟机，开始安装Centos7系统：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image046.gif" alt="img"></p>
+<p>启动后需要选择安装菜单，将鼠标移入黑窗口中后，将无法再使用鼠标，需要按上下键选择菜单。选中Install Centos 7 后按下回车：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image048.gif" alt="img"></p>
+<p>然后会提示我们按下enter键继续：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image050.gif" alt="img"></p>
+<p>过一会儿后，会进入语言选择菜单，这里可以使用鼠标选择。选择中文-简体中文，然后继续：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image052.gif" alt="img"></p>
+<p>接下来，会进入安装配置页面：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image054.gif" alt="img"></p>
+<p>鼠标向下滚动后，找到系统-安装位置配置，点击：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image056.gif" alt="img"></p>
+<p>选择刚刚添加的磁盘，并点击完成：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image058.gif" alt="img"></p>
+<p>然后回到配置页面，这次点击《网络和主机名》：</p>
+<p><img src="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image060.gif" alt="img"></p>
+<p>在网络页面做下面的几件事情：</p>
+<p>\1.    修改主机名为自己喜欢的主机名，不要出现中文和特殊字符，建议用localhost</p>
+<p>\2.    点击应用</p>
+<p>\3.    将网络连接打开</p>
+<p>\4.    点击配置，设置详细网络信息</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image062.gif" alt="img"></p>
+<p>最好用一个截图软件，记住上图中的网络详细信息，接下来的配置要参考：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image064.gif" alt="img"></p>
+<p>点击配置按钮后，我们需要把网卡地址改为静态IP，这样可以避免每次启动虚拟机IP都变化。所有配置照搬你自己截图的网络信息填写，不要照抄我的：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image066.gif" alt="img"></p>
+<p>  上图中的四个信息参考之前的<strong>以太网</strong>**(ens33)**<strong>网卡</strong>的截图，不要照搬我的来写。  </p>
+<p>最后，点击完成按钮：</p>
+<p><img src="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image068.gif" alt="img"></p>
+<p>回到配置界面后，点击开始安装：</p>
+<p><img src="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image070.gif" alt="img"></p>
+<p>接下来需要设置root密码：</p>
+<p><img src="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image072.gif" alt="img"></p>
+<p>填写你要使用的root密码，然后点击完成：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image074.gif" alt="img"></p>
+<p>接下来，耐心等待安装即可。</p>
+<p><img src="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image076.gif" alt="img"></p>
+<p>等待安装完成后，点击<strong>重启</strong>：</p>
+<p><img src="file:///C:/Users/waterdance/AppData/Local/Packages/oice_16_974fa576_32c1d314_25f6/AC/Temp/msohtmlclip1/01/clip_image078.gif" alt="img"></p>
+<p>耐心等待一段时间，不要做任何操作，虚拟机即可启动完毕：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image080.gif" alt="img"></p>
+<p>输入用户名root，然后点击回车，会要求你输入密码：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image082.gif" alt="img"></p>
+<p>此时你要输入密码，不过需要注意的是密码是<strong>隐藏</strong>的，输入了也看不见。所以放心输入，完成后回车即可：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image084.gif" alt="img"></p>
+<p>只要密码输入正确，就可以正常登录。此时可以用命令测试虚拟机网络是否畅通：</p>
+<p>  Bash   ping  baidu.com  </p>
+<p>如果看到这样的结果代表网络畅通：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image086.gif" alt="img"></p>
+<p>默认ping命令会持续执行，按下CTRL + C后命令即可停止。</p>
+<p>**1.4.**<strong>设置虚拟机快照</strong></p>
+<p>在虚拟机安装完成后，最好立刻设置一个快照，这样一旦将来虚拟机出现问题，可以快速恢复。</p>
+<p>我们先停止虚拟机，点击VMware顶部菜单中的暂停<strong>下拉选框</strong>，选择关闭客户机：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image088.gif" alt="img"></p>
+<p>接着，点击VMware菜单中的🔧按钮:</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image090.gif" alt="img"></p>
+<p>然后在弹出的快照管理窗口中，点击<strong>拍摄快照</strong>，填写新的快照信息：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image092.gif" alt="img"></p>
+<p>快照拍摄完成了！而且我们可以在不同阶段拍摄多个不同快照作为备份，方便后期恢复数据。</p>
+<p>假如以后虚拟机文件受损，需要恢复到初识状态的话，可以选中要恢复的快照，点击转到即可：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image094.gif" alt="img"></p>
+<p><strong>2.SSH****客户端</strong></p>
+<p>在VMware界面中操作虚拟机非常不友好，所以一般推荐使用专门的SSH客户端。市面上常见的有：</p>
+<p>•     Xshell：个人免费，商业收费，之前爆出过有隐藏后门。不推荐</p>
+<p>•     Finshell：基础功能免费，高级功能收费，基于Java，内存占用较高（在1个G左右）。不推荐</p>
+<p>•     MobarXterm：基础功能免费、高级功能收费。开源、功能强大、内存占用低（只有10m左右），但是界面不太漂亮。推荐使用</p>
+<p>*<em>2.1.<strong><strong>安装</strong></strong>MobarXterm</em>*</p>
+<p>这里我们会选择内存占用较低的MobarXterm作为SSH客户端，其官网地址：</p>
+<p><strong>[<strong><strong>该类型的内容暂不支持下载</strong></strong>]</strong></p>
+<p>安装完成后界面如图所示：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image096.gif" alt="img"></p>
+<p>点击session按钮，进入会话管理：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image098.gif" alt="img"></p>
+<p>在弹出的session管理页面中，按照下图填写信息并保存：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image100.gif" alt="img"></p>
+<p>点击OK后会提示你是第一次连接，询问你是信任连接的服务：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image102.gif" alt="img"></p>
+<p>选择accept之后，会询问你是否要记住密码，选择yes：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image104.gif" alt="img"></p>
+<p>紧接着需要你设置一个MobarXterm的全局密码用于做密码管理，建议设置一个与虚拟机密码不同的：</p>
+<p>输入密码：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image106.gif" alt="img"></p>
+<p>输入成功后，就会连接成功，并进入操作界面了：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image108.gif" alt="img"></p>
+<p>这里需要做一些基础的配置：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image110.gif" alt="img"></p>
+<p>**2.2.**<strong>配置默认编辑器</strong></p>
+<p>首先建议设置一下默认编辑器，这样我们通过MobarXterm的FTP工具打开文件时会以指定的编辑器打开，方便修改。我这里配置的是vscode：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image112.gif" alt="img"></p>
+<p>**2.3.**<strong>配置右键粘贴</strong></p>
+<p>复制粘贴是很常用的配置，MobarXterm默认左键选中即<strong>复制</strong>，但是需要配置右键点击为<strong>粘贴：</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image114.gif" alt="img"></p>
+<p>这样，复制和粘贴可以全部通过鼠标操作，无需按键。</p>
+<p><strong>2.4.SSH****配置</strong></p>
+<p>接下来还有几个ssh配置：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image116.gif" alt="img"></p>
+<p>分别是：</p>
+<p>•     默认的登录用户</p>
+<p>•     ssh保持连接</p>
+<p>•     取消连接成功后的欢迎banner</p>
+<p>*<em>2.5.<strong><strong>关闭</strong></strong>X-Server</em>*<strong>服务</strong></p>
+<p>大多数情况下，我们没有x-server的需求，因此可以选择不要自启动：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image118.gif" alt="img"></p>
+<p><strong>安装****Docker</strong></p>
+<p>本安装教程参考Docker官方文档，地址如下：</p>
+<p><strong>[<strong><strong>该类型的内容暂不支持下载</strong></strong>]</strong></p>
+<p>**1.**<strong>卸载旧版</strong></p>
+<p>首先如果系统中已经存在旧的Docker，则先卸载：</p>
+<p>  Shell   yum  remove docker \     docker-client \     docker-client-latest \     docker-common \     docker-latest \     docker-latest-logrotate \     docker-logrotate \     docker-engine  </p>
+<p>*<em>2.<strong><strong>配置</strong></strong>Docker</em><em><strong>的</strong></em><em>yum</em>*<strong>库</strong></p>
+<p>首先要安装一个yum工具</p>
+<p>  Bash   yum  install -y yum-utils  </p>
+<p>安装成功后，执行命令，配置Docker的yum源：</p>
+<p>  Bash   yum-config-manager  –add-repo <a target="_blank" rel="noopener" href="https://download.docker.com/linux/centos/docker-ce.repo">https://download.docker.com/linux/centos/docker-ce.repo</a>  </p>
+<p>*<em>3.<strong><strong>安装</strong></strong>Docker</em>*</p>
+<p>最后，执行命令，安装Docker</p>
+<p>  Bash   yum  install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin  docker-compose-plugin  </p>
+<p>**4.**<strong>启动和校验</strong></p>
+<p>  Bash   #  启动Docker   systemctl start docker      # 停止Docker   systemctl stop docker      # 重启   systemctl restart docker      # 设置开机自启   systemctl enable docker      # 执行docker ps命令，如果不报错，说明安装启动成功   docker ps  </p>
+<p>**5.**<strong>配置镜像加速</strong></p>
+<p>这里以阿里云镜像加速为例。</p>
+<p>**5.1.**<strong>注册阿里云账号</strong></p>
+<p>首先访问阿里云网站:</p>
+<p><a target="_blank" rel="noopener" href="https://www.aliyun.com/">https://www.aliyun.com/</a></p>
+<p>注册一个账号。</p>
+<p>**5.2.**<strong>开通镜像服务</strong></p>
+<p>在首页的产品中，找到阿里云的<strong>容器镜像服务</strong>：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image002-17097250992521.gif" alt="img"></p>
+<p>点击后进入控制台：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image004-17097250992532.gif" alt="img"></p>
+<p>首次可能需要选择立刻开通，然后进入控制台。</p>
+<p>**5.3.**<strong>配置镜像加速</strong></p>
+<p>找到<strong>镜像工具</strong>下的<strong>镜像加速器</strong>：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image006-17097250992534.gif" alt="img"></p>
+<p>页面向下滚动，即可找到配置的文档说明：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/clip_image008-17097250992533.gif" alt="img"></p>
+<p>具体命令如下：</p>
+<p>  Bash   #  创建目录   mkdir -p &#x2F;etc&#x2F;docker      # 复制内容，注意把其中的镜像加速地址改成你自己的   tee &#x2F;etc&#x2F;docker&#x2F;daemon.json &lt;&lt;-‘EOF’   {    “registry-mirrors”:  [“<a target="_blank" rel="noopener" href="https://xxxx.mirror.aliyuncs.com" ]">https://xxxx.mirror.aliyuncs.com&quot;]</a>   }   EOF      # 重新加载配置   systemctl daemon-reload      # 重启Docker   systemctl restart docker  </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/" rel="next" title="微服务-day03-入门1">
+                <i class="fa fa-chevron-left"></i> 微服务-day03-入门1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/" rel="prev" title="微服务-day03-docker2">
+                微服务-day03-docker2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+		  
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/2698022795" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2698022795@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/qq_40493033" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-globe"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+		  
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/" title="微服务-day03-docker2" target="_blank">微服务-day03-docker2</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/" title="微服务-day03-docker" target="_blank">微服务-day03-docker</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/" title="微服务-day03-入门1" target="_blank">微服务-day03-入门1</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/" title="微服务-day02-SpringCloud02" target="_blank">微服务-day02-SpringCloud02</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/" title="微服务-day01-SpringCloud01" target="_blank">微服务-day01-SpringCloud01</a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">waterdance</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">121.4k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "topRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+		# 要加入的代码
+</body>
+</html>

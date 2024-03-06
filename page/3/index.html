@@ -297,6 +297,961 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/" itemprop="url">javaweb-day08-springboot原理篇</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-15T19:41:49+08:00">
+                2024-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaweb/" itemprop="url" rel="index">
+                    <span itemprop="name">javaweb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="配置优先级"><a href="#配置优先级" class="headerlink" title="配置优先级"></a>配置优先级</h1><ul>
+<li><p>springboot中支持三种格式的配置文件：</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195245829.png" alt="image-20240215195245829"></p>
+<p>properties的优先级最高</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195550412.png" alt="image-20240215195550412"></p>
+<p>yml的优先级次之</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195629992.png" alt="image-20240215195629992"></p>
+<p>yaml的优先级最后</p>
+</li>
+<li><p>注意事项：虽然springboot支持多种格式配置文件，但是在项目开发时，推荐统一使用一种格式的配置（yml是主流）</p>
+</li>
+<li><p>springboot除了支持配置文件属性配置，还支持<font color="red">Java系统属性</font>和<font color="red">命令行参数</font>的方法进行属性配置。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215195946438.png" alt="image-20240215195946438"></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215200530374.png" alt="image-20240215200530374"></p>
+<p><font color="red">命令行参数（Program argument）的优先级要高于Java系统属性（VM option）设置。</font></p>
+</li>
+</ul>
+<p>目前的设置是在idea中，假如我们使用的不是idea，或者我们的项目已经打包上线了，我们又如何设置java系统属性和命令行参数呢？接下来运行项目打包后运行时如何指定java系统属性和命令行参数。</p>
+<ol>
+<li><p>执行maven打包指令package</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215201417286.png" alt="image-20240215201417286"></p>
+</li>
+<li><p>执行java指令，运行jar包</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dserver.port=<span class="number">9000</span> -jar tlias-web-management-<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT.jar --server.port=<span class="number">10010</span></span><br></pre></td></tr></table></figure>
+
+<p>注意事项：springboot项目进行打包时，需要引入插件spring-boot-maven-plugin（基于官网骨架创建项目，会自动添加该插件）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215201808877.png" alt="image-20240215201808877"></p>
+</li>
+</ol>
+<p>配置优先级（从高到低）</p>
+<ul>
+<li>java系统属性（-Dxxx&#x3D;xxx）</li>
+<li>命令行参数（–xxx&#x3D;xxx）</li>
+<li>application.properties</li>
+<li>application.yml</li>
+<li>application.yaml（忽略）</li>
+</ul>
+<h1 id="Bean管理"><a href="#Bean管理" class="headerlink" title="Bean管理"></a>Bean管理</h1><h2 id="获取bean"><a href="#获取bean" class="headerlink" title="获取bean"></a>获取bean</h2><ul>
+<li><p>默认情况下，Spring项目启动时，会把bean都创建好放在IOC容器中，如果想要主动获取这些bean，可以通过如下方式：</p>
+<ul>
+<li>根据name获取bean：<code>Object getBean(String name)</code></li>
+<li>根据类型获取bean：<code>&lt;T&gt; T getBean(Class&lt;T&gt; requiredType)</code></li>
+<li>根据name获取bean（带类型转换）：<code>&lt;T&gt; T getBean(String name, Class&lt;T&gt; requiredType)</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TliasWebManagementApplicationTests</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DeptService deptService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ApplicationContext applicationContext; <span class="comment">//IOC容器对象</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGetBean</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//根据bean的名称获取</span></span><br><span class="line">        <span class="type">DeptController</span> <span class="variable">bean1</span> <span class="operator">=</span> (DeptController) applicationContext.getBean(<span class="string">&quot;deptController&quot;</span>);</span><br><span class="line">		System.out.println(bean1);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//根据bean的类型获取</span></span><br><span class="line">		<span class="type">DeptController</span> <span class="variable">bean2</span> <span class="operator">=</span> applicationContext.getBean(DeptController.class);</span><br><span class="line">		System.out.println(bean2);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//根据bean的名称及类型获取</span></span><br><span class="line">		<span class="type">DeptController</span> <span class="variable">bean3</span> <span class="operator">=</span> applicationContext.getBean(<span class="string">&quot;deptController&quot;</span>, DeptController.class);</span><br><span class="line">		System.out.println(bean3);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意事项：上述所说的[Spring项目启动时，会把其中的bean都创建好]还会收到作用域及延迟初始化影响，这里主要针对默认的单例非延迟加载的bean而言。</p>
+</li>
+</ul>
+<h2 id="bean作用域"><a href="#bean作用域" class="headerlink" title="bean作用域"></a>bean作用域</h2><ul>
+<li><p>Spring支持五种作用域，后三种在web环境才会生效</p>
+<table>
+<thead>
+<tr>
+<th>作用域</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><font color="red">singleton</font></td>
+<td><font color="red">容器内声明的bean只有一个实例（单例）（默认）</font></td>
+</tr>
+<tr>
+<td><font color="red">prototype</font></td>
+<td><font color="red">每次使用该bean时都会创建新的实例（非单例）</font></td>
+</tr>
+<tr>
+<td>request</td>
+<td>每个请求范围内都会创建新的实例（web环境中，了解）</td>
+</tr>
+<tr>
+<td>session</td>
+<td>每个会话范围内都会创建新的实例（web环境中，了解）</td>
+</tr>
+<tr>
+<td>application</td>
+<td>每个应用范围内都会创建新的实例（web环境中，了解）</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>可以通过@Scope注解来进行配置作用域：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Scope(&quot;prototype&quot;)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/depts&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DeptController</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意事项</p>
+<ul>
+<li>默认singleton的bean，在容器启动时被创建，可以通过@Lazy注解来延迟初始化（延迟到第一次使用时）。</li>
+<li>prototype的bean，每一次使用该bean的时候都会创建一个新的实例。</li>
+<li>实际开发当中，绝大部分的Bean都是单例的，也就是说绝大部分Bean不需要配置scope属性。</li>
+</ul>
+</li>
+</ul>
+<h2 id="第三方bean"><a href="#第三方bean" class="headerlink" title="第三方bean"></a>第三方bean</h2><p>原生Bean</p>
+<ul>
+<li>@Controller</li>
+<li>@Service</li>
+<li>@Repository（@Mapper）</li>
+<li>@Component</li>
+</ul>
+<p>现在有以下情况，需要初始化某些第三方jar包中的某些类对象，而这些第三方jar包的原码默认是read-only的，不能在其类上加注解@Component。</p>
+<ul>
+<li><p>如果要管理的bean对象来自于第三方（不是自定义的），是无法用@Component及衍生注解声明bean的，就需要用到@Bean注解。</p>
+</li>
+<li><p>若要管理的第三方bean对象，建议对这些bean进行集中分类配置，可以通过@Configuration注解声明一个配置类。</p>
+</li>
+<li><p>将当前方法的返回值对象交给IOC容器管理，称为IOC容器的bean，通过@Bean注解的&#x2F;name&#x2F;value属性指定bean名称，如果为指定，默认方法名即为该第三方bean对象。（完成了控制反转）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215223531608.png" alt="image-20240215223531608"></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215224343513.png" alt="image-20240215224343513"></p>
+</li>
+<li><p>完成了依赖注入</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215225225131.png" alt="image-20240215225225131"></p>
+</li>
+<li><p>如果第三方bean需要依赖其他bean对象，直接再bean定义方法中设置形参即可，容器会根据类型自动装配。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215225407697.png" alt="image-20240215225407697"></p>
+</li>
+</ul>
+<h1 id="SpringBoot原理"><a href="#SpringBoot原理" class="headerlink" title="SpringBoot原理"></a>SpringBoot原理</h1><p>Spring全家桶都基于Spring Framework，这个框架比较繁琐（配置pom.xml复杂），基于此，在Spring Framework4.0之后，推出了Spring Boot框架（简化Spring Framework的开发）。</p>
+<p>Spring Boot提供了起步依赖和自动配置。</p>
+<ul>
+<li>起步依赖：大大简化pom.xml中依赖配置，解决spring framework中依赖配置繁琐的问题。</li>
+<li>自动配置：简化spring framework使用时bean的声明和配置。</li>
+</ul>
+<h2 id="起步依赖"><a href="#起步依赖" class="headerlink" title="起步依赖"></a>起步依赖</h2><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215230254400.png" alt="image-20240215230254400"></p>
+<p>spring框加进行web程序开发要引入上述每个依赖，而springboot只需要引入一个依赖，<font color="red">收益于maven的依赖传递（如果a依赖了b，b依赖了c，那么在引入a之后，b和c这两个依赖也都会引入）</font>。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215230457232.png" alt="image-20240215230457232"></p>
+<h2 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h2><ul>
+<li><p>SpringBoot的自动配置就是当spring容器启动后，一些配置类、bean对象就会自动存入到IOC容器中，不需要我们手动去声明，从而简化了开发，省去了繁琐的配置操作。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215231251757.png" alt="image-20240215231251757"></p>
+</li>
+</ul>
+<h3 id="自动配置原理"><a href="#自动配置原理" class="headerlink" title="自动配置原理"></a>自动配置原理</h3><p>springboot当中，我们引入对应的依赖，是如何将依赖中jar包当中所提供的这些bean以及配置类直接加载到当前项目的spring ioc容器当中，然后我们就可以直接使用了。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215231450566.png" alt="image-20240215231450566"></p>
+<ul>
+<li><p>方案一：@ComponentScan组件扫描</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215232814762.png" alt="image-20240215232814762"></p>
+</li>
+<li><p>方案二：@Import导入。使用@Import导入的类会被Spring加载到IOC容器中，导入形式主要有以下几种：</p>
+<ul>
+<li><p>导入普通类</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215233345565.png" alt="image-20240215233345565"></p>
+</li>
+<li><p>导入配置类（@Configuration，这个类中所有的加了@Bean方法返回的对象都会加载到IOC容器中）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215233510157.png" alt="image-20240215233510157"></p>
+</li>
+<li><p>导入ImportSelector接口实现类(<font color="red">selectImports方法，极其重要，决定哪些类可以作为Bean对象导入到IOC容器中</font>)</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215234724430.png" alt="image-20240215234724430"></p>
+</li>
+<li><p>@EnableXxxx注解，封装@Import注解，让第三方库作者来设置要实现哪些bean对象（推荐，方便，优雅）</p>
+<p>为启动程序加上@EnableXxxx注解，再创建Enablexxx接口，在该接口加上注解@Import(Xxxx.class)，指定的这个Xxxx.class实现ImportSelector接口的selectImports方法，该方法返回了具体哪些类会注入到ioc容器中。这样第三方作者可以快速方便的自动决定哪些类要加入到IOC容器中。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215235112424.png" alt="image-20240215235112424"></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240215235235351.png" alt="image-20240215235235351"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="源码跟踪"><a href="#源码跟踪" class="headerlink" title="源码跟踪"></a>源码跟踪</h3><p>重点&#x2F;关键：@SpringBootApplication(SpringBoot中最为重要的注解)</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216002845192.png" alt="image-20240216002845192"></p>
+<p>技巧：抓关键点，找关键流程</p>
+<ol>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216003918693.png" alt="image-20240216003918693"></p>
+</li>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216004027562.png" alt="image-20240216004027562"></p>
+</li>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216004154608.png" alt="image-20240216004154608"></p>
+</li>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216004548571.png" alt="image-20240216004548571"></p>
+</li>
+<li><p>找到了对应的selectImports方法，该方法会返回要封装到IOC容器的bean对象的全类名的数组。现在要查明数组的具体内容是什么，先进入getAutoConfigurationEntry找到具体的实现细节。<img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216004713347.png" alt="image-20240216004713347"></p>
+</li>
+<li><p>Entry里面返回了哪些信息，在这里可以看到，直接return了一个entry对象，new  entry对象时里面传递了两个参数，分别是configurations，exclusions，通过图5可以知道最终调用的是configurations。我们要去看一下这个configurations如何获取的，是通过调用getCandidateConfigurations方法。<img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216005719506.png" alt="image-20240216005719506"></p>
+</li>
+<li><p>getCandidateConfigurations的代码如下所示，通过调用loadFactoryNames获得configurations，它的具体实现细节暂时可跳过，重点注意下面的断言，如果configurations是空的，就会提示信息，信息描述是说当没有自动配置的类被发现时就会报错，这里有两个文件，首先，第一个文件是META-INF下的spring.factory文件，另一个是META-INF&#x2F;spring&#x2F;org.springframework.boot.autoconfigure.AutoConfiguration.imports，那也就是说，springboot在启动时会自动加载这两个文件中配置的信息，并将其封装到list集合，最终将list集合的内容封装到string类型的数组中，这些数据最终加载到IOC容器的Bean或者配置类。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216010055187.png" alt="image-20240216010055187"></p>
+</li>
+<li><p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216010605951.png" alt="image-20240216010605951"></p>
+</li>
+<li><p>可以看到，这两个文件下的内容都是各个类的全类名<img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216010704636.png" alt="image-20240216010704636"></p>
+</li>
+</ol>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216010819685.png" alt="image-20240216010819685"></p>
+<p>@SpringBootApplication</p>
+<ul>
+<li>该注解表示在SpringBoot工程引导类上，是springboot最最最重要的注解，该注解由三个部分组成。<ul>
+<li>@SpringBootConfiguration：该注解与@Configuration注解作用相同，用来声明当前也是一个配置类。</li>
+<li>@ComponentScan：组件扫描，默认扫描当前引导类所在包及其子包。</li>
+<li>@EnableAutoConfiguration：SpringBoot实现自动化配置的核心注解。</li>
+</ul>
+</li>
+</ul>
+<p>并不是所有的@Bean都会注册为bean对象，@ConditionalOnMissingBean就是用来决定哪些加了@Bean的方法返回的对象可以成为bean对象。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216011245608.png" alt="image-20240216011245608"></p>
+<p>@Conditional</p>
+<ul>
+<li>作用：按照一定的条件进行判断，在满足给定条件后才会注册对应的bean对象到Spring IOC容器中。</li>
+<li>位置：方法、类。</li>
+<li>@Conditional本身是一个父注解， 派生出大量的子注解；<ul>
+<li>@ConditionalOnClass：判断环境中是否有对应的字节码文件，才注册bean到IOC容器。</li>
+<li>@ConditionalOnMissingBean：判断环境中没有对应的bean（类型或名称），才注册bean到IOC容器。</li>
+<li>@ConditionalOnProperty：判断配置文件中有对应属性和值，才注册bean到IOC容器。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216011800342.png" alt="image-20240216011800342"></p>
+<ol>
+<li>不加@ConditionalOnClass注解的结果</li>
+</ol>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216135152532.png" alt="image-20240216135152532"></p>
+<ol start="2">
+<li><p>加了@ConditionalOnMissingBean注解（如果用户没有定义对应的第三方类名或方法，才会将其注入到Bean对象中）</p>
+</li>
+<li><p>加了@ConditionalOnClass注解（<font color="red">当pom.xml文件中引入当前name指定的全类对应的依赖时，才会将对象加入到bean对象中</font>）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216135356633.png" alt="image-20240216135356633"></p>
+</li>
+<li><p>加了@ConditionalOnProperty注解（判断配置文件是否存在对应的属性和属性值，如果存在，才会将这个bean注册到ioc容器中）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216142834334.png" alt="image-20240216142834334"></p>
+</li>
+</ol>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216142936518.png" alt="image-20240216142936518"></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216143403666.png" alt="image-20240216143403666"></p>
+<h3 id="案例（自定义starter）"><a href="#案例（自定义starter）" class="headerlink" title="案例（自定义starter）"></a>案例（自定义starter）</h3><p><strong>场景</strong></p>
+<ul>
+<li>在实际开发中，经常会定义一些公共组件，提供给各个项目团队使用。而在SpringBoot的项目中，一般会将这些公共组件封装为SpringBoot的starter。</li>
+</ul>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216144308670.png" alt="image-20240216144308670"></p>
+<p><strong>需求</strong></p>
+<ul>
+<li>需求：自定义aliyun-oss-spring-boot-starter，完成阿里云OSS操作工具类AliyunOSSUtils的自动配置。</li>
+<li>目标：引入起步依赖之后，要想使用阿里云OSS，注入AliyunOSSUtils直接使用即可。</li>
+</ul>
+<p>原始的使用阿里云OSS的步骤</p>
+<ol>
+<li>需要在pom.xml文件中引入阿里云OSS的一堆依赖</li>
+<li>参照官方提供的SDK改造工具类，将官方的SDK demo示例改造成工具类，然后在yml中配置aliyunOSS需要的配置参数，然后在通过AliyunOSS的实体类来加载yml配置文件当中的配置项，最后才可以在AliyunOSSUtils中获取这些参数，最后再将这个类交给SpringIOC容器管理，称为IOC容器当中的Bean对象。</li>
+</ol>
+<p>步骤</p>
+<ol>
+<li>创建aliyun-oss-spring-boot-starter模块</li>
+<li>创建aliyun-oss-spring-boot-autoconfigure模块，在starter中引入该模块</li>
+<li>在aliyun-oss-spring-boot-autoconfigure模块中定义自动配置功能， 并定义自动配置文件 META-INF&#x2F;spring&#x2F;xxxx.imports</li>
+</ol>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216145204597.png" alt="image-20240216145204597"></p>
+<p><strong>创建aliyun-oss-spring-boot-starter模块</strong></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216145946840.png" alt="image-20240216145946840"></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216150000745.png" alt="image-20240216150000745"></p>
+<p>修改pom.xml文件，可以删除下述三个红框位置的内容。<img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216150040587.png" alt="image-20240216150040587"></p>
+<p>删除所有文件至留下以下两项（如果创建的maven项目没有imi文件，解决办法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/helloearth121/article/details/118168244">IDEA使用Maven生成普通项目没有生成iml文件解决方法_创建java不自动创建iml-CSDN博客</a>）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216150441995.png" alt="image-20240216150441995"></p>
+<p><strong>创建aliyun-oss-spring-boot-autoconfigure模块</strong></p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216150711921.png" alt="image-20240216150711921"></p>
+<p>精简至如下结果</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216151112174.png" alt="image-20240216151112174"></p>
+<ol>
+<li><p>将autoconfigure依赖导入starter的pom.xml</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216151300776.png" alt="image-20240216151300776"></p>
+</li>
+<li><p>在autoconfigure模块中配置好AliyunOSSUtils（在autoconfigure模块的pom.xml中引入阿里云OSS依赖）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216151802968.png" alt="image-20240216151802968"></p>
+</li>
+<li><p>将对应AliOSSProperties类和AliOSSUtils类复制到autoconfigure模块的com.aliyun.oss包下。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216152055856.png" alt="image-20240216152055856"></p>
+</li>
+<li><p>补全这两个类需要的依赖和代码（getter和setter方法）</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216152347046.png" alt="image-20240216152347046"></p>
+</li>
+<li><p>由于这两个方法中加了@Component，但是它们都不是项目启动时加入的Bean对象，因此要将注解删除。为了实现依赖注入，要为我们自定义的第三方项目创建配置类，声明AliyunOSSUtils这个Bean.因此这一步的操作是声明配置类。</p>
+<p>先创建AliOSSAutoConfiguration类，加@Configuration使其成为配置类，加@Bean方法，返回值AliOSSUtils类，方法名为aliOSSUtils，使得返回的与方法名同名的AliOSSUtils类型的对象注册为Bean对象。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216152851187.png" alt="image-20240216152851187"></p>
+</li>
+<li><p>通过@EnableConfigurationProperties将AliOSSProperties导入到IOC容器中，使其称为Bean对象，同时将其作为aliOSSUtils的参数输入（默认将IOC容器的Bean对象传入），给AliOSSUtils类添加AliOSSProperties的对象属性，重构对应的AliOSSUtils的构造函数，确保其属性能接收到参数传入的Bean对象。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216154218655.png" alt="image-20240216154218655"></p>
+</li>
+<li><p>配置对应的配置文件META-INF&#x2F;spring&#x2F;xxxx.imports（在resource目录下创建META-INF.spring目录，在该目录下创建org.springframework.boot.autoconfigure.AutoConfiguration.imports文件，并将配置类的全类名com.aliyun.oss.AliOSSAutoConfiguration写入其中。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216155040246.png" alt="image-20240216155040246"></p>
+</li>
+<li><p>至此，完成！</p>
+</li>
+</ol>
+<p><strong>小结</strong></p>
+<p>我们主要定义了starter和autoconfigure两个模块，starter模块主要进行依赖管理，autoconfigure模块实现自动配置。</p>
+<p>我们需要定义一个自动配置类，将需要自动配置的Bean都定义在这个自动配置类当中，接着在org.springframework.boot.autoconfigure.AutoConfiguration.imports下导入启动类。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216160946664.png" alt="image-20240216160946664"></p>
+<h1 id="Web后端开发总结"><a href="#Web后端开发总结" class="headerlink" title="Web后端开发总结"></a>Web后端开发总结</h1><p>Web后端开发基于三层架构开发</p>
+<ul>
+<li>Controller控制器层，负责接受请求，响应数据</li>
+<li>Service业务层，负责业务逻辑处理</li>
+<li>Dao数据访问层&#x2F;持久层，负责处理数据访问操作，完成数据库增删改查</li>
+</ul>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216161332789.png" alt="image-20240216161332789"></p>
+<p>如果我们在执行具体业务之前要进行通用的业务处理，比如要进行登录校验，要进行统一的字符编码。此时可以借助于JavaWeb三大组件之一的过滤器Filter或Spring当中提供的拦截器Interceptor实现。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216161633213.png" alt="image-20240216161633213"></p>
+<p>为了实现三层架构层与层之间的解耦，我们学习了spring框架的第一大核心IOC控制反转和DI依赖注入。</p>
+<p>IOC控制反转：将对象创建的控制权由应用程序自身交给外部容器，并将对象声明为IOC容器的Bean对象。</p>
+<p>DI依赖注入：容器为程序提供运行时需要的资源。</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216161940142.png" alt="image-20240216161940142"></p>
+<ul>
+<li><p>AOP面向切面编程</p>
+</li>
+<li><p>事务管理</p>
+</li>
+<li><p>全局异常处理</p>
+</li>
+<li><p>传统会话技术：Cookie、Session</p>
+</li>
+<li><p>新的会话跟踪解决方案：JWT</p>
+</li>
+<li><p>阿里云OSS对象存储服务</p>
+</li>
+<li><p>MyBatis持久层框架操作数据库</p>
+</li>
+</ul>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216162200217.png" alt="image-20240216162200217"></p>
+<p>各个技术分属细节</p>
+<p><img src="/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/image-20240216162502383.png" alt="image-20240216162502383"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/" itemprop="url">javaweb-day07-事务管理 & AOP</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-14T12:10:24+08:00">
+                2024-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaweb/" itemprop="url" rel="index">
+                    <span itemprop="name">javaweb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="事务管理"><a href="#事务管理" class="headerlink" title="事务管理"></a>事务管理</h1><h2 id="事务回顾"><a href="#事务回顾" class="headerlink" title="事务回顾"></a>事务回顾</h2><ul>
+<li><p>概念</p>
+<p>事务是一组操作的集合，它是一个不可分割的工作单位，这些操作要么同时成功，要么同时失败。</p>
+</li>
+<li><p>操作</p>
+<ul>
+<li>开启事务（一组操作开始前，开启事务）：start transaction &#x2F; begin；</li>
+<li>提交事务（这组操作全部成功后，提交事务）：commit；</li>
+<li>回滚事务（中间任何一个操作出现异常，回滚事务）：rollback；</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h2><p>案例需求：解散部门，删除部门，同时删除该部门下的员工。</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214122907385.png" alt="image-20240214122907385"></p>
+<p>问题（数据库操作中间报错，导致后续数据库操作未正常执行）</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214122932665.png" alt="image-20240214122932665"></p>
+<p>解决办法Spring事务管理</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214123058600.png" alt="image-20240214123058600"></p>
+<ul>
+<li><p>注解：@Transactional</p>
+</li>
+<li><p>位置：业务（service）层的方法上、类上、接口上</p>
+<p>（作用在方法上，表示当前方法交由spring事务管理；作用在类上，表示当前类的所有方法交由spring事务管理；作用在接口上，表示这个接口下所有实现类的所有实现方法都交由spring事务管理）</p>
+</li>
+<li><p>作用：将当前方法交给spring进行事务管理，方法执行前，开启事务；成功执行完毕，提交事务；出现异常，回滚事务</p>
+</li>
+<li><p>常见用法：在执行多次数据访问操作的业务方法上加上Transactional注解。</p>
+</li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214124025970.png" alt="image-20240214124025970"></p>
+<p><strong>开启事务日志</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启事务管理日志</span></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="attr">org.springframework.jdbc.support.JdbcTransactionManager :</span> <span class="string">debug</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="事务进阶"><a href="#事务进阶" class="headerlink" title="事务进阶"></a>事务进阶</h2><h3 id="rollbackFor"><a href="#rollbackFor" class="headerlink" title="rollbackFor"></a>rollbackFor</h3><ul>
+<li><p>默认情况下，只有出现RuntimeException才回滚异常。rollbackFor属性用于控制出现何种异常类型，回滚事务。</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214125021300.png" alt="image-20240214125021300"></p>
+<p>增加代码</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214124800658.png" alt="image-20240214124800658"></p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214125224998.png" alt="image-20240214125224998"></p>
+</li>
+</ul>
+<h3 id="propagation"><a href="#propagation" class="headerlink" title="propagation"></a>propagation</h3><ul>
+<li><p>事务传播行为：指的是当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行事务控制。</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214125400853.png" alt="image-20240214125400853"></p>
+<table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><font color="red">REQUIRED</font></td>
+<td><font color="red">【默认值】需要事务，有则加入，无则创建新事务</font></td>
+</tr>
+<tr>
+<td><font color="red">REQUIRES_NEW</font></td>
+<td><font color="red">需要新事务，无论有无，总是创建新事务</font></td>
+</tr>
+<tr>
+<td>SUPPORTS</td>
+<td>支持事务，有则加入，无则在无事务状态中运行</td>
+</tr>
+<tr>
+<td>NOT_SUPPORTED</td>
+<td>不支持事务，在无事务状态下运行，如果当前存在已有事务，则挂起当前事务</td>
+</tr>
+<tr>
+<td>MANDATORY</td>
+<td>必须有事务，否则抛异常</td>
+</tr>
+<tr>
+<td>NEVER</td>
+<td>必须没事务，否则抛异常</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>案例：解散部门时，记录操作日志</p>
+<p>需求：解散部门时，无论是成功还是失败，都要记录操作日志。</p>
+<p>步骤：</p>
+<ol>
+<li>解散部门：删除部门、删除部门下的员工</li>
+<li>记录日志到数据库表中</li>
+</ol>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214132730521.png" alt="image-20240214132730521"></p>
+<ul>
+<li>REQUIRED：大部分情况下都是用该传播行为即可。</li>
+<li>REQUIRES_NEW：当我们不希望事务之间相互影响时，可以使用该传播行为。例如：下订单前需要记录日志，不论订单保存成功与否，都需要保证日志记录能够记录成功。</li>
+</ul>
+<h1 id="AOP基础"><a href="#AOP基础" class="headerlink" title="AOP基础"></a>AOP基础</h1><h2 id="AOP概述"><a href="#AOP概述" class="headerlink" title="AOP概述"></a>AOP概述</h2><ul>
+<li><p>AOP：Aspect Oriented Programming（面向切面编程、面向方面编程），其实就是面向特定方法编程。</p>
+</li>
+<li><p>场景</p>
+<ul>
+<li><p>案例部分功能运行较慢，定位执行耗时较长的业务方法，此时需要统计每个业务方法的执行耗时</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214135211983.png" alt="image-20240214135211983"></p>
+</li>
+<li><p>实现：</p>
+<ul>
+<li>动态代理是面向切面编程最主流的实现。而SpringAOP是Spring框架的高级技术，旨在管理bean对象的过程中，主要通过底层的动态代理机制，对特定的方法进行编程。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="AOP快速入门"><a href="#AOP快速入门" class="headerlink" title="AOP快速入门"></a>AOP快速入门</h2><p>案例：Spring AOP快速入门：统计各个业务层方法执行耗时</p>
+<ul>
+<li><p>导入依赖：在pom.xml中导入AOP的依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pom.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写AOP程序：针对于特定方法根据业务需要进行编程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Around;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span> <span class="comment">//当前类是AOP类</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TimeAspect</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;execution(* com.example.service.*.*(..))&quot;)</span>  <span class="comment">//运行service包下所有类或接口的所有方法，切入点表达式</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">recordTime</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="comment">//1. 记录开始时间</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">begin</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 调用原始方法运行</span></span><br><span class="line">        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> joinPoint.proceed();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3. 记录结束时间，计算方法执行耗时</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">end</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        log.info(joinPoint.getSignature() + <span class="string">&quot;方法执行耗时：&#123;&#125;ms&quot;</span>,end-begin);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214144033685.png" alt="image-20240214144033685"></p>
+<h2 id="AOP核心概念"><a href="#AOP核心概念" class="headerlink" title="AOP核心概念"></a>AOP核心概念</h2><ul>
+<li><p>连接点：JoinPoint，可以被AOP控制的方法（暗含方法执行时的相关信息）</p>
+</li>
+<li><p>通知：Advice，指那些重复的逻辑，也就是共性功能（最终体现为一个方法）</p>
+</li>
+<li><p>切入点：PointCut，匹配连接点的条件，通知仅会在切入点方法执行时被应用</p>
+</li>
+<li><p>切面：Aspect，描述通知与切入点的对应关系（通知+切入点）</p>
+</li>
+<li><p>目标对象：Target，通知所应用的对象</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214144744583.png" alt="image-20240214144744583"></p>
+</li>
+<li><p>AOP执行流程</p>
+<p>程序运行时，会自动为目标对象生成对应的代理对象，在代理对象中，就会对目标对象中的原始方法进行功能增强。增强逻辑取决于Aspect定义的增强功能。AOP本质还是基于动态代理。如下所示：</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214145040852.png" alt="image-20240214145040852"></p>
+</li>
+</ul>
+<h1 id="AOP进阶"><a href="#AOP进阶" class="headerlink" title="AOP进阶"></a>AOP进阶</h1><h2 id="通知类型"><a href="#通知类型" class="headerlink" title="通知类型"></a>通知类型</h2><ol>
+<li>@Around：环绕通知，此注解标注的通知方法在目标方法前、后都被执行</li>
+<li>@Before：前置通知，此注解标注的通知方法在目标方法前被执行</li>
+<li>@After：后置通知，此注解标注的通知方法在目标方法后被执行，无论是否有异常都会执行</li>
+<li>@AfterReturning：返回后通知，此注解标注的通知方法在目标方法后被执行，有异常不会执行</li>
+<li>@AfterThrowing：异常后通知，此注解标注的通知方法发生异常后执行</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyAspect1</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;execution(* com.example.service.impl.DeptServiceImpl.*(..))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">before</span><span class="params">()</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;before ...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;execution(* com.example.service.impl.DeptServiceImpl.*(..))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">around</span><span class="params">(ProceedingJoinPoint proceedingJoinPoint)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        log.info(<span class="string">&quot;around before ...&quot;</span>);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> proceedingJoinPoint.proceed();</span><br><span class="line">        log.info(<span class="string">&quot;around after ...&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After(&quot;execution(* com.example.service.impl.DeptServiceImpl.*(..))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">after</span><span class="params">()</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;after ...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterReturning(&quot;execution(* com.example.service.impl.DeptServiceImpl.*(..))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterReturning</span><span class="params">()</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;afterReturning ...&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterThrowing(&quot;execution(* com.example.service.impl.DeptServiceImpl.*(..))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterThrowing</span><span class="params">()</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;afterThrowing ...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行顺序如下所示：</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214151512139.png" alt="image-20240214151512139"></p>
+<p>注意事项：</p>
+<ul>
+<li>@Around环绕通知需要自己调用proceedingJoinPoint.proceed()来让原始方法执行，其他通知不需要考虑目标方法执行</li>
+<li>@Around环绕通知方法的返回值，必须指定为Object，来接收原始方法的返回值。</li>
+</ul>
+<p>@PointCut</p>
+<ul>
+<li><p>该注解的作用时将公共的切点表达式抽取出来，需要用到时引用该切点表达式即可。</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214152457184.png" alt="image-20240214152457184"></p>
+</li>
+</ul>
+<p><strong>小结</strong></p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214152524439.png" alt="image-20240214152524439"></p>
+<h2 id="通知顺序"><a href="#通知顺序" class="headerlink" title="通知顺序"></a>通知顺序</h2><p>当有多个切面的切入点都匹配到了目标方法，目标方法运行时，多个通知方法都会被执行。</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214152933743.png" alt="image-20240214152933743"></p>
+<p>执行顺序</p>
+<ol>
+<li><p>不同切面类中，默认按照切面类的类名字母排序</p>
+<ul>
+<li>目标方法前的通知方法：字母排名靠前的先执行</li>
+<li>目标方法后的通知方法：字母排名靠前的后执行</li>
+</ul>
+</li>
+<li><p>用@Order(数字)加载切面类上来控制顺序</p>
+<ul>
+<li>目标方法前的通知方法：数字小的先执行</li>
+<li>目标方法后的通知方法：数字小的后执行</li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214153232022.png" alt="image-20240214153232022"></p>
+</li>
+</ol>
+<h2 id="切入点表达式"><a href="#切入点表达式" class="headerlink" title="切入点表达式"></a>切入点表达式</h2><ul>
+<li>切入点表达式：描述切入点方法的一种表达式</li>
+<li>作用：主要用来决定项目中的哪些方法需要加入通知</li>
+<li>常见形式：<ul>
+<li>execution(…)：根据方法的签名来匹配</li>
+<li>@annotation(…)：根据注解匹配</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214153640323.png" alt="image-20240214153640323"></p>
+<h3 id="切入点表达式-execution"><a href="#切入点表达式-execution" class="headerlink" title="切入点表达式 - execution"></a>切入点表达式 - execution</h3><p>execution主要根据方法的返回值、包名、类名、方法名、方法参数等信息来匹配，语法为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">execution(访问修饰符? 返回值 包名.类名.?方法名(方法参数) <span class="keyword">throws</span> 异常?)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214153831045.png" alt="image-20240214153831045"></p>
+<ul>
+<li><p>其中带？的表示可以省略的部分</p>
+<ul>
+<li>访问修饰符：可省略（比如：public、protected）</li>
+<li>包名.类名：可省略</li>
+<li>throws 异常：可省略（注意是方法上声明抛出的异常，不是实际抛出的异常）</li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214153959965.png" alt="image-20240214153959965"></p>
+</li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214155556329.png" alt="image-20240214155556329"></p>
+<ul>
+<li><p>可以使用通配符描述切入店</p>
+<ul>
+<li><p>*：单个独立的任意符号，可以通配任意返回值、包名、类名、方法名、任意类型的一个参数，也可以通配包、类、方法名的一部分</p>
+<p>如下所示：匹配任意返回类型，任意二级包名，任意类&#x2F;接口，update后续任意部分的任意单个参数</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214155710577.png" alt="image-20240214155710577"></p>
+</li>
+<li><p>.. : 多个连续的任意符号，可以通配任意层级的包，或任意类型、任意个数的参数</p>
+<p>如下所示：匹配任意返回类型，任意层级的包，任意方法名，任意数量的参数</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214155744813.png" alt="image-20240214155744813"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214160336308.png" alt="image-20240214160336308"></p>
+<p>匹配：com包下任意一级子包的service包的impl包的以ServiceImpl结尾的类的以delete开头且含有一个参数的方法。</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214161042187.png" alt="image-20240214161042187"></p>
+<p><font color="red">匹配多个不同名不同参数的方法。</font></p>
+<p>书写规范</p>
+<ul>
+<li>所有业务方法名在命名时应该尽量规范蛮方便切入点表达式快速匹配。如：查询类方法都是find开头，更新类方法都以update开头。</li>
+<li>描述切入点方法时通常基于接口描述，而不是直接描述实现类，增强拓展性。</li>
+<li>在满足业务需要的前提下，尽量缩小切入点的匹配范围。如：包名匹配尽量不要使用..,使用*匹配单个包。</li>
+</ul>
+<h3 id="切入点表达式-anotation"><a href="#切入点表达式-anotation" class="headerlink" title="切入点表达式 - @anotation"></a>切入点表达式 - @anotation</h3><ul>
+<li><p>@annotation切入点表达式，用于匹配标识有特定注解的方法</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214164136474.png" alt="image-20240214164136474"></p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214164149820.png" alt="image-20240214164149820"></p>
+</li>
+</ul>
+<h2 id="连接点"><a href="#连接点" class="headerlink" title="连接点"></a>连接点</h2><ul>
+<li><p>在Spring中用JoinPoint抽象了连接点，用它可以获得方法执行时的相关信息，如目标类名，方法名，方法参数等。</p>
+<ul>
+<li>对于@Around 通知，获取连接点信息只能使用ProceedingJoinPoint</li>
+<li>对于其他四种通知，获取连接点信息只能使用JointPoint，它是ProceedingJoinPoint的父类型</li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214170831453.png" alt="image-20240214170831453"></p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214170900363.png" alt="image-20240214170900363"></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.JoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="comment">//@Order(3)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyAspect7</span> &#123; </span><br><span class="line">    <span class="meta">@Pointcut(&quot;execution(* com.example.service.DeptService.*(..))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">pt</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before(&quot;pt()&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">before</span><span class="params">(JoinPoint joinPoint)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;MyAspect8 ... before ...&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;pt()&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">around</span><span class="params">(ProceedingJoinPoint proceedingJoinPoint)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        log.info(<span class="string">&quot;MyAspect8 around before ...&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1. 获取目标对象的类名</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> proceedingJoinPoint.getTarget().getClass().getName();</span><br><span class="line">        log.info(<span class="string">&quot;目标对象的类名：&#123;&#125;&quot;</span>,className);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 获取目标方法的方法名</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> proceedingJoinPoint.getSignature().getName();</span><br><span class="line">        log.info(<span class="string">&quot;目标方法的方法名:&#123;&#125;&quot;</span>,methodName);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3. 获取目标方法运行时传入的参数</span></span><br><span class="line">        Object[] args = proceedingJoinPoint.getArgs();</span><br><span class="line">        log.info(<span class="string">&quot;目标方法运行时传入的参数：&#123;&#125;&quot;</span>, Arrays.toString(args));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4. 获取目标方法执行</span></span><br><span class="line">        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> proceedingJoinPoint.proceed();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5. 获取目标方法运行的返回值</span></span><br><span class="line">        log.info(<span class="string">&quot;目标方法运行的返回值：&#123;&#125;&quot;</span>,result);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="AOP案例"><a href="#AOP案例" class="headerlink" title="AOP案例"></a>AOP案例</h1><p>案例：将案例中增删改查相关接口的操作日志记录到数据库表中</p>
+<p>操作日志</p>
+<p>日志信息包含：操作人、操作时间、执行方法的全类名、执行方法名、方法运行时参数、返回值、方法执行时长</p>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214172708047.png" alt="image-20240214172708047"></p>
+<p>思路分析</p>
+<ul>
+<li>需要对所有业务类中的增删改查方法添加统一功能，使用AOP技术最为方便。</li>
+</ul>
+<p><img src="/2024/02/14/javaweb-day07-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86-AOP/image-20240214173033257.png" alt="image-20240214173033257"></p>
+<p>步骤</p>
+<ul>
+<li><p>准备：</p>
+<ul>
+<li><p>在案例工程中引入AOP的起步依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pom.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-aop<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>导入资料中准备好的数据库表结构，并引入对应的实体类</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> operate_log</span><br><span class="line">(</span><br><span class="line">    id            <span class="type">int</span> unsigned auto_increment comment <span class="string">&#x27;ID&#x27;</span></span><br><span class="line">        <span class="keyword">primary</span> key,</span><br><span class="line">    operate_user  <span class="type">int</span> unsigned  <span class="keyword">null</span> comment <span class="string">&#x27;操作人ID&#x27;</span>,</span><br><span class="line">    operate_time  datetime      <span class="keyword">null</span> comment <span class="string">&#x27;操作时间&#x27;</span>,</span><br><span class="line">    class_name    <span class="type">varchar</span>(<span class="number">100</span>)  <span class="keyword">null</span> comment <span class="string">&#x27;操作的类名&#x27;</span>,</span><br><span class="line">    method_name   <span class="type">varchar</span>(<span class="number">100</span>)  <span class="keyword">null</span> comment <span class="string">&#x27;操作的方法名&#x27;</span>,</span><br><span class="line">    method_params <span class="type">varchar</span>(<span class="number">1000</span>) <span class="keyword">null</span> comment <span class="string">&#x27;方法参数&#x27;</span>,</span><br><span class="line">    return_value  <span class="type">varchar</span>(<span class="number">2000</span>) <span class="keyword">null</span> comment <span class="string">&#x27;返回值&#x27;</span>,</span><br><span class="line">    cost_time     <span class="type">bigint</span>        <span class="keyword">null</span> comment <span class="string">&#x27;方法执行耗时, 单位:ms&#x27;</span></span><br><span class="line">)</span><br><span class="line">    comment <span class="string">&#x27;操作日志表&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OperateLog</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id; <span class="comment">//ID</span></span><br><span class="line">    <span class="keyword">private</span> Integer operateUser; <span class="comment">//操作人ID</span></span><br><span class="line">    <span class="keyword">private</span> LocalDateTime operateTime; <span class="comment">//操作时间</span></span><br><span class="line">    <span class="keyword">private</span> String className; <span class="comment">//操作类名</span></span><br><span class="line">    <span class="keyword">private</span> String methodName; <span class="comment">//操作方法名</span></span><br><span class="line">    <span class="keyword">private</span> String methodParams; <span class="comment">//操作方法参数</span></span><br><span class="line">    <span class="keyword">private</span> String returnValue; <span class="comment">//操作方法返回值</span></span><br><span class="line">    <span class="keyword">private</span> Long costTime; <span class="comment">//操作耗时</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>编码：</p>
+<ul>
+<li><p>自定义注解@Log</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.anno;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Log &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义切面类，完成记录操作日志的逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.aop;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.example.mapper.OperateLogMapper;</span><br><span class="line"><span class="keyword">import</span> com.example.pojo.OperateLog;</span><br><span class="line"><span class="keyword">import</span> com.example.utils.JwtUtils;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Claims;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Around;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LogAspect</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> OperateLogMapper operateLogMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> HttpServletRequest httpServletRequest;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around(&quot;@annotation(com.example.anno.Log)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">recordLog</span><span class="params">(ProceedingJoinPoint proceedingJoinPoint)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//操作人员ID - 当前登录员工ID</span></span><br><span class="line">        <span class="comment">//获取请求头中的JWT令牌，解析令牌</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> httpServletRequest.getHeader(<span class="string">&quot;token&quot;</span>);</span><br><span class="line">        <span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> JwtUtils.parseJWT(jwt);</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">operatorUser</span> <span class="operator">=</span> (Integer) claims.get(<span class="string">&quot;id&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//操作时间</span></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">operateTime</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//操作类名</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> proceedingJoinPoint.getTarget().getClass().getName();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//操作方法名</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> proceedingJoinPoint.getSignature().getName();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//操作方法参数</span></span><br><span class="line">        Object[] args = proceedingJoinPoint.getArgs();</span><br><span class="line">        <span class="type">String</span> <span class="variable">methodParams</span> <span class="operator">=</span> Arrays.toString(args);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//操作耗时</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">begin</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用原始目标方法运行</span></span><br><span class="line">        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> proceedingJoinPoint.proceed();</span><br><span class="line"></span><br><span class="line">        <span class="type">long</span> <span class="variable">end</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//操作方法返回值</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">returnValue</span> <span class="operator">=</span> JSONObject.toJSONString(result);</span><br><span class="line"></span><br><span class="line">        <span class="type">Long</span> <span class="variable">costTime</span> <span class="operator">=</span> end - begin;</span><br><span class="line"></span><br><span class="line">        <span class="type">OperateLog</span> <span class="variable">operateLog</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">OperateLog</span>(<span class="literal">null</span>, operatorUser, operateTime, className, methodName, methodParams, returnValue, costTime);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//记录操作日志</span></span><br><span class="line">        operateLogMapper.insert(operateLog);</span><br><span class="line"></span><br><span class="line">        log.info(<span class="string">&quot;AOP记录操作日志：&#123;&#125;&quot;</span>, operateLog);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>定义operateLogMapper接口，创建对应的插入操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.DeptLog;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Insert;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Mapper;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">DeptLogMapper</span> &#123;</span><br><span class="line">    <span class="meta">@Insert(&quot;insert into dept_log(create_time,description) values(#&#123;createTime&#125;,#&#123;description&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(DeptLog deptLog)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>获取当前登录用户</p>
+<ul>
+<li>获取request对象，从请求头中获取到jwt令牌，解析令牌获取出当前用户的id。</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3982,762 +4937,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2023/11/17/junit-reflex-proxy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2023/11/17/junit-reflex-proxy/" itemprop="url">junit-reflex-proxy</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-11-17T13:52:50+08:00">
-                2023-11-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javase/" itemprop="url" rel="index">
-                    <span itemprop="name">javase</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  22
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><h2 id="概述、Junit框架快速入门"><a href="#概述、Junit框架快速入门" class="headerlink" title="概述、Junit框架快速入门"></a>概述、Junit框架快速入门</h2><ul>
-<li><p>针对最小的功能单元（方法），编写测试代码进行正确性测试</p>
-</li>
-<li><p><strong>具体步骤</strong></p>
-<ol>
-<li><p>将junit框架的jar包导入到项目中（注意：IDEA已经集成了Junit框架，不需要我们自己手动导入了）</p>
-</li>
-<li><p>为需要测试的业务类，定义对应的测试类，并为每个业务方法，编写对应的测试方法（<strong>必须：公共、无参、无返回值</strong>）</p>
-</li>
-<li><p>测试方法上必须声明@Test注解，然后在测试方法中，编写代码调用被测试的业务方法进行测试；</p>
-</li>
-<li><p>开始测试：选中测试方法，右键选择“JUnit”运行，如果测试通过则是绿色；如果测试失败，则是红色</p>
-<p><strong>1. 编写业务类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.d1_junit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StringUtil</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">printNumber</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(name == <span class="literal">null</span>)&#123;</span><br><span class="line">            System.out.println(<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;名字长度是&quot;</span> + name.length());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">getMaxIndex</span><span class="params">(String data)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(data == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> data.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>2. 编写测试类（测试类和业务类方法一一对应）</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.d1_junit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StringUtilTest</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testPrintNumber</span><span class="params">()</span> &#123;</span><br><span class="line">        StringUtil.printNumber(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">        StringUtil.printNumber(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGetMaxIndex</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(StringUtil.getMaxIndex(<span class="string">&quot;3&quot;</span>));</span><br><span class="line">        System.out.println(StringUtil.getMaxIndex(<span class="literal">null</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>3. 断言机制</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.d1_junit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Assert;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StringUtilTest</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testPrintNumber</span><span class="params">()</span> &#123;</span><br><span class="line">        StringUtil.printNumber(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">        StringUtil.printNumber(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGetMaxIndex</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(StringUtil.getMaxIndex(<span class="string">&quot;3&quot;</span>));</span><br><span class="line">        System.out.println(StringUtil.getMaxIndex(<span class="literal">null</span>));</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> StringUtil.getMaxIndex(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">        <span class="comment">//断言机制：程序员可以通过预测业务方法的结果</span></span><br><span class="line">        Assert.assertEquals(<span class="string">&quot;方法内部有bug!&quot;</span>,<span class="number">4</span>,index);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="Junit框架的常见注解"><a href="#Junit框架的常见注解" class="headerlink" title="Junit框架的常见注解"></a>Junit框架的常见注解</h2></li>
-</ul>
-<p><strong>Junit单元测试框架的常用注解（Junit 4.xxxx版本）</strong></p>
-<table>
-<thead>
-<tr>
-<th>注解</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>@Test</td>
-<td>测试类中的方法必须用它修饰才能成为测试方法，才能启动执行。</td>
-</tr>
-<tr>
-<td>@Before</td>
-<td>用来修饰一个实例方法，该方法会在每一个测试方法执行之前执行一次。</td>
-</tr>
-<tr>
-<td>@After</td>
-<td>用来修饰一个实例方法，该方法会在每一个测试方法执行之后执行一次。</td>
-</tr>
-<tr>
-<td>@BeforeClass</td>
-<td>用来修饰一个静态方法，该方法会在所有测试方法之前执行一次。</td>
-</tr>
-<tr>
-<td>@AfterClass</td>
-<td>用来修饰一个静态方法，该方法会在所有测试方法之后执行一次。</td>
-</tr>
-</tbody></table>
-<ul>
-<li>在测试方法执行前执行的方法，常用于：初始化资源。</li>
-<li>在测试方法执行完之后再执行的方法，常用于：释放资源。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.d1_junit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StringUtilTest</span> &#123;</span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;----&gt; test1 Before执行了--------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test2</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;----&gt;test2 After执行了--------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeClass</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">test3</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;----&gt;Before CLass执行了---------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterClass</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">test4</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;----&gt;After Class执行了---------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testPrintNumber</span><span class="params">()</span> &#123;</span><br><span class="line">        StringUtil.printNumber(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">        StringUtil.printNumber(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGetMaxIndex</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(StringUtil.getMaxIndex(<span class="string">&quot;3&quot;</span>));</span><br><span class="line">        System.out.println(StringUtil.getMaxIndex(<span class="literal">null</span>));</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> StringUtil.getMaxIndex(<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">        <span class="comment">//断言机制：程序员可以通过预测业务方法的结果</span></span><br><span class="line">        Assert.assertEquals(<span class="string">&quot;方法内部有bug!&quot;</span>, <span class="number">5</span>, index);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出结果如下所示：</span><br><span class="line">----&gt;Before CLass执行了---------</span><br><span class="line">----&gt; test1 Before执行了--------</span><br><span class="line">名字长度是<span class="number">5</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line">----&gt;test2 After执行了--------</span><br><span class="line">----&gt; test1 Before执行了--------</span><br><span class="line"><span class="number">1</span></span><br><span class="line">-<span class="number">1</span></span><br><span class="line">----&gt;test2 After执行了--------</span><br><span class="line">----&gt;After Class执行了---------</span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><h2 id="认识反射、获取类"><a href="#认识反射、获取类" class="headerlink" title="认识反射、获取类"></a>认识反射、获取类</h2><ul>
-<li>概念&#x2F;是什么：加载类，并允许以编程的方式解剖类中的各种成分（成员变量、方法、构造器等）。</li>
-</ul>
-<p>​		类是由成员变量、构造器、成员方法组成的。<strong>我们学习反射，就是学习获取类的信息，操作它们。</strong></p>
-<h2 id="获取类的构造器"><a href="#获取类的构造器" class="headerlink" title="获取类的构造器"></a>获取类的构造器</h2><p><strong>1、 反射第一步：加载类，获取类的字节码：Class对象（万物皆对象，类的字节码在Java中还是Class对象）</strong></p>
-<p>Student.java——&gt;Student.class——&gt;字节码文件——&gt;内存</p>
-<p>获取Class对象的三种方式</p>
-<ul>
-<li>Class c1 &#x3D; 类名.class</li>
-<li>调用Class提供方法：public static Class forName(String package);</li>
-<li>Object提供的方法：public Class getClass(); Class c3 &#x3D; 对象.getClass();</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.d2_reliect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test1Class</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="comment">//第一种方式</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c1</span> <span class="operator">=</span> Student.class;</span><br><span class="line">        System.out.println(c1.getName()); <span class="comment">// 全类名</span></span><br><span class="line">        System.out.println(c1.getSimpleName());  <span class="comment">//简名：Student</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//第二种方式</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c2</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;com.itheima.d2_reliect.Student&quot;</span>);</span><br><span class="line">        System.out.println(c1 == c2);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//第三种方式</span></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line">        <span class="type">Class</span> <span class="variable">c3</span> <span class="operator">=</span> s.getClass();</span><br><span class="line">        System.out.println(c3 == c1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>2、获取类的构造器：Constructor对象</strong></p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Constructor&lt;?&gt;[] getConstructors()</td>
-<td>获取全部构造器（只能获取public修饰的）</td>
-</tr>
-<tr>
-<td>Constructor&lt;?&gt;[] getDeclaredConstructors()</td>
-<td>获取全部构造器（只要存在就能拿到）</td>
-</tr>
-<tr>
-<td>Constructor&lt;?&gt;[] getConstructor(Class&lt;?&gt;… parameterTypes)</td>
-<td>获取某个构造器（只能获取public修饰的）</td>
-</tr>
-<tr>
-<td>Constructor&lt;?&gt;[] getDeclaredConstructor(Class&lt;?&gt;… parameterTypes)</td>
-<td>获取某个构造器（只要存在就能拿到）</td>
-</tr>
-</tbody></table>
-<p><strong>示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGetConstructor2</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException &#123;</span><br><span class="line">        <span class="comment">// 1、反射第一步：必须先得到这个类的Class对象</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Cat.class;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2、获取某个构造器，无参数构造器</span></span><br><span class="line">        <span class="type">Constructor</span> <span class="variable">constructor</span> <span class="operator">=</span> c.getDeclaredConstructor();</span><br><span class="line">        constructor.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        System.out.println(constructor.getName() + <span class="string">&quot;===&gt;&quot;</span> + constructor.getParameterCount());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2.1 通过无参构造器初始化实例</span></span><br><span class="line">        <span class="type">Cat</span> <span class="variable">cat</span> <span class="operator">=</span> (Cat) constructor.newInstance();</span><br><span class="line">        System.out.println(cat);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3、获取某个构造器，有参数构造器</span></span><br><span class="line">        <span class="type">Constructor</span> <span class="variable">constructor1</span> <span class="operator">=</span> c.getDeclaredConstructor(String.class, <span class="type">int</span>.class);</span><br><span class="line">        System.out.println(constructor1.getName() + <span class="string">&quot;===&gt;&quot;</span> + constructor1.getParameterCount());</span><br><span class="line">        <span class="comment">// 3.1 通过有参构造器初始化实例</span></span><br><span class="line">        <span class="type">Cat</span> <span class="variable">cat2</span> <span class="operator">=</span> (Cat) constructor1.newInstance(<span class="string">&quot;阿松大&quot;</span>,<span class="number">33</span>);</span><br><span class="line">        System.out.println(cat2);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>2.1、获取类构造器的作用：初始化类对象</strong></p>
-<table>
-<thead>
-<tr>
-<th>Constructor提供的方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>T newInstance(Object … initargs)</td>
-<td>调用此构造器对象表示的构造器，并传入参数，完成对象的初始化并返回</td>
-</tr>
-<tr>
-<td>public void setAccessible(boolean flag)</td>
-<td>设置为true，表示禁止检查访问控制（暴力反射）</td>
-</tr>
-</tbody></table>
-<p><strong>实例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、获取类的class对象</span></span><br><span class="line"><span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Cat.class;</span><br><span class="line"><span class="type">Constructor</span> <span class="variable">constructor1</span> <span class="operator">=</span> c.getDeclaredConstructor();</span><br><span class="line">System.out.println(constructor1.getName() + <span class="string">&quot;---&gt;&quot;</span> + constructor1.getParameterCount());</span><br><span class="line"><span class="comment">//设置访问权限禁止检查</span></span><br><span class="line">constructor1.setAccessible(<span class="literal">true</span>);</span><br><span class="line"><span class="comment">// 直接用会报错，因为Cat类的无参构造函数是private的，默认是无法访问的</span></span><br><span class="line"><span class="type">Cat</span> <span class="variable">cat</span> <span class="operator">=</span> (Cat) constructor1.newInstance();</span><br><span class="line">System.out.println(cat);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取有参数构造器</span></span><br><span class="line"><span class="type">Constructor</span> <span class="variable">constructor2</span> <span class="operator">=</span> c.getDeclaredConstructor(String.class, <span class="type">int</span>.class);</span><br><span class="line">System.out.println(constructor2.getName() + <span class="string">&quot;---&gt;&quot;</span> + constructor2.getParameterCount());</span><br><span class="line"><span class="type">Cat</span> <span class="variable">cat2</span> <span class="operator">=</span> (Cat) constructor2.newInstance(<span class="string">&quot;叮当猫&quot;</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(cat2);</span><br></pre></td></tr></table></figure>
-
-<p><strong>3、获取类的成员变量：Field对象</strong></p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>public Field[] getFields()</td>
-<td>获取类的全部成员变量（只能获取public修饰的）</td>
-</tr>
-<tr>
-<td>public Field[] getDeclaredFields()</td>
-<td>获取类的全部成员变量（只能存在就能拿到）</td>
-</tr>
-<tr>
-<td>public Field[] getField(String name)</td>
-<td>获取类的某个成员变量（只能获取public修饰的）</td>
-</tr>
-<tr>
-<td>public Field[] getDeclaredField(String name)</td>
-<td>获取类的某个成员变量（只能存在就能拿到）</td>
-</tr>
-</tbody></table>
-<p><strong>实例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、获取类的class对象</span></span><br><span class="line"><span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Cat.class;</span><br><span class="line"><span class="comment">// 2、获取类的全部成员变量</span></span><br><span class="line">Field[] declaredFields = c.getDeclaredFields();</span><br><span class="line"><span class="comment">// 3、遍历这个成员变量数组</span></span><br><span class="line"><span class="keyword">for</span> (Field declaredField : declaredFields) &#123;</span><br><span class="line">    System.out.println(declaredField);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 4、定位某个成员变量</span></span><br><span class="line"><span class="type">Field</span> <span class="variable">fName</span> <span class="operator">=</span> c.getDeclaredField(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">System.out.println(fName.getName() + <span class="string">&quot;---&gt;&quot;</span> + fName.getType());</span><br><span class="line"></span><br><span class="line"><span class="type">Field</span> <span class="variable">fAge</span> <span class="operator">=</span> c.getDeclaredField(<span class="string">&quot;age&quot;</span>);</span><br><span class="line">System.out.println(fAge.getName() + <span class="string">&quot;---&gt;&quot;</span> + fAge.getType());</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>void set(Object obj, Object value)</td>
-<td>赋值</td>
-</tr>
-<tr>
-<td>Object get(Object obj)</td>
-<td>取值</td>
-</tr>
-<tr>
-<td>public void setAccessible(boolean flag)</td>
-<td>设置为true，表示禁止检查访问控制（暴力反射）</td>
-</tr>
-</tbody></table>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//赋值</span></span><br><span class="line"><span class="type">Cat</span> <span class="variable">cat</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cat</span>();</span><br><span class="line"><span class="comment">//定位某个成员变量</span></span><br><span class="line"><span class="type">Field</span> <span class="variable">fName</span> <span class="operator">=</span> c.getDeclaredField(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">System.out.println(fName.getName() + <span class="string">&quot;---&gt;&quot;</span> + fName.getType());</span><br><span class="line"><span class="comment">//暴力反射</span></span><br><span class="line">fName.setAccessible(<span class="literal">true</span>);</span><br><span class="line">fName.set(cat,<span class="string">&quot;加菲猫&quot;</span>);</span><br><span class="line">System.out.println(cat);</span><br><span class="line"></span><br><span class="line"><span class="comment">//取值</span></span><br><span class="line"><span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> (String)fName.get(cat);</span><br><span class="line">System.out.println(name);</span><br></pre></td></tr></table></figure>
-
-<p><strong>4、获取类的成员方法：Method对象</strong></p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Method[] getMethods()</td>
-<td>获取类的全部成员方法（只能获取public修饰的）</td>
-</tr>
-<tr>
-<td>Method[] getDeclaredMethods()</td>
-<td>获取类的全部成员方法（只要存在就能拿到）</td>
-</tr>
-<tr>
-<td>Method getMethod(String name, Class&lt;?&gt;… parameterTypes)</td>
-<td>获取类的某个成员方法（只能获取public修饰的）</td>
-</tr>
-<tr>
-<td>Method getDeclaredMethod(String name, Class&lt;?&gt;… parameterTypes)</td>
-<td>获取类的某个成员方法（只要存在就能拿到）</td>
-</tr>
-</tbody></table>
-<p><strong>示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 1、反射第一步，先得到类的CLass对象</span></span><br><span class="line"><span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Cat.class;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、获取类的全部成员方法</span></span><br><span class="line">Method[] declaredMethods = c.getDeclaredMethods();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、遍历数组中的每个方法对象</span></span><br><span class="line"><span class="keyword">for</span> (Method declaredMethod : declaredMethods) &#123;</span><br><span class="line">    System.out.println(declaredMethod.getName() + <span class="string">&quot;---&gt;&quot;</span></span><br><span class="line">                       + declaredMethod.getParameterCount() + <span class="string">&quot;---&gt;&quot;</span></span><br><span class="line">                       + declaredMethod.getReturnType());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4、获取某个方法对象</span></span><br><span class="line"><span class="type">Method</span> <span class="variable">eat</span> <span class="operator">=</span> c.getDeclaredMethod(<span class="string">&quot;eat&quot;</span>);</span><br><span class="line">System.out.println(eat.getName() + <span class="string">&quot;---&gt;&quot;</span> + eat.getParameterCount() + <span class="string">&quot;---&gt;&quot;</span> + eat.getReturnType());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4、获取某个方法对象</span></span><br><span class="line"><span class="type">Method</span> <span class="variable">eat2</span> <span class="operator">=</span> c.getDeclaredMethod(<span class="string">&quot;eat&quot;</span>, String.class);</span><br><span class="line">System.out.println(eat2.getName() + <span class="string">&quot;---&gt;&quot;</span> + eat2.getParameterCount() + <span class="string">&quot;---&gt;&quot;</span> + eat2.getReturnType());</span><br></pre></td></tr></table></figure>
-
-<p><strong>4.2、执行类的成员方法</strong></p>
-<table>
-<thead>
-<tr>
-<th>Method提供的方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>public Object invoke(Object obj, Object… args)</td>
-<td>触发某个对象的该方法执行</td>
-</tr>
-<tr>
-<td>public void setAccessible(boolean flag)</td>
-<td>设置为true，表示禁止检查访问控制（暴力反射）</td>
-</tr>
-</tbody></table>
-<p><strong>示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1、反射第一步，先得到类的CLass对象</span></span><br><span class="line"><span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Cat.class;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、获取某个方法对象</span></span><br><span class="line"><span class="type">Method</span> <span class="variable">eat</span> <span class="operator">=</span> c.getDeclaredMethod(<span class="string">&quot;eat&quot;</span>);</span><br><span class="line">System.out.println(eat.getName() + <span class="string">&quot;---&gt;&quot;</span> + eat.getParameterCount() + <span class="string">&quot;---&gt;&quot;</span> + eat.getReturnType());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、获取某个方法对象</span></span><br><span class="line"><span class="type">Method</span> <span class="variable">eat2</span> <span class="operator">=</span> c.getDeclaredMethod(<span class="string">&quot;eat&quot;</span>, String.class);</span><br><span class="line">System.out.println(eat2.getName() + <span class="string">&quot;---&gt;&quot;</span> + eat2.getParameterCount() + <span class="string">&quot;---&gt;&quot;</span> + eat2.getReturnType());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4、出发run方法执行</span></span><br><span class="line"><span class="type">Cat</span> <span class="variable">cat</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cat</span>();</span><br><span class="line">eat2.setAccessible(<span class="literal">true</span>);  <span class="comment">// 禁止检查访问权限</span></span><br><span class="line"><span class="type">String</span> <span class="variable">rs</span> <span class="operator">=</span> eat2.invoke(cat, <span class="string">&quot;shit&quot;</span>); <span class="comment">// 调用无参数的run方法，用cat对象触发调用的。</span></span><br><span class="line">System.out.println(rs);</span><br></pre></td></tr></table></figure>
-
-<p><strong>5、反射的作用和应用场景</strong></p>
-<p>反射的作用</p>
-<ul>
-<li><p>基本作用：可以得到一个类的全部成分然后操作。</p>
-</li>
-<li><p>可以破坏封装性。</p>
-</li>
-<li><p>最重要的用途是：适合做Java的框架，基本上，主流的框架都会基于反射设计出一些通用的功能。</p>
-</li>
-</ul>
-<p>应用场景</p>
-<p>需求： 对任意一个对象，该框架都可以把对象的字段名和对应的值，保存到文件中去。</p>
-<p>实现步骤：</p>
-<ol>
-<li>定义一个方法，可以接受任意对象</li>
-<li>每收到一个对象后，使用反射获取该对象的Class对象，然后获取全部的成员变量。</li>
-<li>遍历成员变量，然后提取成员变量在该对象中的具体值。</li>
-<li>把成员变量名，和其值，写到文件中即可。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ObjectFrame</span> &#123;</span><br><span class="line">    <span class="comment">// 目标：保存任意对象的字段及其数据到文件中</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">saveObject</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> IllegalAccessException, FileNotFoundException &#123;</span><br><span class="line">        <span class="type">PrintStream</span> <span class="variable">ps</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PrintStream</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;src\\data.txt&quot;</span>, <span class="literal">true</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1、obj是任意对象，到底有多少个字段要保存。</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> obj.getClass();</span><br><span class="line">        <span class="type">String</span> <span class="variable">cName</span> <span class="operator">=</span> c.getSimpleName();</span><br><span class="line">        ps.println(<span class="string">&quot;------------------------------------&quot;</span> + cName + <span class="string">&quot;---------------------------&quot;</span>);</span><br><span class="line">        <span class="comment">// 2、从类中提取它的全部成员变量。</span></span><br><span class="line">        Field[] fields = c.getDeclaredFields();</span><br><span class="line">        <span class="comment">// 3、遍历每个成员变量</span></span><br><span class="line">        <span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">            <span class="comment">// 4、拿到成员变量的名字</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> field.getName();</span><br><span class="line">            <span class="comment">// 5、拿到这个成员变量在对象中的数据</span></span><br><span class="line">            field.setAccessible(<span class="literal">true</span>); <span class="comment">// 禁止检查访问控制</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> field.get(obj) + <span class="string">&quot;&quot;</span>;</span><br><span class="line">            ps.println(name + <span class="string">&quot;=&quot;</span> + value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="注解（Annotation）"><a href="#注解（Annotation）" class="headerlink" title="注解（Annotation）"></a>注解（Annotation）</h1><h2 id="概述、自定义注解"><a href="#概述、自定义注解" class="headerlink" title="概述、自定义注解"></a>概述、自定义注解</h2><ul>
-<li><p>就是Java代码中的特殊标记，比如：@Override，@Test等，作用是：让其他程序根据注解信息来决定怎么执行程序。</p>
-</li>
-<li><p>注意：注解可以用在类上、构造器上、方法上、成员变量上、参数上、等位置处。</p>
-</li>
-<li><p>自定义注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> 注解名称&#123;</span><br><span class="line">    <span class="keyword">public</span> 属性类型 属性名() <span class="keyword">default</span> 默认值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>特殊属性名：value</p>
-<ul>
-<li>如果注解中只有一个value属性，使用注释时，value名称可以不写！！</li>
-</ul>
-<p>示例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*AnnotationTest1.java*/</span></span><br><span class="line"><span class="meta">@MyTest1(aaa = &quot;牛魔王&quot;, ccc = &#123;&quot;html&quot;,&quot;java&quot;&#125;)</span></span><br><span class="line"><span class="comment">//@MyTest2(value=&quot;孙悟空&quot;)</span></span><br><span class="line"><span class="meta">@MyTest2(&quot;孙悟空&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationTest1</span> &#123;</span><br><span class="line">    <span class="meta">@MyTest1(aaa = &quot;铁扇公主&quot;, bbb = false, ccc = &#123;&quot;python&quot;,&quot;前端&quot;,&quot;java&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*Mytest1.java*/</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d3_annotation;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义注解</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTest1 &#123;</span><br><span class="line">    String <span class="title function_">aaa</span><span class="params">()</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">bbb</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">true</span>;</span><br><span class="line">    String[] ccc();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*Mytest2.java*/</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d3_annotation;</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTest2 &#123;</span><br><span class="line">    String <span class="title function_">value</span><span class="params">()</span>; <span class="comment">//特殊属性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>注解的原理</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTest1 &#123;</span><br><span class="line">    String <span class="title function_">aaa</span><span class="params">()</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">bbb</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">true</span>;</span><br><span class="line">    String[] ccc();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行main函数得到编译文件，使用xjad反编译文件，得到结果</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">MyTest1</span> extend Annotation&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title function_">aaa</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="type">boolean</span> <span class="title function_">bbb</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> String[] ccc();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注解本质上是一个接口，Java中所有注解都是继承Annotation接口的。</li>
-<li>@注解(…)：其实就是一个实现类对象，实现了该注解以及Annotation接口。</li>
-</ul>
-</li>
-</ul>
-<h2 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h2><ul>
-<li><p>指的是：修饰注解的注解。</p>
-</li>
-<li><p><strong>元注解一</strong></p>
-<p>作用：声明被修饰的注解只能在哪些位置使用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span></span><br><span class="line"><span class="number">1.</span> TYPE，类，接口</span><br><span class="line"><span class="number">2.</span> FIELD，成员变量</span><br><span class="line"><span class="number">3.</span> METHOD, 成员方法</span><br><span class="line"><span class="number">4.</span> PARAMETER, 方法参数</span><br><span class="line"><span class="number">5.</span> CONSTRUCTOR, 构造器</span><br><span class="line"><span class="number">6.</span> LOCAL_VARIABLE, 局部变量</span><br></pre></td></tr></table></figure>
-
-
-
-
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>作用范围</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>TYPE</td>
-<td>类，接口</td>
-</tr>
-<tr>
-<td>FIELD</td>
-<td>成员变量</td>
-</tr>
-<tr>
-<td>METHOD</td>
-<td>成员方法</td>
-</tr>
-<tr>
-<td>PARAMETER</td>
-<td>方法参数</td>
-</tr>
-<tr>
-<td>CONSTRUCTOR</td>
-<td>构造器</td>
-</tr>
-<tr>
-<td>LOCAL_VARIABLE</td>
-<td>局部变量</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<p>示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE,ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTest3 &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong>元注解二</strong></p>
-<p>作用：声明注解的保留周期</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy,RUNTIME)</span></span><br><span class="line"><span class="number">1.</span> SOURCE</span><br><span class="line">    只作用在源码阶段，字节码文件中不存在</span><br><span class="line"><span class="number">2.</span> CLASS（默认值）</span><br><span class="line">    保留到字节码文件姐阶段，运行阶段不存在</span><br><span class="line"><span class="number">3.</span> RUNTIME（开发常用）</span><br><span class="line">    一直保存到运行阶段</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="注解的解析"><a href="#注解的解析" class="headerlink" title="注解的解析"></a>注解的解析</h2><ul>
-<li><p>就是判断类上面，方法上，成员变量上是否存在注解，并把注解里的内容解析出来</p>
-</li>
-<li><p>如何解析注解？</p>
-<ul>
-<li><p>指导思想：要解析谁上面的注解，就应该先拿到谁。</p>
-</li>
-<li><p>比如要解析类上面的注解，则应该先获取该类的对象，再通过Class对象解析其上面的注解。</p>
-</li>
-<li><p>比如要解析成员方法上面的注解，则应该先获取该成员方法的Method对象，再通过Method对象解析其上面的注解。</p>
-</li>
-<li><p>Class、Method、Field、Constructor都实现了AnnotatedElement接口，它们都拥有解析注解的能力。</p>
-<table>
-<thead>
-<tr>
-<th>AnnotatedElement接口提供了解析注解的方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>public Annotation[] getDeclaredAnnotations()</td>
-<td>获取当前对象上面的注解</td>
-</tr>
-<tr>
-<td>public T getDeclaredAnnotation(Class&lt;\T&gt; annotationClass)</td>
-<td>获取指定的注解对象</td>
-</tr>
-<tr>
-<td>public boolean isAnnotationPresent(Class&lt;Annotation&gt; annotationClass)</td>
-<td>判断当前对象上是否存在某个注解</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-</li>
-<li><p>解析注解的案例</p>
-<p>定义注解MyTest4,要求如下所示</p>
-<ol>
-<li>包含属性：String value()</li>
-<li>包含属性：double aaa()，默认值是100</li>
-<li>包含属性：String[] bbb()</li>
-<li>限制注解使用的位置：类和成员方法上</li>
-<li>限制注解的有效范围：一直到运行时</li>
-</ol>
-<p>定义一个类：Demo，在类中定义一个test1方法，并在该类和其方法上使用MyTest4注解</p>
-<p>定义一个AnnotationTest3测试类，解析Demo类中的全部注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// -------------------MyTest4.java-----------------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d3_annotation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE,ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTest4 &#123;</span><br><span class="line">    String <span class="title function_">value</span><span class="params">()</span>;</span><br><span class="line">    <span class="type">double</span> <span class="title function_">aaa</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">100</span>;</span><br><span class="line">    String[] bbb();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------------------Demo.java-------------------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d3_annotation;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@MyTest4(value = &quot;蜘蛛精&quot;, aaa = 99.5, bbb = &#123;&quot;至尊宝&quot;, &quot;黑马&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="meta">@MyTest4(value = &quot;至尊宝&quot;, aaa = 199.5, bbb = &#123;&quot;紫霞&quot;, &quot;牛夫人&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// --------------AnnotationTest3.java-----------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d3_annotation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Annotation;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationTest3</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">parseClass</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException &#123;</span><br><span class="line">        <span class="comment">// 1、先得到Class对象</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Demo.class;</span><br><span class="line">        <span class="comment">// 2、解析类上的注解</span></span><br><span class="line">        <span class="comment">// 判断类上是否包含了某个注解</span></span><br><span class="line">        <span class="keyword">if</span>(c.isAnnotationPresent(MyTest4.class)) &#123;</span><br><span class="line">            <span class="type">MyTest4</span> <span class="variable">myTest4</span> <span class="operator">=</span> (MyTest4) c.getDeclaredAnnotation(MyTest4.class);</span><br><span class="line">            System.out.println(myTest4.value());</span><br><span class="line">            System.out.println(myTest4.aaa());</span><br><span class="line">            System.out.println(Arrays.toString(myTest4.bbb()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">parseMethod</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException &#123;</span><br><span class="line">        <span class="comment">// 1、先得到Class对象</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Demo.class;</span><br><span class="line">        <span class="comment">// 2、获取方法对象</span></span><br><span class="line">        <span class="type">Method</span> <span class="variable">m</span> <span class="operator">=</span> c.getDeclaredMethod(<span class="string">&quot;test1&quot;</span>);</span><br><span class="line">        <span class="comment">// 3、判断方法对象上是否包含了某个注释</span></span><br><span class="line">        <span class="keyword">if</span>(m.isAnnotationPresent(MyTest4.class))&#123;</span><br><span class="line">            <span class="type">MyTest4</span> <span class="variable">myTest4</span> <span class="operator">=</span> (MyTest4) m.getDeclaredAnnotation(MyTest4.class);</span><br><span class="line">            System.out.println(myTest4.value());</span><br><span class="line">            System.out.println(myTest4.aaa());</span><br><span class="line">            System.out.println(Arrays.toString(myTest4.bbb()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
-<li><p>模拟Junit框架</p>
-<p><strong>需求</strong>：定义若干个方法，只要加了MyTest注解，就会触发该方法的执行。</p>
-<p><strong>分析</strong></p>
-<ol>
-<li>定义一个自定义注解MyTest，只能注解方法，存活范围是一直都在。</li>
-<li>定义若干个方法，部分方法加上@MyTest修饰，部分方法不加。</li>
-<li>模拟一个Junit程序，可以触发加了@MyTest注解的方法执行。</li>
-</ol>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ---------------AnnotationTest4.java----------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d3_annotation;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationTest4</span> &#123;</span><br><span class="line">    <span class="meta">@MyTest</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;----test1----&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@MyTest</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test2</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;----test2----&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test3</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;----test3----&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@MyTest</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test4</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;----test4----&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InvocationTargetException, IllegalAccessException &#123;</span><br><span class="line">        <span class="type">AnnotationTest4</span> <span class="variable">a</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationTest4</span>();</span><br><span class="line">        <span class="comment">//启动程序！</span></span><br><span class="line">        <span class="comment">// 1、得到class对象</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> AnnotationTest4.class;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2、提取这个类的全部成员方法</span></span><br><span class="line">        Method[] methods = c.getDeclaredMethods();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">            <span class="comment">//3、遍历这个数组中的每个方法，看方法是否被@MyTest注释</span></span><br><span class="line">            <span class="keyword">if</span>(method.isAnnotationPresent(MyTest.class))&#123;</span><br><span class="line">                <span class="comment">//说明当前方法是存在@MyTest，触发方法执行</span></span><br><span class="line">                method.invoke(a);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------------MyTest4.java----------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d3_annotation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE,ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyTest4 &#123;</span><br><span class="line">    String <span class="title function_">value</span><span class="params">()</span>;</span><br><span class="line">    <span class="type">double</span> <span class="title function_">aaa</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">100</span>;</span><br><span class="line">    String[] bbb();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h1><ul>
-<li><p>概述、快速入门</p>
-<p>对象如果嫌身上干的事情太多的话，可以通过代理转移部分职责。</p>
-<p>对象有什么方法想被代理，代理就一定要有对应的方法。</p>
-</li>
-<li><p>应用案例、使用代理的好处</p>
-<p>转移对象的方法，优化类的逻辑结构</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------------------UserService.java------------------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d5_proxy2;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  用户业务接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="comment">// 登录功能</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">login</span><span class="params">(String loginName,String passWord)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line">    <span class="comment">// 删除用户</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">deleteUsers</span><span class="params">()</span> <span class="keyword">throws</span> Exception;</span><br><span class="line">    <span class="comment">// 查询用户，返回数组的形式。</span></span><br><span class="line">    String[] selectUsers() <span class="keyword">throws</span> Exception;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//------------------------UserServceImpl.java-----------------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d5_proxy2;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用户业务实现类（面向接口编程）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UserService</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">login</span><span class="params">(String loginName, String passWord)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(loginName) &amp;&amp; <span class="string">&quot;123456&quot;</span>.equals(passWord))&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;您登录成功，欢迎光临本系统~&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;您登录失败，用户名或密码错误~&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteUsers</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;成功删除了1万个用户~&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">1500</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String[] selectUsers() <span class="keyword">throws</span> Exception&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;查询出了3个用户&quot;</span>);</span><br><span class="line">        String[] names = &#123;<span class="string">&quot;张全蛋&quot;</span>, <span class="string">&quot;李二狗&quot;</span>, <span class="string">&quot;牛爱花&quot;</span>&#125;;</span><br><span class="line">        Thread.sleep(<span class="number">500</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> names;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------ProxyUtil.java------------------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d5_proxy2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProxyUtil</span> &#123;</span><br><span class="line"><span class="comment">//    public static UserService createProxy(UserService userService)&#123;</span></span><br><span class="line"><span class="comment">//        UserService userServiceProxy = (UserService) Proxy.newProxyInstance(ProxyUtil.class.getClassLoader(),</span></span><br><span class="line"><span class="comment">//                new Class[]&#123;UserService.class&#125;, new InvocationHandler() &#123;</span></span><br><span class="line"><span class="comment">//                    @Override</span></span><br><span class="line"><span class="comment">//                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//                        if(method.getName().equals(&quot;login&quot;) || method.getName().equals(&quot;deleteUsers&quot;)||</span></span><br><span class="line"><span class="comment">//                               method.getName().equals(&quot;selectUsers&quot;))&#123;</span></span><br><span class="line"><span class="comment">//                            long startTime = System.currentTimeMillis();</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//                            Object rs = method.invoke(userService, args);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//                            long endTime = System.currentTimeMillis();</span></span><br><span class="line"><span class="comment">//                            System.out.println(method.getName() + &quot;方法执行耗时：&quot; + (endTime - startTime)/ 1000.0 + &quot;s&quot;);</span></span><br><span class="line"><span class="comment">//                            return rs;</span></span><br><span class="line"><span class="comment">//                        &#125;else &#123;</span></span><br><span class="line"><span class="comment">//                            Object rs = method.invoke(userService, args);</span></span><br><span class="line"><span class="comment">//                            return rs;</span></span><br><span class="line"><span class="comment">//                        &#125;</span></span><br><span class="line"><span class="comment">//                    &#125;</span></span><br><span class="line"><span class="comment">//                &#125;);</span></span><br><span class="line"><span class="comment">//        return userServiceProxy;</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> UserService <span class="title function_">createProxy</span><span class="params">(UserService userService)</span>&#123;</span><br><span class="line">        <span class="comment">//1、使用Proxy类调用静态方法newProxyInstance创建代理，代理要强转为UserService类型</span></span><br><span class="line">        <span class="type">UserService</span> <span class="variable">userServiceProxy</span> <span class="operator">=</span> (UserService) Proxy.newProxyInstance(ProxyUtil.class.getClassLoader(),</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;UserService.class&#125;, <span class="keyword">new</span> <span class="title class_">InvocationHandler</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                    <span class="keyword">if</span>(method.getName().equals(<span class="string">&quot;login&quot;</span>) || method.getName().equals(<span class="string">&quot;deleteUsers&quot;</span>) || method.getName().equals(<span class="string">&quot;selectUsers&quot;</span>))&#123;</span><br><span class="line">                        <span class="type">long</span> <span class="variable">startTime</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">                        <span class="type">Object</span> <span class="variable">rs</span> <span class="operator">=</span> method.invoke(userService, args);</span><br><span class="line">                        <span class="type">long</span> <span class="variable">endTime</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">                        System.out.println(method.getName() + <span class="string">&quot;方法执行耗时：&quot;</span> + (endTime - startTime) / <span class="number">1000.0</span> + <span class="string">&quot;s&quot;</span>);</span><br><span class="line">                        <span class="keyword">return</span> rs;</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="type">Object</span> <span class="variable">rs</span> <span class="operator">=</span> method.invoke(userService, args);</span><br><span class="line">                        <span class="keyword">return</span> rs;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> userServiceProxy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// -----------------------------Test.java----------------------------</span></span><br><span class="line"><span class="keyword">package</span> com.itheima.d5_proxy2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 目标：使用动态代理解决实际问题，并掌握使用代理的好处。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="comment">// 1、创建用户业务对象。</span></span><br><span class="line">        <span class="type">UserService</span> <span class="variable">userService</span> <span class="operator">=</span> ProxyUtil.createProxy(<span class="keyword">new</span> <span class="title class_">UserServiceImpl</span>());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2、调用用户业务的功能。</span></span><br><span class="line">        userService.login(<span class="string">&quot;admin&quot;</span>, <span class="string">&quot;123456&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;----------------------------------------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">        userService.deleteUsers();</span><br><span class="line">        System.out.println(<span class="string">&quot;----------------------------------------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">        String[] names = userService.selectUsers();</span><br><span class="line">        System.out.println(<span class="string">&quot;查询到的用户是：&quot;</span> + Arrays.toString(names));</span><br><span class="line">        System.out.println(<span class="string">&quot;----------------------------------------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2023/10/27/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2023/10/27/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-10-27T19:09:36+08:00">
-                2023-10-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  75
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -4787,7 +4991,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -4856,6 +5060,14 @@
 				  
 				  
 					<li class="recent_posts_li">
+					  <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/" title="微服务-day03-docker2" target="_blank">微服务-day03-docker2</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/" title="微服务-day03-docker" target="_blank">微服务-day03-docker</a>
+					</li>
+				  
+					<li class="recent_posts_li">
 					  <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/" title="微服务-day03-入门1" target="_blank">微服务-day03-入门1</a>
 					</li>
 				  
@@ -4865,14 +5077,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/" title="微服务-day01-SpringCloud01" target="_blank">微服务-day01-SpringCloud01</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/" title="苍穹外卖-day12-数据统计" target="_blank">苍穹外卖-day12-数据统计</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/" title="苍穹外卖-day11-数据统计,图形报表" target="_blank">苍穹外卖-day11-数据统计,图形报表</a>
 					</li>
 				  
 				</ul>
@@ -4919,7 +5123,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">118.8k</span>
+    <span title="Site words total count">121.4k</span>
   
 </div>
 
