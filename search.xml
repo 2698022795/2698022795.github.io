@@ -144,7 +144,318 @@
   <entry>
     <title>微服务-day03-docker2</title>
     <url>/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306200309171.png" alt="image-20240306200309171"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306195130841.png" alt="image-20240306195130841"></p>
+<p>先停掉虚拟机中的MySQL，确保你的虚拟机已经安装Docker，且网络开通的情况下，执行下面命令即可安装MySQL：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql \</span><br><span class="line">  -p <span class="number">3306</span>:<span class="number">3306</span> \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> \</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306200747495.png" alt="image-20240306200747495"></p>
+<p>当我们利用Docker安装应用时，Docker会自动搜索并下载应用<strong>镜像（image）</strong>。镜像不仅包含应用本身，还包含应用运行所需要的环境、配置、系统函数库。Docker会在运行镜像时创建一个隔离环境，称为<strong>容器（container）</strong>。</p>
+<p><strong>镜像仓库</strong>：存储和管理镜像的平台，Docker官方维护了一个公共仓库：<a href="https://hub.docker.com/">Docker Hub</a>。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202136723.png" alt="image-20240306202136723"></p>
+<p>启动docker，即启动docker的守护进程。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202441652.png" alt="image-20240306202441652"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306201813839.png" alt="image-20240306201813839"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306201934304.png" alt="image-20240306201934304"></p>
+<h2 id="命令解读"><a href="#命令解读" class="headerlink" title="命令解读"></a>命令解读</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql \</span><br><span class="line">  -p <span class="number">3306</span>:<span class="number">3306</span> \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> \</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>docker run</strong> ：创建并运行一个容器，**-d** 是让容器在后台运行</p>
+</li>
+<li><p><strong>–name</strong> <strong>mysql</strong> ：给容器起个名字，必须唯一</p>
+</li>
+<li><p><strong>-p 3306:3306</strong> ：设置端口映射（宿主机和容器的端口映射）</p>
+</li>
+<li><p><strong>-e KEY&#x3D;VALUE</strong> ：是设置环境变量</p>
+</li>
+<li><p><strong>mysql</strong> ：指定运行的镜像的名字</p>
+</li>
+</ul>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202941360.png" alt="image-20240306202941360"></p>
+<p>镜像名称一般分两部分组成：[repository]:[tag]。</p>
+<ul>
+<li><p>其中repository就是镜像名</p>
+</li>
+<li><p>tag是镜像的版本</p>
+</li>
+</ul>
+<p>在没有指定tag时，默认是latest，代表最新版本的镜像</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203130328.png" alt="image-20240306203130328"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203157297.png" alt="image-20240306203157297"></p>
+<h1 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h1><p>Docker最常见的命令就是操作镜像、容器的命令，详见官方文档：<a href="https://docs.docker.com/">https://docs.docker.com/</a></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203417693.png" alt="image-20240306203417693"></p>
+<p>可以把打包的镜像通过docker save保存至本地。</p>
+<p>案例：查看DockerHub，拉取Nginx镜像，创建并运行Nginx容器</p>
+<p>需求：</p>
+<ul>
+<li><p>在DockerHub中搜索Nginx镜像，查看镜像的名称</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306204926400.png" alt="image-20240306204926400"></p>
+</li>
+<li><p>拉取Nginx镜像（docker pull nginx）</p>
+</li>
+<li><p>查看本地镜像列表（docker images）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306204628426.png" alt="image-20240306204628426"></p>
+</li>
+<li><p>创建并运行Nginx容器（docker run -d –name nginx -p 80:80 nginx）</p>
+</li>
+<li><p>查看容器（docker ps）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205440312.png" alt="image-20240306205440312"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205740883.png" alt="image-20240306205740883"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210018638.png" alt="image-20240306210018638"></p>
+</li>
+<li><p>停止容器（docker stop）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205846076.png" alt="image-20240306205846076"></p>
+</li>
+<li><p>再次启动容器（docker start nginx）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210051059.png" alt="image-20240306210051059"></p>
+</li>
+<li><p>查看容器日志（docker logs  nginx）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210346893.png" alt="image-20240306210346893"></p>
+</li>
+<li><p>进入Nginx容器（docker exec -it nginx bash）<br><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210611228.png" alt="image-20240306210611228"></p>
+</li>
+<li><p>删除容器（docker rm mysql2）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210839826.png" alt="image-20240306210839826"></p>
+</li>
+<li><p>加载本地镜像（docker load -i xxx.tar）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205303088.png" alt="image-20240306205303088"></p>
+</li>
+<li><p>删除镜像（docker rmi xxx:xxx）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205204179.png" alt="image-20240306205204179"></p>
+</li>
+<li><p>打包镜像至本地（docker save -o nginx.tar nginx:latest）最后一个参数是镜像名:版本号</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205050594.png" alt="image-20240306205050594"></p>
+</li>
+</ul>
+<h1 id="命名别名"><a href="#命名别名" class="headerlink" title="命名别名"></a>命名别名</h1><p><strong>给命令起别名</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211154566.png" alt="image-20240306211154566"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211127808.png" alt="image-20240306211127808"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211210643.png" alt="image-20240306211210643"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211241213.png" alt="image-20240306211241213"></p>
+<h1 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h1><p>案例1-利用Nginx容器部署静态资源</p>
+<p>需求：</p>
+<ul>
+<li><p>创建Nginx容器，修改nginx容器内的html目录下的index.html文件，查看变化</p>
+</li>
+<li><p>将静态资源部署到nginx的html目录</p>
+</li>
+</ul>
+<p><strong>数据卷（volume）</strong>是一个虚拟目录，是<strong>容器内目录</strong>与<strong>宿主机目录</strong>之间映射的桥梁。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211729107.png" alt="image-20240306211729107"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211952333.png" alt="image-20240306211952333"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211945189.png" alt="image-20240306211945189"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306212013727.png" alt="image-20240306212013727"></p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>文档地址</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker volume create</td>
+<td>创建数据卷</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/volume_create/">docker volume create</a></td>
+</tr>
+<tr>
+<td>docker volume ls</td>
+<td>查看所有数据卷</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/volume_ls/">docker volume ls</a></td>
+</tr>
+<tr>
+<td>docker volume rm</td>
+<td>删除指定数据卷</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/volume_prune/">docker volume rm</a></td>
+</tr>
+<tr>
+<td>docker volume inspect</td>
+<td>查看某个数据卷的详情</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/volume_inspect/">docker volume inspect</a></td>
+</tr>
+<tr>
+<td>docker volume prune</td>
+<td>清除数据卷</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/volume_prune/">docker volume prune</a></td>
+</tr>
+</tbody></table>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306224049549.png" alt="image-20240306224049549"></p>
+<p>提示：</p>
+<ul>
+<li><p>在执行docker run命令时，使用 <strong>-v</strong> <strong>数据卷:容器内目录</strong> 可以完成数据卷挂载</p>
+</li>
+<li><p>当创建容器时，如果挂载了数据卷且数据卷不存在，会自动创建数据卷</p>
+</li>
+</ul>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306215341815.png" alt="image-20240306215341815"></p>
+<p>案例2-mysql容器的数据挂载</p>
+<p>需求：</p>
+<ul>
+<li><p>查看mysql容器，判断是否有数据卷挂载</p>
+</li>
+<li><p>基于<strong>宿主机目录</strong>实现MySQL数据目录、配置文件、初始化脚本的挂载（查阅官方镜像文档）</p>
+</li>
+</ul>
+<p>①挂载&#x2F;root&#x2F;mysql&#x2F;data到容器内的&#x2F;var&#x2F;lib&#x2F;mysql目录</p>
+<p>②挂载&#x2F;root&#x2F;mysql&#x2F;init到容器内的&#x2F;docker-entrypoint-initdb.d目录，携带课前资料准备的SQL脚本</p>
+<p>③挂载&#x2F;root&#x2F;mysql&#x2F;conf到容器内的&#x2F;etc&#x2F;mysql&#x2F;conf.d目录，携带课前资料准备的配置文件</p>
+<ul>
+<li><p>在执行docker run命令时，使用 <strong>-v</strong> <strong>本地目录</strong> <strong>:</strong> <strong>容器内目录</strong> 可以完成本地目录挂载</p>
+</li>
+<li><p>l本地目录必须以“**&#x2F;<strong>”或 “</strong>.&#x2F;**” 开头，如果直接以名称开头，会被识别为数据卷而非本地目录</p>
+<ul>
+<li><p>-v mysql : &#x2F;var&#x2F;lib&#x2F;mysql 会被识别为一个数据卷叫mysql</p>
+</li>
+<li><p>-v .&#x2F;mysql : &#x2F;var&#x2F;lib&#x2F;mysql 会被识别为当前目录下的mysql目录</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="自定义镜像"><a href="#自定义镜像" class="headerlink" title="自定义镜像"></a>自定义镜像</h1><p><font color="red">自定义镜像的核心：Dockerfile和基础镜像。Dockerfile决定了镜像的打包步骤，基础镜像是后续分层打包其他镜像的基础。</font></p>
+<p>镜像就是包含了应用程序、程序运行的系统函数库、运行配置等文件的文件包。构建镜像的过程其实就是把上述文件打包的过程。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306230455069.png" alt="image-20240306230455069"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306230935661.png" alt="image-20240306230935661"></p>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p><strong>Dockerfile</strong>就是一个文本文件，其中包含一个个的**指令(Instruction)**，用指令来说明要执行什么操作来构建镜像。将来Docker可以根据Dockerfile帮我们构建镜像。常见指令如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>指令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FROM</td>
+<td>指定基础镜像</td>
+<td>FROM centos:6</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>设置环境变量，可在后面指令使用</td>
+<td>ENV key value</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>拷贝本地文件到镜像的指定目录</td>
+<td>COPY .&#x2F;jre11.tar.gz &#x2F;tmp</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>执行Linux的shell命令，一般是安装过程的命令</td>
+<td>RUN tar -zxvf &#x2F;tmp&#x2F;jre11.tar.gz  &amp;&amp; EXPORTS  path&#x3D;&#x2F;tmp&#x2F;jre11:$path</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>指定容器运行时监听的端口，是给镜像使用者看的</td>
+<td>EXPOSE 8080</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>镜像中应用的启动命令，容器运行时调用</td>
+<td>ENTRYPOINT java -jar xx.jar</td>
+</tr>
+</tbody></table>
+<p>我们可以基于Ubuntu基础镜像，利用Dockerfile描述镜像结构</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 指定基础镜像</span></span><br><span class="line">FROM ubuntu:<span class="number">16.04</span></span><br><span class="line"><span class="comment"># 配置环境变量，JDK的安装目录、容器内时区</span></span><br><span class="line">ENV JAVA_DIR=/usr/local</span><br><span class="line"><span class="comment"># 拷贝jdk和java项目的包</span></span><br><span class="line"><span class="built_in">COPY</span> ./jdk8.tar.gz <span class="variable">$JAVA_DIR</span>/</span><br><span class="line"><span class="built_in">COPY</span> ./docker<span class="literal">-demo</span>.jar /tmp/app.jar</span><br><span class="line"><span class="comment"># 安装JDK</span></span><br><span class="line">RUN <span class="built_in">cd</span> <span class="variable">$JAVA_DIR</span> \ &amp;&amp; tar <span class="literal">-xf</span> ./jdk8.tar.gz \ &amp;&amp; <span class="built_in">mv</span> ./jdk1.<span class="number">8.0</span>_144 ./java8</span><br><span class="line"><span class="comment"># 配置环境变量</span></span><br><span class="line">ENV JAVA_HOME=<span class="variable">$JAVA_DIR</span>/java8</span><br><span class="line">ENV PATH=<span class="variable">$PATH:</span><span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="comment"># 入口，java项目的启动命令</span></span><br><span class="line">ENTRYPOINT [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;/app.jar&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接基于JDK为基础镜像，省略前面的步骤：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基础镜像</span></span><br><span class="line">FROM openjdk:<span class="number">11.0</span><span class="literal">-jre-buster</span></span><br><span class="line"><span class="comment"># 拷贝jar包</span></span><br><span class="line"><span class="built_in">COPY</span> docker<span class="literal">-demo</span>.jar /app.jar</span><br><span class="line"><span class="comment"># 入口</span></span><br><span class="line">ENTRYPOINT [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;/app.jar&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306231938328.png" alt="image-20240306231938328"></p>
+<p>当编写好了Dockerfile，可以利用下面命令来构建镜像</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">docker build <span class="literal">-t</span> myImage:<span class="number">1.0</span> .</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>-t：是给镜像起名，格式依然是repository:tag的格式，不指定tag时，默认为latest</p>
+</li>
+<li><p>. ：是指定Dockerfile所在目录，如果就在当前目录，则指定为”.”</p>
+</li>
+</ul>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306232249665.png" alt="image-20240306232249665"></p>
+<ol>
+<li><strong>docker load -i jdk.tar</strong></li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306233103657.png" alt="image-20240306233103657"></p>
+<ol start="2">
+<li>(进入到dockerfile文件所在目录)<strong>docker build -t docker-demo .</strong></li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306233436422.png" alt="image-20240306233436422"></p>
+<ol start="3">
+<li><strong>docker run -d –name dd -p 8080:8080 docker-demo</strong></li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306234347787.png" alt="image-20240306234347787"></p>
+<ol start="4">
+<li><strong>docker logs -f dd</strong>(查看容器运行日志)</li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306232329884.png" alt="image-20240306232329884"></p>
+<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>默认情况下，所有容器都是以bridge方式连接到Docker的一个虚拟网桥上：</p>
+<p>即容器（运行的镜像）都是在同个网段内的。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306235252569.png" alt="image-20240306235252569"></p>
+<p>加入自定义网络的容器才可以通过<strong>容器名</strong>互相访问（不需要IP地址就可以访问其他容器），Docker的网络操作命令如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>文档地址</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker network create</td>
+<td>创建一个网络</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/network_create/">docker   network create</a></td>
+</tr>
+<tr>
+<td>docker network ls</td>
+<td>查看所有网络</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/network_ls/">docker   network ls</a></td>
+</tr>
+<tr>
+<td>docker network rm</td>
+<td>删除指定网络</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/network_rm/">docker   network rm</a></td>
+</tr>
+<tr>
+<td>docker network prune</td>
+<td>清除未使用的网络</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/network_prune/">docker   network prune</a></td>
+</tr>
+<tr>
+<td>docker network connect</td>
+<td>使指定容器连接加入某网络</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/network_connect/">docker   network connect</a></td>
+</tr>
+<tr>
+<td>docker network disconnect</td>
+<td>使指定容器连接离开某网络</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/network_disconnect/">docker   network disconnect</a></td>
+</tr>
+<tr>
+<td>docker network inspect</td>
+<td>查看网络详细信息</td>
+<td><a href="https://docs.docker.com/engine/reference/commandline/network_inspect/">docker   network inspect</a></td>
+</tr>
+</tbody></table>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000318503.png" alt="image-20240307000318503"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000348752.png" alt="image-20240307000348752"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000222937.png" alt="image-20240307000222937"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000514681.png" alt="image-20240307000514681"></p>
+<h1 id="项目部署"><a href="#项目部署" class="headerlink" title="项目部署"></a>项目部署</h1><h2 id="部署Java应用"><a href="#部署Java应用" class="headerlink" title="部署Java应用"></a>部署Java应用</h2><p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001419724.png" alt="image-20240307001419724"></p>
+<ol>
+<li><p>打包hm-service成jar包，将jar包和dockerfile上传到服务器。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001523682.png" alt="image-20240307001523682"></p>
+</li>
+<li><p>在服务器通过上传的jar包和dockerfile生成自定义镜像。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001707848.png" alt="image-20240307001707848"></p>
+</li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307002359738.png" alt="image-20240307002359738"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307002606022.png" alt="image-20240307002606022"></p>
+<h2 id="部署前端"><a href="#部署前端" class="headerlink" title="部署前端"></a>部署前端</h2><p>需求：创建一个新的nginx容器，将课前资料提供的nginx.conf、html目录与容器挂载</p>
+]]></content>
+      <categories>
+        <category>微服务</category>
+      </categories>
   </entry>
   <entry>
     <title>微服务-day03-docker</title>
@@ -368,6 +679,171 @@
 <p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240306162522783.png" alt="image-20240306162522783"></p>
 <p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240306162530746.png" alt="image-20240306162530746"></p>
 <p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240306162542431.png" alt="image-20240306162542431"></p>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>在课前资料提供好了MySQL的一个目录：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307111647606.png" alt="image-20240307111647606"></p>
+<p>其中有MySQL的配置文件和初始化脚本：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307111701682.png" alt="image-20240307111701682"></p>
+<p>我们将其复制到虚拟机的<code>/root</code>目录。如果<code>/root</code>下已经存在<code>mysql</code>目录则删除旧的，如果不存在则直接复制本地的：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307111825247.png" alt="image-20240307111825247"></p>
+<p>然后创建一个通用网络：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker network create hm-net</span><br></pre></td></tr></table></figure>
+
+<p>使用下面的命令来安装MySQL：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql \</span><br><span class="line">  -p 3306:3306 \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=123456 \</span><br><span class="line">  -v /root/mysql/data:/var/lib/mysql \</span><br><span class="line">  -v /root/mysql/conf:/etc/mysql/conf.d \</span><br><span class="line">  -v /root/mysql/init:/docker-entrypoint-initdb.d \</span><br><span class="line">  --network hm-net\</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure>
+
+<p>此时，通过命令查看mysql容器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>给常用Docker命令起别名，方便我们访问：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 修改/root/.bashrc文件</span></span><br><span class="line">vi /root/.bashrc</span><br><span class="line">内容如下：</span><br><span class="line"><span class="comment"># .bashrc</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># User specific aliases and functions</span></span><br><span class="line"></span><br><span class="line">alias <span class="built_in">rm</span>=<span class="string">&#x27;rm -i&#x27;</span></span><br><span class="line">alias <span class="built_in">cp</span>=<span class="string">&#x27;cp -i&#x27;</span></span><br><span class="line">alias <span class="built_in">mv</span>=<span class="string">&#x27;mv -i&#x27;</span></span><br><span class="line">alias dps=<span class="string">&#x27;docker ps --format &quot;table &#123;&#123;.ID&#125;&#125;\t&#123;&#123;.Image&#125;&#125;\t&#123;&#123;.Ports&#125;&#125;\t&#123;&#123;.Status&#125;&#125;\t&#123;&#123;.Names&#125;&#125;&quot;&#x27;</span></span><br><span class="line">alias dis=<span class="string">&#x27;docker images&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Source global definitions</span></span><br><span class="line"><span class="keyword">if</span> [ -<span class="type">f</span> /<span class="type">etc</span>/<span class="type">bashrc</span> ]; then</span><br><span class="line">        . /etc/bashrc</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>然后，执行命令使别名生效</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">source /root/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>查看运行容器</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307113028691.png" alt="image-20240307113028691"></p>
+<p>此时，如果我们使用MySQL的客户端工具连接MySQL，应该能发现已经创建了黑马商城所需要的表：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307114017076.png" alt="image-20240307114017076"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307113947159.png" alt="image-20240307113947159"></p>
+<p><strong>后端</strong></p>
+<p>然后是Java代码，在课前资料提供了一个hmall目录：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307114118436.png" alt="image-20240307114118436"></p>
+<p>将其复制到你的工作空间，然后利用Idea打开。</p>
+<p>项目结构如下：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307114141225.png" alt="image-20240307114141225"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307114218480.png" alt="image-20240307114218480"></p>
+<p>点击OK配置完成。接下来就可以运行了！</p>
+<p>启动完成后，试试看访问下 <a href="http://localhost:8080/hi">http://localhost:8080/hi</a> 吧！</p>
+<p><strong>前端</strong></p>
+<p>在课前资料中还提供了一个hmall-nginx的目录：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307114314836.png" alt="image-20240307114314836"></p>
+<p>其中就是一个nginx程序以及我们的前端代码，直接在windows下将其复制到一个非中文、不包含特殊字符的目录下。然后进入hmall-nginx后，利用cmd启动即可：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启动nginx</span></span><br><span class="line"><span class="built_in">start</span> nginx.exe</span><br><span class="line"><span class="comment"># 停止</span></span><br><span class="line">nginx.exe <span class="literal">-s</span> stop</span><br><span class="line"><span class="comment"># 重新加载配置</span></span><br><span class="line">nginx.exe <span class="literal">-s</span> reload</span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line">nginx.exe <span class="literal">-s</span> restart</span><br></pre></td></tr></table></figure>
+
+<p><strong>特别注意</strong>：</p>
+<p>nginx.exe 不要双击启动，而是打开cmd窗口，通过命令行启动。停止的时候也一样要是用命令停止。如果启动失败不要重复启动，而是查看logs目录中的error.log日志，查看是否是端口冲突。如果是端口冲突则自行修改端口解决。</p>
+<p>启动成功后，访问<a href="http://localhost:18080，应该能看到我们的门户页面：">http://localhost:18080，应该能看到我们的门户页面：</a></p>
+<h1 id="认识微服务"><a href="#认识微服务" class="headerlink" title="认识微服务"></a>认识微服务</h1><h2 id="单体架构-1"><a href="#单体架构-1" class="headerlink" title="单体架构"></a>单体架构</h2><p><strong>单体架构</strong>：将业务的所有功能集中在一个项目中开发，达成一个包部署。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307115314830.png" alt="image-20240307115314830"></p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>架构简单</li>
+<li>部署成本低</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>团队协作成本高</li>
+<li>系统发布效率低</li>
+<li>系统可用性差</li>
+</ul>
+<p><strong>总结</strong></p>
+<p>单体架构适合开发功能相对简单，规模较小的项目。</p>
+<h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><p><strong>微服务</strong>架构，是服务化思想指导下的一套最佳实践架构方案。服务化，就是把单体架构中的功能模块拆分为多个独立项目。</p>
+<ul>
+<li>粒度小</li>
+<li>团队自治</li>
+<li>服务自洽</li>
+</ul>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307123849127.png" alt="image-20240307123849127"></p>
+<h2 id="SpringCloud"><a href="#SpringCloud" class="headerlink" title="SpringCloud"></a>SpringCloud</h2><p>SpringCloud是目前国内使用最广泛的微服务框架。官网地址：<a href="https://spring.io/projects/spring-cloud">https://spring.io/projects/spring-cloud</a></p>
+<p>SpringCloud集成了各种微服务功能组件，并基于SpringBoot实现了这些组件的自动装配，从而提供了良好的开箱即用体验：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307124159293.png" alt="image-20240307124159293"></p>
+<p>SpringCloud基于SpringBoot实现了微服务组件的自动装配，从而提供了良好的开箱即用体验。但对于SpringBoot的版本也有要求：</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307124301449.png" alt="image-20240307124301449"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307124338333.png" alt="image-20240307124338333"></p>
+<h1 id="微服务拆分"><a href="#微服务拆分" class="headerlink" title="微服务拆分"></a>微服务拆分</h1><p>从单体架构到微服务架构的拆分需要按照功能模块拆分。</p>
+<h2 id="熟悉黑马商城"><a href="#熟悉黑马商城" class="headerlink" title="熟悉黑马商城"></a>熟悉黑马商城</h2><p>模块：用户模块 | 商品模块 | 购物车模块 | 订单模块 | 支付模块</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307140348155.png" alt="image-20240307140348155"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307140748648.png" alt="image-20240307140748648"></p>
+<h2 id="服务拆分原则"><a href="#服务拆分原则" class="headerlink" title="服务拆分原则"></a>服务拆分原则</h2><p><strong>什么时候拆分？</strong></p>
+<ul>
+<li><strong>创业型项目</strong>：先采用单体架构，快速开发，快速试错。随着规模扩大，逐渐拆分。</li>
+<li><strong>确定的大型项目</strong>：资金充足，目标明确，可以直接选择微服务架构，避免后续拆分的麻烦。</li>
+</ul>
+<p><strong>怎么拆分？</strong></p>
+<p>从拆分目标来说，要做到：</p>
+<ul>
+<li><strong>高内聚</strong>：每个微服务的职责要尽量单一，包含的业务相互关联度高、完整度高。</li>
+<li><strong>低耦合</strong>：每个微服务的功能要相对独立，尽量减少对其他微服务的依赖。</li>
+</ul>
+<p>从拆分方式来说，一般包括两种方式：</p>
+<ul>
+<li><strong>纵向拆分</strong>：按照业务模块来拆分</li>
+<li><strong>横向拆分</strong>：抽取公共服务，提高复用性</li>
+</ul>
+<h2 id="拆分服务"><a href="#拆分服务" class="headerlink" title="拆分服务"></a>拆分服务</h2><p><strong>垂直拆分</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307145521445.png" alt="image-20240307145521445"></p>
+<p>工程结构有两种：</p>
+<ul>
+<li><p>独立Project</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307150104816.png" alt="image-20240307150104816"></p>
+</li>
+<li><p>Maven聚合</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307150134457.png" alt="image-20240307150134457"></p>
+</li>
+</ul>
+<p>拆分服务：</p>
+<p>需求：</p>
+<ul>
+<li>将hm-service中与商品管理相关功能拆分到一个微服务module中，命名为item-service</li>
+<li>将hm-service中与购物车有关的功能拆分到一个微服务module中，命名为cart-service</li>
+</ul>
+<p><strong>创建item-service</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307150800213.png" alt="image-20240307150800213"></p>
+<p><strong>引入依赖</strong></p>
+<p><strong>删除掉不用的依赖</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.heima<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hmall<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.itheima<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>item-service<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--common--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.heima<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hm-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--web--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &amp;lt;!&amp;ndash;加密&amp;ndash;&amp;gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;artifactId&gt;spring-security-crypto&lt;/artifactId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;/dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;artifactId&gt;spring-security-rsa&lt;/artifactId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;version&gt;1.0.9.RELEASE&lt;/version&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;/dependency&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--数据库--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--mybatis--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &amp;lt;!&amp;ndash;单元测试&amp;ndash;&amp;gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;/dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &amp;lt;!&amp;ndash;redis&amp;ndash;&amp;gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--            &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        &lt;/dependency&gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>$&#123;project.artifactId&#125;<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>17<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>17<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>修改配置项</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307161015600.png" alt="image-20240307161015600"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307161038542.png" alt="image-20240307161038542"></p>
+<p><strong>创建包和对应的子包</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307151650439.png" alt="image-20240307151650439"></p>
+<p><strong>在服务器创建对应的hm-item数据库</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307154724301.png" alt="image-20240307154724301"></p>
+<p><strong>将对应方法放到对应文件中。</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307160625532.png" alt="image-20240307160625532"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307161454757.png" alt="image-20240307161454757"></p>
+<h2 id="服务调用"><a href="#服务调用" class="headerlink" title="服务调用"></a>服务调用</h2><p><strong>通过网络请求数据</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307163322564.png" alt="image-20240307163322564"></p>
+<p>Spring给我们提供了一个RestTemplate工具，可以方便的实现Http请求的发送。使用步骤如下：</p>
+<ol>
+<li><p>注册ResTemplate到Spring容器</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> RestTemplate <span class="title function_">restTemplate</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发起远程调用</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307163924648.png" alt="image-20240307163924648"></p>
+</li>
+</ol>
+<p><strong>注册restTemplate</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.cart;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.mybatis.spring.annotation.MapperScan;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@MapperScan(&quot;com.hmall.cart.mapper&quot;)</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CartApplication</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(CartApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> RestTemplate <span class="title function_">restTemplate</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在需要诸如的类中做如下操作<font color="red">（给需要注入Bean对象的成员变量加上final关键字，再在类的定义时加上@RequiredArgsConstructor注解）</font>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.cart.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 订单详情表 服务实现类</span></span><br><span class="line"><span class="comment"> * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span> <span class="comment">//给加final的成员变量生成构造函数</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CartServiceImpl</span> <span class="keyword">extends</span> <span class="title class_">ServiceImpl</span>&lt;CartMapper, Cart&gt; <span class="keyword">implements</span> <span class="title class_">ICartService</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    private final IItemService itemService;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RestTemplate restTemplate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改handleCartItems</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">handleCartItems</span><span class="params">(List&lt;CartVO&gt; vos)</span> &#123;</span><br><span class="line"></span><br><span class="line">        Set&lt;Long&gt; itemIds = vos.stream().map(CartVO::getItemId).collect(Collectors.toSet());</span><br><span class="line">        <span class="comment">// 2.查询商品</span></span><br><span class="line"><span class="comment">//        List&lt;ItemDTO&gt; items = itemService.queryItemByIds(itemIds);</span></span><br><span class="line">        <span class="comment">// 2.1利用RestTemplate发起Http请求，得到http的响应</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;http://localhost:8081/items?ids=&#123;ids&#125;&quot;</span>;</span><br><span class="line">        ResponseEntity&lt;List&lt;ItemDTO&gt;&gt; response = restTemplate.exchange(url,</span><br><span class="line">            HttpMethod.GET,</span><br><span class="line">            <span class="literal">null</span>,</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">ParameterizedTypeReference</span>&lt;List&lt;ItemDTO&gt;&gt;() &#123;</span><br><span class="line">            &#125;,</span><br><span class="line">            Map.of(<span class="string">&quot;ids&quot;</span>, CollUtil.join(itemIds, <span class="string">&quot;,&quot;</span>))</span><br><span class="line">        );</span><br><span class="line">        <span class="comment">// 2.2解析响应</span></span><br><span class="line">        <span class="keyword">if</span>(!response.getStatusCode().is2xxSuccessful())&#123;</span><br><span class="line">            <span class="comment">//查询失败</span></span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;ItemDTO&gt; items = response.getBody();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (CollUtils.isEmpty(items)) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 3.转为 id 到 item的map</span></span><br><span class="line">        Map&lt;Long, ItemDTO&gt; itemMap = items.stream().collect(Collectors.toMap(ItemDTO::getId, Function.identity()));</span><br><span class="line">        <span class="comment">// 4.写入vo</span></span><br><span class="line">        <span class="keyword">for</span> (CartVO v : vos) &#123;</span><br><span class="line">            <span class="type">ItemDTO</span> <span class="variable">item</span> <span class="operator">=</span> itemMap.get(v.getItemId());</span><br><span class="line">            <span class="keyword">if</span> (item == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            v.setNewPrice(item.getPrice());</span><br><span class="line">            v.setStatus(item.getStatus());</span><br><span class="line">            v.setStock(item.getStock());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>总结</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307170439147.png" alt="image-20240307170439147"></p>
+<h2 id="服务治理"><a href="#服务治理" class="headerlink" title="服务治理"></a>服务治理</h2><p>服务远程调用时存在的问题：</p>
+<p>cart-service调用item-service时，实际上是restTemplate调用接口。</p>
+<p>在实际部署时，商品服务压力比较大，为了抗住高并发请求压力，我们会把一个服务部署多份，即创建多个容器，同时启动，同时接受请求，这个时候启动的商品服务的每个容器可以称为实例。这个时候商品服务有多个实例。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307170927719.png" alt="image-20240307170927719"></p>
+<ol>
+<li>服务调用者不知道服务提供者的地址？</li>
+<li>服务调用者知道了服务提供者的地址，要访问哪一个呢？</li>
+<li>如果选中了一个服务提供者，结果他寄了，该怎么办呢？</li>
+</ol>
+<p><strong>这些问题要解决，就要用到注册中心的技术。</strong></p>
+<h3 id="注册中心原理"><a href="#注册中心原理" class="headerlink" title="注册中心原理"></a>注册中心原理</h3><p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307172438391.png" alt="image-20240307172438391"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307172611313.png" alt="image-20240307172611313"></p>
+<h3 id="Nacos注册中心"><a href="#Nacos注册中心" class="headerlink" title="Nacos注册中心"></a>Nacos注册中心</h3><p>Nacos是目前国内企业中占比最多的注册中心组件。他是阿里巴巴的产品，目前已经加入SpringCloudAlibaba中。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307172706117.png" alt="image-20240307172706117"></p>
+<p>我们基于Docker来部署Nacos的注册中心，首先我们要准备MySQL数据库表，用来存储Nacos的数据。由于是Docker部署，所以大家需要将资料中的SQL文件导入到你<strong>Docker中的MySQL容器</strong>中：</p>
+<p><strong>最终表结构如下所示：</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307194635332.png" alt="image-20240307194635332"></p>
+<p><strong>然后，找到课前资料下的nacos文件夹</strong></p>
 ]]></content>
       <categories>
         <category>微服务</category>
