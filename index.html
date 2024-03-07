@@ -1449,7 +1449,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.6k
+                  4.1k
                 </span>
               
 
@@ -1465,7 +1465,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  11
+                  17
                 </span>
               
             </div>
@@ -1657,7 +1657,139 @@
 <p>我们基于Docker来部署Nacos的注册中心，首先我们要准备MySQL数据库表，用来存储Nacos的数据。由于是Docker部署，所以大家需要将资料中的SQL文件导入到你<strong>Docker中的MySQL容器</strong>中：</p>
 <p><strong>最终表结构如下所示：</strong></p>
 <p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307194635332.png" alt="image-20240307194635332"></p>
-<p><strong>然后，找到课前资料下的nacos文件夹</strong></p>
+<p><strong>然后，找到课前资料下的nacos文件夹</strong>(修改IP，USER，PASSWORD)</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307202148098.png" alt="image-20240307202148098"></p>
+<p>然后，将课前资料中的<code>nacos</code>目录上传至虚拟机的<code>/root</code>目录。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307202534809.png" alt="image-20240307202534809"></p>
+<p>进入root目录，然后执行下面的docker命令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run <span class="literal">-d</span> \</span><br><span class="line"><span class="literal">--name</span> nacos \</span><br><span class="line"><span class="literal">--env-file</span> ./nacos/custom.env \</span><br><span class="line"><span class="literal">-p</span> <span class="number">8848</span>:<span class="number">8848</span> \</span><br><span class="line"><span class="literal">-p</span> <span class="number">9848</span>:<span class="number">9848</span> \</span><br><span class="line"><span class="literal">-p</span> <span class="number">9849</span>:<span class="number">9849</span> \</span><br><span class="line"><span class="literal">--restart</span>=always \</span><br><span class="line">nacos/nacos<span class="literal">-server</span>:v2.<span class="number">1.0</span><span class="literal">-slim</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307202645498.png" alt="image-20240307202645498"></p>
+<p>启动完成后，访问下面地址：<a target="_blank" rel="noopener" href="http://192.168.226.129:8848/nacos/%EF%BC%8C%E6%B3%A8%E6%84%8F%E5%B0%86%60192.168.226.129%60%E6%9B%BF%E6%8D%A2%E4%B8%BA%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BAIP%E5%9C%B0%E5%9D%80%E3%80%82">http://192.168.226.129:8848/nacos/，注意将`192.168.226.129`替换为你自己的虚拟机IP地址。</a></p>
+<p>首次访问会跳转到登录页，<strong>账号密码都是nacos</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307203153387.png" alt="image-20240307203153387"></p>
+<h3 id="服务注册"><a href="#服务注册" class="headerlink" title="服务注册"></a>服务注册</h3><p><strong>服务注册</strong>：微服务启动时要将自己的服务信息提交至nacos。</p>
+<p>服务注册步骤如下：</p>
+<ol>
+<li><p>引入nacos discovery依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置nacos地址</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">    <span class="attr">application:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">item-service</span> <span class="comment">#服务名称</span></span><br><span class="line">    <span class="attr">cloud:</span></span><br><span class="line">    	<span class="attr">nacos:</span></span><br><span class="line">    		<span class="attr">server-addr:</span> <span class="number">192.168</span><span class="number">.226</span><span class="number">.129</span><span class="string">:8848</span> <span class="comment">#nacos地址</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>启动三个服务</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307211757847.png" alt="image-20240307211757847"></p>
+<p><strong>在注册中心查看服务信息</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307211713610.png" alt="image-20240307211713610"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307211656571.png" alt="image-20240307211656571"></p>
+<h3 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h3><p><strong>服务发现</strong>：服务调用者要调用别的服务就要去注册中心拉取列表。</p>
+<p>消费者需要链接nacos以拉取和订阅服务，因此服务发现的前两步与服务注册是一样，后面再加上服务调用即可：</p>
+<ol>
+<li><p>引入nacos discovery依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置nacos地址</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">    <span class="attr">application:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">item-service</span> <span class="comment">#服务名称</span></span><br><span class="line">    <span class="attr">cloud:</span></span><br><span class="line">    	<span class="attr">nacos:</span></span><br><span class="line">    		<span class="attr">server-addr:</span> <span class="number">192.168</span><span class="number">.226</span><span class="number">.129</span><span class="string">:8848</span> <span class="comment">#nacos地址</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务发现</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307212411584.png" alt="image-20240307212411584"></p>
+</li>
+</ol>
+<h2 id="OpenFeign"><a href="#OpenFeign" class="headerlink" title="OpenFeign"></a>OpenFeign</h2><h3 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h3><p>OpenFeign是一个声明式的http客户端，是SpringCloud在Eureka公司开源的Feign基础上改造而来。官方地址：<a target="_blank" rel="noopener" href="https://github.com/OpenFeign/feign">https://github.com/OpenFeign/feign</a></p>
+<p>其作用就是基于SpringMVC的常见注解，帮我们优雅的实现http请求的发送。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307213910659.png" alt="image-20240307213910659"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307214029675.png" alt="image-20240307214029675"></p>
+<p>OpenFeign已经被SpringCloud自动装配，实现起来非常简单：</p>
+<ol>
+<li><p>引入依赖，包括OpenFeign和负载均衡组件SpringCloudLoadBalancer</p>
+<p>负载均衡早期使用的是SpringCloud的Ribbon，新版本用的是loadBalancer。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--openFeign--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!--负载均衡器--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-loadbalancer&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动类中通过@EnableFeignClients注解，启用OpenFeign功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.cart;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableFeignClients</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CartApplication</span> &#123;</span><br><span class="line">	<span class="comment">// .. 略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写FeignClient</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;item-service&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ItemClient</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@GetMapping(&quot;/items&quot;)</span></span><br><span class="line">    List&lt;ItemDTO&gt; <span class="title function_">queryItemByIds</span><span class="params">(<span class="meta">@RequestParam(&quot;ids&quot;)</span> Collection&lt;Long&gt; ids)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用FeignClient</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ItemDTO&gt; items = itemClient.queryItemByIds(itemIds);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="连接池"><a href="#连接池" class="headerlink" title="连接池"></a>连接池</h3><p>OpenFeign对Http请求做了优雅的伪装，不过其底层发起http请求，依赖于其他的框架。这些框架可以自己选择，包括以下三种：</p>
+<ul>
+<li>HttpURLConnection：默认实现，不支持连接池</li>
+<li>Apache HttpClient：支持连接池</li>
+<li>OKHttp：支持连接池</li>
+</ul>
+<p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--OK http 的依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.github.openfeign<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>feign-okhttp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>开启连接池功能</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">okhttp:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 开启OKHttp功能</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h3><p><strong>问题</strong>：</p>
+<ol>
+<li>所有要查询商品微服务的其他微服务，都需要定义ItemClient接口，都需要编写其中的方法。</li>
+<li>商品微服务接口发生变化，其他调用了商品微服务接口的方法都要修改内容。</li>
+</ol>
+<p>购物车服务和订单服务现在都需要来查询商品服务的根据ID批量查询的接口，如果在两个服务中各自编写FeignClient，代码重复，后期修改维护成本高。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307230913871.png" alt="image-20240307230913871"></p>
+<p><strong>解决办法1</strong>：既然两个服务都需要编写FeignClient，那么现在由开发商品服务的人员编写。具体实现如下：将item-service成为纯pom文件，在其下面在去创建三个子模块，</p>
+<ul>
+<li>item-dto（放实体类）</li>
+<li>item-api（放api接口，把商品查询的feignclient放到其中）</li>
+<li>item-blz（放商品服务的所有业务代码）</li>
+</ul>
+<p>其他微服务后续需要使用商品服务，只需要在pom.xml文件中引入item-dto和item-api的坐标即可。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307231605973.png" alt="image-20240307231605973"></p>
+<p>弊端：代码编写复杂度增加。</p>
+<p><strong>解决办法2</strong>：原有服务不变化。单独创建一个新的模块hm-api，它不属于任何微服务，它属于通用的，和其他微服务同一级别的模块，在其中定义三个包client，config，dto包。</p>
+<ul>
+<li>clinent：每一个微服务想要暴露的接口，ItemClient，CartClient，UserClient。</li>
+<li>dto：放DTO。</li>
+</ul>
+<p>使用时其他微服务引用hm-api即可。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240307231818553.png" alt="image-20240307231818553"></p>
+<p>弊端：代码耦合度增加。</p>
+<p>当定义的FeignClient不在SpringBootApplication的扫描包范围时，这些FeignClient无法使用。有两种方式解决：</p>
+<p>方式一：指定FeignClient所在包（所有的FeignClient）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableFeignClients(basePackages = &quot;com.hmall.api.client&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<p>方式二：指定FeignClient的字节码（单个特定FeignClient）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableFeignClients(clients = &#123;ItemClient.class&#125;)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="日志（只有在调试时用）"><a href="#日志（只有在调试时用）" class="headerlink" title="日志（只有在调试时用）"></a>日志（只有在调试时用）</h3><p>OpenFeign只会在FeignClient所在包的日志级别为<strong>DEBUG</strong>时，才会输出日志，而且其日志级别有4级：</p>
+<ul>
+<li>NONE：不记录任何日志信息，这是默认值。</li>
+<li>BASIC：仅记录请求的方法，URL以及响应状态码和执行时间</li>
+<li>HEADERS：在BASIC的基础上，额外记录了请求和响应的头信息</li>
+<li>FULL：记录所有请求和响应的明细，包括头信息、请求体、元数据。</li>
+</ul>
+<p>由于Feign默认的日志级别就是NONE，所以默认我们看不到请求日志。</p>
+<p>要自定义日志级别需要声明一个类型为Logger.Level的Bean，在其中定义日志级别：(在hm-api中定义对应类)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.api.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> feign.Logger;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DefaultFeignConfig</span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Logger.Level <span class="title function_">feignLogLevel</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Logger.Level.FULL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但此时这个Bean并未生效，要想配置某个FeignClient的日志，可以在@FeignClient注解中声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;item-service&quot;, configuration = DefaultFeignConfig.class)</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想要全局配置，让所有FeignClient都按照这个日志配置，则需要在@EnableFeignClients注解中声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableFeignClients(clients = &#123;ItemClient.class&#125;,defaultConfiguration = DefaultFeignConfig.class)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>总结</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240308000450406.png" alt="image-20240308000450406"></p>
+<h1 id="个人总结"><a href="#个人总结" class="headerlink" title="个人总结"></a>个人总结</h1><ol>
+<li>导入黑马商城（单体项目）</li>
+<li>单体架构拆分为微服务架构的原则</li>
+<li>restTemplate实现服务调用（缺点：url定死）</li>
+<li>nacos注册，服务发现，管理和监控微服务</li>
+<li>openfeign，简化跨服务代码</li>
+<li>oepnfeign进一步优化，改造</li>
+</ol>
 
           
         
@@ -4515,7 +4647,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">125.9k</span>
+    <span title="Site words total count">127.4k</span>
   
 </div>
 
