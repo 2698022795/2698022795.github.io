@@ -144,7 +144,64 @@
   <entry>
     <title>微服务-day02-网关</title>
     <url>/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="网关及配置管理"><a href="#网关及配置管理" class="headerlink" title="网关及配置管理"></a>网关及配置管理</h1><p>问题1：黑马商城原来是单体项目，所有的功能集中在一个项目中，项目端口为8080</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163720785.png" alt="image-20240308163720785"></p>
+<p>所以前端在渲染数据时，不管是商品数据、订单数据还是交易数据，只需要去请求8080端口，就可以拿到任意数据。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163807114.png" alt="image-20240308163807114"></p>
+<p>但是现在我们把项目拆分为多个不同的服务，且每个服务它的功能都各不相同，端口也不一样。一旦线上部署，这些IP和端口还可能发生改变。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163837890.png" alt="image-20240308163837890"></p>
+<p>前端在写数据的时候要写好数据向哪个端口IP发起请求。如果这些服务的端口要发生变化，该怎么办呢？</p>
+<p>问题2：</p>
+<p>这些微服务都需要用户信息，难道要在每个微服务里都去写登录和jwt的逻辑？</p>
+<p>而且jwt校验时要用密钥，这些密钥要分发给每个微服务吗？（密码泄露风险提高）</p>
+<p>总结：</p>
+<ol>
+<li>服务地址过多，且会发生变化，前端不知道要请求谁？</li>
+<li>每个服务都可能需要登录用户信息，如果各自去做登录校验，不仅麻烦，而且还会有密钥泄露的风险。</li>
+</ol>
+<p>解决办法：<strong>网关</strong>。</p>
+<ul>
+<li>前端请求路由转发</li>
+<li>请求的身份校验</li>
+</ul>
+<h1 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h1><p>网关：网络的关口，负责请求的路由、转发、身份校验。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308164732726.png" alt="image-20240308164732726"></p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308164739370.png" alt="image-20240308164739370"></p>
+<p>网关用8080端口，网关根据前端的请求，去判断应该用哪个微服务来处理这个请求。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165014579.png" alt="image-20240308165014579"></p>
+<p>在Spring Cloud中网关的实现包括两种：</p>
+<ul>
+<li><p>Spring Cloud Gateway</p>
+<ul>
+<li><p>Spring官方出品</p>
+</li>
+<li><p>基于WebFlux响应式编程</p>
+</li>
+<li><p>无需调优就可以获得优异性能</p>
+</li>
+</ul>
+</li>
+<li><p>Netflix Zuul</p>
+<ul>
+<li><p>Netflix出品</p>
+</li>
+<li><p>基于Servlet的阻塞式编程</p>
+</li>
+<li><p>需要调优才能获得与SpringCloud Gateway类似的性能</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="网关路由"><a href="#网关路由" class="headerlink" title="网关路由"></a>网关路由</h1><h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>创建网关服务，实现网关路由转发。</p>
+<p><strong>网关可以去注册中心拉取微服务的地址信息。</strong>前端跟网关对接即可。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165553480.png" alt="image-20240308165553480"></p>
+<h2 id="1-创建新模块"><a href="#1-创建新模块" class="headerlink" title="1. 创建新模块"></a>1. 创建新模块</h2><h2 id="2-引入网关依赖"><a href="#2-引入网关依赖" class="headerlink" title="2. 引入网关依赖"></a>2. 引入网关依赖</h2><h2 id="3-编写启动类"><a href="#3-编写启动类" class="headerlink" title="3. 编写启动类"></a>3. 编写启动类</h2><h2 id="4-配置路由规则"><a href="#4-配置路由规则" class="headerlink" title="4. 配置路由规则"></a>4. 配置路由规则</h2><p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165831877.png" alt="image-20240308165831877"></p>
+<ul>
+<li>id：自定义，建议跟微服务的名称一致</li>
+<li>url：指定微服务</li>
+<li>predicates：指定哪些请求由url指定的微服务来处理</li>
+</ul>
+<h2 id="路由属性"><a href="#路由属性" class="headerlink" title="路由属性"></a>路由属性</h2>]]></content>
       <categories>
         <category>微服务</category>
       </categories>

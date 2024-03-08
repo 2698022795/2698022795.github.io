@@ -80,18 +80,27 @@
 
 
 
-<meta name="description" content="和光同尘">
+<meta name="description" content="网关及配置管理问题1：黑马商城原来是单体项目，所有的功能集中在一个项目中，项目端口为8080  所以前端在渲染数据时，不管是商品数据、订单数据还是交易数据，只需要去请求8080端口，就可以拿到任意数据。  但是现在我们把项目拆分为多个不同的服务，且每个服务它的功能都各不相同，端口也不一样。一旦线上部署，这些IP和端口还可能发生改变。  前端在写数据的时候要写好数据向哪个端口IP发起请求。如果这些服">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微服务-day02-网关">
 <meta property="og:url" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/index.html">
 <meta property="og:site_name" content="章北海">
-<meta property="og:description" content="和光同尘">
+<meta property="og:description" content="网关及配置管理问题1：黑马商城原来是单体项目，所有的功能集中在一个项目中，项目端口为8080  所以前端在渲染数据时，不管是商品数据、订单数据还是交易数据，只需要去请求8080端口，就可以拿到任意数据。  但是现在我们把项目拆分为多个不同的服务，且每个服务它的功能都各不相同，端口也不一样。一旦线上部署，这些IP和端口还可能发生改变。  前端在写数据的时候要写好数据向哪个端口IP发起请求。如果这些服">
 <meta property="og:locale">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163720785.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163807114.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163837890.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308164732726.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308164739370.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165014579.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165553480.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165831877.png">
 <meta property="article:published_time" content="2024-03-08T08:34:30.000Z">
-<meta property="article:modified_time" content="2024-03-08T08:34:51.808Z">
+<meta property="article:modified_time" content="2024-03-08T08:59:37.935Z">
 <meta property="article:author" content="waterdance">
 <meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://2698022795.github.io/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163720785.png">
 
 
 
@@ -389,7 +398,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  584
                 </span>
               
 
@@ -405,7 +414,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -426,7 +435,64 @@
       
 
       
-        
+        <h1 id="网关及配置管理"><a href="#网关及配置管理" class="headerlink" title="网关及配置管理"></a>网关及配置管理</h1><p>问题1：黑马商城原来是单体项目，所有的功能集中在一个项目中，项目端口为8080</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163720785.png" alt="image-20240308163720785"></p>
+<p>所以前端在渲染数据时，不管是商品数据、订单数据还是交易数据，只需要去请求8080端口，就可以拿到任意数据。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163807114.png" alt="image-20240308163807114"></p>
+<p>但是现在我们把项目拆分为多个不同的服务，且每个服务它的功能都各不相同，端口也不一样。一旦线上部署，这些IP和端口还可能发生改变。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308163837890.png" alt="image-20240308163837890"></p>
+<p>前端在写数据的时候要写好数据向哪个端口IP发起请求。如果这些服务的端口要发生变化，该怎么办呢？</p>
+<p>问题2：</p>
+<p>这些微服务都需要用户信息，难道要在每个微服务里都去写登录和jwt的逻辑？</p>
+<p>而且jwt校验时要用密钥，这些密钥要分发给每个微服务吗？（密码泄露风险提高）</p>
+<p>总结：</p>
+<ol>
+<li>服务地址过多，且会发生变化，前端不知道要请求谁？</li>
+<li>每个服务都可能需要登录用户信息，如果各自去做登录校验，不仅麻烦，而且还会有密钥泄露的风险。</li>
+</ol>
+<p>解决办法：<strong>网关</strong>。</p>
+<ul>
+<li>前端请求路由转发</li>
+<li>请求的身份校验</li>
+</ul>
+<h1 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h1><p>网关：网络的关口，负责请求的路由、转发、身份校验。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308164732726.png" alt="image-20240308164732726"></p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308164739370.png" alt="image-20240308164739370"></p>
+<p>网关用8080端口，网关根据前端的请求，去判断应该用哪个微服务来处理这个请求。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165014579.png" alt="image-20240308165014579"></p>
+<p>在Spring Cloud中网关的实现包括两种：</p>
+<ul>
+<li><p>Spring Cloud Gateway</p>
+<ul>
+<li><p>Spring官方出品</p>
+</li>
+<li><p>基于WebFlux响应式编程</p>
+</li>
+<li><p>无需调优就可以获得优异性能</p>
+</li>
+</ul>
+</li>
+<li><p>Netflix Zuul</p>
+<ul>
+<li><p>Netflix出品</p>
+</li>
+<li><p>基于Servlet的阻塞式编程</p>
+</li>
+<li><p>需要调优才能获得与SpringCloud Gateway类似的性能</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="网关路由"><a href="#网关路由" class="headerlink" title="网关路由"></a>网关路由</h1><h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>创建网关服务，实现网关路由转发。</p>
+<p><strong>网关可以去注册中心拉取微服务的地址信息。</strong>前端跟网关对接即可。</p>
+<p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165553480.png" alt="image-20240308165553480"></p>
+<h2 id="1-创建新模块"><a href="#1-创建新模块" class="headerlink" title="1. 创建新模块"></a>1. 创建新模块</h2><h2 id="2-引入网关依赖"><a href="#2-引入网关依赖" class="headerlink" title="2. 引入网关依赖"></a>2. 引入网关依赖</h2><h2 id="3-编写启动类"><a href="#3-编写启动类" class="headerlink" title="3. 编写启动类"></a>3. 编写启动类</h2><h2 id="4-配置路由规则"><a href="#4-配置路由规则" class="headerlink" title="4. 配置路由规则"></a>4. 配置路由规则</h2><p><img src="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/image-20240308165831877.png" alt="image-20240308165831877"></p>
+<ul>
+<li>id：自定义，建议跟微服务的名称一致</li>
+<li>url：指定微服务</li>
+<li>predicates：指定哪些请求由url指定的微服务来处理</li>
+</ul>
+<h2 id="路由属性"><a href="#路由属性" class="headerlink" title="路由属性"></a>路由属性</h2>
       
     </div>
     
@@ -528,8 +594,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -653,6 +728,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E5%85%B3%E5%8F%8A%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">网关及配置管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">网关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E5%85%B3%E8%B7%AF%E7%94%B1"><span class="nav-number">3.</span> <span class="nav-text">网关路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="nav-number">3.1.</span> <span class="nav-text">快速入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BA%E6%96%B0%E6%A8%A1%E5%9D%97"><span class="nav-number">3.2.</span> <span class="nav-text">1. 创建新模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%BC%95%E5%85%A5%E7%BD%91%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="nav-number">3.3.</span> <span class="nav-text">2. 引入网关依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%BC%96%E5%86%99%E5%90%AF%E5%8A%A8%E7%B1%BB"><span class="nav-number">3.4.</span> <span class="nav-text">3. 编写启动类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99"><span class="nav-number">3.5.</span> <span class="nav-text">4. 配置路由规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%B1%9E%E6%80%A7"><span class="nav-number">3.6.</span> <span class="nav-text">路由属性</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -680,7 +771,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">131.9k</span>
+    <span title="Site words total count">132.5k</span>
   
 </div>
 
