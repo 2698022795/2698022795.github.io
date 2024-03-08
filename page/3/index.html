@@ -297,6 +297,415 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/" itemprop="url">javaweb-day09-maven高级</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-16T16:26:39+08:00">
+                2024-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaweb/" itemprop="url" rel="index">
+                    <span itemprop="name">javaweb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="分模块设计与开发"><a href="#分模块设计与开发" class="headerlink" title="分模块设计与开发"></a>分模块设计与开发</h1><ul>
+<li><p>为什么？</p>
+<ul>
+<li>（一个电商项目可能包含多个业务功能，商品、搜索、购物车、订单等等模块，所有的代码都在一个java项目中，这个项目的管理和维护会很困难）</li>
+<li>（在项目中定义了通用的工具类和组件，公司其他项目组也想使用这些工具类和组件，这种情况也不太方便，代码难以复用）</li>
+</ul>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216183352534.png" alt="image-20240216183352534"></p>
+</li>
+<li><p>分模块设计：将项目按照功能拆分为若干个子模块，方便项目的管理维护、拓展，也方便模块间的相互调用，资源共享。（商品、搜索、购物车、订单、实体类|通用组件模块等）</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216183456409.png" alt="image-20240216183456409"></p>
+</li>
+<li><p>实践</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216213219458.png" alt="image-20240216213219458"></p>
+</li>
+<li><p>步骤</p>
+<ul>
+<li><p>创建maven模块 tlias-pojo，存放实体类。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216214402332.png" alt="image-20240216214402332"></p>
+<p>给tlias-pojo的pom.xml文件加上对应的依赖，确保其中的pojo类方法能正常运行。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216214515180.png" alt="image-20240216214515180"></p>
+</li>
+<li><p>创建maven模块tlias-utils，存放相关工具类。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216214900547.png" alt="image-20240216214900547"></p>
+</li>
+<li><p>在主程序中引入这两个模块</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216215548913.png" alt="image-20240216215548913"></p>
+<p><font color="red">注意事项：分模块开发需要先针对模块功能进行设计，再进行编码。不会先将工程开发完毕，然后进行拆分。</font></p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="继承与聚合"><a href="#继承与聚合" class="headerlink" title="继承与聚合"></a>继承与聚合</h1><h2 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h2><p><strong>问题</strong></p>
+<p>不同模块的配置引入了多个相同依赖。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216220009702.png" alt="image-20240216220009702"></p>
+<p><strong>继承</strong></p>
+<ul>
+<li>概念：继承描述的是两个工程间的关系，与Java中的继承相似，子工程可以继承父工程中的配置信息，常见于依赖关系的继承。（将各个子工程中的公共依赖放到父工程依赖中）。</li>
+<li>作用：简化依赖配置，统一管理依赖。</li>
+<li>实现：&lt;parent&gt; … &lt;&#x2F;parent&gt;</li>
+</ul>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216220347887.png" alt="image-20240216220347887"></p>
+<p><strong>步骤</strong></p>
+<ol>
+<li><p>创建maven模块tlias-parent，该工程为父工程，设置打包方式pom（默认jar）。</p>
+<ul>
+<li>jar：普通模块打包，springboot项目基本都是jar包（内嵌tomcat运行）</li>
+<li>war：普通web程序打包，需要部署在外部的tomcat服务器中运行</li>
+<li>pom：父工程或聚合工程，该模块不写代码，仅进行依赖管理</li>
+</ul>
+<p>注意：在maven当中，一个工程只能继承一个父工程。我们原始的tlias-web-management已经有父工程spring-boot-starter-parent。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221111872.png" alt="image-20240216221111872"></p>
+<p>解决办法：让tlias-parent继承spring-boot-starter-parent，再让tlias-web-management继承tlias-parent。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221158176.png" alt="image-20240216221158176"></p>
+<p>设置tlias-parent的pom.xml内容，设置了parent父工程，packaging打包方式。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221232706.png" alt="image-20240216221232706"></p>
+</li>
+<li><p>在子工程的pom.xml文件中，配置继承关系。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216223213319.png" alt="image-20240216223213319"></p>
+<ul>
+<li>在子工程中，配置了继承关系之后，坐标中的groupId是可以省略的，因为会自动继承父工程的。</li>
+<li>relativePath指定父工程的pom文件的相对位置（如果不指定，将从本地仓库&#x2F;远程仓库中查找该工程）。</li>
+</ul>
+</li>
+<li><p>在父工程中配置各个工程共有的依赖（子工程会自动继承父工程的依赖）。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216223346649.png" alt="image-20240216223346649"></p>
+<ul>
+<li><font color="red">若父子工程都配置了同一个依赖的不同版本，以子工程的为准。</font></li>
+</ul>
+</li>
+</ol>
+<p><strong>实操</strong></p>
+<ol>
+<li>创建tlias-parent模块作为父工程。</li>
+</ol>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221627518.png" alt="image-20240216221627518"></p>
+<ol start="2">
+<li><p>设置tlias-parent模块的打包方式和父工程，删除无用的src目录（仅做依赖管理）</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216221919180.png" alt="image-20240216221919180"></p>
+</li>
+<li><p>设置子工程的pom.xml</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216222504798.png" alt="image-20240216222504798"></p>
+</li>
+<li><p>在父工程中配置子工程中相同的配置</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216222918026.png" alt="image-20240216222918026"></p>
+</li>
+</ol>
+<p><strong>真实的项目模块结构</strong>（有图所示）</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216223542356.png" alt="image-20240216223542356"></p>
+<h2 id="版本锁定"><a href="#版本锁定" class="headerlink" title="版本锁定"></a>版本锁定</h2><p>分模块之后，子工程可以继承父工程的依赖。</p>
+<p>问题：存在多个（非全部）子工程使用同一个依赖。这个依赖无法直接添加到父工程中。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216223913990.png" alt="image-20240216223913990"></p>
+<p>解决办法：</p>
+<p>在maven中，可以在父工程的pom文件中通过&lt;dependencyManagement&gt;来统一管理依赖版本。（仅仅代表我们要统一管理这个依赖的版本，但是不将其添加至父工程的依赖中，实际上配置时还是在子工程中配置依赖，但是不用再在子工程中指定依赖版本）</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216224152871.png" alt="image-20240216224152871"></p>
+<p>注意事项：</p>
+<ul>
+<li>子工程引入依赖时，无需指定&lt;version&gt;版本号，父工程统一管理。变更依赖版本，只需在父工程中统一变更。</li>
+</ul>
+<p><strong>自定义属性&#x2F;引用属性</strong></p>
+<p>在yml文件的properties属性中设置依赖版本</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216225128520.png" alt="image-20240216225128520"></p>
+<ol>
+<li>&lt;dependencyManagement&gt;与&lt;dependencies&gt;的区别是什么？</li>
+</ol>
+<ul>
+<li>&lt;dependencies&gt;是直接依赖，在父工程配置了依赖，子工程会直接继承下来。</li>
+<li>&lt;dependencyManagement&gt;是统一管理依赖版本，不会直接依赖，还需要在子工程中引入所需依赖（无需指定版本）</li>
+</ul>
+<h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><p>问题：要将tlias-web-management打包，得先将tlias-parent，tlias-pojo，tlias-utils执行install，然后才能打包tlias-web-management。</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216231527264.png" alt="image-20240216231527264"></p>
+<p>maven的聚合操作就是来解决这个问题：一键编译、打包、安装。</p>
+<ul>
+<li><p>聚合</p>
+<p>将多个模块组织成一个整体，同时进行项目的构建。</p>
+</li>
+<li><p>聚合工程</p>
+<p>一个不具有业务功能的“空”工程（有且仅有一个pom文件）（目前项目中就有，是tlias-parent，因此tlias-parent既是父工程，也是聚合工程）</p>
+</li>
+<li><p>作用</p>
+<p>快速构建项目（无需根据依赖关系手动构建，直接在聚合工程上构建即可）</p>
+</li>
+</ul>
+<p>maven可以通过在pom.xml中设置&lt;modules&gt;，从而设置当前聚合工程所包含的子模块名称</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216231953596.png" alt="image-20240216231953596"></p>
+<p>注意事项：</p>
+<ul>
+<li>聚合工程中所包含的模块，在构建时，会根据模块间的依赖关系设置构建顺序，与聚合工程中模块的配置书写位置无关。</li>
+</ul>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240216232244285.png" alt="image-20240216232244285"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>作用<ul>
+<li>聚合用于快速构建项目</li>
+<li>继承用于简化依赖配置、统一管理依赖</li>
+</ul>
+</li>
+<li>相同点<ul>
+<li>聚合与继承的pom.xml文件打包方式均为pom，可以将两种关系制作到同一个pom文件中</li>
+<li>聚合与继承均属于设计型模块， 并无实际的模块内容</li>
+</ul>
+</li>
+<li>不同点<ul>
+<li>聚合是在聚合工程中配置关系，聚合可以感知到参与聚合的模块有哪些</li>
+<li>继承是在子模块中配置关系，父模块无法感知哪些子模块继承了自己</li>
+</ul>
+</li>
+</ul>
+<h1 id="私服"><a href="#私服" class="headerlink" title="私服"></a>私服</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217011547756.png" alt="image-20240217011547756"></p>
+<p>问题：怎么将A中的jar包导入至B的项目中？</p>
+<p>解决办法：搭建私服。私服从中央仓库下载第三方依赖，确保A和B能使用对方的依赖和中央仓库的依赖。</p>
+<ul>
+<li><p>私服是一种特殊的远程仓库，它是架设在局域网内的仓库服务，用来代理位于外部的中央仓库，用于解决团队内部的资源共享与资源同步问题。</p>
+</li>
+<li><p>依赖查找顺序：</p>
+<ul>
+<li>本地仓库</li>
+<li>私服</li>
+<li>中央仓库</li>
+</ul>
+</li>
+<li><p>注意事项：私服在企业项目开发中，一个项目&#x2F;公司，只需要一台即可（<font color="red">无需我们搭建，会使用即可</font>）</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217011926163.png" alt="image-20240217011926163"></p>
+</li>
+</ul>
+<h2 id="资源上传与下载"><a href="#资源上传与下载" class="headerlink" title="资源上传与下载"></a>资源上传与下载</h2><p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217012323930.png" alt="image-20240217012323930"></p>
+<p><strong>私服的仓库</strong></p>
+<ul>
+<li>RELEASE(发行版本)：功能趋于稳定，当前更新停止，可以用于发行的版本，存储在私服的RELEASE仓库中。</li>
+<li>SNAPSHOT（快照版本）：功能不稳定、尚处于开发中的版本，即快照版本，存储在私服的SNAPSHOT仓库中。</li>
+</ul>
+<ol>
+<li><p>配置访问私服的用户名&#x2F;密码（settings.xml中的servers中配置）</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013612624.png" alt="image-20240217013612624"></p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013535822.png" alt="image-20240217013535822"></p>
+</li>
+<li><p>IDEA的maven工程的pom文件中配置上传（发布）地址</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013625786.png" alt="image-20240217013625786"></p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013643914.png" alt="image-20240217013643914"></p>
+</li>
+<li><p>设置私服依赖下载的仓库组地址（仓库组挂载了所有仓库，settings.xml中的mirrors、profiles中配置）</p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013820947.png" alt="image-20240217013820947"></p>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217013850809.png" alt="image-20240217013850809"></p>
+</li>
+</ol>
+<h2 id="私服配置说明"><a href="#私服配置说明" class="headerlink" title="私服配置说明"></a>私服配置说明</h2><p>访问私服：<a target="_blank" rel="noopener" href="http://192.168.150.101:8081/">http://192.168.150.101:8081</a></p>
+<p>访问密码：admin&#x2F;admin</p>
+<p>使用私服，需要在maven的settings.xml配置文件中，做如下配置：</p>
+<ol>
+<li><p>需要在 <strong>servers</strong> 标签中，配置访问私服的个人凭证(访问的用户名和密码)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>在 <strong>mirrors</strong> 中只配置我们自己私服的连接地址(如果之前配置过阿里云，需要直接替换掉)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-public<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.150.101:8081/repository/maven-public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>需要在 <strong>profiles</strong> 中，增加如下配置，来指定snapshot快照版本的依赖，依然允许使用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>allow-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-public<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.150.101:8081/repository/maven-public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>如果需要上传自己的项目到私服上，需要在项目的pom.xml文件中，增加如下配置，来配置项目发布的地址(也就是私服的地址)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">distributionManagement</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- release版本的发布地址 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.150.101:8081/repository/maven-releases/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- snapshot版本的发布地址 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.150.101:8081/repository/maven-snapshots/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">distributionManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>发布项目，直接运行 deploy 生命周期即可 (发布时，建议跳过单元测试)</p>
+</li>
+</ol>
+<p>​		</p>
+<h2 id="启动本地私服"><a href="#启动本地私服" class="headerlink" title="启动本地私服"></a>启动本地私服</h2><ol>
+<li><p>解压： apache-maven-nexus.zip</p>
+</li>
+<li><p>进入目录： apache-maven-nexus\nexus-3.39.0-01\bin</p>
+</li>
+<li><p>启动服务：双击 start.bat </p>
+</li>
+<li><p>访问服务：localhost:8081</p>
+</li>
+<li><p>私服配置说明：将上述配置私服信息的 192.168.150.101 改为 localhost</p>
+</li>
+</ol>
+<h1 id="Web开发完结"><a href="#Web开发完结" class="headerlink" title="Web开发完结"></a>Web开发完结</h1><p>接下来的学习路线</p>
+<ol>
+<li>MyBatis-Plus</li>
+<li>瑞吉外卖项目</li>
+<li>微服务技术栈</li>
+<li>学成在线项目</li>
+</ol>
+<p><img src="/2024/02/16/javaweb-day09-maven%E9%AB%98%E7%BA%A7/image-20240217015500978.png" alt="image-20240217015500978"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/15/javaweb-day08-springboot%E5%8E%9F%E7%90%86%E7%AF%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4721,222 +5130,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/01/15/hexo%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/01/15/hexo%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/" itemprop="url">hexo中插入图片教程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-01-15T14:25:23+08:00">
-                2024-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8D%9A%E5%AE%A2/" itemprop="url" rel="index">
-                    <span itemprop="name">博客</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-解决方案"><a href="#1-解决方案" class="headerlink" title="1. 解决方案"></a>1. 解决方案</h2><h3 id="1-1-创建图片资源文件夹"><a href="#1-1-创建图片资源文件夹" class="headerlink" title="1.1 创建图片资源文件夹"></a>1.1 创建图片资源文件夹</h3><p>网上有关的解决方式几乎很大一部分会提到这一点：将_config.yml 文件中的post_asset_folder 选项设为 true 来打开。事实上这正是hexo官方文档给出的解决方案之一中的一个步骤。仔细阅读后会发现如下几点：</p>
-<ol>
-<li><p>该操作的作用就是在使用hexo new xxx指令新建博文时，在相同路径下同步创建一个xxx文件夹，而xxx文件夹的作用就是用来存放图片资源；</p>
-</li>
-<li><p>就我个人而言，我偏好于直接在source_posts文件夹下新建md文件，而不是通过hexo new xxx指令；</p>
-</li>
-<li><p>那么直接新建xxx.md再新建xxx文件夹，这种操作的最终效果和使用hexo new xxx指令新建博文的效果一样吗？经过实测，是一样的。</p>
-</li>
-</ol>
-<p>基于以上3点，告诉大家几个结论：</p>
-<ol>
-<li>新建博文可以不用hexo new xxx指令，我较为推荐直接新建文件和文件夹的方式，只要达到一个md文件，一个同名文件夹的效果即可；</li>
-<li>【将_config.yml 文件中的post_asset_folder 选项设为 true 】是必须的！理论上既然没用hexo new xxx指令，文件夹也是我自己新建的，这一步设置的意义似乎并不存在，但是后文介绍的插件必须在post_asset_folder 选项设为 true的情况下才能生效——本人亲测，大家记住这么设置即可！</li>
-</ol>
-<h3 id="1-2-typora中图像设置"><a href="#1-2-typora中图像设置" class="headerlink" title="1.2 typora中图像设置"></a>1.2 typora中图像设置</h3><p>一般来说，大家会现在typora里写好md格式的博客，然后通过hexo clean、hexo g、hexo s进行一下本地测试，确认无误后再发布到远端。</p>
-<p>暂且不说hexo博客的图片插入是个问题，我相信当初单纯利用typora做笔记时，图片文件的管理就让很多人头疼过，typora官方似乎也意识到这个问题，所以偏好设置中图像是专门的一项，提供了很多选择。</p>
-<p><img src="/2024/01/15/hexo%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/image-20240115143136972.png" alt="image-20240115143136972"></p>
-<p>我相信大多数同学写md时的图片很多可能是直接截图或者在其他地方copy的，然后在typora中直接粘贴就ok了。但是这么做之前最好把typora插入图片时采取何种操作配置好，否则md文件和图片相隔十万八千里，后续一旦移动md文件图片就识别不出来，相信大家用过typora都深有体会。</p>
-<p>所以接下来讲一下typora如何设置。直接给结论：</p>
-<p><img src="/2024/01/15/hexo%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/image-20240115143150050.png" alt="image-20240115143150050"></p>
-<p>的路径是：<code>./$&#123;filename&#125;</code>。<code>./</code>表示当前文件夹，<code>$&#123;filename&#125;</code>表示当前文件名。这么设置的好处：</p>
-<ol>
-<li>图片资源文件夹有了；</li>
-<li>而且是同名文件夹！（2.1中的文件夹其实不用手动添加了）</li>
-</ol>
-<p>这么设置的结果就是：想写篇博客，在<code>source\_posts</code>文件夹下新建<code>xxx.md</code>文件，写着写着需要插一张图，从别处复制，然后在typora中直接粘贴，<code>bling!</code>图片资源文件夹自动搞定，并不用关心什么文件夹，只管专注于<code>md</code>文件即可。</p>
-<h3 id="1-3-插件下载"><a href="#1-3-插件下载" class="headerlink" title="1.3 插件下载"></a>1.3 插件下载</h3><p>这个很多博客也有提到，插件的名字叫<code>hexo-asset-image</code>，相信在网上找了一波解决方案的同学一定对这个名字不陌生。</p>
-<p>这个插件的不同版本可能会有不同的影响，我最终成功解决问题的版本是用如下命令下载的：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install https://github.com/CodeFalling/hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-
-<p>为什么需要这么插件呢？</p>
-<p>因为我们虽然在<code>source\_posts</code>文件夹下写了md文件，也有了图片资源文件夹存了图片，但从我们前面typora中的设置不难知道，实际上md文件中的图片路径都是相对路径（<code>./$&#123;filename&#125;</code>）。而实际网上看到的博文显然不是md文件，而是html文件，从md到html的转变就是hexo帮我们做的，还记得<code>hexo g</code>命令吗？就是干这个的。转换后的html文件在<code>public</code>目录下，路径是通过日期指示的。</p>
-<p>下面第一张图是存放md文件的地方，图片就在图中的jiangzhou文件夹中；第二张图是generate之后存在html和图片资源的地方。</p>
-<p><img src="/2024/01/15/hexo%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/image-20240115145940757.png" alt="image-20240115145940757"></p>
-<p><img src="/2024/01/15/hexo%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E6%95%99%E7%A8%8B/image-20240115145902744.png" alt="image-20240115145902744"></p>
-<h2 id="1-4-完成部署"><a href="#1-4-完成部署" class="headerlink" title="1.4 完成部署"></a>1.4 完成部署</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>经过以上三步，在本地目录public目录下就会根据日期产生对应的网页，网页中图片的路径经过插件<code>https://github.com/CodeFalling/hexo-asset-image</code>之后已经正确转换为对应的路径。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4991,7 +5184,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5060,6 +5253,10 @@
 				  
 				  
 					<li class="recent_posts_li">
+					  <a href="/2024/03/08/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-%E7%BD%91%E5%85%B3/" title="微服务-day02-网关" target="_blank">微服务-day02-网关</a>
+					</li>
+				  
+					<li class="recent_posts_li">
 					  <a href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/" title="微服务-day03-docker2" target="_blank">微服务-day03-docker2</a>
 					</li>
 				  
@@ -5073,10 +5270,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/03/05/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day02-SpringCloud02/" title="微服务-day02-SpringCloud02" target="_blank">微服务-day02-SpringCloud02</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/04/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day01-SpringCloud01/" title="微服务-day01-SpringCloud01" target="_blank">微服务-day01-SpringCloud01</a>
 					</li>
 				  
 				</ul>
@@ -5123,7 +5316,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">127.4k</span>
+    <span title="Site words total count">131.9k</span>
   
 </div>
 
