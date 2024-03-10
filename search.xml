@@ -142,9 +142,106 @@
       </categories>
   </entry>
   <entry>
+    <title>微服务-day05-rabbitMQ</title>
+    <url>/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/</url>
+    <content><![CDATA[<h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><p>高性能的异步通讯组件</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223355698.png" alt="image-20240310223355698"></p>
+<p>解读：</p>
+<ul>
+<li>同步通讯：就如同打视频电话，双方的交互都是实时的。因此同一时刻你只能跟一个人打视频电话。</li>
+<li>异步通讯：就如同发微信聊天，双方的交互不是实时的，你不需要立刻给对方回应。因此你可以多线操作，同时跟多人聊天。</li>
+</ul>
+<p>两种方式各有优劣，打电话可以立即得到响应，但是你却不能跟多个人同时通话。发微信可以同时与多个人收发微信，但是往往响应会有延迟。</p>
+<p>所以，如果我们的业务需要实时得到服务提供方的响应，则应该选择同步通讯（同步调用）。而如果我们追求更高的效率，并且不需要实时响应，则应该选择异步通讯（异步调用）。</p>
+<p>之前讲解微服务，微服务之间采用OpenFeign通信，是阻塞式的。缺点是要后续微服务都完成才能完成本微服务的请求。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223456971.png" alt="image-20240310223456971"></p>
+<p> 同步调用的方式我们已经学过了，之前的OpenFeign调用就是。但是：</p>
+<ul>
+<li>异步调用又该如何实现？</li>
+<li>哪些业务适合用异步调用来实现呢？</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223905233.png" alt="image-20240310223905233"></p>
+<p><strong>课程背景</strong></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310224432096.png" alt="image-20240310224432096"></p>
+<h2 id="同步调用"><a href="#同步调用" class="headerlink" title="同步调用"></a>同步调用</h2><p>我们以黑马商城的余额支付为例：</p>
+]]></content>
+      <categories>
+        <category>微服务</category>
+      </categories>
+  </entry>
+  <entry>
     <title>内功-spring-day01</title>
     <url>/2024/03/10/%E5%86%85%E5%8A%9F-spring-day01/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="IOC的理解"><a href="#IOC的理解" class="headerlink" title="IOC的理解"></a>IOC的理解</h1><p>通常，我们认为Spring有两⼤特性IoC和AOP。</p>
+<p>IoC表示控制反转，那么： </p>
+<ol>
+<li>什么是控制？控制了什么？ </li>
+<li>什么是反转？反转之前是谁控制的？反转之后是谁控制的？如何控制的？ </li>
+<li>为什么要反转？反转之前有什么问题？反转之后有什么好处？</li>
+</ol>
+<p>这就是解决这⼀类⼤问题的思路，⼤⽽化⼩。 </p>
+<p>那么，我们先来解决第⼀个问题：什么是控制？控制了什么？ </p>
+<p>我们在⽤Spring的时候，我们需要做什么： </p>
+<ol>
+<li>建⼀些类，⽐如UserService、OrderService </li>
+<li>⽤⼀些注解，⽐如@Autowired</li>
+</ol>
+<p>但是，我们也知道，当程序运⾏时，⽤的是具体的UserService对象、OrderService对象，那这些对象 是什么时候创建的？谁创建的？包括对象⾥的属性是什么时候赋的值？谁赋的？所有这些都是我们程序 员做的，以为我们只是写了类⽽已，所有的这些都是Spring做的，它才是幕后⿊⼿。 </p>
+<p>这就是控制： </p>
+<ol>
+<li><p>控制对象的创建 </p>
+</li>
+<li><p>控制对象内属性的赋值</p>
+</li>
+</ol>
+<p>如果我们不⽤Spring，那我们得⾃⼰来做这两件事，反过来，我们⽤Spring，这两件事情就不⽤我们做 了，我们要做的仅仅是定义类，以及定义哪些属性需要Spring来赋值（⽐如某个属性上加 @Autowired），⽽这其实就是第⼆个问题的答案，这就是<strong>反转</strong>，表示⼀种对象控制权的转移。 </p>
+<p>那反转有什么⽤，为什么要反转？ 如果我们⾃⼰来负责创建对象，⾃⼰来给对象中的属性赋值，会出现什么情况？</p>
+<p>⽐如，现在有三个类： </p>
+<ol>
+<li>A类，A类⾥有⼀个属性C c； </li>
+<li>B类，B类⾥也有⼀个属性C c； </li>
+<li>C类</li>
+</ol>
+<p>现在程序要运⾏，这三个类的对象都需要创建出来，并且相应的属性都需要有值，那么除开定义这三个 类之外，我们还得写：</p>
+<ol>
+<li><p>A a &#x3D; new A(); </p>
+</li>
+<li><p>B b &#x3D; new B(); </p>
+</li>
+<li><p>C c &#x3D; new C(); </p>
+</li>
+<li><p>a.c &#x3D; c; </p>
+</li>
+<li><p>b.c &#x3D; c</p>
+</li>
+</ol>
+<p>这五⾏代码是不⽤Spring的情况下多出来的代码，⽽且，如果类在多⼀些，类中的属性在多⼀些，那相 应的代码会更多，⽽且代码会更复杂。所以我们可以发现，我们⾃⼰来控制⽐交给Spring来控制，我们 的代码量以及代码复杂度是要⾼很多的，反⾔之，将对象交给Spring来控制，减轻了程序员的负担。</p>
+<p>总结⼀下，IoC表示控制反转，表示如果⽤Spring，那么Spring会负责来创建对象，以及给对象内的属 性赋值，也就是如果⽤Spring，那么对象的控制权会转交给Spring。</p>
+<h1 id="单例Bean和单例模式"><a href="#单例Bean和单例模式" class="headerlink" title="单例Bean和单例模式"></a>单例Bean和单例模式</h1><p>单例模式表示JVM中某个类的对象只会存在唯⼀⼀个。 </p>
+<p>⽽单例Bean并不表示JVM中只能存在唯⼀的某个类的Bean对象。</p>
+<p>单例Bean表示向Spring容器获取Bean时，通过相同的名字可以获得同一个对象。</p>
+<p>区别：单例模式表示类的对象在整个项目中独一份；单例Bean则表示可以创建多个该类的Bean对象（名称不同即可）并注入到IOC容器中。</p>
+<p>联系：在Spring容器中不同位置调用该类的同名Bean对象，这个时候这些不同位置调用的对象是同一个。</p>
+<h1 id="Spring事务传播机制"><a href="#Spring事务传播机制" class="headerlink" title="Spring事务传播机制"></a>Spring事务传播机制</h1><p>多个事务⽅法相互调⽤时，事务如何在这些⽅法间传播，⽅法A是⼀个事务的⽅法，⽅法A执⾏过程中调 ⽤了⽅法B，那么⽅法B有⽆事务以及⽅法B对事务的要求不同都会对⽅法A的事务具体执⾏造成影响， 同时⽅法A的事务对⽅法B的事务执⾏也有影响，这种影响具体是什么就由两个⽅法所定义的事务传播类 型所决定。</p>
+<ol>
+<li><p>REQUIRED(Spring默认的事务传播类型)：如果当前没有事务，则⾃⼰新建⼀个事务，如果当前存 在事务，则加⼊这个事务 </p>
+</li>
+<li><p>SUPPORTS：当前存在事务，则加⼊当前事务，如果当前没有事务，就以⾮事务⽅法执⾏ 单例Bean和单例模式 Spring事务传播机制</p>
+</li>
+<li><p>MANDATORY：当前存在事务，则加⼊当前事务，如果当前事务不存在，则抛出异常。 </p>
+</li>
+<li><p>REQUIRES_NEW：创建⼀个新事务，如果存在当前事务，则挂起该事务。 </p>
+</li>
+<li><p>NOT_SUPPORTED：以⾮事务⽅式执⾏,如果当前存在事务，则挂起当前事务 </p>
+</li>
+<li><p>NEVER：不使⽤事务，如果当前事务存在，则抛出异常 </p>
+</li>
+<li><p>NESTED：如果当前事务存在，则在嵌套事务中执⾏，否则REQUIRED的操作⼀样（开启⼀个事 务）</p>
+</li>
+</ol>
+<h1 id="Spring事务什么时候会失效"><a href="#Spring事务什么时候会失效" class="headerlink" title="Spring事务什么时候会失效?"></a>Spring事务什么时候会失效?</h1><p>spring事务的原理是AOP，进⾏了切⾯增强，那么失效的根本原因是这个AOP不起作⽤了！常⻅情况有 如下几种</p>
+<p>1、发⽣⾃调⽤，类⾥⾯使⽤this调⽤本类的⽅法（this通常省略），此时这个this对象不是代理类，⽽ 是UserService对象本身！ 解决⽅法很简单，让那个this变成UserService的代理类即可！ 2、⽅法不是public的：@Transactional 只能⽤于 public 的⽅法上，否则事务不会失效，如果要⽤在⾮ public ⽅法上，可以开启 AspectJ 代理模式。 3、数据库不⽀持事务 4、没有被spring管理 5、异常被吃掉，事务不会回滚(或者抛出的异常没有被定义，默认为RuntimeException)</p>
+]]></content>
       <categories>
         <category>内功</category>
       </categories>
