@@ -142,6 +142,14 @@
       </categories>
   </entry>
   <entry>
+    <title>内功-spring-day01</title>
+    <url>/2024/03/10/%E5%86%85%E5%8A%9F-spring-day01/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>内功</category>
+      </categories>
+  </entry>
+  <entry>
     <title>微服务-day04-服务保护和分布式事务</title>
     <url>/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</url>
     <content><![CDATA[<h1 id="服务保护和分布式事务"><a href="#服务保护和分布式事务" class="headerlink" title="服务保护和分布式事务"></a>服务保护和分布式事务</h1><p>黑马商城是单体项目。</p>
