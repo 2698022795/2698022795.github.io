@@ -80,18 +80,82 @@
 
 
 
-<meta name="description" content="服务保护和分布式事务">
+<meta name="description" content="服务保护和分布式事务黑马商城是单体项目。  单个微服务的延迟会影响到其他关联的微服务。  雪崩问题微服务调用链路中的某个服务故障，会引起整个链路中所有微服务都不可用，这就是雪崩。   总结 雪崩问题产生的原因是什么？  微服务相互调用，服务提供者出现故障或阻塞。 服务调用者没有做好异常处理，导致自身故障。 调用链中的所有服务级联失败，导致整个集群故障。  解决问题的思路有哪些？  尽量避免服务出现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微服务-day04-服务保护和分布式事务">
 <meta property="og:url" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/index.html">
 <meta property="og:site_name" content="章北海">
-<meta property="og:description" content="服务保护和分布式事务">
+<meta property="og:description" content="服务保护和分布式事务黑马商城是单体项目。  单个微服务的延迟会影响到其他关联的微服务。  雪崩问题微服务调用链路中的某个服务故障，会引起整个链路中所有微服务都不可用，这就是雪崩。   总结 雪崩问题产生的原因是什么？  微服务相互调用，服务提供者出现故障或阻塞。 服务调用者没有做好异常处理，导致自身故障。 调用链中的所有服务级联失败，导致整个集群故障。  解决问题的思路有哪些？  尽量避免服务出现">
 <meta property="og:locale">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309165400922.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309165536035.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309194057631.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309194137485.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309195457444.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309200129557.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309200659901.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309200923754.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309201307876.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309202120513.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309202940378.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309203242547.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309205034708.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309205539493.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309205554490.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309205906143.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309210254311.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309210628641.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309211057455.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309212247512.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309212306176.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309212325154.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309212335169.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213141430.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213323760.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213615075.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213633219.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213832548.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309214528000.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215127124.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215255008.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215640164.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215821658.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215850899.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309221443729.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309221555926.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309221625339.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309224157908.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309224555162.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309224919146.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309225202809.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309230122960.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309230513990.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309230749836.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309231840691.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309232303123.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309232802149.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309233418513.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309233724441.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309233752868.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309233945073.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310000148756.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310000707734.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310000800567.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310000831228.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310125721543.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310130144858.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310130436215.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310131107889.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310131333885.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310131340185.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310131613563.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310133241965.png">
 <meta property="article:published_time" content="2024-03-09T08:45:13.000Z">
-<meta property="article:modified_time" content="2024-03-09T08:45:55.620Z">
+<meta property="article:modified_time" content="2024-03-10T05:32:43.356Z">
 <meta property="article:author" content="waterdance">
 <meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://2698022795.github.io/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309165400922.png">
 
 
 
@@ -389,7 +453,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  10
+                  4.1k
                 </span>
               
 
@@ -405,7 +469,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  15
                 </span>
               
             </div>
@@ -426,7 +490,298 @@
       
 
       
-        <h1 id="服务保护和分布式事务"><a href="#服务保护和分布式事务" class="headerlink" title="服务保护和分布式事务"></a>服务保护和分布式事务</h1>
+        <h1 id="服务保护和分布式事务"><a href="#服务保护和分布式事务" class="headerlink" title="服务保护和分布式事务"></a>服务保护和分布式事务</h1><p>黑马商城是单体项目。</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309165400922.png" alt="image-20240309165400922"></p>
+<p>单个微服务的延迟会影响到其他关联的微服务。</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309165536035.png" alt="image-20240309165536035"></p>
+<h1 id="雪崩问题"><a href="#雪崩问题" class="headerlink" title="雪崩问题"></a>雪崩问题</h1><p><font color="red">微服务调用链路中的某个服务故障，会引起整个链路中所有微服务都不可用，这就是雪崩。</font></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309194057631.png" alt="image-20240309194057631"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309194137485.png" alt="image-20240309194137485"></p>
+<p><strong>总结</strong></p>
+<p>雪崩问题产生的原因是什么？</p>
+<ul>
+<li>微服务相互调用，服务提供者出现故障或阻塞。</li>
+<li>服务调用者没有做好异常处理，导致自身故障。</li>
+<li>调用链中的所有服务级联失败，导致整个集群故障。</li>
+</ul>
+<p>解决问题的思路有哪些？</p>
+<ul>
+<li>尽量避免服务出现故障或阻塞。<ul>
+<li>保证代码的健壮性；</li>
+<li>保证网络通畅；</li>
+<li>能应对较高的并发请求；</li>
+</ul>
+</li>
+</ul>
+<h2 id="服务保护方案（服务降级方案）"><a href="#服务保护方案（服务降级方案）" class="headerlink" title="服务保护方案（服务降级方案）"></a>服务保护方案（服务降级方案）</h2><h3 id="请求限流"><a href="#请求限流" class="headerlink" title="请求限流"></a>请求限流</h3><p>请求限流 ：限制访问接口的请求的并发量，避免服务因流量激增出现故障。</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309195457444.png" alt="image-20240309195457444"></p>
+<h3 id="线程隔离"><a href="#线程隔离" class="headerlink" title="线程隔离"></a>线程隔离</h3><p>线程隔离：也叫做船舱模式，模拟船舱隔板的防水原理。通过限定每个业务使用的线程数量而将故障业务隔离，避免故障扩散。</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309200129557.png" alt="image-20240309200129557"></p>
+<h3 id="服务熔断"><a href="#服务熔断" class="headerlink" title="服务熔断"></a>服务熔断</h3><p>服务熔断：由断路器统计请求的异常比例或慢调用比例，如果超出阈值则会熔断该业务，则拦截该接口的请求。</p>
+<p>熔断期间，该业务的所有请求快速失败，全都走fallback逻辑。</p>
+<p>业务2多次请求异常比例较高，这个时候服务就会触发熔断机制，拦截该请求。</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309200659901.png" alt="image-20240309200659901"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309200923754.png" alt="image-20240309200923754"></p>
+<h3 id="服务保护技术"><a href="#服务保护技术" class="headerlink" title="服务保护技术"></a>服务保护技术</h3><p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309201307876.png" alt="image-20240309201307876"></p>
+<p>Hystrix只支持SpringCloud老版本，目前用的基本是Sentinel。</p>
+<h1 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h1><h2 id="初始Sentinel"><a href="#初始Sentinel" class="headerlink" title="初始Sentinel"></a>初始Sentinel</h2><p>Sentinel是阿里巴巴开源的一款微服务流量控制组件。官网地址：<a target="_blank" rel="noopener" href="https://sentinelguard.io/zh-cn/index.html">https://sentinelguard.io/zh-cn/index.html</a></p>
+<p>Sentinel &#x3D; Sentinel客户端（引入依赖） + Sentinel控制台（配置流量）</p>
+<p>Sentinel控制台</p>
+<ol>
+<li>监控微服务内部所有接口的请求情况</li>
+<li>基于控制台配置限流规则，熔断规则</li>
+</ol>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309202120513.png" alt="image-20240309202120513"></p>
+<p>为了方便监控微服务，我们先把Sentinel的控制台搭建出来。</p>
+<p>1）下载jar包</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel/releases">Releases · alibaba&#x2F;Sentinel (github.com)</a></p>
+<p>也可以直接使用课前资料提供的版本：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309202940378.png" alt="image-20240309202940378"></p>
+<p>2）运行</p>
+<p>将jar包放在任意非中文、不包含特殊字符的目录下，重命名为<code>sentinel-dashboard.jar</code></p>
+<p>然后运行如下命令启动控制台：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dserver.port=8090 -Dcsp.sentinel.dashboard.server=localhost:8090 -Dproject.name=sentinel-dashboard -jar sentinel-dashboard.jar</span><br></pre></td></tr></table></figure>
+
+<p>访问<a target="_blank" rel="noopener" href="http://localhost:8090/">http://localhost:8090</a>页面，就可以看到sentinel的控制台了：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309203242547.png" alt="image-20240309203242547"></p>
+<p>需要输入账号和密码，默认都是：sentinel</p>
+<p>登录后，即可看到控制台，默认会监控sentinel-dashboard服务本身：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309205034708.png" alt="image-20240309205034708"></p>
+<p>我们在<code>cart-service</code>模块中整合sentinel，连接<code>sentinel-dashboard</code>控制台，步骤如下：</p>
+<p> 1）引入sentinel依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--sentinel--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-sentinel<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2）配置控制台</p>
+<p>修改application.yaml文件，添加下面内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span> </span><br><span class="line">    <span class="attr">sentinel:</span></span><br><span class="line">      <span class="attr">transport:</span></span><br><span class="line">        <span class="attr">dashboard:</span> <span class="string">localhost:8090</span></span><br></pre></td></tr></table></figure>
+
+<p>3）访问<code>cart-service</code>的任意端点</p>
+<p>重启<code>cart-service</code>，然后访问查询购物车接口，sentinel的客户端就会将服务访问的信息提交到<code>sentinel-dashboard</code>控制台。并展示出统计信息：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309205539493.png" alt="image-20240309205539493"></p>
+<p>点击簇点链路菜单，会看到下面的页面：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309205554490.png" alt="image-20240309205554490"></p>
+<p><strong>簇点链路</strong>，就是单机调用链路，是一次请求进入服务后经过的每一个被<code>Sentinel</code>监控的资源。默认情况下，<code>Sentinel</code>会监控<code>SpringMVC</code>的每一个<code>Endpoint</code>（接口）。</p>
+<p>因此，我们看到<code>/carts</code>这个接口路径就是其中一个簇点，我们可以对其进行限流、熔断、隔离等保护措施。</p>
+<p><font color="red">说白了，就是监控controller中设置的请求路径。</font></p>
+<p>不过，需要注意的是，我们的SpringMVC接口是按照Restful风格设计，因此购物车的查询、删除、修改等接口全部都是<code>/carts</code>路径：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309205906143.png" alt="image-20240309205906143"></p>
+<p>Restful风格的API请求路径一般都相同，这会导致簇点资源名称重复。因此我们要修改配置，把<strong>请求方式+请求路径</strong>作为簇点资源名称：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">sentinel:</span></span><br><span class="line">      <span class="attr">transport:</span></span><br><span class="line">        <span class="attr">dashboard:</span> <span class="string">localhost:8090</span></span><br><span class="line">      <span class="attr">http-method-specify:</span> <span class="literal">true</span> <span class="comment"># 开启请求方式前缀</span></span><br></pre></td></tr></table></figure>
+
+<p>然后，重启服务，通过页面访问购物车的相关接口，可以看到sentinel控制台的簇点链路发生了变化：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309210254311.png" alt="image-20240309210254311"></p>
+<h2 id="请求限流-1"><a href="#请求限流-1" class="headerlink" title="请求限流"></a>请求限流</h2><p>在簇点链路后面点击流控按钮，即可对其做限流配置：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309210628641.png" alt="image-20240309210628641"></p>
+<p>在弹出的菜单中这样填写：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309211057455.png" alt="image-20240309211057455"></p>
+<p>这样就把查询购物车列表这个簇点资源的流量限制在了每秒6个，也就是最大QPS为6.</p>
+<p>我们利用Jemeter做限流测试，我们每秒发出10个请求：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309212247512.png" alt="image-20240309212247512"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309212306176.png" alt="image-20240309212306176"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309212325154.png" alt="image-20240309212325154"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309212335169.png" alt="image-20240309212335169"></p>
+<h2 id="线程隔离-1"><a href="#线程隔离-1" class="headerlink" title="线程隔离"></a>线程隔离</h2><p>当商品服务中出现阻塞或者故障时，调用商品服务的购物车服务可能因此而被拖慢，设置资源耗尽。所以必须限制购物车服务中查询商品这个业务的可用线程数，实现县城隔离。</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213141430.png" alt="image-20240309213141430"></p>
+<p>操作步骤一：</p>
+<p>让OpenFeign整合Sentinel：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">feign:</span><br><span class="line">  sentinel:</span><br><span class="line">    enabled: true # 开启feign对sentinel的支持</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213323760.png" alt="image-20240309213323760"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213615075.png" alt="image-20240309213615075"></p>
+<p>sentinel中线程隔离也是当作请求限流处理，只是线程隔离要配置并发线程数，而请求限流配置的是QPS。</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213633219.png" alt="image-20240309213633219"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309213832548.png" alt="image-20240309213832548"></p>
+<p>最终测试结果如下：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309214528000.png" alt="image-20240309214528000"></p>
+<h2 id="Fallback"><a href="#Fallback" class="headerlink" title="Fallback"></a>Fallback</h2><p>FeignClient的FallBack有两种配置方式：</p>
+<ul>
+<li>方式一：FallbackClass，无法对远程调用的异常做处理</li>
+<li>方式二：FallbackFactory：可以对远程调用的异常做处理，通常都会选择这种</li>
+</ul>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215127124.png" alt="image-20240309215127124"></p>
+<p>假设我们有一个FeignClient如下：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215255008.png" alt="image-20240309215255008"></p>
+<p>为其编写Fallback逻辑。</p>
+<p>步骤一：自定义类，实现FallbackFactory，编写对某个FeignClient的fallback逻辑：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215640164.png" alt="image-20240309215640164"></p>
+<p>步骤二：将刚刚定义的UserClientFallbackFactory注册为一个Bean：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215821658.png" alt="image-20240309215821658"></p>
+<p>步骤三：在UserClient接口中使用UserClientFallbackFactory</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309215850899.png" alt="image-20240309215850899"></p>
+<p><strong>步骤一</strong>：在hm-api模块中给<code>ItemClient</code>定义降级处理类，实现<code>FallbackFactory</code>：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309221443729.png" alt="image-20240309221443729"></p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.api.client.fallback;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hmall.api.client.ItemClient;</span><br><span class="line"><span class="keyword">import</span> com.hmall.api.dto.ItemDTO;</span><br><span class="line"><span class="keyword">import</span> com.hmall.api.dto.OrderDetailDTO;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FallbackFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ItemClientFallbackFactory</span> <span class="keyword">implements</span> <span class="title class_">FallbackFactory</span>&lt;ItemClient&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> ItemClient <span class="title function_">create</span><span class="params">(Throwable cause)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ItemClient</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> List&lt;ItemDTO&gt; <span class="title function_">queryItemByIds</span><span class="params">(Collection&lt;Long&gt; ids)</span> &#123;</span><br><span class="line">                <span class="comment">//查询出现异常，返回空集合</span></span><br><span class="line">                log.error(<span class="string">&quot;查询商品异常，异常原因：&quot;</span>,cause);</span><br><span class="line">                <span class="keyword">return</span> Collections.emptyList();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deductStock</span><span class="params">(List&lt;OrderDetailDTO&gt; items)</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(cause);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>步骤二</strong>：在<code>hm-api</code>模块中的<code>com.hmall.api.config.DefaultFeignConfig</code>类中将<code>ItemClientFallback</code>注册为一个<code>Bean</code>：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309221555926.png" alt="image-20240309221555926"></p>
+<p><strong>步骤三</strong>：在<code>hm-api</code>模块中的<code>ItemClient</code>接口中使用<code>ItemClientFallbackFactory</code>：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309221625339.png" alt="image-20240309221625339"></p>
+<p>重启后，再次测试，发现被限流的请求不再报错，走了降级逻辑：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309224157908.png" alt="image-20240309224157908"></p>
+<h2 id="服务熔断-1"><a href="#服务熔断-1" class="headerlink" title="服务熔断"></a>服务熔断</h2><p>熔断降级是解决雪崩问题的重要手段。思路是由<strong>断路器</strong>来统计服务调用的异常比例、慢请求比例，如果超出阈值则会<strong>熔断</strong>该服务。即拦截访问该服务的一切请求；而当服务回复时，断路器会放行访问该服务的请求。</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309224555162.png" alt="image-20240309224555162"></p>
+<p>查询商品的RT较高（模拟的500ms），从而导致查询购物车的RT也变的很长。这样不仅拖慢了购物车服务，消耗了购物车服务的更多资源，而且用户体验也很差。</p>
+<p>对于商品服务这种不太健康的接口，我们应该停止调用，直接走降级逻辑，避免影响到当前服务。也就是将商品查询接口<strong>熔断</strong>。当商品服务接口恢复正常后，再允许调用。这其实就是<strong>断路器</strong>的工作模式了。</p>
+<p>Sentinel中的断路器不仅可以统计某个接口的<strong>慢请求比例</strong>，还可以统计<strong>异常请求比例</strong>。当这些比例超出阈值时，就会<strong>熔断</strong>该接口，即拦截访问该接口的一切请求，降级处理；当该接口恢复正常时，再放行对于该接口的请求。</p>
+<p>断路器的工作状态切换有一个状态机来控制：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309224919146.png" alt="image-20240309224919146"></p>
+<p>状态机包括三个状态：</p>
+<ul>
+<li><strong>closed</strong>：关闭状态，断路器放行所有请求，并开始统计异常比例、慢请求比例。超过阈值则切换到open状态</li>
+<li><strong>open</strong>：打开状态，服务调用被<strong>熔断</strong>，访问被熔断服务的请求会被拒绝，快速失败，直接走降级逻辑。Open状态持续一段时间后会进入half-open状态</li>
+<li><strong>half-open</strong>：半开状态，放行一次请求，根据执行结果来判断接下来的操作。 <ul>
+<li>请求成功：则切换到closed状态</li>
+<li>请求失败：则切换到open状态</li>
+</ul>
+</li>
+</ul>
+<p>我们可以在控制台通过点击簇点后的**<code>熔断</code>**按钮来配置熔断策略：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309225202809.png" alt="image-20240309225202809"></p>
+<p>这种是按照慢调用比例来做熔断，上述配置的含义是：</p>
+<ul>
+<li>RT超过200毫秒的请求调用就是慢调用</li>
+<li>统计最近1000ms内的最少5次请求，如果慢调用比例不低于0.5，则触发熔断</li>
+<li>熔断持续时长20s</li>
+</ul>
+<h2 id="持久化配置"><a href="#持久化配置" class="headerlink" title="持久化配置"></a>持久化配置</h2><ol>
+<li><p>引入sentinel-nacos依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.csp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>sentinel-datasource-nacos<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.8.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在nacos添加配置</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309230122960.png" alt="image-20240309230122960"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309230513990.png" alt="image-20240309230513990"></p>
+<p>修改yaml文件，设置对应配置项</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309230749836.png" alt="image-20240309230749836"></p>
+</li>
+</ol>
+<h1 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h1><p>下单业务，前端请求首先进入订单服务，创建订单并写入数据库。然后订单服务调用购物车服务和库存服务：</p>
+<ul>
+<li>购物车服务负责清理购物车信息</li>
+<li>库存服务负责扣减商品库存</li>
+</ul>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309231840691.png" alt="image-20240309231840691"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309232303123.png" alt="image-20240309232303123"></p>
+<p>在分布式系统重，如果一个业务需要多个服务合作完成，而且每一个服务都有事务，多个事务必须同时成功或失败，这样的事务就是<strong>分布式事务</strong>。其中的每一个服务的事务就是一个<strong>分支事务</strong>。整个业务称为<strong>全局事务</strong>。</p>
+<h2 id="初始Seata"><a href="#初始Seata" class="headerlink" title="初始Seata"></a>初始Seata</h2><p>解决分布式事务的方案有很多，但实现起来都比较复杂，因此我们一般会使用开源的框架来解决分布式事务问题。在众多的开源分布式事务框架中，功能最完善、使用最多的就是阿里巴巴在2019年开源的Seata了。</p>
+<p>其实分布式事务产生的一个重要原因，就是参与事务的多个分支事务互相无感知，不知道彼此的执行状态。因此解决分布式事务的思想非常简单：</p>
+<p>就是找一个统一的<strong>事务协调者</strong>，与多个分支事务通信，检测每个分支事务的执行状态，保证全局事务下的每一个分支事务同时成功或失败即可。大多数的分布式事务框架都是基于这个理论来实现的。</p>
+<p>Seata也不例外，在Seata的事务管理中有三个重要的角色：</p>
+<ul>
+<li><strong>TC (Transaction Coordinator）事务协调者：</strong>维护全局和分支事务的状态，协调全局事务提交或回滚。 </li>
+<li><strong>TM (Transaction Manager) -</strong> <strong>事务管理器：</strong>定义全局事务的范围、开始全局事务、提交或回滚全局事务。 </li>
+<li><strong>RM (Resource Manager) -</strong> <strong>资源管理器：</strong>管理分支事务，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。</li>
+</ul>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309232802149.png" alt="image-20240309232802149"></p>
+<p>Seata的工作架构如图所示：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309233418513.png" alt="image-20240309233418513"></p>
+<p>其中，<strong>TM</strong>和<strong>RM</strong>可以理解为Seata的客户端部分，引入到参与事务的微服务依赖中即可。将来<strong>TM</strong>和<strong>RM</strong>就会协助微服务，实现本地分支事务与<strong>TC</strong>之间交互，实现事务的提交或回滚。</p>
+<p>而<strong>TC</strong>服务则是事务协调中心，是一个独立的微服务，需要单独部署。</p>
+<h2 id="部署TC服务"><a href="#部署TC服务" class="headerlink" title="部署TC服务"></a>部署TC服务</h2><h3 id="准备数据库表"><a href="#准备数据库表" class="headerlink" title="准备数据库表"></a>准备数据库表</h3><p>Seata支持多种存储模式，但考虑到持久化的需要，我们一般选择基于数据库存储。执行课前资料提供的<code>《seata-tc.sql》</code>，导入数据库表：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309233724441.png" alt="image-20240309233724441"></p>
+<h3 id="准备配置文件"><a href="#准备配置文件" class="headerlink" title="准备配置文件"></a>准备配置文件</h3><p>课前资料准备了一个seata目录，其中包含了seata运行时所需要的配置文件：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309233752868.png" alt="image-20240309233752868"></p>
+<p>我们将整个seata文件夹拷贝到虚拟机的<code>/root</code>目录：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240309233945073.png" alt="image-20240309233945073"></p>
+<h3 id="Docker部署"><a href="#Docker部署" class="headerlink" title="Docker部署"></a>Docker部署</h3><p>需要注意，要确保nacos、mysql都在hm-net网络中。如果某个容器不再hm-net网络，可以参考下面的命令将某容器加入指定网络：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network connect [网络名] [容器名]</span><br></pre></td></tr></table></figure>
+
+<p>在虚拟机的<code>/root</code>目录执行下面的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run --name seata \</span><br><span class="line">-p 8099:8099 \</span><br><span class="line">-p 7099:7099 \</span><br><span class="line">-e SEATA_IP=192.168.226.129 \</span><br><span class="line">-v ./seata:/seata-server/resources \</span><br><span class="line">--privileged=true \</span><br><span class="line">--network hm-net \</span><br><span class="line">-d \</span><br><span class="line">seataio/seata-server:1.5.2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="微服务集成Seata"><a href="#微服务集成Seata" class="headerlink" title="微服务集成Seata"></a>微服务集成Seata</h2><p>为了方便各个微服务集成seata，我们需要把seata配置共享到nacos，因此<code>trade-service</code>模块不仅仅要引入seata依赖，还要引入nacos依赖:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--seata--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-seata<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后，在application.yml中添加配置，让微服务找到TC服务地址：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310000148756.png" alt="image-20240310000148756"></p>
+<p>在nacos上添加一个共享的seata配置，命名为<code>shared-seata.yaml</code>：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310000707734.png" alt="image-20240310000707734"></p>
+<p>然后，改造<code>trade-service</code>模块，添加<code>bootstrap.yaml</code>：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310000800567.png" alt="image-20240310000800567"></p>
+<p>内容如下:</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310000831228.png" alt="image-20240310000831228"></p>
+<p>可以看到这里加载了共享的seata配置。</p>
+<p>然后改造application.yaml文件，内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8083</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">okhttp:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">sentinel:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 开启feign对sentinel的支持</span></span><br><span class="line"><span class="attr">hm:</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">database:</span> <span class="string">hm-item</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">swagger:</span></span><br><span class="line">    <span class="attr">title:</span> <span class="string">&quot;黑马商城商品服务接口文档&quot;</span></span><br><span class="line">    <span class="attr">package:</span> <span class="string">com.hmall.item.controller</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">sentinel:</span></span><br><span class="line">      <span class="attr">transport:</span></span><br><span class="line">        <span class="attr">dashboard:</span> <span class="string">localhost:8090</span></span><br><span class="line">      <span class="attr">http-method-specify:</span> <span class="literal">true</span> <span class="comment"># 开启请求方式前缀</span></span><br><span class="line">      <span class="attr">datasource:</span></span><br><span class="line">        <span class="attr">ds2:</span> <span class="comment"># 配置文件的数据源名称</span></span><br><span class="line">          <span class="attr">nacos:</span></span><br><span class="line">            <span class="attr">server-addr:</span> <span class="number">192.168</span><span class="number">.226</span><span class="number">.129</span><span class="string">:8848</span></span><br><span class="line">            <span class="attr">data-id:</span> <span class="string">degrade.json</span></span><br><span class="line">            <span class="attr">group-id:</span> <span class="string">DEFAULT_GROUP</span></span><br><span class="line">            <span class="attr">data-type:</span> <span class="string">json</span></span><br><span class="line">            <span class="attr">rule-type:</span> <span class="string">degrade</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="XA模式"><a href="#XA模式" class="headerlink" title="XA模式"></a>XA模式</h2><p>XA规范是X&#x2F;Open组织定义的分布式事务管理（DTP，Distributed Transaction Processing）标准，XA规范描述了全局TM与局部RM之间的接口，几乎所有主流的数据库都对XA规范提供了支持。Seata的XA模式如下：</p>
+<ol>
+<li>TM开启全局事务</li>
+<li>TM调用分支事务</li>
+<li>RM向TC注册分支事务</li>
+<li>RM执行业务sql（在执行事务的时候不准提交）</li>
+<li>RM向TC报告事务状态</li>
+<li>TM执行全局事务</li>
+<li>TC检查各个分支事务状态</li>
+<li>TC向RM发送提交&#x2F;回滚命令</li>
+</ol>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310125721543.png" alt="image-20240310125721543"></p>
+<p>一阶段的工作：</p>
+<ol>
+<li>RM注册分支事务到TC</li>
+<li>RM执行分支业务sql但不提交</li>
+<li>RM报告执行状态到TC</li>
+</ol>
+<p>二阶段</p>
+<ul>
+<li>TC检测各分支事务执行状态<ul>
+<li>如果都成功，通知所有RM提交事务</li>
+<li>如果有失败，通知所有RM回滚事务</li>
+</ul>
+</li>
+<li>RM接收TC指令，提交或回滚事务</li>
+</ul>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310130144858.png" alt="image-20240310130144858"></p>
+<h3 id="实现XA模式"><a href="#实现XA模式" class="headerlink" title="实现XA模式"></a>实现XA模式</h3><p>Seata的startery已经完成了XA模式的自动装配，实现非常简单，步骤如下：</p>
+<ol>
+<li><p>修改application.yaml文件（每个参与事务的微服务），开启XA模式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">seata:</span><br><span class="line">  data-source-proxy-mode: XA</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给发起全局事务的入口方法添加@GlobalTransactional注解，本例中是OrderServiceImpl中的create方法：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310130436215.png" alt="image-20240310130436215"></p>
+</li>
+</ol>
+<h2 id="AT模式"><a href="#AT模式" class="headerlink" title="AT模式"></a>AT模式</h2><p>Seata主推的是AT模式，AT模式同样是分阶段提交的事务模型，不过弥补了XA模型中资源锁定周期过长的缺陷。</p>
+<ol>
+<li>TM开启全局事务</li>
+<li>TM调用分支事务</li>
+<li>RM向TC注册分支事务</li>
+<li>RM执行业务sql<strong>并提交，同时记录更新前后快照</strong></li>
+<li>RM向TC报告事务状态</li>
+<li>TM<strong>提交&#x2F;回滚</strong>全局事务</li>
+<li>TC检查各个分支事务状态</li>
+<li>TC向RM发送提交&#x2F;回滚命令</li>
+<li>RM<strong>删除log&#x2F;回复log数据</strong></li>
+</ol>
+<p>阶段一RM的工作：</p>
+<ul>
+<li>注册分支事务</li>
+<li>记录undo-log（数据快照）</li>
+<li>执行业务sql并提交</li>
+<li>报告事务状态</li>
+</ul>
+<p>阶段二提交RM的工作：</p>
+<ul>
+<li>删除undo-log即可</li>
+</ul>
+<p>阶段二回滚时RM的工作：</p>
+<ul>
+<li>根据undo-log恢复数据到更新前</li>
+</ul>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310131107889.png" alt="image-20240310131107889"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310131333885.png" alt="image-20240310131333885"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310131340185.png" alt="image-20240310131340185"></p>
+<h3 id="实现AT模式"><a href="#实现AT模式" class="headerlink" title="实现AT模式"></a>实现AT模式</h3><p>首先，添加资料中的seata-at.sql到微服务对应的数据库中：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- for AT mode you must to init this sql for you business database. the seata server not need it.</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> `undo_log`</span><br><span class="line">(</span><br><span class="line">    `branch_id`     <span class="type">BIGINT</span>       <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;branch transaction id&#x27;</span>,</span><br><span class="line">    `xid`           <span class="type">VARCHAR</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;global transaction id&#x27;</span>,</span><br><span class="line">    `context`       <span class="type">VARCHAR</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;undo_log context,such as serialization&#x27;</span>,</span><br><span class="line">    `rollback_info` LONGBLOB     <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;rollback info&#x27;</span>,</span><br><span class="line">    `log_status`    <span class="type">INT</span>(<span class="number">11</span>)      <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;0:normal status,1:defense status&#x27;</span>,</span><br><span class="line">    `log_created`   DATETIME(<span class="number">6</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;create datetime&#x27;</span>,</span><br><span class="line">    `log_modified`  DATETIME(<span class="number">6</span>)  <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;modify datetime&#x27;</span>,</span><br><span class="line">    <span class="keyword">UNIQUE</span> KEY `ux_undo_log` (`xid`, `branch_id`)</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB</span><br><span class="line">  AUTO_INCREMENT <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">  <span class="keyword">DEFAULT</span> CHARSET <span class="operator">=</span> utf8mb4 COMMENT <span class="operator">=</span><span class="string">&#x27;AT transaction mode undo table&#x27;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后，修改application.yml文件，将事务模式修改为AT模式：</p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310131613563.png" alt="image-20240310131613563"></p>
+<p><img src="/2024/03/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day04-%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/image-20240310133241965.png" alt="image-20240310133241965"></p>
+
       
     </div>
     
@@ -671,7 +1026,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">服务保护和分布式事务</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">服务保护和分布式事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%AA%E5%B4%A9%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">雪崩问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E6%96%B9%E6%A1%88%EF%BC%88%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7%E6%96%B9%E6%A1%88%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">服务保护方案（服务降级方案）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E9%99%90%E6%B5%81"><span class="nav-number">2.1.1.</span> <span class="nav-text">请求限流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E9%9A%94%E7%A6%BB"><span class="nav-number">2.1.2.</span> <span class="nav-text">线程隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD"><span class="nav-number">2.1.3.</span> <span class="nav-text">服务熔断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4%E6%8A%80%E6%9C%AF"><span class="nav-number">2.1.4.</span> <span class="nav-text">服务保护技术</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sentinel"><span class="nav-number">3.</span> <span class="nav-text">Sentinel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8BSentinel"><span class="nav-number">3.1.</span> <span class="nav-text">初始Sentinel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E9%99%90%E6%B5%81-1"><span class="nav-number">3.2.</span> <span class="nav-text">请求限流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E9%9A%94%E7%A6%BB-1"><span class="nav-number">3.3.</span> <span class="nav-text">线程隔离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fallback"><span class="nav-number">3.4.</span> <span class="nav-text">Fallback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD-1"><span class="nav-number">3.5.</span> <span class="nav-text">服务熔断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="nav-number">3.6.</span> <span class="nav-text">持久化配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">分布式事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8BSeata"><span class="nav-number">4.1.</span> <span class="nav-text">初始Seata</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2TC%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.2.</span> <span class="nav-text">部署TC服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8"><span class="nav-number">4.2.1.</span> <span class="nav-text">准备数据库表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.2.2.</span> <span class="nav-text">准备配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E9%83%A8%E7%BD%B2"><span class="nav-number">4.2.3.</span> <span class="nav-text">Docker部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%9B%86%E6%88%90Seata"><span class="nav-number">4.3.</span> <span class="nav-text">微服务集成Seata</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XA%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.4.</span> <span class="nav-text">XA模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0XA%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.4.1.</span> <span class="nav-text">实现XA模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AT%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.5.</span> <span class="nav-text">AT模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0AT%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.5.1.</span> <span class="nav-text">实现AT模式</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -705,7 +1060,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">137.6k</span>
+    <span title="Site words total count">142k</span>
   
 </div>
 

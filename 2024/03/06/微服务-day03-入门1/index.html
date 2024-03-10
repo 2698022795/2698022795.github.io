@@ -170,7 +170,7 @@
 <meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240308152905085.png">
 <meta property="og:image" content="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240308161142290.png">
 <meta property="article:published_time" content="2024-03-06T08:20:13.000Z">
-<meta property="article:modified_time" content="2024-03-08T08:34:00.915Z">
+<meta property="article:modified_time" content="2024-03-09T14:12:15.729Z">
 <meta property="article:author" content="waterdance">
 <meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
 <meta name="twitter:card" content="summary">
@@ -472,7 +472,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  8.6k
+                  8.8k
                 </span>
               
 
@@ -488,7 +488,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  41
+                  42
                 </span>
               
             </div>
@@ -799,8 +799,11 @@
 <p>如果想要全局配置，让所有FeignClient都按照这个日志配置，则需要在@EnableFeignClients注解中声明：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableFeignClients(clients = &#123;ItemClient.class&#125;,defaultConfiguration = DefaultFeignConfig.class)</span></span><br></pre></td></tr></table></figure>
 
-
-
+<blockquote>
+<p>。在您的<code>CartApplication</code>类中，通过<code>@EnableFeignClients</code>注解启用了Feign客户端，并通过<code>defaultConfiguration</code>属性指定了Feign的默认配置类<code>DefaultFeignConfig</code>。这样，Spring会知道<code>DefaultFeignConfig</code>类中定义的<code>@Bean</code>方法应该被注册为Spring上下文中的Bean。</p>
+<p><code>@EnableFeignClients</code>注解告诉Spring扫描指定的接口，为其创建代理，并应用指定的默认配置。在这个案例中，即使<code>DefaultFeignConfig</code>没有直接用<code>@Configuration</code>注解，因为您在<code>@EnableFeignClients</code>注解中通过<code>defaultConfiguration</code>属性显式地指定了这个类，Spring会处理这个类中的<code>@Bean</code>注解方法，并创建对应的Bean实例。</p>
+<p>总结来说，<code>DefaultFeignConfig</code>中的<code>@Bean</code>方法会生效，因为您在使用<code>@EnableFeignClients</code>注解时指定了这个类作为Feign的默认配置。这样做允许您定义Feign客户端的日志级别、请求拦截器以及熔断降级处理。这是Feign和Spring Cloud的一部分集成特性，它允许在微服务架构中灵活地定义和应用客户端级别的配置。</p>
+</blockquote>
 <p><strong>总结</strong></p>
 <p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-%E5%85%A5%E9%97%A81/image-20240308000450406.png" alt="image-20240308000450406"></p>
 <h1 id="个人总结"><a href="#个人总结" class="headerlink" title="个人总结"></a>个人总结</h1><ol>
@@ -1271,7 +1274,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">137.6k</span>
+    <span title="Site words total count">142k</span>
   
 </div>
 
