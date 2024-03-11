@@ -80,19 +80,76 @@
 
 
 
-<meta name="description" content="RabbitMQ高性能的异步通讯组件  解读：  同步通讯：就如同打视频电话，双方的交互都是实时的。因此同一时刻你只能跟一个人打视频电话。 异步通讯：就如同发微信聊天，双方的交互不是实时的，你不需要立刻给对方回应。因此你可以多线操作，同时跟多人聊天。  两种方式各有优劣，打电话可以立即得到响应，但是你却不能跟多个人同时通话。发微信可以同时与多个人收发微信，但是往往响应会有延迟。 所以，如果我们的业">
+<meta name="description" content="前景知识高性能的异步通讯组件  解读：  同步通讯：就如同打视频电话，双方的交互都是实时的。因此同一时刻你只能跟一个人打视频电话。 异步通讯：就如同发微信聊天，双方的交互不是实时的，你不需要立刻给对方回应。因此你可以多线操作，同时跟多人聊天。  两种方式各有优劣，打电话可以立即得到响应，但是你却不能跟多个人同时通话。发微信可以同时与多个人收发微信，但是往往响应会有延迟。 所以，如果我们的业务需要实">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微服务-day05-rabbitMQ">
 <meta property="og:url" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/index.html">
 <meta property="og:site_name" content="章北海">
-<meta property="og:description" content="RabbitMQ高性能的异步通讯组件  解读：  同步通讯：就如同打视频电话，双方的交互都是实时的。因此同一时刻你只能跟一个人打视频电话。 异步通讯：就如同发微信聊天，双方的交互不是实时的，你不需要立刻给对方回应。因此你可以多线操作，同时跟多人聊天。  两种方式各有优劣，打电话可以立即得到响应，但是你却不能跟多个人同时通话。发微信可以同时与多个人收发微信，但是往往响应会有延迟。 所以，如果我们的业">
+<meta property="og:description" content="前景知识高性能的异步通讯组件  解读：  同步通讯：就如同打视频电话，双方的交互都是实时的。因此同一时刻你只能跟一个人打视频电话。 异步通讯：就如同发微信聊天，双方的交互不是实时的，你不需要立刻给对方回应。因此你可以多线操作，同时跟多人聊天。  两种方式各有优劣，打电话可以立即得到响应，但是你却不能跟多个人同时通话。发微信可以同时与多个人收发微信，但是往往响应会有延迟。 所以，如果我们的业务需要实">
 <meta property="og:locale">
 <meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223355698.png">
 <meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223456971.png">
 <meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223905233.png">
 <meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310224432096.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311110925391.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311111026926.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311111256657.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311140813726.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311141547756.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311141744653.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311142135874.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143611065.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143733022.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143753660.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311144339755.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145316219.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145716007.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145727512.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145841146.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150103251.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150137037.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150616631.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150635359.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150739849.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311151427295.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311151700585.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155009971.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155808370.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155943682.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160125258.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160430629.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160922469.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161756543.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161824447.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161929562.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162157320.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162339877.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162609141.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162647850.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311163628967.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311163820738.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164134271.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164434183.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164854473.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164946045.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311165108205.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311165724343.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170128232.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170334038.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170429785.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170509773.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170541112.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170624625.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170904131.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170947088.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171538279.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171730188.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171831142.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171816002.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171927499.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311172456801.png">
 <meta property="article:published_time" content="2024-03-10T14:30:11.000Z">
-<meta property="article:modified_time" content="2024-03-10T14:46:49.318Z">
+<meta property="article:modified_time" content="2024-03-11T09:25:48.585Z">
 <meta property="article:author" content="waterdance">
 <meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
 <meta name="twitter:card" content="summary">
@@ -394,7 +451,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  346
+                  5.6k
                 </span>
               
 
@@ -410,7 +467,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  22
                 </span>
               
             </div>
@@ -431,7 +488,7 @@
       
 
       
-        <h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><p>高性能的异步通讯组件</p>
+        <h1 id="前景知识"><a href="#前景知识" class="headerlink" title="前景知识"></a>前景知识</h1><p>高性能的异步通讯组件</p>
 <p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223355698.png" alt="image-20240310223355698"></p>
 <p>解读：</p>
 <ul>
@@ -451,7 +508,316 @@
 <p><strong>课程背景</strong></p>
 <p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310224432096.png" alt="image-20240310224432096"></p>
 <h2 id="同步调用"><a href="#同步调用" class="headerlink" title="同步调用"></a>同步调用</h2><p>我们以黑马商城的余额支付为例：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311110925391.png" alt="image-20240311110925391"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311111026926.png" alt="image-20240311111026926"></p>
+<ul>
+<li>拓展性差</li>
+<li>性能下降</li>
+<li>级联失败</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311111256657.png" alt="image-20240311111256657"></p>
+<p><strong>总结</strong></p>
+<p>同步调用的优势是什么？</p>
+<ul>
+<li>时效性强，等待到结果后才返回。</li>
+</ul>
+<p>同步调用的问题是什么？</p>
+<ul>
+<li>拓展性差</li>
+<li>性能下降</li>
+<li>级联失败问题</li>
+</ul>
+<h2 id="异步调用"><a href="#异步调用" class="headerlink" title="异步调用"></a>异步调用</h2><p>异步调用方式起始就是基于消息通知的方式，一般包含三个角色：</p>
+<ul>
+<li>消息发送者：投递消息的人，就是原来的调用方</li>
+<li>消息代理：管理、暂存、转发消息，你可以把它理解成微信服务器</li>
+<li>消息接收者：接收和处理消息的人，就是原来的服务提供方</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311140813726.png" alt="image-20240311140813726"></p>
+<p>支付服务不再同步调用业务关联度低的服务，而不是发送消息通知到Broker。</p>
+<p>具备以下优势：</p>
+<ul>
+<li>接触耦合，拓展性强</li>
+<li>异步调用，无需等待，性能好</li>
+<li>故障隔离，下游服务故障不影响上游业务</li>
+<li>缓存消息，流量削峰填谷</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>无法立刻获取其他微服务的调用结果，时效性差</li>
+<li>不能确定下游业务是否执行成功</li>
+<li>业务安全依赖于Broker的可靠性</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311141547756.png" alt="image-20240311141547756"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311141744653.png" alt="image-20240311141744653"></p>
+<h2 id="MQ技术选型"><a href="#MQ技术选型" class="headerlink" title="MQ技术选型"></a>MQ技术选型</h2><p>MQ（MessageQueue），中文是消息队列，字面上来看就是存放消息的队列。也就是异步调用中的Broker。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311142135874.png" alt="image-20240311142135874"></p>
+<h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><h2 id="介绍和安装"><a href="#介绍和安装" class="headerlink" title="介绍和安装"></a>介绍和安装</h2><p>RabbitMQ是基于Erlang语言开发的开源消息通信中间件，官网地址：<a target="_blank" rel="noopener" href="http://www.rabbitmq.com/">http://www.rabbitmq.com/</a></p>
+<p>我们同样基于Docker来安装RabbitMQ，使用下面的命令即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line"> -e RABBITMQ_DEFAULT_USER=itheima \</span><br><span class="line"> -e RABBITMQ_DEFAULT_PASS=123321 \</span><br><span class="line"> -v mq-plugins:/plugins \</span><br><span class="line"> --name mq \</span><br><span class="line"> --hostname mq \</span><br><span class="line"> -p 15672:15672 \</span><br><span class="line"> -p 5672:5672 \</span><br><span class="line"> --network hm-net\</span><br><span class="line"> -d \</span><br><span class="line"> rabbitmq:3.8-management</span><br></pre></td></tr></table></figure>
 
+<p>如果拉取镜像困难的话，可以使用课前资料给大家准备的镜像，利用docker load命令加载：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143611065.png" alt="image-20240311143611065"></p>
+<p>可以看到在安装命令中有两个映射的端口：</p>
+<ul>
+<li>15672：RabbitMQ提供的管理控制台的端口</li>
+<li>5672：RabbitMQ的消息发送处理接口</li>
+</ul>
+<p>安装完成后，我们访问 <a href="http://192.168.226.129:15672即可看到管理控制台。首次访问需要登录，默认的用户名和密码在配置文件中已经指定了。">http://192.168.226.129:15672即可看到管理控制台。首次访问需要登录，默认的用户名和密码在配置文件中已经指定了。</a></p>
+<p>登录后即可看到管理控制台总览页面：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143733022.png" alt="image-20240311143733022"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143753660.png" alt="image-20240311143753660"></p>
+<p>RabbitMQ对应的架构如图：</p>
+<p>其中包含几个概念：</p>
+<ul>
+<li>**<code>publisher</code>**：生产者，也就是发送消息的一方</li>
+<li>**<code>consumer</code>**：消费者，也就是消费消息的一方</li>
+<li>**<code>queue</code>**：队列，存储消息。生产者投递的消息会暂存在消息队列中，等待消费者处理</li>
+<li>**<code>exchange</code>**：交换机，负责消息路由。生产者发送的消息由交换机决定投递到哪个队列。</li>
+<li>**<code>virtual host</code>**：虚拟主机，起到数据隔离的作用。每个虚拟主机相互独立，有各自的exchange、queue</li>
+</ul>
+<p>上述这些东西都可以在RabbitMQ的管理控制台来管理，下一节我们就一起来学习控制台的使用。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311144339755.png" alt="image-20240311144339755"></p>
+<p>RabbitMQ Server Broker可以建立多个VirtualHost（虚拟主机），起数据隔离作用。</p>
+<p>不同的VirtualHost有自己的交换机和队列，不同VirtualHost是相互隔离的。</p>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>需求：在RabbitMQ的控制台完成以下操作：</p>
+<ul>
+<li>新建队列hello.queue1和hello.queue2</li>
+<li>向默认的amp.fanout交换机发送一条消息</li>
+<li>查看消息是否到达hello.queue1和hello.queue2</li>
+<li>总结规律</li>
+</ul>
+<h3 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h3><p>我们打开Exchanges选项卡，可以看到已经存在很多交换机：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145316219.png" alt="image-20240311145316219"></p>
+<p>我们点击任意交换机，即可进入交换机详情页面。仍然会利用控制台中的publish message 发送一条消息：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145716007.png" alt="image-20240311145716007"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145727512.png" alt="image-20240311145727512"></p>
+<p>这里是由控制台模拟了生产者发送的消息。由于没有消费者存在，最终消息丢失了，这样说明交换机没有存储消息的能力。</p>
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>我们打开<code>Queues</code>选项卡，新建多个队列：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145841146.png" alt="image-20240311145841146"></p>
+<p>此时，我们再次向<code>amq.fanout</code>交换机发送一条消息。会发现消息依然没有到达队列！！</p>
+<p>怎么回事呢？</p>
+<p>发送到交换机的消息，只会路由到与其绑定的队列，因此仅仅创建队列是不够的，我们还需要将其与交换机绑定。</p>
+<h3 id="绑定关系"><a href="#绑定关系" class="headerlink" title="绑定关系"></a>绑定关系</h3><p>点击<code>Exchanges</code>选项卡，点击<code>amq.fanout</code>交换机，进入交换机详情页，然后点击<code>Bindings</code>菜单，在表单中填写要绑定的队列名称：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150103251.png" alt="image-20240311150103251"></p>
+<p>查看队列，发现它已经被交换机绑定</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150137037.png" alt="image-20240311150137037"></p>
+<p>再次回到exchange页面，找到刚刚绑定的<code>amq.fanout</code>，点击进入详情页，再次发送一条消息：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150616631.png" alt="image-20240311150616631"></p>
+<p>回到<code>Queues</code>页面，可以发现<code>hello.queue</code>中已经有一条消息了：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150635359.png" alt="image-20240311150635359"></p>
+<p>点击队列名称，进入详情页，查看队列详情，这次我们点击get message：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150739849.png" alt="image-20240311150739849"></p>
+<p>这个时候如果有消费者监听了MQ的<code>hello.queue1</code>或<code>hello.queue2</code>队列，自然就能接收到消息了。</p>
+<h2 id="数据隔离"><a href="#数据隔离" class="headerlink" title="数据隔离"></a>数据隔离</h2><p>需求：在RabbitMQ的控制台完成以下操作：</p>
+<ul>
+<li>新建一个用户hamll</li>
+<li>为hmall用户创建一个virtual host</li>
+<li>测试不同virtrual host之间的数据隔离现象</li>
+</ul>
+<ol>
+<li>新建一个用户hmall</li>
+</ol>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311151427295.png" alt="image-20240311151427295"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311151700585.png" alt="image-20240311151700585"></p>
+<p>理论上应该给每个项目创建一个自己的用户，黑马商城一个自己账号，自己的虚拟主机；苍穹外卖，自己的用户，自己的虚拟主机。</p>
+<h1 id="java客户端"><a href="#java客户端" class="headerlink" title="java客户端"></a>java客户端</h1><h2 id="快速入门-1"><a href="#快速入门-1" class="headerlink" title="快速入门"></a>快速入门</h2><p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155009971.png" alt="image-20240311155009971"></p>
+<p>SpringAmqp的官方地址：<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-amqp">https://spring.io/projects/spring-amqp</a></p>
+<p>导入课前资料提供的Demo工程来测试：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155808370.png" alt="image-20240311155808370"></p>
+<p>步骤一：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--AMQP依赖，包含RabbitMQ--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>快速入门</p>
+<p>需求如下：</p>
+<ul>
+<li>利用控制台创建队列simple.queue</li>
+<li>在publisher服务中，利用SpringAMQP直接向simple.queue发送消息</li>
+<li>在consumer服务中，利用SpringAMQP编写消费者，监听simple.queue队列</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155943682.png" alt="image-20240311155943682"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160125258.png" alt="image-20240311160125258"></p>
+<p>步骤二：配置RabbitMQ服务端消息</p>
+<p>在每个微服务中引入MQ服务端信息，这样微服务才能链接到RabbitMQ</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.226</span><span class="number">.129</span> <span class="comment"># 你的虚拟机IP</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">5672</span> <span class="comment"># 端口</span></span><br><span class="line">    <span class="attr">virtual-host:</span> <span class="string">/hmall</span> <span class="comment"># 虚拟主机</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">hmall</span> <span class="comment"># 用户名</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span> <span class="comment"># 密码</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160430629.png" alt="image-20240311160430629"></p>
+<p>步骤三：发送消息</p>
+<p>SpringAMQP提供了RabbitTemplate工具类，方便我们发送消息。发送消息代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.publisher.amqp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringAmqpTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSimpleQueue</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 队列名称</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">queueName</span> <span class="operator">=</span> <span class="string">&quot;simple.queue&quot;</span>;</span><br><span class="line">        <span class="comment">// 消息</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;hello, spring amqp!&quot;</span>;</span><br><span class="line">        <span class="comment">// 发送消息</span></span><br><span class="line">        rabbitTemplate.convertAndSend(queueName, message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打开控制台，可以看到消息已经发送到队列中：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160922469.png" alt="image-20240311160922469"></p>
+<p>步骤四：接收消息</p>
+<p>SpringAMQP提供了声明式的消息监听，我们只需要通过注解在方法上声明要监听的队列名称，将来SpringAMQP就会把消息传递给当前方法：</p>
+<p>然后在<code>consumer</code>服务的<code>com.itheima.consumer.listener</code>包中新建一个类<code>SpringRabbitListener</code>，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.consumer.listener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.annotation.RabbitListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringRabbitListener</span> &#123;</span><br><span class="line">        <span class="comment">// 利用RabbitListener来声明要监听的队列信息</span></span><br><span class="line">    <span class="comment">// 将来一旦监听的队列中有了消息，就会推送给当前服务，调用当前方法，处理消息。</span></span><br><span class="line">    <span class="comment">// 可以看到方法体中接收的就是消息体的内容</span></span><br><span class="line">    <span class="meta">@RabbitListener(queues = &quot;simple.queue&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenSimpleQueueMessage</span><span class="params">(String msg)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;spring 消费者接收到消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动consumer服务，然后在publisher服务中运行测试代码，发送MQ消息。最终consumer收到消息：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161756543.png" alt="image-20240311161756543"></p>
+<p><strong>总结</strong></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161824447.png" alt="image-20240311161824447"></p>
+<h2 id="WorkQueue"><a href="#WorkQueue" class="headerlink" title="WorkQueue"></a>WorkQueue</h2><p>Work queues，任务模型。简单来说就是<strong>让多个消费者绑定一个队列，共同消费队列中的消息</strong>。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161929562.png" alt="image-20240311161929562"></p>
+<p>当消息处理比较耗时的时候，可能生产消息的速度会远远大于消息的消费速度。长此以往，消息就会堆积越来越多，无法及时处理。</p>
+<p>此时就可以使用work 模型，<strong>多个消费者共同处理消息处理，消息处理的速度就能大大提高</strong>了。</p>
+<p>案例：模拟WorkQueue，实现一个队列绑定多个消费者</p>
+<p>基本思路如下：</p>
+<ol>
+<li>在RabbitMQ的控制条创建一个队列，名为work.queue</li>
+<li>在publisher服务中定义测试方法，在1秒内产生50条消息，发送到work.queue</li>
+<li>在consumer服务中定义两个消息监听者，都监听work.queue队列</li>
+<li>消费者1每秒处理50条消息，消费者2每秒处理5条消息</li>
+</ol>
+<p>接下来，我们就来模拟这样的场景。</p>
+<p>首先，我们在控制台创建一个新的队列，命名为<code>work.queue</code>：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162157320.png" alt="image-20240311162157320"></p>
+<p>要模拟多个消费者绑定同一个队列，我们在consumer服务的SpringRabbitListener中添加2个新的方法：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162339877.png" alt="image-20240311162339877"></p>
+<p>启动consumer启动类</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162609141.png" alt="image-20240311162609141"></p>
+<p>这次我们循环发送，模拟大量消息堆积现象。</p>
+<p>在publisher服务中的SpringAmqpTest类中添加一个测试方法：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162647850.png" alt="image-20240311162647850"></p>
+<p>启动ConsumerApplication后，在执行publisher服务中刚刚编写的发送测试方法testWorkQueue。</p>
+<p>最终结果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_0】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.869555300</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_1】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.884518</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_2】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.907454400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_4】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.953332100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_6】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.997867300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_8】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.042178700</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_3】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.086478800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_10】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.087476600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_12】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.132578300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_14】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.175851200</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_16】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.218533400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_18】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.261322900</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_5】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.287003700</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_20】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.304412400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_22】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.349950100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_24】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.394533900</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_26】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.439876500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_28】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.482937800</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_7】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.488977100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_30】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.526409300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_32】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.572148</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_34】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.618264800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_36】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.660780600</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_9】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.689189300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_38】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.705261</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_40】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.746927300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_42】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.789835</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_44】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.834393100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_46】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.875312100</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_11】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.889969500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_48】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.920702500</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_13】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.090725900</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_15】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.293060600</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_17】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.493748</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_19】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.696635100</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_21】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.896809700</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_23】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.099533400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_25】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.301446400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_27】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.504999100</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_29】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.705702500</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_31】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.906601200</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_33】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.108118500</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_35】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.308945400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_37】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.511547700</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_39】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.714038400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_41】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.916192700</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_43】<span class="number">21</span>:<span class="number">06</span>:<span class="number">05.116286400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_45】<span class="number">21</span>:<span class="number">06</span>:<span class="number">05.318055100</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_47】<span class="number">21</span>:<span class="number">06</span>:<span class="number">05.520656400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_49】<span class="number">21</span>:<span class="number">06</span>:<span class="number">05.723106700</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到消费者1和消费者2竟然每人消费了25条消息：</p>
+<ul>
+<li>消费者1很快完成了自己的25条消息</li>
+<li>消费者2却在缓慢的处理自己的25条消息。</li>
+</ul>
+<p><font color="red">也就是说消息是平均分配给每个消费者，并没有考虑到消费者的处理能力。导致1个消费者空闲，另一个消费者忙的不可开交。没有充分利用每一个消费者的能力，最终消息处理的耗时远远超过了1秒。这样显然是有问题的。</font></p>
+<p>因此，我们需要修改application.yml，设置preFetch值为1，确保同一时刻最多投递给消费者1条消息：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">listener:</span></span><br><span class="line">      <span class="attr">simple:</span></span><br><span class="line">        <span class="attr">prefetch:</span> <span class="number">1</span> <span class="comment"># 每次只能获取一条消息，处理完成才能获取下一个消息</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311163628967.png" alt="image-20240311163628967"></p>
+<p>再次测试，发现结果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_0】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.659664200</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_1】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.680610</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_2】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.703625</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_3】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.724330100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_4】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.746651100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_5】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.768401400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_6】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.790511400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_7】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.812559800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_8】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.834500600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_9】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.857438800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_10】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.880379600</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_11】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.899327100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_12】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.922828400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_13】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.945617400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_14】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.968942500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_15】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.992215400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_16】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.013325600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_17】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.035687100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_18】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.058188</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_19】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.081208400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_20】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.103406200</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_21】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.123827300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_22】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.146165100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_23】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.168828300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_24】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.191769500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_25】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.214839100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_26】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.238998700</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_27】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.259772600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_28】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.284131800</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_29】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.306190600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_30】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.325315800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_31】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.347012500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_32】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.368508600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_33】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.391785100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_34】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.416383800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_35】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.439019</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_36】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.461733900</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_37】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.485990</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_38】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.509219900</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_39】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.523683400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_40】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.547412100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_41】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.571191800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_42】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.593024600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_43】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.616731800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_44】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.640317</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_45】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.663111100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_46】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.686727</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_47】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.709266500</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_48】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.725884900</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_49】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.746299900</span></span><br></pre></td></tr></table></figure>
+
+<p>可以发现，由于消费者1处理速度较快，所以处理了更多的消息；消费者2处理速度较慢，只处理了6条消息。而最终总的执行耗时也在1秒左右，大大提升。</p>
+<p>正所谓能者多劳，这样充分利用了每一个消费者的处理能力，可以有效避免消息积压问题。</p>
+<p><strong>总结</strong></p>
+<p>Work模型的使用：</p>
+<ul>
+<li>多个消费者绑定到一个队列，同一条消息只会被一个消费者处理</li>
+<li>通过设置prefetch来控制消费者预取的消息数量</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311163820738.png" alt="image-20240311163820738"></p>
+<h2 id="Fanout交换机"><a href="#Fanout交换机" class="headerlink" title="Fanout交换机"></a>Fanout交换机</h2><p>真正生产环境都会经过exchange来发送消息，而不是直接发送到队列，交换机的类型有以下三种：</p>
+<ul>
+<li>Fanout：广播</li>
+<li>Direct：定向</li>
+<li>Topic：话题</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164134271.png" alt="image-20240311164134271"></p>
+<p>Fanout Exchange会将接收到的消息广播到每一个跟其绑定的queue，所以也叫广播模式</p>
+<p>解决了消息被多个微服务接收的问题，每个微服务有自己的队列，绑定在该交换机上的所有队列都能收到消息。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164434183.png" alt="image-20240311164434183"></p>
+<p>案例：利用SpringAMQP演示FanoutExchange的使用</p>
+<p>实现思路如下：</p>
+<ol>
+<li>在RabbitMQ的控制台中，声明队列fanout.queue1和fanout.queue2</li>
+<li>在RabbitMQ的控制台中，声明交换机hmall.fanout，将两个队列与其绑定</li>
+<li>在consumer服务中，编写两个消费者方法，分别监听fanout.queue1和fanout.queue2</li>
+<li>在publisher中编写测试方法，向hmall.fanout发送消息</li>
+</ol>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164854473.png" alt="image-20240311164854473"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164946045.png" alt="image-20240311164946045"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311165108205.png" alt="image-20240311165108205"></p>
+<p>在consumer服务的SpringRabbitListener中添加两个方法，作为消费者：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;fanout.queue1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenFanoutQueue1</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者1接收到Fanout消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RabbitListener(queues = &quot;fanout.queue2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenFanoutQueue2</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者2接收到Fanout消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在publisher服务的SpringAmqpTest类中添加测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testFanoutExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 交换机名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exchangeName</span> <span class="operator">=</span> <span class="string">&quot;hmall.fanout&quot;</span>;</span><br><span class="line">    <span class="comment">// 消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;hello, everyone!&quot;</span>;</span><br><span class="line">    rabbitTemplate.convertAndSend(exchangeName, <span class="string">&quot;&quot;</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>总结</strong></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311165724343.png" alt="image-20240311165724343"></p>
+<h2 id="Direct交换机"><a href="#Direct交换机" class="headerlink" title="Direct交换机"></a>Direct交换机</h2><p>在Fanout模式中，一条消息，会被所有订阅的队列都消费。但是，在某些场景下，我们希望不同的消息被不同的队列消费。这时就要用到Direct类型的Exchange。</p>
+<p>Direct Exchange会将接收到的消息根据规则路由到指定的Queue，因此称为<strong>定向</strong>路由。</p>
+<ul>
+<li>每个Queue都会与Exchange设置一个BindingKey</li>
+<li>发布者发送消息时，指定消息的RoutingKey</li>
+<li>Exchange将消息路由到BindingKey与消息RoutingKey一致的队列</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170128232.png" alt="image-20240311170128232"></p>
+<p>案例：利用SpringAMQP演示DirectExchange的使用</p>
+<p>需求如下：</p>
+<ol>
+<li>在RabbitMQ控制台中，声明队列direct.queue1和direct.queue2</li>
+<li>在RabbitMQ控制台中，声明交换机hmall.direct，将两个队列与其绑定</li>
+<li>在consumer服务中，编写两个消费者方法，分别监听direct.queue1和direct.queue2</li>
+<li>在publisher中编写测试方法，利用不同的RoutingKey向hmall.direct发送消息</li>
+</ol>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170334038.png" alt="image-20240311170334038"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170429785.png" alt="image-20240311170429785"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170509773.png" alt="image-20240311170509773"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170541112.png" alt="image-20240311170541112"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170624625.png" alt="image-20240311170624625"></p>
+<p>在consumer服务的SpringRabbitListener中添加方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;direct.queue1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenDirectQueue1</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者1接收到direct.queue1的消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RabbitListener(queues = &quot;direct.queue2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenDirectQueue2</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者2接收到direct.queue2的消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在publisher服务的SpringAmqpTest类中添加测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendDirectExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 交换机名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exchangeName</span> <span class="operator">=</span> <span class="string">&quot;hmall.direct&quot;</span>;</span><br><span class="line">    <span class="comment">// 消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;红色警报！日本乱排核废水，导致海洋生物变异，惊现哥斯拉！&quot;</span>;</span><br><span class="line">    <span class="comment">// 发送消息</span></span><br><span class="line">    rabbitTemplate.convertAndSend(exchangeName, <span class="string">&quot;red&quot;</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170904131.png" alt="image-20240311170904131"></p>
+<p>我们再切换为blue这个key：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendDirectExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 交换机名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exchangeName</span> <span class="operator">=</span> <span class="string">&quot;hmall.direct&quot;</span>;</span><br><span class="line">    <span class="comment">// 消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;最新报道，哥斯拉是居民自治巨型气球，虚惊一场！&quot;</span>;</span><br><span class="line">    <span class="comment">// 发送消息</span></span><br><span class="line">    rabbitTemplate.convertAndSend(exchangeName, <span class="string">&quot;blue&quot;</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你会发现，只有消费者1收到了消息：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170947088.png" alt="image-20240311170947088"></p>
+<p><strong>总结</strong></p>
+<p>描述下Direct交换机与Fanout交换机的差异？</p>
+<ul>
+<li>Fanout交换机将消息路由给每一个与之绑定的队列</li>
+<li>Direct交换机根据RoutingKey判断路由给哪个队列</li>
+<li>如果多个队列具有相同的RoutingKey，则与Fanout功能类似</li>
+</ul>
+<h2 id="Topic交换机"><a href="#Topic交换机" class="headerlink" title="Topic交换机"></a>Topic交换机</h2><p><code>Topic</code>类型的<code>Exchange</code>与<code>Direct</code>相比，都是可以根据<code>RoutingKey</code>把消息路由到不同的队列。</p>
+<p>只不过<code>Topic</code>类型<code>Exchange</code>可以让队列在绑定<code>BindingKey</code> 的时候使用通配符！</p>
+<p><code>BindingKey</code> 一般都是有一个或多个单词组成，多个单词之间以<code>.</code>分割，例如： &#96;item.insert</p>
+<p>通配符规则：</p>
+<ul>
+<li><code>#</code>：匹配一个或多个词</li>
+<li><code>*</code>：匹配不多不少恰好1个词</li>
+</ul>
+<p>举例：</p>
+<ul>
+<li><code>item.#</code>：能够匹配<code>item.spu.insert</code> 或者 <code>item.spu</code></li>
+<li><code>item.*</code>：只能匹配<code>item.spu</code></li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171538279.png" alt="image-20240311171538279"></p>
+<p>案例：利用SpringAMQP演示DirectExchange的使用</p>
+<p>需求如下：</p>
+<ol>
+<li>在RabbitMQ控制台中，声明队列topic.queue1和topic.queue2</li>
+<li>在RabbitMQ控制台中，声明交换机hmall.topic，将两个队列与其绑定</li>
+<li>在consumer服务中，编写两个消费者方法，分别监听topic.queue1和topic.queue2</li>
+<li>在publisher中编写测试方法，利用不同的RoutingKey向hmall.topic发送消息</li>
+</ol>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171730188.png" alt="image-20240311171730188"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171831142.png" alt="image-20240311171831142"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171816002.png" alt="image-20240311171816002"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171927499.png" alt="image-20240311171927499"></p>
+<p>在publisher服务的SpringAmqpTest类中添加测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * topicExchange</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendTopicExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 交换机名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exchangeName</span> <span class="operator">=</span> <span class="string">&quot;hmall.topic&quot;</span>;</span><br><span class="line">    <span class="comment">// 消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;喜报！孙悟空大战哥斯拉，胜!&quot;</span>;</span><br><span class="line">    <span class="comment">// 发送消息</span></span><br><span class="line">    rabbitTemplate.convertAndSend(exchangeName, <span class="string">&quot;china.news&quot;</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在consumer服务的SpringRabbitListener中添加方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;topic.queue1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenTopicQueue1</span><span class="params">(String msg)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者1接收到topic.queue1的消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RabbitListener(queues = &quot;topic.queue2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenTopicQueue2</span><span class="params">(String msg)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者2接收到topic.queue2的消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>总结</strong></p>
+<p>描述下Direct交换机与Topic交换机的差异？</p>
+<ul>
+<li>Topic交换机接收的消息RoutingKey必须是多个单词，以 <strong><code>.</code></strong> 分割</li>
+<li>Topic交换机与队列绑定时的bindingKey可以指定通配符</li>
+<li><code>#</code>：代表0个或多个词</li>
+<li><code>*</code>：代表1个词</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311172456801.png" alt="image-20240311172456801"></p>
+<h2 id="声明队列交换机"><a href="#声明队列交换机" class="headerlink" title="声明队列交换机"></a>声明队列交换机</h2><h2 id="消息转换器"><a href="#消息转换器" class="headerlink" title="消息转换器"></a>消息转换器</h2>
       
     </div>
     
@@ -696,7 +1062,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RabbitMQ"><span class="nav-number">1.</span> <span class="nav-text">RabbitMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E8%B0%83%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">同步调用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%99%AF%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">前景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E8%B0%83%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">同步调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">异步调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MQ%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">MQ技术选型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RabbitMQ"><span class="nav-number">2.</span> <span class="nav-text">RabbitMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">介绍和安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="nav-number">2.2.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-number">2.2.1.</span> <span class="nav-text">交换机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%9F%E5%88%97"><span class="nav-number">2.2.2.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E5%85%B3%E7%B3%BB"><span class="nav-number">2.2.3.</span> <span class="nav-text">绑定关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9A%94%E7%A6%BB"><span class="nav-number">2.3.</span> <span class="nav-text">数据隔离</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">java客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8-1"><span class="nav-number">3.1.</span> <span class="nav-text">快速入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WorkQueue"><span class="nav-number">3.2.</span> <span class="nav-text">WorkQueue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fanout%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-number">3.3.</span> <span class="nav-text">Fanout交换机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Direct%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-number">3.4.</span> <span class="nav-text">Direct交换机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Topic%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-number">3.5.</span> <span class="nav-text">Topic交换机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E9%98%9F%E5%88%97%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-number">3.6.</span> <span class="nav-text">声明队列交换机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-number">3.7.</span> <span class="nav-text">消息转换器</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -730,7 +1096,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">143.6k</span>
+    <span title="Site words total count">148.9k</span>
   
 </div>
 
