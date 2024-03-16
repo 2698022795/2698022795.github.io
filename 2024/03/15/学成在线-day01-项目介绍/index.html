@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本项目包括了用户端、机构端、运营端。 核心模块包括:内容管理、媒资管理、课程搜索、订单支付、选课管理、认证授权等。 下图是项目的功能模块图:  本项目采用前后端分离架构，后端采用SpringBoot.SpringCloud技术栈开发，数据库使用了MySQL，还使用Redis、消息队列、分布式文件系统、Elasticsearch等中间件系统。 划分的微服务包括:内容管理服务、媒资管理服务、搜索服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学成在线-day01-项目介绍">
+<meta property="og:url" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="章北海">
+<meta property="og:description" content="本项目包括了用户端、机构端、运营端。 核心模块包括:内容管理、媒资管理、课程搜索、订单支付、选课管理、认证授权等。 下图是项目的功能模块图:  本项目采用前后端分离架构，后端采用SpringBoot.SpringCloud技术栈开发，数据库使用了MySQL，还使用Redis、消息队列、分布式文件系统、Elasticsearch等中间件系统。 划分的微服务包括:内容管理服务、媒资管理服务、搜索服务">
+<meta property="og:locale">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315223532295.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315224559562.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315224735067.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315224849424.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316121844617.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130313055.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130335930.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130458317.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130658125.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130706712.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130724357.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130735726.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130744860.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130752766.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316132214804.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316132226183.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316134639621.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316134745336.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316134805028.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135012947.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135043880.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135121982.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135300709.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135413371.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135429648.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135445018.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135516120.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135535238.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135716687.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135747358.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135849305.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135908676.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141129367.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141135408.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141142079.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141209775.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141408170.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141420764.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141434226.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141446568.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141458062.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316171755987.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316171806767.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316171908635.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316171958844.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316172015950.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316172055714.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316172230895.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316210412004.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316200949058.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316201324805.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316201936842.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316204914180.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316204927459.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316204936797.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316210109126.png">
+<meta property="og:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316210215061.png">
+<meta property="article:published_time" content="2024-03-15T14:34:51.000Z">
+<meta property="article:modified_time" content="2024-03-16T13:04:24.472Z">
+<meta property="article:author" content="waterdance">
+<meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315223532295.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://2698022795.github.io/2024/03/15/学成在线-day01-项目介绍/"/>
+
+
+
+
+
+  <title>学成在线-day01-项目介绍 | 章北海</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">章北海</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">轻舟已过万重山</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学成在线-day01-项目介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-15T22:34:51+08:00">
+                2024-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">学成在线</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  31
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315223532295.png" alt="image-20240315223532295"></p>
+<p>本项目包括了用户端、机构端、运营端。</p>
+<p>核心模块包括:内容管理、媒资管理、课程搜索、订单支付、选课管理、认证授权等。</p>
+<p>下图是项目的功能模块图:</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315224559562.png" alt="image-20240315224559562"></p>
+<p>本项目采用前后端分离架构，后端采用SpringBoot.SpringCloud技术栈开发，数据库使用了MySQL，还使用Redis、消息队列、分布式文件系统、Elasticsearch等中间件系统。</p>
+<p>划分的微服务包括:内容管理服务、媒资管理服务、搜索服务、订单支付服务、学习中心服务、系统管理服务、认证授权服务、网关服务、注册中心服务、配置中心服务等。</p>
+<p>下边介绍业务流程:</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315224735067.png" alt="image-20240315224735067"></p>
+<p>2、课程发布后学生登录平台进行选课、在线学习。</p>
+<p>免费课程可直接学习，收费课程需要下单购买。</p>
+<p>学生选课流程如下:</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240315224849424.png" alt="image-20240315224849424"></p>
+<h1 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h1><p>1、详细说说你的项目吧</p>
+<p>从以下几个方面进行项目介绍:</p>
+<p>1、项目的背景，包括:是白研还是外包、什么业务、服务的客户群是谁、谁去运营等问题。</p>
+<p>2、项目的业务流程</p>
+<p>3、项目的功能模块</p>
+<p>4、项目的技术架构</p>
+<p>5、个人工作职责</p>
+<p>6、个人负责模块的详细说明，包括模块的设计，所用到的技术，技术的实现方案等。</p>
+<p>一个例子:</p>
+<p>我最近参与的项目是我们公司自研的专门针对成人职业技能教育的网络课堂系统，网站提供了成人职业技能培训的相关课程，如:软件开发培训、职业资格证书培训、成人学历教育培训等课程。项目基于B2B2C的业务模式，培训机构可以在平台入驻、发布课程，我们公司作为运营方由专门的人员对发布的课程进行审核，审核通过后课程才可以发布成功，课程包括免费和收费两种形式，对于免费课程普通用户可以直接选课学习，对于收费课程在选课后需要支付成功才可以继续学习。</p>
+<p>本项目包括三个端:用户端(学生端)、机构端、运营端。</p>
+<p>核心模块包括:内容管理、媒资管理、课程搜索、订单支付、选课管理、认证授权等。</p>
+<p>本项目采用前后端分离架构，后端采用SpringBoot、SpringCloud技术栈开发，数据库使用了MySQL，还使用的Redis、消息队列、分布式文件系统、Elasticsearch等中间件系统。</p>
+<p>划分的微服务包括:内容管理服务、媒资管理服务、搜索服务、订单支付服务、学习中心服务、系统管理服务、认证授权服务、网关服务、注册中心服务、配置中心服务等。</p>
+<p>我在这个项目中负责了内容管理、媒资管理、订单支付模块的设计与开发。</p>
+<p>内容管理模块，是对平台上的课程进行管理，课程的相关信息比较多这里在数据库设计了课程基本信息表、课程营销表、课程计划、课程师资表进行存储，培训机构要发布一门课程需要填写课程基本信息、课程营销信息、课程计划信息、课程师资信息，填写完毕后需要提交审核，由运营人员进行课程信息的审核，整个审核过程是程序自动审核加人工确认的方式，通常24小时审核完成。课程审核通过即可发布课程，课程的相关信息会聚合到课程发布表中，这里不仅要将课程信息写到课程发布表还要将课程信息写到索引库、分布式文件系统中，所以这里存在分布式事务的问题，项目使用本地消息表加任务调度的方式去解决这里的分布式事务，保存数据的最终一致性。</p>
+<h1 id="项目的技术架构（面试）"><a href="#项目的技术架构（面试）" class="headerlink" title="项目的技术架构（面试）"></a>项目的技术架构（面试）</h1><p>本项目采用前后端分离架构，后端采用SpringBoot、SpringCloud技术栈开发，数据库使用了MySQL，还使用的Redis、消息队列、分布式文件系统、Elasticsearch等中间件系统。</p>
+<p>划分的微服务包括：内容管理服务、媒资管理服务、搜索服务、订单支付服务、 学习中心服务、系统管理服务、认证授权服务、网关服务、注册中心服务、配置中心服务等。</p>
+<p>下图是项目的技术架构图：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316121844617.png" alt="image-20240316121844617"></p>
+<p>各层职责说明如下：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户层</td>
+<td>用户层描述了本系统所支持的用户类型包括：pc用户、app用户、h5用户。pc用户通过浏览器访问系统、app用户通过android、ios手机访问系统，H5用户通过h5页面访问系统。</td>
+</tr>
+<tr>
+<td>CDN</td>
+<td>CDN全称Content  Delivery Network，即内容分发网络，本系统所有静态资源全部通过CDN加速来提高访问速度。系统静态资源包括：html页面、js文件、css文件、image图片、pdf和ppt及doc教学文档、video视频等。</td>
+</tr>
+<tr>
+<td>负载均衡</td>
+<td>系统的CDN层、UI层、服务层及数据层均设置了负载均衡服务，上图仅在UI层前边标注了负载均衡。 每一层的负载均衡会根据系统的需求来确定负载均衡器的类型，系统支持4层负载均衡+7层负载均衡结合的方式，4层负载均衡是指在网络传输层进行流程转发，根据IP和端口进行转发，7层负载均衡完成HTTP协议负载均衡及反向代理的功能，根据url进行请求转发。</td>
+</tr>
+<tr>
+<td>UI层</td>
+<td>UI层描述了系统向pc用户、app用户、h5用户提供的产品界面。根据系统功能模块特点确定了UI层包括如下产品界面类型：  1）面向pc用户的门户系统、学习中心系统、教学管理系统、系统管理中心。  2）面向h5用户的门户系统、学习中心系统。  3）面向app用户的门户系统、学习中心系统。</td>
+</tr>
+<tr>
+<td>微服务层</td>
+<td>微服务层将系统服务分类三类：业务服务、基础服务、第三方代理服务。 业务服务：主要为学成在线核心业务提供服务，并与数据层进行交互获得数据。 基础服务：主要管理学成在线系统运行所需的配置、日志、任务调度、短信等系统级别的服务。 第三方代理服务：系统接入第三方服务完成业务的对接，例如认证、支付、视频点播&#x2F;直播、用户认证和授权。</td>
+</tr>
+<tr>
+<td>数据层</td>
+<td>数据层描述了系统的数据存储的内容类型，关系性数据库：持久化的业务数据使用MySQL。 消息队列：存储系统服务间通信的消息，本身提供消息存取服务，与微服务层的系统服务连接。 索引库：存储课程信息的索引信息，本身提供索引维护及搜索的服务，与微服务层的系统服务连接。 缓存：作为系统的缓存服务，作为微服务的缓存数据便于查询。 文件存储：提供系统静态资源文件的分布式存储服务，文件存储服务器作为CDN服务器的数据来源，CDN上的静态资源将最终在文件存储服务器上保存多份。</td>
+</tr>
+</tbody></table>
+<h1 id="开发工具版本"><a href="#开发工具版本" class="headerlink" title="开发工具版本"></a><strong>开发工具版本</strong></h1><p>开发工具列表：</p>
+<table>
+<thead>
+<tr>
+<th>开发工具</th>
+<th>版本号</th>
+<th>安装位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IntelliJ-IDEA</td>
+<td>2021.x以上版本</td>
+<td>个人电脑</td>
+</tr>
+<tr>
+<td>JDK</td>
+<td>1.8.x</td>
+<td>个人电脑</td>
+</tr>
+<tr>
+<td>Maven</td>
+<td>3.8.x以上版本</td>
+<td>个人电脑</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>2.37.x</td>
+<td>个人电脑</td>
+</tr>
+<tr>
+<td>VMware-workstation</td>
+<td>16.x</td>
+<td>个人电脑</td>
+</tr>
+<tr>
+<td>CentOS</td>
+<td>7.x</td>
+<td>虚拟机</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>18.09.0</td>
+<td>虚拟机</td>
+</tr>
+<tr>
+<td>Mysql</td>
+<td>8.x</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>nacos</td>
+<td>1.4.1</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>rabbitmq</td>
+<td>3.8.34</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>redis</td>
+<td>6.2.7</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>xxl-job-admin</td>
+<td>2.3.1</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>minio</td>
+<td>RELEASE.2022-09-07</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>elasticsearch</td>
+<td>7.12.1</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>kibana</td>
+<td>7.12.1</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>gogs</td>
+<td>0.13.0</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>nginx</td>
+<td>1.12.2</td>
+<td>docker</td>
+</tr>
+</tbody></table>
+<h1 id="2-IDEA环境配置"><a href="#2-IDEA环境配置" class="headerlink" title="2 IDEA环境配置"></a>2 <strong>IDEA环境配置</strong></h1><p>安装指定版本的IDEA，根据下边的步骤进行配置。</p>
+<h2 id="2-1-编码配置"><a href="#2-1-编码配置" class="headerlink" title="2.1 编码配置"></a><strong>2.1 编码配置</strong></h2><p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130313055.png" alt="image-20240316130313055"></p>
+<h2 id="2-2-自动导包设置"><a href="#2-2-自动导包设置" class="headerlink" title="2.2 自动导包设置"></a>2.2 <strong>自动导包设置</strong></h2><p>IDEA可以自动优化导入包，<strong>但是有多个同名的类调用不同的包，必须自己手动Alt+Enter设置</strong>， 下面可以通过设置来进行导包优化。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130335930.png" alt="image-20240316130335930"></p>
+<h2 id="2-3-提示忽略大小写"><a href="#2-3-提示忽略大小写" class="headerlink" title="2.3 提示忽略大小写"></a>2.3 <strong>提示忽略大小写</strong></h2><p>IDEA代码提示默认是区分大小写的，设置为提示忽略大小写，编译我们后期的开发</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130458317.png" alt="image-20240316130458317"></p>
+<h2 id="2-4-设置-Java-编译级别"><a href="#2-4-设置-Java-编译级别" class="headerlink" title="2.4 设置 Java 编译级别"></a>2.4 <strong>设置 Java 编译级别</strong></h2><p>工程创建成功，点击Project Structure:</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130658125.png" alt="image-20240316130658125"></p>
+<p>点击Project，设置SDK为1.8及Project language level，如下图：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130706712.png" alt="image-20240316130706712"></p>
+<h1 id="3-Maven环境"><a href="#3-Maven环境" class="headerlink" title="3 Maven环境"></a>3 Maven环境</h1><h2 id="3-1-安装Maven"><a href="#3-1-安装Maven" class="headerlink" title="3.1 安装Maven"></a>3.1 安装Maven</h2><p>下载maven3.8.6版本，下载链接如下：</p>
+<p><a target="_blank" rel="noopener" href="https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip">https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip</a></p>
+<p>解压apache-maven-3.8.6-bin.zip到没有中文的目录下。</p>
+<h2 id="3-2-配置仓库"><a href="#3-2-配置仓库" class="headerlink" title="3.2 配置仓库"></a>3.2 <strong>配置仓库</strong></h2><p>1、解压课程资料中的maven仓库下的repository.zip到本地硬盘</p>
+<p>2、在Maven的conf目录中setting.xml文件中配置本地仓库的地址。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130724357.png" alt="image-20240316130724357"></p>
+<p>配置中央仓库位置：</p>
+<p>在setting.xml文件中配置阿里云中央仓库地址。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130735726.png" alt="image-20240316130735726"></p>
+<h2 id="3-3-IDEA中配置maven"><a href="#3-3-IDEA中配置maven" class="headerlink" title="3.3 IDEA中配置maven"></a><strong>3.3 IDEA中配置maven</strong></h2><p>在IDEA中配置maven：进入 File –&gt; Settings –&gt; Build –&gt; Build Tools –&gt; Maven</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130744860.png" alt="image-20240316130744860"></p>
+<p>配置maven安装目录、setting.xml及本地仓库的位置。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316130752766.png" alt="image-20240316130752766"></p>
+<h1 id="4-安装虚拟机"><a href="#4-安装虚拟机" class="headerlink" title="4 安装虚拟机"></a>4 安装虚拟机</h1><p>项目中用到的一些服务端软件如：MySQL、Nacos配置中心、RabbitMQ消息队列等通常会安装在企业局域网的服务器中，开发人员去远程连接它们。在教学中我们在自己的电脑上安装虚拟机，虚拟机代表了企业局域网中的服务器。</p>
+<p>服务器操作系统使用Centos7，导入我发的虚拟机文件，也可以自行安装Centos7虚拟机。</p>
+<p>1、导入虚拟机：</p>
+<p>首先安装VMware-workstation 16.x 虚拟机软件。</p>
+<p>1）设置网络</p>
+<p>点击 “编辑–》虚拟网络编辑器”配置网络地址，地址须与下图一致。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316132214804.png" alt="image-20240316132214804"></p>
+<p>设置子网IP：192.168.101.0，子网掩码：255.255.255.0。</p>
+<p>2）导入虚拟机</p>
+<p>解压老师提供的虚拟机文件，进入解压后的文件架，双击”CentOS 7 64 位.vmx” 文件，选择复制虚拟机。</p>
+<p>对此虚拟机的设置建议8G内存、4核CPU。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316132226183.png" alt="image-20240316132226183"></p>
+<p>设置完成，启动虚拟机。</p>
+<p>注意：虚拟机的IP地址为192.168.101.65，不用修改IP地址。</p>
+<p>3）远程连接虚拟机</p>
+<p>使用ssh客户端工具FinalShell远程 连接 虚拟机中的CentOS系统。</p>
+<p>IP地址：192.168.101.65</p>
+<p>账号与密码为：root&#x2F;centos</p>
+<p>执行 systemctl start docker 启动docker。</p>
+<p>运行： sh &#x2F;data&#x2F;soft&#x2F;restart.sh  </p>
+<p>查询docker容器：docker ps</p>
+<p>如下图：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316134639621.png" alt="image-20240316134639621"></p>
+<p>2、自行安装虚拟机：</p>
+<p>首先安装VMware-workstation 16.x 虚拟机软件。</p>
+<p>Centos7的安装文件在常用软件工具目录下的centos7目录中，也可以自行下载CentOS7的安装包，下载地址：<a target="_blank" rel="noopener" href="http://isoredirect.centos.org/centos/7/isos/x86_64/">http://isoredirect.centos.org/centos/7/isos/x86_64/</a> </p>
+<p>CentOS7只提供了64位，这里选择DVD版本下载。</p>
+<p>安装CentOS7，在VMware中新建一个虚拟机，选择刚才下载的CentOS7的iso映像文件，然后一步一步进行安装，具体可以参考centos7目录中的centos7安装.docx。</p>
+<h1 id="5-安装数据库环境"><a href="#5-安装数据库环境" class="headerlink" title="5 安装数据库环境"></a>5 安装数据库环境</h1><p>1、启动虚拟机中的Docker及容器</p>
+<p>保证mysql数据库启动成功</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316134745336.png" alt="image-20240316134745336"></p>
+<p>2、安装数据库客户端工具，可使用软件工具目录的datagrip-2022.2.2.win.zip，也可自行下载。</p>
+<p>3、远程连接数据库</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316134805028.png" alt="image-20240316134805028"></p>
+<p>密码：mysql，用户名：root</p>
+<p>到此数据库环境搭建成功。</p>
+<h1 id="6-安装Git环境"><a href="#6-安装Git环境" class="headerlink" title="6 安装Git环境"></a>6 安装Git环境</h1><h2 id="6-1-安装Git"><a href="#6-1-安装Git" class="headerlink" title="6.1 安装Git"></a>6.1 安装Git</h2><p>在个人电脑安装Git，使用常用软件工具目录中的Git-2.37.3-64-bit.exe。</p>
+<p>也可以自行下载，地址：<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com/</a>  （windows版本：<a target="_blank" rel="noopener" href="https://git-scm.com/download/win%EF%BC%89">https://git-scm.com/download/win）</a></p>
+<p>安装成功，在右键菜单出现Git菜单，如下图</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135012947.png" alt="image-20240316135012947"></p>
+<p>配置git邮箱：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;你的名字&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>安装成功在IDEA中配置git的安装目录</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135043880.png" alt="image-20240316135043880"></p>
+<h2 id="6-2-搭建Gogs"><a href="#6-2-搭建Gogs" class="headerlink" title="6.2 搭建Gogs"></a>6.2 搭建Gogs</h2><p>在发放的虚拟机中已经安装了Gogs 服务，Gogs和GitHub、GitLab都是Git托管平台，Gogs相比它们两者更轻量。Gogs的官网地址：<a target="_blank" rel="noopener" href="https://gogs.io/%EF%BC%8C%E6%9C%AC%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8Gogs%E4%BD%9C%E4%B8%BAGit%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E3%80%82">https://gogs.io/，本项目使用Gogs作为Git远程仓库。</a></p>
+<p>每位同学把虚拟上的Gogs服务作为远程仓库，每天练习的代码都需要上传至Gogs。</p>
+<p>如果个人虚拟机Gogs存在问题也可以使用其它git仓库，比如：gitee.com等。</p>
+<p>下边介绍Gogs的基本使用方法</p>
+<p>进入Gogs：<a target="_blank" rel="noopener" href="http://192.168.101.65:10880/gogs/xuecheng-plus">http://192.168.101.65:10880</a>  </p>
+<p>账号&#x2F;密码：gogs&#x2F;gogs</p>
+<p>1、首先创建一个组织</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135121982.png" alt="image-20240316135121982"></p>
+<p>创建成功，进入管理面板修改组织信息</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135300709.png" alt="image-20240316135300709"></p>
+<p>点击编辑，填写组织名称。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135413371.png" alt="image-20240316135413371"></p>
+<p>修改成功，进入首页点击组织名称</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135429648.png" alt="image-20240316135429648"></p>
+<p>下边开始创建团队</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135445018.png" alt="image-20240316135445018"></p>
+<p>假如创建研发团队，填写团队名称</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135516120.png" alt="image-20240316135516120"></p>
+<p>选择权限等级，注意：这里即使选择了权限等级也需要在仓库管理中去管理协作者的权限。</p>
+<p> 团队创建成功</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135535238.png" alt="image-20240316135535238"></p>
+<p>团队创建成功下边开始创建成员账号 。</p>
+<p> 首先在用户管理中添加账号分配给成员。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135716687.png" alt="image-20240316135716687"></p>
+<p> 团队和组织创建完成，下边创建仓库，进入组织，创建仓库。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135747358.png" alt="image-20240316135747358"></p>
+<p>填写仓库信息</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135849305.png" alt="image-20240316135849305"></p>
+<p>创建成功，仓库地址：<a target="_blank" rel="noopener" href="http://192.168.101.65:10880/xuecheng-plus-group1/xuecheng-plus-group1.git%EF%BC%8C%E5%A6%82%E4%B8%8B">http://192.168.101.65:10880/xuecheng-plus-group1/xuecheng-plus-group1.git，如下</a></p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316135908676.png" alt="image-20240316135908676"></p>
+<h1 id="7-Git环境"><a href="#7-Git环境" class="headerlink" title="7 Git环境"></a>7 Git环境</h1><h2 id="7-1-拉取代码"><a href="#7-1-拉取代码" class="headerlink" title="7.1  拉取代码"></a>7.1  拉取代码</h2><p>本项目使用Git进行版本控制，在gogs上创建一个个人使用的git仓库：<a target="_blank" rel="noopener" href="http://192.168.101.65:10880/xuecheng-plus-group01/xuecheng-plus.git%EF%BC%8C%E5%A6%82%E6%9E%9Cgogs%E5%AE%89%E8%A3%85%E6%9C%89%E9%97%AE%E9%A2%98%E4%B9%9F%E5%8F%AF%E8%87%AA%E8%A1%8C%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%AA%E5%85%AC%E7%BD%91%E7%9A%84Git%E4%BB%93%E5%BA%93%EF%BC%8C%E6%AF%94%E5%A6%82%EF%BC%9Agitee%E3%80%81github%EF%BC%8C%E6%B3%A8%E5%86%8C%E8%87%AA%E5%B7%B1%E7%9A%84%E8%B4%A6%E5%8F%B7%E5%B9%B6%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93%E3%80%82">http://192.168.101.65:10880/xuecheng-plus-group01/xuecheng-plus.git，如果gogs安装有问题也可自行选择一个公网的Git仓库，比如：gitee、github，注册自己的账号并创建仓库。</a></p>
+<p>使用git拉取远程仓库。</p>
+<p>打开IDEA，从版本控制创建工程。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141129367.png" alt="image-20240316141129367"></p>
+<p>输入仓库地址，并选择工程路径。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141135408.png" alt="image-20240316141135408"></p>
+<p>创建成功：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141142079.png" alt="image-20240316141142079"></p>
+<p>添加.gitignore文件，编辑内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">HELP.md</span><br><span class="line">target/</span><br><span class="line">!.mvn/wrapper/maven-wrapper.jar</span><br><span class="line">!**/src/main<span class="comment">/**</span></span><br><span class="line"><span class="comment">!**/</span>src/test<span class="comment">/**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">### STS ###</span></span><br><span class="line"><span class="comment">.apt_generated</span></span><br><span class="line"><span class="comment">.classpath</span></span><br><span class="line"><span class="comment">.factorypath</span></span><br><span class="line"><span class="comment">.project</span></span><br><span class="line"><span class="comment">.settings</span></span><br><span class="line"><span class="comment">.springBeans</span></span><br><span class="line"><span class="comment">.sts4-cache</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">### IntelliJ IDEA ###</span></span><br><span class="line"><span class="comment">.idea</span></span><br><span class="line"><span class="comment">*.iws</span></span><br><span class="line"><span class="comment">*.iml</span></span><br><span class="line"><span class="comment">*.ipr</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">### NetBeans ###</span></span><br><span class="line"><span class="comment">/nbproject/private/</span></span><br><span class="line"><span class="comment">/nbbuild/</span></span><br><span class="line"><span class="comment">/dist/</span></span><br><span class="line"><span class="comment">/nbdist/</span></span><br><span class="line"><span class="comment">/.nb-gradle/</span></span><br><span class="line"><span class="comment">build/</span></span><br><span class="line"><span class="comment">logs/</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">### VS Code ###</span></span><br><span class="line"><span class="comment">.vscode/</span></span><br></pre></td></tr></table></figure>
+
+<p>提交代码到git仓库。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141209775.png" alt="image-20240316141209775"></p>
+<p>执行push：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141408170.png" alt="image-20240316141408170"></p>
+<p>如果是首次向该git仓库提交代码需要输入账号和密码：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141420764.png" alt="image-20240316141420764"></p>
+<p>可以输入默认的账号和密码：gogs&#x2F;gogs</p>
+<p>如果账号密码输入错误报异常：Incorrect username or password (access token)  </p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141434226.png" alt="image-20240316141434226"></p>
+<p>如果没有权限访问此仓库则报403错误：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141446568.png" alt="image-20240316141446568"></p>
+<p>此时就需要在仓库成员管理界面将账号添加到此仓库即可。</p>
+<p>如果忘记密码，此时可以先修改gogs中的密码，再修改windows凭据的密码，</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316141458062.png" alt="image-20240316141458062"></p>
+<p>在此界面中找到远程仓库的记录，修改密码。</p>
+<p>如果在windows凭据中找不到指定记录可以设置IDEA不记录密码</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316171755987.png" alt="image-20240316171755987"></p>
+<p>在此界面中找到远程仓库的记录，修改密码。</p>
+<p>如果在windows凭据中找不到指定记录可以设置IDEA不记录密码</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316171806767.png" alt="image-20240316171806767"></p>
+<h2 id="7-2-创建开发分支"><a href="#7-2-创建开发分支" class="headerlink" title="7.2  创建开发分支"></a>7.2  创建开发分支</h2><p>通常不会在主分支进行开发，本项目在dev开发分支进行开发，下边创建开发分支。</p>
+<p>新建一个分支，点击IDEA右下角的分支标识：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316171908635.png" alt="image-20240316171908635"></p>
+<p>点击：Create</p>
+<p>创建成功，右下角已经显示了dev分支</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316171958844.png" alt="image-20240316171958844"></p>
+<p>打开Git Log：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316172015950.png" alt="image-20240316172015950"></p>
+<p>下边将dev分支提交到远程仓库</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316172055714.png" alt="image-20240316172055714"></p>
+<p>push成功，查看远程git仓库界面显示了dev分支：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316172230895.png" alt="image-20240316172230895"></p>
+<p>接下来我们就在dev分支进行开发，开发完成后将合并到主分支。</p>
+<p>要求：学生在练习每天老师布置的作业前都创建一个新分支进行。</p>
+<h1 id="8-基础工程搭建"><a href="#8-基础工程搭建" class="headerlink" title="8 基础工程搭建"></a>8 基础工程搭建</h1><h2 id="8-1-工程结构关系"><a href="#8-1-工程结构关系" class="headerlink" title="8.1 工程结构关系"></a>8.1 工程结构关系</h2><p>​        学成在线使用 Maven 来进行项目的管理和构建。整个项目分为三大类工程：父工程、基础工程 和微服务工程。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316210412004.png" alt="image-20240316210412004"></p>
+<p>每一种类的工程都有不同的作用，下面是对其功能进行说明：</p>
+<ul>
+<li>父工程<ul>
+<li>对依赖包的版本进行管理 </li>
+<li>本身为Pom工程，对子工程进行聚合管理</li>
+</ul>
+</li>
+<li><h2 id="基础工程-继承父类工程-提供基础类库-提供工具类库"><a href="#基础工程-继承父类工程-提供基础类库-提供工具类库" class="headerlink" title="基础工程- 继承父类工程- 提供基础类库- 提供工具类库"></a>基础工程<br>- 继承父类工程<br>- 提供基础类库<br>- 提供工具类库</h2></li>
+<li>微服务工程<ul>
+<li>分别从业务、技术方面划分模块，每个模块构建为一个微服务。</li>
+<li>每个微服务工程依赖基础工程，间接继承父工程。</li>
+<li>包括：内容管理服务、媒资管理服务、搜索服务、订单支付服务等。</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-2-构建父工程"><a href="#8-2-构建父工程" class="headerlink" title="8.2 构建父工程"></a>8.2 构建父工程</h2><p>父工程的职责是对依赖包的版本进行管理，本小节创建父工程分两步，第一创建父工程，第二在pom.xml编辑依赖管理。</p>
+<p>1、首先创建父工程</p>
+<p>为了对代码更好的进行权限管理，这里我们单独创建父工程。</p>
+<p>使用idea打开工程目录，进入工程结构界面。</p>
+<p>点击File–&gt;Project Structure: </p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316200949058.png" alt="image-20240316200949058"></p>
+<p>进入Project Structure,首先检查jdk是否配置正确，并进行配置。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316201324805.png" alt="image-20240316201324805"></p>
+<p>进入Modules界面，新建模块</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316201936842.png" alt="image-20240316201936842"></p>
+<p>创建成功，删除多余文件</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316204914180.png" alt="image-20240316204914180"></p>
+<p>选择要删除的文件，进行删除</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316204927459.png" alt="image-20240316204927459"></p>
+<p>删除成功</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316204936797.png" alt="image-20240316204936797"></p>
+<p>到此父工程创建完成。</p>
+<p>2、依赖管理定义</p>
+<p>下边开始编辑xuecheng-plus-parent父工程的依赖管理 。</p>
+<p>父工程中没有代码，不用去依赖其它的包，它的作用是限定其它子工程依赖包的版本号，即在dependencyManagement 中去编辑即可。</p>
+<p>1）确定父工程为一个pom工程，在pom.xml中添加如下内容：</p>
+<p>&lt;packaging&gt;pom&lt;packaging&gt;</p>
+<p>2）编辑依赖的包的版本号、打包插件等。</p>
+<p>pom.xml如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;project xmlns=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> xmlns:xsi=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">         xsi:schemaLocation=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br><span class="line">    &lt;modelVersion&gt;<span class="number">4.0</span><span class="number">.0</span>&lt;/modelVersion&gt;</span><br><span class="line">    &lt;groupId&gt;com.xuecheng&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;xuecheng-plus-parent&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;name&gt;xuecheng-plus-parent&lt;/name&gt;</span><br><span class="line">    &lt;description&gt;xuecheng-plus-parent&lt;/description&gt;</span><br><span class="line">    &lt;packaging&gt;pom&lt;/packaging&gt;</span><br><span class="line"></span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;java.version&gt;<span class="number">1.8</span>&lt;/java.version&gt;</span><br><span class="line">        &lt;project.build.sourceEncoding&gt;UTF-<span class="number">8</span>&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">        &lt;project.reporting.outputEncoding&gt;UTF-<span class="number">8</span>&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">        &lt;spring-boot.version&gt;<span class="number">2.3</span><span class="number">.7</span>.RELEASE&lt;/spring-boot.version&gt;</span><br><span class="line">        &lt;spring-cloud.version&gt;Hoxton.SR9&lt;/spring-cloud.version&gt;</span><br><span class="line">        &lt;org.mapstruct.version&gt;<span class="number">1.3</span><span class="number">.1</span>.Final&lt;/org.mapstruct.version&gt;</span><br><span class="line">        &lt;spring-cloud-alibaba.version&gt;<span class="number">2.2</span><span class="number">.6</span>.RELEASE&lt;/spring-cloud-alibaba.version&gt;</span><br><span class="line">        &lt;org.projectlombok.version&gt;<span class="number">1.18</span><span class="number">.8</span>&lt;/org.projectlombok.version&gt;</span><br><span class="line">        &lt;javax.servlet-api.version&gt;<span class="number">4.0</span><span class="number">.1</span>&lt;/javax.servlet-api.version&gt;</span><br><span class="line">        &lt;fastjson.version&gt;<span class="number">1.2</span><span class="number">.83</span>&lt;/fastjson.version&gt;</span><br><span class="line">        &lt;druid-spring-boot-starter.version&gt;<span class="number">1.2</span><span class="number">.8</span>&lt;/druid-spring-boot-starter.version&gt;</span><br><span class="line">        &lt;mysql-connector-java.version&gt;<span class="number">8.0</span><span class="number">.30</span>&lt;/mysql-connector-java.version&gt;</span><br><span class="line">        &lt;mybatis-plus-boot-starter.version&gt;<span class="number">3.4</span><span class="number">.1</span>&lt;/mybatis-plus-boot-starter.version&gt;</span><br><span class="line">        &lt;commons-lang.version&gt;<span class="number">2.6</span>&lt;/commons-lang.version&gt;</span><br><span class="line">        &lt;minio.version&gt;<span class="number">8.4</span><span class="number">.3</span>&lt;/minio.version&gt;</span><br><span class="line">        &lt;xxl-job-core.version&gt;<span class="number">2.3</span><span class="number">.1</span>&lt;/xxl-job-core.version&gt;</span><br><span class="line">        &lt;swagger-annotations.version&gt;<span class="number">1.5</span><span class="number">.20</span>&lt;/swagger-annotations.version&gt;</span><br><span class="line">        &lt;commons-lang3.version&gt;<span class="number">3.10</span>&lt;/commons-lang3.version&gt;</span><br><span class="line">        &lt;okhttp.version&gt;<span class="number">4.8</span><span class="number">.1</span>&lt;/okhttp.version&gt;</span><br><span class="line">        &lt;swagger-spring-boot-starter.version&gt;<span class="number">1.9</span><span class="number">.0</span>.RELEASE&lt;/swagger-spring-boot-starter.version&gt;</span><br><span class="line">        &lt;elasticsearch.version&gt;<span class="number">7.12</span><span class="number">.1</span>&lt;/elasticsearch.version&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;dependencyManagement&gt;</span><br><span class="line">        &lt;dependencies&gt;</span><br><span class="line"></span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;spring-cloud.version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">                &lt;scope&gt;<span class="keyword">import</span>&lt;/scope&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;spring-boot.version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">                &lt;scope&gt;<span class="keyword">import</span>&lt;/scope&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;spring-cloud-alibaba.version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">                &lt;scope&gt;<span class="keyword">import</span>&lt;/scope&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!-- lombok，简化类的构建--&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;org.projectlombok.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!-- mapstruct 代码生成器，简化java bean之间的映射 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.mapstruct&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;mapstruct-jdk8&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;org.mapstruct.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.mapstruct&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;mapstruct-processor&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;org.mapstruct.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;io.swagger&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;swagger-annotations&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;swagger-annotations.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!-- Servlet 容器管理 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;javax.servlet-api.version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!-- fastjson ，json解析工具 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;fastjson.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!-- druid 连接池管理 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;druid-spring-boot-starter.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">            &lt;!-- mySQL数据库驱动包管理 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;mysql-connector-java.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!-- mybatis plus 集成Spring Boot启动器 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;mybatis-plus-boot-starter.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">            &lt;!-- mybatis plus 代码生成器 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;mybatis-plus-generator&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;mybatis-plus-boot-starter.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">            &lt;!-- 工具类管理 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;commons-lang&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;commons-lang&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;commons-lang.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!-- 分布式文件系统 minIO的客户端API包 --&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;io.minio&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;minio&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;minio.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!--google推荐的一套工具类库--&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;<span class="number">25.0</span>-jre&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!--分布式任务调度--&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.xuxueli&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;xxl-job-core&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;xxl-job-core.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;!--Spring boot单元测试--&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;spring-boot.version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">                &lt;exclusions&gt;</span><br><span class="line">                    &lt;exclusion&gt;</span><br><span class="line">                        &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;</span><br><span class="line">                        &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;</span><br><span class="line">                    &lt;/exclusion&gt;</span><br><span class="line">                &lt;/exclusions&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.squareup.okhttp3&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;okhttp&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;okhttp.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;commons-lang3.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.spring4all&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;swagger-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;swagger-spring-boot-starter.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;elasticsearch-rest-high-level-client&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;elasticsearch.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.elasticsearch&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;elasticsearch&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;elasticsearch.version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">        &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/dependencyManagement&gt;</span><br><span class="line"></span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;finalName&gt;$&#123;project.name&#125;&lt;/finalName&gt;</span><br><span class="line">        &lt;!--编译打包过虑配置--&gt;</span><br><span class="line">        &lt;resources&gt;</span><br><span class="line">            &lt;resource&gt;</span><br><span class="line">                &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">                &lt;filtering&gt;<span class="literal">true</span>&lt;/filtering&gt;</span><br><span class="line">                &lt;includes&gt;</span><br><span class="line">                    &lt;include&gt;**<span class="comment">/*&lt;/include&gt;</span></span><br><span class="line"><span class="comment">                &lt;/includes&gt;</span></span><br><span class="line"><span class="comment">            &lt;/resource&gt;</span></span><br><span class="line"><span class="comment">            &lt;resource&gt;</span></span><br><span class="line"><span class="comment">                &lt;directory&gt;src/main/java&lt;/directory&gt;</span></span><br><span class="line"><span class="comment">                &lt;includes&gt;</span></span><br><span class="line"><span class="comment">                    &lt;include&gt;**/</span>*.xml&lt;/include&gt;</span><br><span class="line">                &lt;/includes&gt;</span><br><span class="line">            &lt;/resource&gt;</span><br><span class="line">        &lt;/resources&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;<span class="number">3.8</span><span class="number">.1</span>&lt;/version&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;!--指定项目源码jdk的版本--&gt;</span><br><span class="line">                    &lt;source&gt;<span class="number">1.8</span>&lt;/source&gt;</span><br><span class="line">                    &lt;!--指定项目编译后的jdk的版本--&gt;</span><br><span class="line">                    &lt;target&gt;<span class="number">1.8</span>&lt;/target&gt;</span><br><span class="line">                    &lt;!--配置注解预编译--&gt;</span><br><span class="line">                    &lt;annotationProcessorPaths&gt;</span><br><span class="line">                        &lt;path&gt;</span><br><span class="line">                            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">                            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">                            &lt;version&gt;$&#123;org.projectlombok.version&#125;&lt;/version&gt;</span><br><span class="line">                        &lt;/path&gt;</span><br><span class="line">                    &lt;/annotationProcessorPaths&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line"></span><br><span class="line">            &lt;!--责处理项目资源文件并拷贝到输出目录，如果有额外的资源文件目录则需要配置--&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-resources-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;<span class="number">3.3</span><span class="number">.0</span>&lt;/version&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;encoding&gt;utf-<span class="number">8</span>&lt;/encoding&gt;</span><br><span class="line">                    &lt;!--使用默认分隔符，resource中可以使用分割符定义过虑的路径--&gt;</span><br><span class="line">                    &lt;useDefaultDelimiters&gt;<span class="literal">true</span>&lt;/useDefaultDelimiters&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-3-构建基础工程"><a href="#8-3-构建基础工程" class="headerlink" title="8.3 构建基础工程"></a>8.3 构建基础工程</h2><p>基础工程的职责是提供一些系统架构所需要的基础类库以及一此工具类库。</p>
+<p>1、首先创建基础工程xuecheng-plus-base。</p>
+<p>创建的过程同父工程的创建过程，如下图：</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316210109126.png" alt="image-20240316210109126"></p>
+<p>删除多余的文件</p>
+<p>这里需要注意的是xuecheng-plus-base的父工程为xuecheng-plus-parent，xuecheng-plus-base的pom.xml的如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.xuecheng<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xuecheng-plus-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>&gt;</span>../xuecheng-plus-parent<span class="tag">&lt;/<span class="name">relativePath</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xuecheng-plus-base<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-lang3<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- fast Json --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- servlet Api 依赖 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 通用组件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-lang<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-lang<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-codec<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-codec<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.11<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.swagger<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>swagger-annotations<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-validation<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-log4j2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--根据扩展名取mimetype--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.j256.simplemagic<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>simplemagic<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.17<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-lang3<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.zxing<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.3.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.zxing<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javase<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.3.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.module<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-module-parameter-names<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.datatype<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-datatype-jdk8<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.datatype<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-datatype-jsr310<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>基础工程中的内容待需要时再行开发。</p>
+<p>至此父工程和基础工程创建完成，最后提交至git。</p>
+<p><img src="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/image-20240316210215061.png" alt="image-20240316210215061"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/" rel="next" title="微服务-day06-rabbitMQ">
+                <i class="fa fa-chevron-left"></i> 微服务-day06-rabbitMQ
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/03/16/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day02-%E9%A1%B9%E7%9B%AE%E5%85%A5%E9%97%A8/" rel="prev" title="学成在线-day02-项目入门">
+                学成在线-day02-项目入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+		  
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/2698022795" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2698022795@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/qq_40493033" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-globe"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+		  
+			
+			  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+				<div class="links-of-blogroll-title">
+				  <!-- modify icon to fire by szw -->
+				  <i class="fa fa-history fa-" aria-hidden="true"></i>
+				  近期文章
+				</div>
+				<ul class="links-of-blogroll-list">
+				  
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/16/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day02-%E9%A1%B9%E7%9B%AE%E5%85%A5%E9%97%A8/" title="学成在线-day02-项目入门" target="_blank">学成在线-day02-项目入门</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/15/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day01-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D/" title="学成在线-day01-项目介绍" target="_blank">学成在线-day01-项目介绍</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/" title="微服务-day06-rabbitMQ" target="_blank">微服务-day06-rabbitMQ</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/" title="微服务-day05-rabbitMQ" target="_blank">微服务-day05-rabbitMQ</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/10/%E5%86%85%E5%8A%9F-spring-day01/" title="" target="_blank"></a>
+					</li>
+				  
+				</ul>
+			  </div>
+			
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">面试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%EF%BC%88%E9%9D%A2%E8%AF%95%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">项目的技术架构（面试）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E7%89%88%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">开发工具版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-IDEA%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">2 IDEA环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E7%BC%96%E7%A0%81%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.</span> <span class="nav-text">2.1 编码配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%8C%85%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.2.</span> <span class="nav-text">2.2 自动导包设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%8F%90%E7%A4%BA%E5%BF%BD%E7%95%A5%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="nav-number">4.3.</span> <span class="nav-text">2.3 提示忽略大小写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E8%AE%BE%E7%BD%AE-Java-%E7%BC%96%E8%AF%91%E7%BA%A7%E5%88%AB"><span class="nav-number">4.4.</span> <span class="nav-text">2.4 设置 Java 编译级别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Maven%E7%8E%AF%E5%A2%83"><span class="nav-number">5.</span> <span class="nav-text">3 Maven环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%AE%89%E8%A3%85Maven"><span class="nav-number">5.1.</span> <span class="nav-text">3.1 安装Maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E9%85%8D%E7%BD%AE%E4%BB%93%E5%BA%93"><span class="nav-number">5.2.</span> <span class="nav-text">3.2 配置仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-IDEA%E4%B8%AD%E9%85%8D%E7%BD%AEmaven"><span class="nav-number">5.3.</span> <span class="nav-text">3.3 IDEA中配置maven</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%AE%89%E8%A3%85%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">6.</span> <span class="nav-text">4 安装虚拟机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%AE%89%E8%A3%85%E6%95%B0%E6%8D%AE%E5%BA%93%E7%8E%AF%E5%A2%83"><span class="nav-number">7.</span> <span class="nav-text">5 安装数据库环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%AE%89%E8%A3%85Git%E7%8E%AF%E5%A2%83"><span class="nav-number">8.</span> <span class="nav-text">6 安装Git环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-%E5%AE%89%E8%A3%85Git"><span class="nav-number">8.1.</span> <span class="nav-text">6.1 安装Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-%E6%90%AD%E5%BB%BAGogs"><span class="nav-number">8.2.</span> <span class="nav-text">6.2 搭建Gogs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Git%E7%8E%AF%E5%A2%83"><span class="nav-number">9.</span> <span class="nav-text">7 Git环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81"><span class="nav-number">9.1.</span> <span class="nav-text">7.1  拉取代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-%E5%88%9B%E5%BB%BA%E5%BC%80%E5%8F%91%E5%88%86%E6%94%AF"><span class="nav-number">9.2.</span> <span class="nav-text">7.2  创建开发分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E5%9F%BA%E7%A1%80%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA"><span class="nav-number">10.</span> <span class="nav-text">8 基础工程搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84%E5%85%B3%E7%B3%BB"><span class="nav-number">10.1.</span> <span class="nav-text">8.1 工程结构关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%B7%A5%E7%A8%8B-%E7%BB%A7%E6%89%BF%E7%88%B6%E7%B1%BB%E5%B7%A5%E7%A8%8B-%E6%8F%90%E4%BE%9B%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%BA%93-%E6%8F%90%E4%BE%9B%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%BA%93"><span class="nav-number">10.2.</span> <span class="nav-text">基础工程- 继承父类工程- 提供基础类库- 提供工具类库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-%E6%9E%84%E5%BB%BA%E7%88%B6%E5%B7%A5%E7%A8%8B"><span class="nav-number">10.3.</span> <span class="nav-text">8.2 构建父工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-%E6%9E%84%E5%BB%BA%E5%9F%BA%E7%A1%80%E5%B7%A5%E7%A8%8B"><span class="nav-number">10.4.</span> <span class="nav-text">8.3 构建基础工程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">waterdance</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">165.1k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "default";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "default";
+      
+          flOptions.boxForm = "vertical";
+      
+          flOptions.position = "topRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+		# 要加入的代码
+</body>
+</html>
