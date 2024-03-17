@@ -1540,7 +1540,7 @@
       </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>八股-SpringBoot篇</title>
     <url>/2024/03/10/%E5%86%85%E5%8A%9F-spring-day01/</url>
     <content><![CDATA[<p>💡  根据 <a href="https://baike.baidu.com/item/%E9%81%97%E5%BF%98%E6%9B%B2%E7%BA%BF/7278665?fr=aladdin">遗忘曲线</a>：如果没有记录和回顾，6天后便会忘记75%的内容</p>
 <p>​      读书笔记正是帮助你记录和回顾的工具，不必拘泥于形式，其核心是：记录、翻看、思考</p>
@@ -1856,6 +1856,9 @@
 <li>只有会话提交或者关闭以后，一级缓存中的数据才会转移到二级缓存中</li>
 </ol>
 ]]></content>
+      <categories>
+        <category>八股</category>
+      </categories>
   </entry>
   <entry>
     <title>微服务-day04-服务保护和分布式事务</title>
