@@ -297,6 +297,492 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/" itemprop="url">微服务-day03-docker2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-06T19:39:11+08:00">
+                2024-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306200309171.png" alt="image-20240306200309171"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306195130841.png" alt="image-20240306195130841"></p>
+<p>先停掉虚拟机中的MySQL，确保你的虚拟机已经安装Docker，且网络开通的情况下，执行下面命令即可安装MySQL：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql \</span><br><span class="line">  -p <span class="number">3306</span>:<span class="number">3306</span> \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> \</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306200747495.png" alt="image-20240306200747495"></p>
+<p>当我们利用Docker安装应用时，Docker会自动搜索并下载应用<strong>镜像（image）</strong>。镜像不仅包含应用本身，还包含应用运行所需要的环境、配置、系统函数库。Docker会在运行镜像时创建一个隔离环境，称为<strong>容器（container）</strong>。</p>
+<p><strong>镜像仓库</strong>：存储和管理镜像的平台，Docker官方维护了一个公共仓库：<a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a>。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202136723.png" alt="image-20240306202136723"></p>
+<p>启动docker，即启动docker的守护进程。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202441652.png" alt="image-20240306202441652"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306201813839.png" alt="image-20240306201813839"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306201934304.png" alt="image-20240306201934304"></p>
+<h2 id="命令解读"><a href="#命令解读" class="headerlink" title="命令解读"></a>命令解读</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql \</span><br><span class="line">  -p <span class="number">3306</span>:<span class="number">3306</span> \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> \</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>docker run</strong> ：创建并运行一个容器，**-d** 是让容器在后台运行</p>
+</li>
+<li><p><strong>–name</strong> <strong>mysql</strong> ：给容器起个名字，必须唯一</p>
+</li>
+<li><p><strong>-p 3306:3306</strong> ：设置端口映射（宿主机和容器的端口映射）</p>
+</li>
+<li><p><strong>-e KEY&#x3D;VALUE</strong> ：是设置环境变量</p>
+</li>
+<li><p><strong>mysql</strong> ：指定运行的镜像的名字</p>
+</li>
+</ul>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202941360.png" alt="image-20240306202941360"></p>
+<p>镜像名称一般分两部分组成：[repository]:[tag]。</p>
+<ul>
+<li><p>其中repository就是镜像名</p>
+</li>
+<li><p>tag是镜像的版本</p>
+</li>
+</ul>
+<p>在没有指定tag时，默认是latest，代表最新版本的镜像</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203130328.png" alt="image-20240306203130328"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203157297.png" alt="image-20240306203157297"></p>
+<h1 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h1><p>Docker最常见的命令就是操作镜像、容器的命令，详见官方文档：<a target="_blank" rel="noopener" href="https://docs.docker.com/">https://docs.docker.com/</a></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203417693.png" alt="image-20240306203417693"></p>
+<p>可以把打包的镜像通过docker save保存至本地。</p>
+<p>案例：查看DockerHub，拉取Nginx镜像，创建并运行Nginx容器</p>
+<p>需求：</p>
+<ul>
+<li><p>在DockerHub中搜索Nginx镜像，查看镜像的名称</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306204926400.png" alt="image-20240306204926400"></p>
+</li>
+<li><p>拉取Nginx镜像（docker pull nginx）</p>
+</li>
+<li><p>查看本地镜像列表（docker images）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306204628426.png" alt="image-20240306204628426"></p>
+</li>
+<li><p>创建并运行Nginx容器（docker run -d –name nginx -p 80:80 nginx）</p>
+</li>
+<li><p>查看容器（docker ps）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205440312.png" alt="image-20240306205440312"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205740883.png" alt="image-20240306205740883"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210018638.png" alt="image-20240306210018638"></p>
+</li>
+<li><p>停止容器（docker stop）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205846076.png" alt="image-20240306205846076"></p>
+</li>
+<li><p>再次启动容器（docker start nginx）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210051059.png" alt="image-20240306210051059"></p>
+</li>
+<li><p>查看容器日志（docker logs  nginx）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210346893.png" alt="image-20240306210346893"></p>
+</li>
+<li><p>进入Nginx容器（docker exec -it nginx bash）<br><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210611228.png" alt="image-20240306210611228"></p>
+</li>
+<li><p>删除容器（docker rm mysql2）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210839826.png" alt="image-20240306210839826"></p>
+</li>
+<li><p>加载本地镜像（docker load -i xxx.tar）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205303088.png" alt="image-20240306205303088"></p>
+</li>
+<li><p>删除镜像（docker rmi xxx:xxx）</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205204179.png" alt="image-20240306205204179"></p>
+</li>
+<li><p>打包镜像至本地（docker save -o nginx.tar nginx:latest）最后一个参数是镜像名:版本号</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205050594.png" alt="image-20240306205050594"></p>
+</li>
+</ul>
+<h1 id="命名别名"><a href="#命名别名" class="headerlink" title="命名别名"></a>命名别名</h1><p><strong>给命令起别名</strong></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211154566.png" alt="image-20240306211154566"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211127808.png" alt="image-20240306211127808"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211210643.png" alt="image-20240306211210643"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211241213.png" alt="image-20240306211241213"></p>
+<h1 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h1><p>案例1-利用Nginx容器部署静态资源</p>
+<p>需求：</p>
+<ul>
+<li><p>创建Nginx容器，修改nginx容器内的html目录下的index.html文件，查看变化</p>
+</li>
+<li><p>将静态资源部署到nginx的html目录</p>
+</li>
+</ul>
+<p><strong>数据卷（volume）</strong>是一个虚拟目录，是<strong>容器内目录</strong>与<strong>宿主机目录</strong>之间映射的桥梁。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211729107.png" alt="image-20240306211729107"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211952333.png" alt="image-20240306211952333"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211945189.png" alt="image-20240306211945189"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306212013727.png" alt="image-20240306212013727"></p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>文档地址</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker volume create</td>
+<td>创建数据卷</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_create/">docker volume create</a></td>
+</tr>
+<tr>
+<td>docker volume ls</td>
+<td>查看所有数据卷</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_ls/">docker volume ls</a></td>
+</tr>
+<tr>
+<td>docker volume rm</td>
+<td>删除指定数据卷</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_prune/">docker volume rm</a></td>
+</tr>
+<tr>
+<td>docker volume inspect</td>
+<td>查看某个数据卷的详情</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_inspect/">docker volume inspect</a></td>
+</tr>
+<tr>
+<td>docker volume prune</td>
+<td>清除数据卷</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_prune/">docker volume prune</a></td>
+</tr>
+</tbody></table>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306224049549.png" alt="image-20240306224049549"></p>
+<p>提示：</p>
+<ul>
+<li><p>在执行docker run命令时，使用 <strong>-v</strong> <strong>数据卷:容器内目录</strong> 可以完成数据卷挂载</p>
+</li>
+<li><p>当创建容器时，如果挂载了数据卷且数据卷不存在，会自动创建数据卷</p>
+</li>
+</ul>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306215341815.png" alt="image-20240306215341815"></p>
+<p>案例2-mysql容器的数据挂载</p>
+<p>需求：</p>
+<ul>
+<li><p>查看mysql容器，判断是否有数据卷挂载</p>
+</li>
+<li><p>基于<strong>宿主机目录</strong>实现MySQL数据目录、配置文件、初始化脚本的挂载（查阅官方镜像文档）</p>
+</li>
+</ul>
+<p>①挂载&#x2F;root&#x2F;mysql&#x2F;data到容器内的&#x2F;var&#x2F;lib&#x2F;mysql目录</p>
+<p>②挂载&#x2F;root&#x2F;mysql&#x2F;init到容器内的&#x2F;docker-entrypoint-initdb.d目录，携带课前资料准备的SQL脚本</p>
+<p>③挂载&#x2F;root&#x2F;mysql&#x2F;conf到容器内的&#x2F;etc&#x2F;mysql&#x2F;conf.d目录，携带课前资料准备的配置文件</p>
+<ul>
+<li><p>在执行docker run命令时，使用 <strong>-v</strong> <strong>本地目录</strong> <strong>:</strong> <strong>容器内目录</strong> 可以完成本地目录挂载</p>
+</li>
+<li><p>l本地目录必须以“**&#x2F;<strong>”或 “</strong>.&#x2F;**” 开头，如果直接以名称开头，会被识别为数据卷而非本地目录</p>
+<ul>
+<li><p>-v mysql : &#x2F;var&#x2F;lib&#x2F;mysql 会被识别为一个数据卷叫mysql</p>
+</li>
+<li><p>-v .&#x2F;mysql : &#x2F;var&#x2F;lib&#x2F;mysql 会被识别为当前目录下的mysql目录</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="自定义镜像"><a href="#自定义镜像" class="headerlink" title="自定义镜像"></a>自定义镜像</h1><p><font color="red">自定义镜像的核心：Dockerfile和基础镜像。Dockerfile决定了镜像的打包步骤，基础镜像是后续分层打包其他镜像的基础。</font></p>
+<p>镜像就是包含了应用程序、程序运行的系统函数库、运行配置等文件的文件包。构建镜像的过程其实就是把上述文件打包的过程。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306230455069.png" alt="image-20240306230455069"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306230935661.png" alt="image-20240306230935661"></p>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p><strong>Dockerfile</strong>就是一个文本文件，其中包含一个个的**指令(Instruction)**，用指令来说明要执行什么操作来构建镜像。将来Docker可以根据Dockerfile帮我们构建镜像。常见指令如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>指令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FROM</td>
+<td>指定基础镜像</td>
+<td>FROM centos:6</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>设置环境变量，可在后面指令使用</td>
+<td>ENV key value</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>拷贝本地文件到镜像的指定目录</td>
+<td>COPY .&#x2F;jre11.tar.gz &#x2F;tmp</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>执行Linux的shell命令，一般是安装过程的命令</td>
+<td>RUN tar -zxvf &#x2F;tmp&#x2F;jre11.tar.gz  &amp;&amp; EXPORTS  path&#x3D;&#x2F;tmp&#x2F;jre11:$path</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>指定容器运行时监听的端口，是给镜像使用者看的</td>
+<td>EXPOSE 8080</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>镜像中应用的启动命令，容器运行时调用</td>
+<td>ENTRYPOINT java -jar xx.jar</td>
+</tr>
+</tbody></table>
+<p>我们可以基于Ubuntu基础镜像，利用Dockerfile描述镜像结构</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定基础镜像</span></span><br><span class="line">FROM ubuntu:<span class="number">16.04</span></span><br><span class="line"><span class="comment"># 配置环境变量，JDK的安装目录、容器内时区</span></span><br><span class="line">ENV JAVA_DIR=/usr/local</span><br><span class="line"><span class="comment"># 拷贝jdk和java项目的包</span></span><br><span class="line"><span class="built_in">COPY</span> ./jdk8.tar.gz <span class="variable">$JAVA_DIR</span>/</span><br><span class="line"><span class="built_in">COPY</span> ./docker<span class="literal">-demo</span>.jar /tmp/app.jar</span><br><span class="line"><span class="comment"># 安装JDK</span></span><br><span class="line">RUN <span class="built_in">cd</span> <span class="variable">$JAVA_DIR</span> \ &amp;&amp; tar <span class="literal">-xf</span> ./jdk8.tar.gz \ &amp;&amp; <span class="built_in">mv</span> ./jdk1.<span class="number">8.0</span>_144 ./java8</span><br><span class="line"><span class="comment"># 配置环境变量</span></span><br><span class="line">ENV JAVA_HOME=<span class="variable">$JAVA_DIR</span>/java8</span><br><span class="line">ENV PATH=<span class="variable">$PATH:</span><span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="comment"># 入口，java项目的启动命令</span></span><br><span class="line">ENTRYPOINT [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;/app.jar&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接基于JDK为基础镜像，省略前面的步骤：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础镜像</span></span><br><span class="line">FROM openjdk:<span class="number">11.0</span><span class="literal">-jre-buster</span></span><br><span class="line"><span class="comment"># 拷贝jar包</span></span><br><span class="line"><span class="built_in">COPY</span> docker<span class="literal">-demo</span>.jar /app.jar</span><br><span class="line"><span class="comment"># 入口</span></span><br><span class="line">ENTRYPOINT [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;/app.jar&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306231938328.png" alt="image-20240306231938328"></p>
+<p>当编写好了Dockerfile，可以利用下面命令来构建镜像</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build <span class="literal">-t</span> myImage:<span class="number">1.0</span> .</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>-t：是给镜像起名，格式依然是repository:tag的格式，不指定tag时，默认为latest</p>
+</li>
+<li><p>. ：是指定Dockerfile所在目录，如果就在当前目录，则指定为”.”</p>
+</li>
+</ul>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306232249665.png" alt="image-20240306232249665"></p>
+<ol>
+<li><strong>docker load -i jdk.tar</strong></li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306233103657.png" alt="image-20240306233103657"></p>
+<ol start="2">
+<li>(进入到dockerfile文件所在目录)<strong>docker build -t docker-demo .</strong></li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306233436422.png" alt="image-20240306233436422"></p>
+<ol start="3">
+<li><strong>docker run -d –name dd -p 8080:8080 docker-demo</strong></li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306234347787.png" alt="image-20240306234347787"></p>
+<ol start="4">
+<li><strong>docker logs -f dd</strong>(查看容器运行日志)</li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306232329884.png" alt="image-20240306232329884"></p>
+<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>默认情况下，所有容器都是以bridge方式连接到Docker的一个虚拟网桥上：</p>
+<p>即容器（运行的镜像）都是在同个网段内的。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306235252569.png" alt="image-20240306235252569"></p>
+<p>加入自定义网络的容器才可以通过<strong>容器名</strong>互相访问（不需要IP地址就可以访问其他容器），Docker的网络操作命令如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>文档地址</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker network create</td>
+<td>创建一个网络</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_create/">docker   network create</a></td>
+</tr>
+<tr>
+<td>docker network ls</td>
+<td>查看所有网络</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_ls/">docker   network ls</a></td>
+</tr>
+<tr>
+<td>docker network rm</td>
+<td>删除指定网络</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_rm/">docker   network rm</a></td>
+</tr>
+<tr>
+<td>docker network prune</td>
+<td>清除未使用的网络</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_prune/">docker   network prune</a></td>
+</tr>
+<tr>
+<td>docker network connect</td>
+<td>使指定容器连接加入某网络</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_connect/">docker   network connect</a></td>
+</tr>
+<tr>
+<td>docker network disconnect</td>
+<td>使指定容器连接离开某网络</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_disconnect/">docker   network disconnect</a></td>
+</tr>
+<tr>
+<td>docker network inspect</td>
+<td>查看网络详细信息</td>
+<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_inspect/">docker   network inspect</a></td>
+</tr>
+</tbody></table>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000318503.png" alt="image-20240307000318503"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000348752.png" alt="image-20240307000348752"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000222937.png" alt="image-20240307000222937"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000514681.png" alt="image-20240307000514681"></p>
+<h1 id="项目部署"><a href="#项目部署" class="headerlink" title="项目部署"></a>项目部署</h1><h2 id="部署Java应用"><a href="#部署Java应用" class="headerlink" title="部署Java应用"></a>部署Java应用</h2><p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001419724.png" alt="image-20240307001419724"></p>
+<ol>
+<li><p>打包hm-service成jar包，将jar包和dockerfile上传到服务器。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001523682.png" alt="image-20240307001523682"></p>
+</li>
+<li><p>在服务器通过上传的jar包和dockerfile生成自定义镜像。</p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001707848.png" alt="image-20240307001707848"></p>
+</li>
+</ol>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307002359738.png" alt="image-20240307002359738"></p>
+<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307002606022.png" alt="image-20240307002606022"></p>
+<h2 id="部署前端"><a href="#部署前端" class="headerlink" title="部署前端"></a>部署前端</h2><p>需求：创建一个新的nginx容器，将课前资料提供的nginx.conf、html目录与容器挂载</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4298,408 +4784,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/" itemprop="url">苍穹外卖-day07-缓存商品、购物车</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-29T13:27:50+08:00">
-                2024-02-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/" itemprop="url" rel="index">
-                    <span itemprop="name">苍穹外卖</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  19
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="需求原因"><a href="#需求原因" class="headerlink" title="需求原因"></a>需求原因</h1><p>通过小程序可以展示菜品和套餐数据，这些都是存储在同一个数据库当中，如果在某个时间段内，有大量的用户来点餐，就会频繁的查询数据库，数据库的访问压力相对来说比较大，造成数据库查询性能下降，用户使用体验不是很好，直观的体验是点击某个分类之后要经过几秒钟才能显示对应数据。</p>
-<p><strong>解决办法</strong>：使用缓存来解决，需要把商品数据缓存至redis当中。这会大大提高系统的查询性能。</p>
-<p><strong>购物车相关功能，点击+号，将商品添加到购物车。</strong></p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229144150227.png" alt="image-20240229144150227"></p>
-<h1 id="缓存菜品"><a href="#缓存菜品" class="headerlink" title="缓存菜品"></a>缓存菜品</h1><h2 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h2><p>从系统的查询性能分析问题，然后通过缓存的方式提高系统的查询性能。</p>
-<ol>
-<li>是不是所有商品都要缓存？</li>
-<li>商品缓存的粒度如何？</li>
-</ol>
-<p>用户端小程序展示的菜品数据都是通过查询数据库获得，如果用户端访问量比较大，数据库访问压力随之增大。系统查询的瓶颈是数据库查询。</p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229151909242.png" alt="image-20240229151909242"></p>
-<p>结果：系统响应慢、用户体验差</p>
-<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>通过Redis来缓存菜品数据，减少数据库查询操作。</p>
-<p>Redis是基于内存访问数据的，数据库是磁盘IO操作。</p>
-<p>内存操作相对于磁盘操作性能较高。</p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229221904137.png" alt="image-20240229221904137"></p>
-<p><strong>缓存逻辑分析：</strong></p>
-<ul>
-<li><p>每个分类的菜品保存一份缓存数据（key：分类ID，value：分类下具体的菜品数据，使用string字符串保存，右侧的菜品在java中用list表示，我们可以将其序列化，转成redis的字符串）</p>
-</li>
-<li><p>数据库中菜品数据有变更时清理缓存数据。（在商家端改了数据，要清理缓存，不然数据没有更新）</p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229222637493.png" alt="image-20240229222637493"></p>
-</li>
-</ul>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240229223752062.png" alt="image-20240229223752062"></p>
-<h2 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>user.dishcontroller</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.user;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController(&quot;userDishController&quot;)</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user/dish&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;C端-菜品浏览接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DishController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishService dishService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据分类id查询菜品</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> categoryId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;根据分类id查询菜品&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;List&lt;DishVO&gt;&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span> &#123;</span><br><span class="line">        <span class="comment">//构造redis中的key，规则：dish_分类id</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;dish_&quot;</span> + categoryId;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//查询redis中是否存在菜品数据</span></span><br><span class="line">        List&lt;DishVO&gt; list = (List&lt;DishVO&gt;) redisTemplate.opsForValue().get(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (list != <span class="literal">null</span> &amp;&amp; list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//如果存在，直接返回，无需查询数据库</span></span><br><span class="line">            <span class="keyword">return</span> Result.success(list);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">Dish</span> <span class="variable">dish</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Dish</span>();</span><br><span class="line">        dish.setCategoryId(categoryId);</span><br><span class="line">        dish.setStatus(StatusConstant.ENABLE);<span class="comment">//查询起售中的菜品</span></span><br><span class="line"></span><br><span class="line">        list = dishService.listWithFlavor(dish);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果不存在，查询数据库，将查询到的数据放到redis中</span></span><br><span class="line">        redisTemplate.opsForValue().set(key, list);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>修改管理端接口DishController的相关方法，加入清理缓存的逻辑，需要改造的方法：</p>
-<ul>
-<li>新增菜品</li>
-<li>修改菜品</li>
-<li>批量删除菜品</li>
-<li>起售、停售菜品</li>
-</ul>
-<p><strong>admin.dishcontroller</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.admin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/admin/dish&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;菜品相关接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DishController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishService dishService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 新增菜品</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dishDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;新增菜品接口&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">save</span><span class="params">(<span class="meta">@RequestBody</span> DishDTO dishDTO)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;新增菜品：&#123;&#125;&quot;</span>, dishDTO);</span><br><span class="line">        dishService.saveWithFlavor(dishDTO);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//清理缓存数据</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;dish_&quot;</span> + dishDTO.getCategoryId();</span><br><span class="line">        redisTemplate.delete(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/page&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;菜品分页查询接口&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;PageResult&gt; <span class="title function_">page</span><span class="params">(DishPageQueryDTO dishPageQueryDTO)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;菜品分页查询:&#123;&#125;&quot;</span>, dishPageQueryDTO);</span><br><span class="line"></span><br><span class="line">        <span class="type">PageResult</span> <span class="variable">pageResult</span> <span class="operator">=</span> dishService.pageQuery(dishPageQueryDTO);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(pageResult);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 菜品批量删除接口</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@DeleteMapping</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;菜品批量删除接口&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">delete</span><span class="params">(<span class="meta">@RequestParam</span> List&lt;Long&gt; ids)</span> &#123;</span><br><span class="line">        log.info(<span class="string">&quot;菜品批量删除：&#123;&#125;&quot;</span>, ids);</span><br><span class="line">        dishService.deleteBatch(ids);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将所有的菜品缓存数据清理掉，所有以dish_下划线开头的key</span></span><br><span class="line">        cleanCache(<span class="string">&quot;dish_*&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;根据id查询菜品&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;DishVO&gt; <span class="title function_">getById</span><span class="params">(<span class="meta">@PathVariable</span> Long id)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;根据id查询菜品：&#123;&#125;&quot;</span>,id);</span><br><span class="line">        <span class="type">DishVO</span> <span class="variable">dishVO</span> <span class="operator">=</span> dishService.getByIdWithFlavor(id);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(dishVO);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PutMapping</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;修改菜品接口&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">update</span><span class="params">(<span class="meta">@RequestBody</span> DishDTO dishDTO)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;修改菜品:&#123;&#125;&quot;</span>,dishDTO);</span><br><span class="line">        dishService.updateWithFlavor(dishDTO);</span><br><span class="line"></span><br><span class="line">        cleanCache(<span class="string">&quot;dish_*&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;根据分类id查询菜品&quot;)</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;List&lt;Dish&gt;&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;根据分类id查询菜品:&#123;&#125;&quot;</span>,categoryId);</span><br><span class="line">        List&lt;Dish&gt; list = dishService.list(categoryId);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(list);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">cleanCache</span><span class="params">(String pattern)</span>&#123;</span><br><span class="line">        <span class="comment">//将所有的菜品缓存数据清理掉，所有以dish_下划线开头的key</span></span><br><span class="line">        <span class="type">Set</span> <span class="variable">keys</span> <span class="operator">=</span> redisTemplate.keys(pattern);</span><br><span class="line">        redisTemplate.delete(keys);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><h1 id="缓存套餐-Spring-Cache"><a href="#缓存套餐-Spring-Cache" class="headerlink" title="缓存套餐_Spring Cache"></a>缓存套餐_Spring Cache</h1><p>新的技术（spring-cache），由spring提供的技术。</p>
-<h2 id="Spring-Cache"><a href="#Spring-Cache" class="headerlink" title="Spring Cache"></a>Spring Cache</h2><p>使用它可以进一步简化代码，提供了注解，要操作缓存数据，只要在方法上加入它提供的注解就可以。这种使用方式类似于事务管理。</p>
-<p>Spring Cache是一个框架，实现了基于注解的缓存功能，只需要简单地加一个注解，就能实现缓存功能。</p>
-<p>Spring Cache提供了一层抽象，底层可以切换不同的缓存实现，例如：</p>
-<ul>
-<li>EHCache</li>
-<li>Caffeine</li>
-<li>Redis</li>
-</ul>
-<p><strong>导入maven坐标</strong>（不同缓存对应不同坐标，用redis就导入redis坐标）</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-cache<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!-- redis坐标 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>常用注解：</p>
-<table>
-<thead>
-<tr>
-<th>注解</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>@EnableCaching</td>
-<td>开启缓存注解功能，通常加在启动类上</td>
-</tr>
-<tr>
-<td>@Cacheable</td>
-<td>在方法执行前先查询缓存中是否有数据，如果有数据，则直接返回缓存数据；如果没有缓存数据，调用方法并将方法返回值放到缓存中</td>
-</tr>
-<tr>
-<td>@CachePut</td>
-<td>将方法的返回值放到缓存中</td>
-</tr>
-<tr>
-<td>@CacheEvict</td>
-<td>将一条或多条数据从缓存中删除</td>
-</tr>
-</tbody></table>
-<h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><ol>
-<li><p>在启动类加上@EnableCaching注解，开启缓存注解功能。</p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301112330973.png" alt="image-20240301112330973"></p>
-</li>
-<li><p>使用@CachePut注解，将对应方法的返回值放入redis缓存中。</p>
-<p>该返回值的键，可以由#user.id或#result.id决定。</p>
-<p><strong>UserController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span></span><br><span class="line"><span class="comment">//    @CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#user.id&quot;) //如果使用spring Cache缓存数据，key的生成：userCache::2,</span></span><br><span class="line"><span class="comment">//    @CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#result.id&quot;) //对象导航</span></span><br><span class="line"><span class="comment">//    @CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#p0.id&quot;) //拿到当前方法的第一个参数</span></span><br><span class="line"><span class="comment">//    @CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#a0.id&quot;) //拿到当前方法的第一个参数</span></span><br><span class="line"><span class="meta">@CachePut(cacheNames = &quot;userCache&quot;,key = &quot;#root.args[0].id&quot;)</span> <span class="comment">//拿到当前方法的第一个参数</span></span><br><span class="line"><span class="keyword">public</span> User <span class="title function_">save</span><span class="params">(<span class="meta">@RequestBody</span> User user)</span>&#123;</span><br><span class="line">    <span class="comment">//插入数据时要将数据放到缓存中</span></span><br><span class="line">    userMapper.insert(user);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用@Cacheable注解，如果查到数据，会把它直接放到缓存中。</p>
-<p>（Spring Cache底层是基于代理技术，即加入注解之后，Spring Cache会为当前的controller创建代理对象，我们在请求方法前是先进入代理对象，而在代理对象中查询redis）</p>
-<p><strong>UserController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Cacheable(cacheNames = &quot;userCache&quot;,key=&quot;#id&quot;)</span>  <span class="comment">//key的生成 userCache::id</span></span><br><span class="line"><span class="meta">@GetMapping</span></span><br><span class="line"><span class="keyword">public</span> User <span class="title function_">getById</span><span class="params">(Long id)</span>&#123;</span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userMapper.getById(id);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用@CacheEvict注解，方法结束完之后会删除缓存中的单条数据或全部数据</p>
-<p><strong>UserController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;userCache&quot;,key=&quot;#id&quot;)</span></span><br><span class="line"><span class="meta">@DeleteMapping</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteById</span><span class="params">(Long id)</span>&#123;</span><br><span class="line">    userMapper.deleteById(id);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;userCache&quot;,allEntries = true)</span> <span class="comment">//删除redis缓存中userCache下的所有键值对</span></span><br><span class="line"><span class="meta">@DeleteMapping(&quot;/delAll&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteAll</span><span class="params">()</span>&#123;</span><br><span class="line">    userMapper.deleteAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="代码开发-1"><a href="#代码开发-1" class="headerlink" title="代码开发"></a>代码开发</h2><h3 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h3><p>具体实现思路如下：</p>
-<ul>
-<li>导入Spring Cache和Redis相关的maven坐标</li>
-<li>在启动类上加入@EnableCaching注解，开启缓存注解功能</li>
-<li>在用户端接口SetmealController的list方法上加入@Cacheable注解</li>
-<li>在管理端接口SetmealController的save、delete、update、startOrStop等方法上加入CacheEvit注解</li>
-</ul>
-<p><strong>检查pom文件</strong></p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301132623493.png" alt="image-20240301132623493"></p>
-<p><strong>开启缓存功能</strong></p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301132649067.png" alt="image-20240301132649067"></p>
-<p><strong>修改user&#x2F;setmealcontroller类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 条件查询</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> categoryId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;根据分类id查询套餐&quot;)</span></span><br><span class="line"><span class="meta">@Cacheable(cacheNames = &quot;setmealCache&quot;, key = &quot;#categoryId&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;List&lt;Setmeal&gt;&gt; <span class="title function_">list</span><span class="params">(Long categoryId)</span> &#123;</span><br><span class="line">    <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Setmeal</span>();</span><br><span class="line">    setmeal.setCategoryId(categoryId);</span><br><span class="line">    setmeal.setStatus(StatusConstant.ENABLE);</span><br><span class="line"></span><br><span class="line">    List&lt;Setmeal&gt; list = setmealService.list(setmeal);</span><br><span class="line">    <span class="keyword">return</span> Result.success(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301132834586.png" alt="image-20240301132834586"></p>
-<p><strong>修改admin&#x2F;setmealcontroller类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span></span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;setmealCache&quot;, key = &quot;#setmealDTO.categoryId&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;新增套餐接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">add</span><span class="params">(<span class="meta">@RequestBody</span> SetmealDTO setmealDTO)</span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;新增套餐接口:&#123;&#125;&quot;</span>,setmealDTO);</span><br><span class="line">    setmealService.saveWithDish(setmealDTO);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@DeleteMapping</span></span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;setmealCache&quot;,allEntries = true)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;批量删除套餐&quot;)</span></span><br><span class="line"><span class="keyword">public</span>  Result <span class="title function_">delete</span><span class="params">(<span class="meta">@RequestParam</span> List&lt;Long&gt; ids)</span>&#123;</span><br><span class="line">    setmealService.deleteBatch(ids);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@PutMapping</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;修改套餐&quot;)</span></span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;setmealCache&quot;,allEntries = true)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">update</span><span class="params">(<span class="meta">@RequestBody</span> SetmealDTO setmealDTO)</span> &#123;</span><br><span class="line">    setmealService.update(setmealDTO);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@PostMapping(&quot;/status/&#123;status&#125;&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;套餐起售停售&quot;)</span></span><br><span class="line"><span class="meta">@CacheEvict(cacheNames = &quot;setmealCache&quot;,allEntries = true)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">startOrStop</span><span class="params">(<span class="meta">@PathVariable</span> Integer status, Long id)</span> &#123;</span><br><span class="line">    setmealService.startOrStop(status, id);</span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><font color="red">给user&#x2F;admin端的dishcontroller类中也修改对应的注释。</font></p>
-<h2 id="功能测试-1"><a href="#功能测试-1" class="headerlink" title="功能测试"></a>功能测试</h2><p>管理端前端登录，修改菜品价格，会发现redis中对应的缓存数据被删除。</p>
-<p>客户端根据分类查询菜品，会发现redis中保存了菜品的对应数据。</p>
-<h1 id="添加购物车"><a href="#添加购物车" class="headerlink" title="添加购物车"></a>添加购物车</h1><h2 id="需求分析和设计"><a href="#需求分析和设计" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><strong>产品原型：</strong></p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301135115767.png" alt="image-20240301135115767"></p>
-<p><strong>接口设计</strong></p>
-<ul>
-<li>请求方式：POST</li>
-<li>请求路径：&#x2F;user&#x2F;shoppingCart&#x2F;add</li>
-<li>请求参数：套餐id、菜品id、口味</li>
-<li>返回结果：code、data、msg</li>
-</ul>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301135634271.png" alt="image-20240301135634271"></p>
-<p><strong>数据库设计</strong></p>
-<ul>
-<li>作用：暂时存放所选商品的地方</li>
-<li>选的什么商品</li>
-<li>每个商品都买了几个</li>
-<li>不同用户的购物车需要区分开</li>
-</ul>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301140329045.png" alt="image-20240301140329045"></p>
-<p>加点冗余字段，不用联表查询，单表查询，提高查询速度。</p>
-<h2 id="代码开发-2"><a href="#代码开发-2" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>shoppingCartController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.user;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user/shoppingCart&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;C端-购物车相关接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartService shoppingCartService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCartDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/add&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;添加购物车&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">add</span><span class="params">(<span class="meta">@RequestBody</span> ShoppingCartDTO shoppingCartDTO)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;添加购物车，商品信息为：&#123;&#125;&quot;</span>,shoppingCartDTO);</span><br><span class="line"></span><br><span class="line">        shoppingCartService.addShoppingCart(shoppingCartDTO);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartService接口</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.dto.ShoppingCartDTO;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCartDTO</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addShoppingCart</span><span class="params">(ShoppingCartDTO shoppingCartDTO)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartServiceImpl类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加购物车</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCartDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addShoppingCart</span><span class="params">(ShoppingCartDTO shoppingCartDTO)</span> &#123;</span><br><span class="line">        <span class="comment">//判断当前加入到购物车中的商品是否已经存在了</span></span><br><span class="line">        <span class="type">ShoppingCart</span> <span class="variable">shoppingCart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ShoppingCart</span>();</span><br><span class="line">        BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);</span><br><span class="line">        <span class="type">Long</span> <span class="variable">currentId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line">        shoppingCart.setUserId(currentId);</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; list = shoppingCartMapper.list(shoppingCart);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果已经存在了，只需要将数量加一</span></span><br><span class="line">        <span class="comment">//要么查不到，要么对于同一用户的的同一商品的同一口味，只有可能获得一条数据</span></span><br><span class="line">        <span class="keyword">if</span> (list != <span class="literal">null</span> &amp;&amp; list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">ShoppingCart</span> <span class="variable">cart</span> <span class="operator">=</span> list.get(<span class="number">0</span>);  <span class="comment">//查到数据</span></span><br><span class="line">            cart.setNumber(cart.getNumber() + <span class="number">1</span>); <span class="comment">//update shopping_car set number = ? and id = ?</span></span><br><span class="line">            shoppingCartMapper.updateNumberById(cart);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//如果不存在，需要插入一条购物车数据</span></span><br><span class="line">            <span class="comment">//判断本次添加到购物车的是菜品还是套餐</span></span><br><span class="line">            <span class="type">Long</span> <span class="variable">dishId</span> <span class="operator">=</span> shoppingCartDTO.getDishId();</span><br><span class="line">            <span class="type">Long</span> <span class="variable">setmealId</span> <span class="operator">=</span> shoppingCartDTO.getSetmealId();</span><br><span class="line">            <span class="keyword">if</span> (dishId != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">//本次添加到购物车的是菜品</span></span><br><span class="line">                <span class="type">Dish</span> <span class="variable">dish</span> <span class="operator">=</span> dishMapper.getById(dishId);</span><br><span class="line">                shoppingCart.setName(dish.getName());</span><br><span class="line">                shoppingCart.setImage(dish.getImage());</span><br><span class="line">                shoppingCart.setAmount(dish.getPrice());</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//本次添加到购物车的是套餐</span></span><br><span class="line">                <span class="type">Setmeal</span> <span class="variable">setmeal</span> <span class="operator">=</span> setmealMapper.getById(setmealId);</span><br><span class="line">                shoppingCart.setName(setmeal.getName());</span><br><span class="line">                shoppingCart.setImage(setmeal.getImage());</span><br><span class="line">                shoppingCart.setAmount(setmeal.getPrice());</span><br><span class="line">            &#125;</span><br><span class="line">            shoppingCart.setNumber(<span class="number">1</span>);</span><br><span class="line">            shoppingCart.setCreateTime(LocalDateTime.now());</span><br><span class="line"></span><br><span class="line">            shoppingCartMapper.insert(shoppingCart);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartMapper类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.entity.ShoppingCart;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Insert;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Update;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartMapper</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 动态条件查询</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCart</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    List&lt;ShoppingCart&gt; <span class="title function_">list</span><span class="params">(ShoppingCart shoppingCart)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Update(&quot;update shopping_cart set number = #&#123;number&#125; where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">updateNumberById</span><span class="params">(ShoppingCart shoppingCart)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入购物车数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> shoppingCart</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Insert(&quot;insert into shopping_cart (name, image, user_id, dish_id, setmeal_id, dish_flavor, amount, create_time) &quot; +</span></span><br><span class="line"><span class="meta">        &quot;values (#&#123;name&#125;,#&#123;userId&#125;,#&#123;dishId&#125;,#&#123;setmealId&#125;,#&#123;dishFlavor&#125;,#&#123;amount&#125;,#&#123;createTime&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(ShoppingCart shoppingCart)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartMapper.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.sky.mapper.ShoppingCartMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;list&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span>&gt;</span></span><br><span class="line">        select * from shopping_cart</span><br><span class="line">        <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userId != null&quot;</span>&gt;</span>user_id = #&#123;userId&#125;,<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;setmealId != null&quot;</span>&gt;</span>setmeal_id = #&#123;setmealId&#125;,<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishId != null&quot;</span>&gt;</span>dish_id = #&#123;dishId&#125;,<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishFlavor != null&quot;</span>&gt;</span>dish_flavor = #&#123;dishFlavor&#125;,<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="功能测试-2"><a href="#功能测试-2" class="headerlink" title="功能测试"></a>功能测试</h2><p>正常测试即可。</p>
-<h1 id="查看购物车"><a href="#查看购物车" class="headerlink" title="查看购物车"></a>查看购物车</h1><h2 id="需求分析和设计-1"><a href="#需求分析和设计-1" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301151804526.png" alt="image-20240301151804526"></p>
-<p><strong>接口设计</strong></p>
-<ul>
-<li>请求方式：GET方式</li>
-<li>请求路径：&#x2F;user&#x2F;shoppingCart&#x2F;list</li>
-<li>请求参数：无</li>
-</ul>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301153218027.png" alt="image-20240301153218027"></p>
-<h2 id="代码开发-3"><a href="#代码开发-3" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>ShoppingCartController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查看购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;查看购物车&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;List&lt;ShoppingCart&gt;&gt; <span class="title function_">list</span><span class="params">()</span>&#123;</span><br><span class="line">    List&lt;ShoppingCart&gt; list = shoppingCartService.showShoppingCart();</span><br><span class="line">    <span class="keyword">return</span> Result.success(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartService类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查看购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">List&lt;ShoppingCart&gt; <span class="title function_">showShoppingCart</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartServiceImpl类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查看购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;ShoppingCart&gt; <span class="title function_">showShoppingCart</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line"></span><br><span class="line">        <span class="type">ShoppingCart</span> <span class="variable">shoppingCart</span> <span class="operator">=</span> ShoppingCart.builder()</span><br><span class="line">            .userId(userId)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; list = shoppingCartMapper.list(shoppingCart);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartMapper.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.sky.mapper.ShoppingCartMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;list&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span>&gt;</span></span><br><span class="line">        select * from shopping_cart</span><br><span class="line">        <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userId != null&quot;</span>&gt;</span>user_id = #&#123;userId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;setmealId != null&quot;</span>&gt;</span>and setmeal_id = #&#123;setmealId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishId != null&quot;</span>&gt;</span>and dish_id = #&#123;dishId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishFlavor != null&quot;</span>&gt;</span>and dish_flavor = #&#123;dishFlavor&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="功能测试-3"><a href="#功能测试-3" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301154323794.png" alt="image-20240301154323794"></p>
-<h1 id="清空购物车"><a href="#清空购物车" class="headerlink" title="清空购物车"></a>清空购物车</h1><h2 id="需求分析与设计"><a href="#需求分析与设计" class="headerlink" title="需求分析与设计"></a>需求分析与设计</h2><p><strong>产品原型：</strong></p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301154620724.png" alt="image-20240301154620724"></p>
-<p><strong>接口设计</strong></p>
-<ul>
-<li><p>请求方式：DELETE</p>
-</li>
-<li><p>请求路径：&#x2F;user&#x2F;shoppingCart&#x2F;clean</p>
-</li>
-<li><p>请求参数：无</p>
-</li>
-<li><p>返回结果：Result.sucess()</p>
-</li>
-</ul>
-<p>把当前用户所有购物车数据删除即可。</p>
-<p><img src="/2024/02/29/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day07-%E7%BC%93%E5%AD%98%E5%95%86%E5%93%81%E3%80%81%E8%B4%AD%E7%89%A9%E8%BD%A6/image-20240301154809669.png" alt="image-20240301154809669"></p>
-<h2 id="代码开发-4"><a href="#代码开发-4" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>ShoppingCartController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.user;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user/shoppingCart&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;C端-购物车相关接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartService shoppingCartService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 清空购物车</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@DeleteMapping(&quot;/clean&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;清空购物车&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">clean</span><span class="params">()</span>&#123;</span><br><span class="line">        shoppingCartService.cleanShoppingCart();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartService类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.dto.ShoppingCartDTO;</span><br><span class="line"><span class="keyword">import</span> com.sky.entity.ShoppingCart;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 清空购物车</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">cleanShoppingCart</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartServiceImpl类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 清空购物车</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">cleanShoppingCart</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line"></span><br><span class="line">        shoppingCartMapper.deleteByUserId(userId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartMapper类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartMapper</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据UserId删除数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Delete(&quot;delete from shopping_cart where user_id = #&#123;userId&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">deleteByUserId</span><span class="params">(Long userId)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="功能测试-4"><a href="#功能测试-4" class="headerlink" title="功能测试"></a>功能测试</h2><p>已测试</p>
-<h1 id="从购物车中减去某个商品"><a href="#从购物车中减去某个商品" class="headerlink" title="从购物车中减去某个商品"></a>从购物车中减去某个商品</h1><p><strong>ShoppingCartController</strong>类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从购物车中减去某个商品</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/sub&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;从购物车中减去某个商品&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">sub</span><span class="params">(<span class="meta">@RequestBody</span> ShoppingCartDTO shoppingCartDTO)</span>&#123;</span><br><span class="line">    shoppingCartService.subShoppingCart(shoppingCartDTO);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Result.success();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartService类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartService</span>  &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">subShoppingCart</span><span class="params">(ShoppingCartDTO shoppingCartDTO)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartServiceImpl类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShoppingCartServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ShoppingCartService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ShoppingCartMapper shoppingCartMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> DishMapper dishMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SetmealMapper setmealMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">subShoppingCart</span><span class="params">(ShoppingCartDTO shoppingCartDTO)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line">        <span class="type">ShoppingCart</span> <span class="variable">shoppingCart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ShoppingCart</span>();</span><br><span class="line">        BeanUtils.copyProperties(shoppingCartDTO,shoppingCart);</span><br><span class="line">        shoppingCart.setUserId(userId);</span><br><span class="line"></span><br><span class="line">        List&lt;ShoppingCart&gt; list = shoppingCartMapper.list(shoppingCart);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果已经存在了，只需要将数量加一</span></span><br><span class="line">        <span class="comment">//要么查不到，要么对于同一用户的的同一商品的同一口味，只有可能获得一条数据</span></span><br><span class="line">        <span class="keyword">if</span> (list != <span class="literal">null</span> &amp;&amp; list.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">ShoppingCart</span> <span class="variable">cart</span> <span class="operator">=</span> list.get(<span class="number">0</span>);  <span class="comment">//查到数据</span></span><br><span class="line">            <span class="keyword">if</span> (cart.getNumber() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                cart.setNumber(cart.getNumber() - <span class="number">1</span>); <span class="comment">//update shopping_car set number = ? and id = ?</span></span><br><span class="line">                shoppingCartMapper.updateNumberById(cart);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                shoppingCartMapper.delByUserInfo(cart);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartMapper类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ShoppingCartMapper</span> &#123;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">delByUserInfo</span><span class="params">(ShoppingCart cart)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ShoppingCartMapper.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.sky.mapper.ShoppingCartMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">&quot;delByUserInfo&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.sky.entity.ShoppingCart&quot;</span>&gt;</span></span><br><span class="line">        delete from shopping_cart</span><br><span class="line">        <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;userId != null&quot;</span>&gt;</span>user_id = #&#123;userId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;setmealId != null&quot;</span>&gt;</span>and setmeal_id = #&#123;setmealId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishId != null&quot;</span>&gt;</span>and dish_id = #&#123;dishId&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;dishFlavor != null&quot;</span>&gt;</span>and dish_flavor = #&#123;dishFlavor&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -4749,7 +4838,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -4818,6 +4907,10 @@
 				  
 				  
 					<li class="recent_posts_li">
+					  <a href="/2024/03/19/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day04-JSR303%E6%A0%A1%E9%AA%8C/" title="学成在线-day04-JSR303校验" target="_blank">学成在线-day04-JSR303校验</a>
+					</li>
+				  
+					<li class="recent_posts_li">
 					  <a href="/2024/03/17/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day03-%E8%AF%BE%E7%A8%8B%E6%9F%A5%E8%AF%A2%E3%80%81%E6%96%B0%E5%A2%9E%E8%AF%BE%E7%A8%8B%E3%80%81%E5%89%8D%E5%90%8E%E7%AB%AF%E8%81%94%E8%B0%83/" title="学成在线-day03-课程查询、新增课程、前后端联调" target="_blank">学成在线-day03-课程查询、新增课程、前后端联调</a>
 					</li>
 				  
@@ -4831,10 +4924,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/" title="微服务-day06-rabbitMQ" target="_blank">微服务-day06-rabbitMQ</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/" title="微服务-day05-rabbitMQ" target="_blank">微服务-day05-rabbitMQ</a>
 					</li>
 				  
 				</ul>
@@ -4881,7 +4970,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">172.2k</span>
+    <span title="Site words total count">186.4k</span>
   
 </div>
 
