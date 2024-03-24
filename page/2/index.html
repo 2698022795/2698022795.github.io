@@ -297,6 +297,587 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/" itemprop="url">微服务-day05-rabbitMQ</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-10T22:30:11+08:00">
+                2024-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  29
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前景知识"><a href="#前景知识" class="headerlink" title="前景知识"></a>前景知识</h1><p>高性能的异步通讯组件</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223355698.png" alt="image-20240310223355698"></p>
+<p>解读：</p>
+<ul>
+<li>同步通讯：就如同打视频电话，双方的交互都是实时的。因此同一时刻你只能跟一个人打视频电话。</li>
+<li>异步通讯：就如同发微信聊天，双方的交互不是实时的，你不需要立刻给对方回应。因此你可以多线操作，同时跟多人聊天。</li>
+</ul>
+<p>两种方式各有优劣，打电话可以立即得到响应，但是你却不能跟多个人同时通话。发微信可以同时与多个人收发微信，但是往往响应会有延迟。</p>
+<p>所以，如果我们的业务需要实时得到服务提供方的响应，则应该选择同步通讯（同步调用）。而如果我们追求更高的效率，并且不需要实时响应，则应该选择异步通讯（异步调用）。</p>
+<p>之前讲解微服务，微服务之间采用OpenFeign通信，是阻塞式的。缺点是要后续微服务都完成才能完成本微服务的请求。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223456971.png" alt="image-20240310223456971"></p>
+<p> 同步调用的方式我们已经学过了，之前的OpenFeign调用就是。但是：</p>
+<ul>
+<li>异步调用又该如何实现？</li>
+<li>哪些业务适合用异步调用来实现呢？</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310223905233.png" alt="image-20240310223905233"></p>
+<p><strong>课程背景</strong></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240310224432096.png" alt="image-20240310224432096"></p>
+<h2 id="同步调用"><a href="#同步调用" class="headerlink" title="同步调用"></a>同步调用</h2><p>我们以黑马商城的余额支付为例：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311110925391.png" alt="image-20240311110925391"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311111026926.png" alt="image-20240311111026926"></p>
+<ul>
+<li>拓展性差</li>
+<li>性能下降</li>
+<li>级联失败</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311111256657.png" alt="image-20240311111256657"></p>
+<p><strong>总结</strong></p>
+<p>同步调用的优势是什么？</p>
+<ul>
+<li>时效性强，等待到结果后才返回。</li>
+</ul>
+<p>同步调用的问题是什么？</p>
+<ul>
+<li>拓展性差</li>
+<li>性能下降</li>
+<li>级联失败问题</li>
+</ul>
+<h2 id="异步调用"><a href="#异步调用" class="headerlink" title="异步调用"></a>异步调用</h2><p>异步调用方式起始就是基于消息通知的方式，一般包含三个角色：</p>
+<ul>
+<li>消息发送者：投递消息的人，就是原来的调用方</li>
+<li>消息代理：管理、暂存、转发消息，你可以把它理解成微信服务器</li>
+<li>消息接收者：接收和处理消息的人，就是原来的服务提供方</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311140813726.png" alt="image-20240311140813726"></p>
+<p>支付服务不再同步调用业务关联度低的服务，而不是发送消息通知到Broker。</p>
+<p>具备以下优势：</p>
+<ul>
+<li>接触耦合，拓展性强</li>
+<li>异步调用，无需等待，性能好</li>
+<li>故障隔离，下游服务故障不影响上游业务</li>
+<li>缓存消息，流量削峰填谷</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>无法立刻获取其他微服务的调用结果，时效性差</li>
+<li>不能确定下游业务是否执行成功</li>
+<li>业务安全依赖于Broker的可靠性</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311141547756.png" alt="image-20240311141547756"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311141744653.png" alt="image-20240311141744653"></p>
+<h2 id="MQ技术选型"><a href="#MQ技术选型" class="headerlink" title="MQ技术选型"></a>MQ技术选型</h2><p>MQ（MessageQueue），中文是消息队列，字面上来看就是存放消息的队列。也就是异步调用中的Broker。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311142135874.png" alt="image-20240311142135874"></p>
+<h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><h2 id="介绍和安装"><a href="#介绍和安装" class="headerlink" title="介绍和安装"></a>介绍和安装</h2><p>RabbitMQ是基于Erlang语言开发的开源消息通信中间件，官网地址：<a target="_blank" rel="noopener" href="http://www.rabbitmq.com/">http://www.rabbitmq.com/</a></p>
+<p>我们同样基于Docker来安装RabbitMQ，使用下面的命令即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line"> -e RABBITMQ_DEFAULT_USER=itheima \</span><br><span class="line"> -e RABBITMQ_DEFAULT_PASS=123321 \</span><br><span class="line"> -v mq-plugins:/plugins \</span><br><span class="line"> --name mq \</span><br><span class="line"> --hostname mq \</span><br><span class="line"> -p 15672:15672 \</span><br><span class="line"> -p 5672:5672 \</span><br><span class="line"> --network hm-net\</span><br><span class="line"> -d \</span><br><span class="line"> rabbitmq:3.8-management</span><br></pre></td></tr></table></figure>
+
+<p>如果拉取镜像困难的话，可以使用课前资料给大家准备的镜像，利用docker load命令加载：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143611065.png" alt="image-20240311143611065"></p>
+<p>可以看到在安装命令中有两个映射的端口：</p>
+<ul>
+<li>15672：RabbitMQ提供的管理控制台的端口</li>
+<li>5672：RabbitMQ的消息发送处理接口</li>
+</ul>
+<p>安装完成后，我们访问 <a href="http://192.168.226.129:15672即可看到管理控制台。首次访问需要登录，默认的用户名和密码在配置文件中已经指定了。">http://192.168.226.129:15672即可看到管理控制台。首次访问需要登录，默认的用户名和密码在配置文件中已经指定了。</a></p>
+<p>登录后即可看到管理控制台总览页面：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143733022.png" alt="image-20240311143733022"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311143753660.png" alt="image-20240311143753660"></p>
+<p>RabbitMQ对应的架构如图：</p>
+<p>其中包含几个概念：</p>
+<ul>
+<li>**<code>publisher</code>**：生产者，也就是发送消息的一方</li>
+<li>**<code>consumer</code>**：消费者，也就是消费消息的一方</li>
+<li>**<code>queue</code>**：队列，存储消息。生产者投递的消息会暂存在消息队列中，等待消费者处理</li>
+<li>**<code>exchange</code>**：交换机，负责消息路由。生产者发送的消息由交换机决定投递到哪个队列。</li>
+<li>**<code>virtual host</code>**：虚拟主机，起到数据隔离的作用。每个虚拟主机相互独立，有各自的exchange、queue</li>
+</ul>
+<p>上述这些东西都可以在RabbitMQ的管理控制台来管理，下一节我们就一起来学习控制台的使用。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311144339755.png" alt="image-20240311144339755"></p>
+<p>RabbitMQ Server Broker可以建立多个VirtualHost（虚拟主机），起数据隔离作用。</p>
+<p>不同的VirtualHost有自己的交换机和队列，不同VirtualHost是相互隔离的。</p>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>需求：在RabbitMQ的控制台完成以下操作：</p>
+<ul>
+<li>新建队列hello.queue1和hello.queue2</li>
+<li>向默认的amp.fanout交换机发送一条消息</li>
+<li>查看消息是否到达hello.queue1和hello.queue2</li>
+<li>总结规律</li>
+</ul>
+<h3 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h3><p>我们打开Exchanges选项卡，可以看到已经存在很多交换机：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145316219.png" alt="image-20240311145316219"></p>
+<p>我们点击任意交换机，即可进入交换机详情页面。仍然会利用控制台中的publish message 发送一条消息：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145716007.png" alt="image-20240311145716007"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145727512.png" alt="image-20240311145727512"></p>
+<p>这里是由控制台模拟了生产者发送的消息。由于没有消费者存在，最终消息丢失了，这样说明交换机没有存储消息的能力。</p>
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>我们打开<code>Queues</code>选项卡，新建多个队列：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311145841146.png" alt="image-20240311145841146"></p>
+<p>此时，我们再次向<code>amq.fanout</code>交换机发送一条消息。会发现消息依然没有到达队列！！</p>
+<p>怎么回事呢？</p>
+<p>发送到交换机的消息，只会路由到与其绑定的队列，因此仅仅创建队列是不够的，我们还需要将其与交换机绑定。</p>
+<h3 id="绑定关系"><a href="#绑定关系" class="headerlink" title="绑定关系"></a>绑定关系</h3><p>点击<code>Exchanges</code>选项卡，点击<code>amq.fanout</code>交换机，进入交换机详情页，然后点击<code>Bindings</code>菜单，在表单中填写要绑定的队列名称：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150103251.png" alt="image-20240311150103251"></p>
+<p>查看队列，发现它已经被交换机绑定</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150137037.png" alt="image-20240311150137037"></p>
+<p>再次回到exchange页面，找到刚刚绑定的<code>amq.fanout</code>，点击进入详情页，再次发送一条消息：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150616631.png" alt="image-20240311150616631"></p>
+<p>回到<code>Queues</code>页面，可以发现<code>hello.queue</code>中已经有一条消息了：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150635359.png" alt="image-20240311150635359"></p>
+<p>点击队列名称，进入详情页，查看队列详情，这次我们点击get message：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311150739849.png" alt="image-20240311150739849"></p>
+<p>这个时候如果有消费者监听了MQ的<code>hello.queue1</code>或<code>hello.queue2</code>队列，自然就能接收到消息了。</p>
+<h2 id="数据隔离"><a href="#数据隔离" class="headerlink" title="数据隔离"></a>数据隔离</h2><p>需求：在RabbitMQ的控制台完成以下操作：</p>
+<ul>
+<li>新建一个用户hamll</li>
+<li>为hmall用户创建一个virtual host</li>
+<li>测试不同virtrual host之间的数据隔离现象</li>
+</ul>
+<ol>
+<li>新建一个用户hmall</li>
+</ol>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311151427295.png" alt="image-20240311151427295"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311151700585.png" alt="image-20240311151700585"></p>
+<p>理论上应该给每个项目创建一个自己的用户，黑马商城一个自己账号，自己的虚拟主机；苍穹外卖，自己的用户，自己的虚拟主机。</p>
+<h1 id="java客户端"><a href="#java客户端" class="headerlink" title="java客户端"></a>java客户端</h1><h2 id="快速入门-1"><a href="#快速入门-1" class="headerlink" title="快速入门"></a>快速入门</h2><p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155009971.png" alt="image-20240311155009971"></p>
+<p>SpringAmqp的官方地址：<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-amqp">https://spring.io/projects/spring-amqp</a></p>
+<p>导入课前资料提供的Demo工程来测试：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155808370.png" alt="image-20240311155808370"></p>
+<p>步骤一：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--AMQP依赖，包含RabbitMQ--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>快速入门</p>
+<p>需求如下：</p>
+<ul>
+<li>利用控制台创建队列simple.queue</li>
+<li>在publisher服务中，利用SpringAMQP直接向simple.queue发送消息</li>
+<li>在consumer服务中，利用SpringAMQP编写消费者，监听simple.queue队列</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311155943682.png" alt="image-20240311155943682"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160125258.png" alt="image-20240311160125258"></p>
+<p>步骤二：配置RabbitMQ服务端消息</p>
+<p>在每个微服务中引入MQ服务端信息，这样微服务才能链接到RabbitMQ</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.226</span><span class="number">.129</span> <span class="comment"># 你的虚拟机IP</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">5672</span> <span class="comment"># 端口</span></span><br><span class="line">    <span class="attr">virtual-host:</span> <span class="string">/hmall</span> <span class="comment"># 虚拟主机</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">hmall</span> <span class="comment"># 用户名</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span> <span class="comment"># 密码</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160430629.png" alt="image-20240311160430629"></p>
+<p>步骤三：发送消息</p>
+<p>SpringAMQP提供了RabbitTemplate工具类，方便我们发送消息。发送消息代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.publisher.amqp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringAmqpTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSimpleQueue</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 队列名称</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">queueName</span> <span class="operator">=</span> <span class="string">&quot;simple.queue&quot;</span>;</span><br><span class="line">        <span class="comment">// 消息</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;hello, spring amqp!&quot;</span>;</span><br><span class="line">        <span class="comment">// 发送消息</span></span><br><span class="line">        rabbitTemplate.convertAndSend(queueName, message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打开控制台，可以看到消息已经发送到队列中：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311160922469.png" alt="image-20240311160922469"></p>
+<p>步骤四：接收消息</p>
+<p>SpringAMQP提供了声明式的消息监听，我们只需要通过注解在方法上声明要监听的队列名称，将来SpringAMQP就会把消息传递给当前方法：</p>
+<p>然后在<code>consumer</code>服务的<code>com.itheima.consumer.listener</code>包中新建一个类<code>SpringRabbitListener</code>，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.consumer.listener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.annotation.RabbitListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringRabbitListener</span> &#123;</span><br><span class="line">        <span class="comment">// 利用RabbitListener来声明要监听的队列信息</span></span><br><span class="line">    <span class="comment">// 将来一旦监听的队列中有了消息，就会推送给当前服务，调用当前方法，处理消息。</span></span><br><span class="line">    <span class="comment">// 可以看到方法体中接收的就是消息体的内容</span></span><br><span class="line">    <span class="meta">@RabbitListener(queues = &quot;simple.queue&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenSimpleQueueMessage</span><span class="params">(String msg)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;spring 消费者接收到消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动consumer服务，然后在publisher服务中运行测试代码，发送MQ消息。最终consumer收到消息：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161756543.png" alt="image-20240311161756543"></p>
+<p><strong>总结</strong></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161824447.png" alt="image-20240311161824447"></p>
+<h2 id="WorkQueue"><a href="#WorkQueue" class="headerlink" title="WorkQueue"></a>WorkQueue</h2><p>Work queues，任务模型。简单来说就是<strong>让多个消费者绑定一个队列，共同消费队列中的消息</strong>。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311161929562.png" alt="image-20240311161929562"></p>
+<p>当消息处理比较耗时的时候，可能生产消息的速度会远远大于消息的消费速度。长此以往，消息就会堆积越来越多，无法及时处理。</p>
+<p>此时就可以使用work 模型，<strong>多个消费者共同处理消息处理，消息处理的速度就能大大提高</strong>了。</p>
+<p>案例：模拟WorkQueue，实现一个队列绑定多个消费者</p>
+<p>基本思路如下：</p>
+<ol>
+<li>在RabbitMQ的控制条创建一个队列，名为work.queue</li>
+<li>在publisher服务中定义测试方法，在1秒内产生50条消息，发送到work.queue</li>
+<li>在consumer服务中定义两个消息监听者，都监听work.queue队列</li>
+<li>消费者1每秒处理50条消息，消费者2每秒处理5条消息</li>
+</ol>
+<p>接下来，我们就来模拟这样的场景。</p>
+<p>首先，我们在控制台创建一个新的队列，命名为<code>work.queue</code>：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162157320.png" alt="image-20240311162157320"></p>
+<p>要模拟多个消费者绑定同一个队列，我们在consumer服务的SpringRabbitListener中添加2个新的方法：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162339877.png" alt="image-20240311162339877"></p>
+<p>启动consumer启动类</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162609141.png" alt="image-20240311162609141"></p>
+<p>这次我们循环发送，模拟大量消息堆积现象。</p>
+<p>在publisher服务中的SpringAmqpTest类中添加一个测试方法：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311162647850.png" alt="image-20240311162647850"></p>
+<p>启动ConsumerApplication后，在执行publisher服务中刚刚编写的发送测试方法testWorkQueue。</p>
+<p>最终结果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_0】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.869555300</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_1】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.884518</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_2】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.907454400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_4】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.953332100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_6】<span class="number">21</span>:<span class="number">06</span>:<span class="number">00.997867300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_8】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.042178700</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_3】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.086478800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_10】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.087476600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_12】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.132578300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_14】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.175851200</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_16】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.218533400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_18】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.261322900</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_5】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.287003700</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_20】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.304412400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_22】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.349950100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_24】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.394533900</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_26】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.439876500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_28】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.482937800</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_7】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.488977100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_30】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.526409300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_32】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.572148</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_34】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.618264800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_36】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.660780600</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_9】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.689189300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_38】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.705261</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_40】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.746927300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_42】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.789835</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_44】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.834393100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_46】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.875312100</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_11】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.889969500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_48】<span class="number">21</span>:<span class="number">06</span>:<span class="number">01.920702500</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_13】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.090725900</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_15】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.293060600</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_17】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.493748</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_19】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.696635100</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_21】<span class="number">21</span>:<span class="number">06</span>:<span class="number">02.896809700</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_23】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.099533400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_25】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.301446400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_27】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.504999100</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_29】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.705702500</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_31】<span class="number">21</span>:<span class="number">06</span>:<span class="number">03.906601200</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_33】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.108118500</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_35】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.308945400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_37】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.511547700</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_39】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.714038400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_41】<span class="number">21</span>:<span class="number">06</span>:<span class="number">04.916192700</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_43】<span class="number">21</span>:<span class="number">06</span>:<span class="number">05.116286400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_45】<span class="number">21</span>:<span class="number">06</span>:<span class="number">05.318055100</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_47】<span class="number">21</span>:<span class="number">06</span>:<span class="number">05.520656400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_49】<span class="number">21</span>:<span class="number">06</span>:<span class="number">05.723106700</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到消费者1和消费者2竟然每人消费了25条消息：</p>
+<ul>
+<li>消费者1很快完成了自己的25条消息</li>
+<li>消费者2却在缓慢的处理自己的25条消息。</li>
+</ul>
+<p><font color="red">也就是说消息是平均分配给每个消费者，并没有考虑到消费者的处理能力。导致1个消费者空闲，另一个消费者忙的不可开交。没有充分利用每一个消费者的能力，最终消息处理的耗时远远超过了1秒。这样显然是有问题的。</font></p>
+<p>因此，我们需要修改application.yml，设置preFetch值为1，确保同一时刻最多投递给消费者1条消息：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">listener:</span></span><br><span class="line">      <span class="attr">simple:</span></span><br><span class="line">        <span class="attr">prefetch:</span> <span class="number">1</span> <span class="comment"># 每次只能获取一条消息，处理完成才能获取下一个消息</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311163628967.png" alt="image-20240311163628967"></p>
+<p>再次测试，发现结果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_0】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.659664200</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_1】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.680610</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_2】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.703625</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_3】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.724330100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_4】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.746651100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_5】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.768401400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_6】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.790511400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_7】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.812559800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_8】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.834500600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_9】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.857438800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_10】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.880379600</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_11】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.899327100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_12】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.922828400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_13】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.945617400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_14】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.968942500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_15】<span class="number">21</span>:<span class="number">12</span>:<span class="number">51.992215400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_16】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.013325600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_17】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.035687100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_18】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.058188</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_19】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.081208400</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_20】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.103406200</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_21】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.123827300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_22】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.146165100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_23】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.168828300</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_24】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.191769500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_25】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.214839100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_26】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.238998700</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_27】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.259772600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_28】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.284131800</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_29】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.306190600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_30】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.325315800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_31】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.347012500</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_32】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.368508600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_33】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.391785100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_34】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.416383800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_35】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.439019</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_36】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.461733900</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_37】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.485990</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_38】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.509219900</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_39】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.523683400</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_40】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.547412100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_41】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.571191800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_42】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.593024600</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_43】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.616731800</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_44】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.640317</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_45】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.663111100</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_46】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.686727</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_47】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.709266500</span></span><br><span class="line">消费者<span class="number">2.</span>.......接收到消息：【hello, message_48】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.725884900</span></span><br><span class="line">消费者<span class="number">1</span>接收到消息：【hello, message_49】<span class="number">21</span>:<span class="number">12</span>:<span class="number">52.746299900</span></span><br></pre></td></tr></table></figure>
+
+<p>可以发现，由于消费者1处理速度较快，所以处理了更多的消息；消费者2处理速度较慢，只处理了6条消息。而最终总的执行耗时也在1秒左右，大大提升。</p>
+<p>正所谓能者多劳，这样充分利用了每一个消费者的处理能力，可以有效避免消息积压问题。</p>
+<p><strong>总结</strong></p>
+<p>Work模型的使用：</p>
+<ul>
+<li>多个消费者绑定到一个队列，同一条消息只会被一个消费者处理</li>
+<li>通过设置prefetch来控制消费者预取的消息数量</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311163820738.png" alt="image-20240311163820738"></p>
+<h2 id="Fanout交换机"><a href="#Fanout交换机" class="headerlink" title="Fanout交换机"></a>Fanout交换机</h2><p>真正生产环境都会经过exchange来发送消息，而不是直接发送到队列，交换机的类型有以下三种：</p>
+<ul>
+<li>Fanout：广播</li>
+<li>Direct：定向</li>
+<li>Topic：话题</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164134271.png" alt="image-20240311164134271"></p>
+<p>Fanout Exchange会将接收到的消息广播到每一个跟其绑定的queue，所以也叫广播模式</p>
+<p>解决了消息被多个微服务接收的问题，每个微服务有自己的队列，绑定在该交换机上的所有队列都能收到消息。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164434183.png" alt="image-20240311164434183"></p>
+<p>案例：利用SpringAMQP演示FanoutExchange的使用</p>
+<p>实现思路如下：</p>
+<ol>
+<li>在RabbitMQ的控制台中，声明队列fanout.queue1和fanout.queue2</li>
+<li>在RabbitMQ的控制台中，声明交换机hmall.fanout，将两个队列与其绑定</li>
+<li>在consumer服务中，编写两个消费者方法，分别监听fanout.queue1和fanout.queue2</li>
+<li>在publisher中编写测试方法，向hmall.fanout发送消息</li>
+</ol>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164854473.png" alt="image-20240311164854473"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311164946045.png" alt="image-20240311164946045"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311165108205.png" alt="image-20240311165108205"></p>
+<p>在consumer服务的SpringRabbitListener中添加两个方法，作为消费者：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;fanout.queue1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenFanoutQueue1</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者1接收到Fanout消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RabbitListener(queues = &quot;fanout.queue2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenFanoutQueue2</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者2接收到Fanout消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在publisher服务的SpringAmqpTest类中添加测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testFanoutExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 交换机名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exchangeName</span> <span class="operator">=</span> <span class="string">&quot;hmall.fanout&quot;</span>;</span><br><span class="line">    <span class="comment">// 消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;hello, everyone!&quot;</span>;</span><br><span class="line">    rabbitTemplate.convertAndSend(exchangeName, <span class="string">&quot;&quot;</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>总结</strong></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311165724343.png" alt="image-20240311165724343"></p>
+<h2 id="Direct交换机"><a href="#Direct交换机" class="headerlink" title="Direct交换机"></a>Direct交换机</h2><p>在Fanout模式中，一条消息，会被所有订阅的队列都消费。但是，在某些场景下，我们希望不同的消息被不同的队列消费。这时就要用到Direct类型的Exchange。</p>
+<p>Direct Exchange会将接收到的消息根据规则路由到指定的Queue，因此称为<strong>定向</strong>路由。</p>
+<ul>
+<li>每个Queue都会与Exchange设置一个BindingKey</li>
+<li>发布者发送消息时，指定消息的RoutingKey</li>
+<li>Exchange将消息路由到BindingKey与消息RoutingKey一致的队列</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170128232.png" alt="image-20240311170128232"></p>
+<p>案例：利用SpringAMQP演示DirectExchange的使用</p>
+<p>需求如下：</p>
+<ol>
+<li>在RabbitMQ控制台中，声明队列direct.queue1和direct.queue2</li>
+<li>在RabbitMQ控制台中，声明交换机hmall.direct，将两个队列与其绑定</li>
+<li>在consumer服务中，编写两个消费者方法，分别监听direct.queue1和direct.queue2</li>
+<li>在publisher中编写测试方法，利用不同的RoutingKey向hmall.direct发送消息</li>
+</ol>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170334038.png" alt="image-20240311170334038"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170429785.png" alt="image-20240311170429785"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170509773.png" alt="image-20240311170509773"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170541112.png" alt="image-20240311170541112"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170624625.png" alt="image-20240311170624625"></p>
+<p>在consumer服务的SpringRabbitListener中添加方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;direct.queue1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenDirectQueue1</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者1接收到direct.queue1的消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RabbitListener(queues = &quot;direct.queue2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenDirectQueue2</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者2接收到direct.queue2的消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在publisher服务的SpringAmqpTest类中添加测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendDirectExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 交换机名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exchangeName</span> <span class="operator">=</span> <span class="string">&quot;hmall.direct&quot;</span>;</span><br><span class="line">    <span class="comment">// 消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;红色警报！日本乱排核废水，导致海洋生物变异，惊现哥斯拉！&quot;</span>;</span><br><span class="line">    <span class="comment">// 发送消息</span></span><br><span class="line">    rabbitTemplate.convertAndSend(exchangeName, <span class="string">&quot;red&quot;</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170904131.png" alt="image-20240311170904131"></p>
+<p>我们再切换为blue这个key：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendDirectExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 交换机名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exchangeName</span> <span class="operator">=</span> <span class="string">&quot;hmall.direct&quot;</span>;</span><br><span class="line">    <span class="comment">// 消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;最新报道，哥斯拉是居民自治巨型气球，虚惊一场！&quot;</span>;</span><br><span class="line">    <span class="comment">// 发送消息</span></span><br><span class="line">    rabbitTemplate.convertAndSend(exchangeName, <span class="string">&quot;blue&quot;</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你会发现，只有消费者1收到了消息：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311170947088.png" alt="image-20240311170947088"></p>
+<p><strong>总结</strong></p>
+<p>描述下Direct交换机与Fanout交换机的差异？</p>
+<ul>
+<li>Fanout交换机将消息路由给每一个与之绑定的队列</li>
+<li>Direct交换机根据RoutingKey判断路由给哪个队列</li>
+<li>如果多个队列具有相同的RoutingKey，则与Fanout功能类似</li>
+</ul>
+<h2 id="Topic交换机"><a href="#Topic交换机" class="headerlink" title="Topic交换机"></a>Topic交换机</h2><p><code>Topic</code>类型的<code>Exchange</code>与<code>Direct</code>相比，都是可以根据<code>RoutingKey</code>把消息路由到不同的队列。</p>
+<p>只不过<code>Topic</code>类型<code>Exchange</code>可以让队列在绑定<code>BindingKey</code> 的时候使用通配符！</p>
+<p><code>BindingKey</code> 一般都是有一个或多个单词组成，多个单词之间以<code>.</code>分割，例如： &#96;item.insert</p>
+<p>通配符规则：</p>
+<ul>
+<li><code>#</code>：匹配一个或多个词</li>
+<li><code>*</code>：匹配不多不少恰好1个词</li>
+</ul>
+<p>举例：</p>
+<ul>
+<li><code>item.#</code>：能够匹配<code>item.spu.insert</code> 或者 <code>item.spu</code></li>
+<li><code>item.*</code>：只能匹配<code>item.spu</code></li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171538279.png" alt="image-20240311171538279"></p>
+<p>案例：利用SpringAMQP演示DirectExchange的使用</p>
+<p>需求如下：</p>
+<ol>
+<li>在RabbitMQ控制台中，声明队列topic.queue1和topic.queue2</li>
+<li>在RabbitMQ控制台中，声明交换机hmall.topic，将两个队列与其绑定</li>
+<li>在consumer服务中，编写两个消费者方法，分别监听topic.queue1和topic.queue2</li>
+<li>在publisher中编写测试方法，利用不同的RoutingKey向hmall.topic发送消息</li>
+</ol>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171730188.png" alt="image-20240311171730188"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171831142.png" alt="image-20240311171831142"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171816002.png" alt="image-20240311171816002"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311171927499.png" alt="image-20240311171927499"></p>
+<p>在publisher服务的SpringAmqpTest类中添加测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * topicExchange</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendTopicExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 交换机名称</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">exchangeName</span> <span class="operator">=</span> <span class="string">&quot;hmall.topic&quot;</span>;</span><br><span class="line">    <span class="comment">// 消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;喜报！孙悟空大战哥斯拉，胜!&quot;</span>;</span><br><span class="line">    <span class="comment">// 发送消息</span></span><br><span class="line">    rabbitTemplate.convertAndSend(exchangeName, <span class="string">&quot;china.news&quot;</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在consumer服务的SpringRabbitListener中添加方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;topic.queue1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenTopicQueue1</span><span class="params">(String msg)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者1接收到topic.queue1的消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RabbitListener(queues = &quot;topic.queue2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenTopicQueue2</span><span class="params">(String msg)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者2接收到topic.queue2的消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>总结</strong></p>
+<p>描述下Direct交换机与Topic交换机的差异？</p>
+<ul>
+<li>Topic交换机接收的消息RoutingKey必须是多个单词，以 <strong><code>.</code></strong> 分割</li>
+<li>Topic交换机与队列绑定时的bindingKey可以指定通配符</li>
+<li><code>#</code>：代表0个或多个词</li>
+<li><code>*</code>：代表1个词</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311172456801.png" alt="image-20240311172456801"></p>
+<h2 id="声明队列交换机"><a href="#声明队列交换机" class="headerlink" title="声明队列交换机"></a>声明队列交换机</h2><h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><p>SpringAMQP提供了几个类，用来声明队列、交换机及其绑定关系：</p>
+<ul>
+<li>Queue：用于声明队列，可以用工厂类QueueBuilder构建</li>
+<li>Exchange：用于声明交换机。可以用工厂类ExchangeBuilder构建</li>
+<li>Binding：用于声明队列和交换机的绑定关系，可以用工厂类BindingBuilder构建</li>
+</ul>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311204539943.png" alt="image-20240311204539943"></p>
+<p>例如，声明一个Fanout类型的交换机，并且创建队列与其绑定：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311204708193.png" alt="image-20240311204708193"></p>
+<p><strong>FanoutConfiguration类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.consumer.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FanoutConfiguration</span>  &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> FanoutExchange <span class="title function_">fanoutExchange</span><span class="params">()</span>&#123;</span><br><span class="line"><span class="comment">//        Exchange build = ExchangeBuilder.fanoutExchange(&quot;hmall.fanout&quot;).build();</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">FanoutExchange</span>(<span class="string">&quot;hmall.fanout2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">fanoutQueue3</span><span class="params">()</span>&#123;</span><br><span class="line"><span class="comment">//        QueueBuilder.durable(&quot;ff&quot;).build();</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;fanout.queue3&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">fanoutBinding3</span><span class="params">(Queue fanoutQueue3, FanoutExchange fanoutExchange)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(fanoutQueue3).to(fanoutExchange);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">fanoutQueue4</span><span class="params">()</span>&#123;</span><br><span class="line"><span class="comment">//        QueueBuilder.durable(&quot;ff&quot;).build();</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;fanout.queue4&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">fanoutBinding4</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(fanoutQueue4()).to(fanoutExchange());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h3><p><font color="red">快捷键：ctrl + p 提示</font></p>
+<p>SpringAMQP还提供了基于@RabbitListener注解来声明队列和交换机的方式：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311214814819.png" alt="image-20240311214814819"></p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311215948033.png" alt="image-20240311215948033"></p>
+<h2 id="消息转换器"><a href="#消息转换器" class="headerlink" title="消息转换器"></a>消息转换器</h2><p>案例：消息转换器</p>
+<p>需求：测试利用SpringAMQP发送对象类型的消息</p>
+<ol>
+<li>声明一个队列，名为object.queue</li>
+<li>编写单元测试，向队列中一直发送一条消息，消息类型为Map</li>
+<li>在控制台查看消息，总结你能发现的问题</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.consumer.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.Queue;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MessageConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">objectQueue</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;object.queue&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 我们在publisher模块的SpringAmqpTest中新增一个消息发送的代码，发送一个Map对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendMap</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    <span class="comment">// 准备消息</span></span><br><span class="line">    Map&lt;String,Object&gt; msg = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    msg.put(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;柳岩&quot;</span>);</span><br><span class="line">    msg.put(<span class="string">&quot;age&quot;</span>, <span class="number">21</span>);</span><br><span class="line">    <span class="comment">// 发送消息</span></span><br><span class="line">    rabbitTemplate.convertAndSend(<span class="string">&quot;object.queue&quot;</span>, msg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发送消息后查看控制台：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311220425575.png" alt="image-20240311220425575"></p>
+<p>可以看到消息格式非常不友好。</p>
+<h3 id="配置JSON转换器"><a href="#配置JSON转换器" class="headerlink" title="配置JSON转换器"></a>配置JSON转换器</h3><p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311220845085.png" alt="image-20240311220845085"></p>
+<p>显然，JDK序列化方式并不合适。我们希望消息体的体积更小、可读性更高，因此可以使用JSON方式来做序列化和反序列化。</p>
+<p>在<code>publisher</code>和<code>consumer</code>两个服务中都引入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.dataformat<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-dataformat-xml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，如果项目中引入了<code>spring-boot-starter-web</code>依赖，则无需再次引入<code>Jackson</code>依赖。</p>
+<p>配置消息转换器，在<code>publisher</code>和<code>consumer</code>两个服务的启动类中添加一个Bean即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> MessageConverter <span class="title function_">messageConverter</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">// 1.定义消息转换器</span></span><br><span class="line">    <span class="type">Jackson2JsonMessageConverter</span> <span class="variable">jackson2JsonMessageConverter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Jackson2JsonMessageConverter</span>();</span><br><span class="line">    <span class="comment">// 2.配置自动创建消息id，用于识别不同消息，也可以在业务中基于ID判断是否是重复消息</span></span><br><span class="line">    jackson2JsonMessageConverter.setCreateMessageIds(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">return</span> jackson2JsonMessageConverter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>消息转换器中添加的messageId可以便于我们将来做幂等性判断。</p>
+<p>此时，我们到MQ控制台<strong>删除</strong><code>object.queue</code>中的旧的消息。然后再次执行刚才的消息发送的代码，到MQ的控制台查看消息结构：此时，我们到MQ控制台<strong>删除</strong><code>object.queue</code>中的旧的消息。然后再次执行刚才的消息发送的代码，到MQ的控制台查看消息结构：</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311221128894.png" alt="image-20240311221128894"></p>
+<p>我们在consumer服务中定义一个新的消费者，publisher是用Map发送，那么消费者也一定要用Map接收，格式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;object.queue&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenSimpleQueueMessage</span><span class="params">(Map&lt;String, Object&gt; msg)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;消费者接收到object.queue消息：【&quot;</span> + msg + <span class="string">&quot;】&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="业务管理"><a href="#业务管理" class="headerlink" title="业务管理"></a>业务管理</h1><p>案例需求：改造余额支付功能，将支付成功后基于OpenFeign的交易服务的更新订单状态接口的同步调用，改为基于RabbitMQ的异步通知。</p>
+<p><img src="/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/image-20240311223726332.png" alt="image-20240311223726332"></p>
+<p>说明，我们只关注交易服务，步骤如下：</p>
+<ul>
+<li>定义topic类型交换机，命名为<code>pay.topic</code></li>
+<li>定义消息队列，命名为<code>mark.order.pay.queue</code></li>
+<li>将<code>mark.order.pay.queue</code>与<code>pay.topic</code>绑定，<code>BindingKey</code>为<code>pay.success</code></li>
+<li>支付成功时不再调用交易服务更新订单状态的接口，而是发送一条消息到<code>pay.topic</code>，发送消息的<code>RoutingKey</code>  为<code>pay.success</code>，消息内容是订单id</li>
+<li>交易服务监听<code>mark.order.pay.queue</code>队列，接收到消息后更新订单状态为已支付</li>
+</ul>
+<h2 id="4-1-配置MQ"><a href="#4-1-配置MQ" class="headerlink" title="4.1.配置MQ"></a>4.1.配置MQ</h2><p>不管是生产者还是消费者，都需要配置MQ的基本信息。分为两步：</p>
+<p>1）添加依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--消息发送--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2）配置MQ地址：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.226</span><span class="number">.129</span> <span class="comment"># 你的虚拟机IP</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">5672</span> <span class="comment"># 端口</span></span><br><span class="line">    <span class="attr">virtual-host:</span> <span class="string">/hmall</span> <span class="comment"># 虚拟主机</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">hmall</span> <span class="comment"># 用户名</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span> <span class="comment"># 密码</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-1-接收消息"><a href="#4-1-接收消息" class="headerlink" title="4.1.接收消息"></a>4.1.接收消息</h2><p>在trade-service服务中定义一个消息监听类：</p>
+<p><img src="https://b11et3un53m.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDZhZDE2MTAzMjUzMzRmNmM1YzRjYjRjMjhjYzRiY2JfZmJMeUs0MElFdVNhcWhsRlNUWUUyVkNjMDR0WEhsVXRfVG9rZW46UzdSWmJnVUJNb3FyVFp4VVhNaWNLc2YzbjlqXzE3MTAxNjc4OTc6MTcxMDE3MTQ5N19WNA" alt="img"></p>
+<p>其代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.trade.listener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hmall.trade.service.IOrderService;</span><br><span class="line"><span class="keyword">import</span> lombok.RequiredArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.ExchangeTypes;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.annotation.Exchange;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.annotation.Queue;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.annotation.QueueBinding;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.annotation.RabbitListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PayStatusListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> IOrderService orderService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RabbitListener(bindings = @QueueBinding(</span></span><br><span class="line"><span class="meta">            value = @Queue(name = &quot;mark.order.pay.queue&quot;, durable = &quot;true&quot;),</span></span><br><span class="line"><span class="meta">            exchange = @Exchange(name = &quot;pay.topic&quot;, type = ExchangeTypes.TOPIC),</span></span><br><span class="line"><span class="meta">            key = &quot;pay.success&quot;</span></span><br><span class="line"><span class="meta">    ))</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenPaySuccess</span><span class="params">(Long orderId)</span>&#123;</span><br><span class="line">        orderService.markOrderPaySuccess(orderId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-发送消息"><a href="#4-2-发送消息" class="headerlink" title="4.2.发送消息"></a>4.2.发送消息</h2><p>修改<code>pay-service</code>服务下的<code>com.hmall.pay.service.impl.PayOrderServiceImpl</code>类中的<code>tryPayOrderByBalance</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">tryPayOrderByBalance</span><span class="params">(PayOrderDTO payOrderDTO)</span> &#123;</span><br><span class="line">    <span class="comment">// 1.查询支付单</span></span><br><span class="line">    <span class="type">PayOrder</span> <span class="variable">po</span> <span class="operator">=</span> getById(payOrderDTO.getId());</span><br><span class="line">    <span class="comment">// 2.判断状态</span></span><br><span class="line">    <span class="keyword">if</span>(!PayStatus.WAIT_BUYER_PAY.equalsValue(po.getStatus()))&#123;</span><br><span class="line">        <span class="comment">// 订单不是未支付，状态异常</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizIllegalException</span>(<span class="string">&quot;交易已支付或关闭！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 3.尝试扣减余额</span></span><br><span class="line">    userClient.deductMoney(payOrderDTO.getPw(), po.getAmount());</span><br><span class="line">    <span class="comment">// 4.修改支付单状态</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">success</span> <span class="operator">=</span> markPayOrderSuccess(payOrderDTO.getId(), LocalDateTime.now());</span><br><span class="line">    <span class="keyword">if</span> (!success) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizIllegalException</span>(<span class="string">&quot;交易已支付或关闭！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 5.修改订单状态</span></span><br><span class="line">    <span class="comment">// tradeClient.markOrderPaySuccess(po.getBizOrderNo());</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        rabbitTemplate.convertAndSend(<span class="string">&quot;pay.topic&quot;</span>, <span class="string">&quot;pay.success&quot;</span>, po.getBizOrderNo());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        log.error(<span class="string">&quot;支付成功的消息发送失败，支付单id：&#123;&#125;， 交易单id：&#123;&#125;&quot;</span>, po.getId(), po.getBizOrderNo(), e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/10/%E5%86%85%E5%8A%9F-spring-day01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4770,311 +5351,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 导出运营数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">exportBusinessData</span><span class="params">(HttpServletResponse response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="comment">//1. 查询数据库，获取营业数据 -- 查询最近30天的运营数据</span></span><br><span class="line">    <span class="type">LocalDate</span> <span class="variable">dateBegin</span> <span class="operator">=</span> LocalDate.now().minusDays(<span class="number">30</span>);</span><br><span class="line">    <span class="type">LocalDate</span> <span class="variable">dateEnd</span> <span class="operator">=</span> LocalDate.now().minusDays(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">LocalDateTime</span> <span class="variable">beginTime</span> <span class="operator">=</span> LocalDateTime.of(dateBegin, LocalTime.MIN);</span><br><span class="line">    <span class="type">LocalDateTime</span> <span class="variable">endTime</span> <span class="operator">=</span> LocalDateTime.of(dateBegin, LocalTime.MAX);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//查询概览数据</span></span><br><span class="line">    <span class="type">BusinessDataVO</span> <span class="variable">businessData</span> <span class="operator">=</span> workspaceService.getBusinessData(beginTime, endTime);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2. 通过POI将数据写入到Excel文件中</span></span><br><span class="line">    <span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="built_in">this</span>.getClass().getClassLoader().getResourceAsStream(<span class="string">&quot;template/运营数据报表模板&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//基于模板文件创建一个新的excel文件</span></span><br><span class="line">    <span class="type">XSSFWorkbook</span> <span class="variable">excel</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XSSFWorkbook</span>(in);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3. 通过输出流将Excel文件下载至客户端浏览器</span></span><br><span class="line">    <span class="type">XSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> excel.getSheet(<span class="string">&quot;Sheet1&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//填充数据 -- 时间</span></span><br><span class="line">    sheet.getRow(<span class="number">1</span>).getCell(<span class="number">1</span>).setCellValue(<span class="string">&quot;时间：&quot;</span> + dateBegin + <span class="string">&quot;至&quot;</span> + dateEnd);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//填充数据 -- 营业额 | 订单完成率 | 新增用户数</span></span><br><span class="line">    sheet.getRow(<span class="number">3</span>).getCell(<span class="number">2</span>).setCellValue(businessData.getTurnover());</span><br><span class="line">    sheet.getRow(<span class="number">3</span>).getCell(<span class="number">4</span>).setCellValue(businessData.getOrderCompletionRate());</span><br><span class="line">    sheet.getRow(<span class="number">3</span>).getCell(<span class="number">6</span>).setCellValue(businessData.getNewUsers());</span><br><span class="line"></span><br><span class="line">    <span class="comment">//填充数据 -- 有效订单数 | 平均客单价</span></span><br><span class="line">    sheet.getRow(<span class="number">4</span>).getCell(<span class="number">2</span>).setCellValue(businessData.getValidOrderCount());</span><br><span class="line">    sheet.getRow(<span class="number">4</span>).getCell(<span class="number">4</span>).setCellValue(businessData.getUnitPrice());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//填充明细数据</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">30</span>; i++) &#123;</span><br><span class="line">        <span class="type">LocalDate</span> <span class="variable">date</span> <span class="operator">=</span> dateBegin.plusDays(i);</span><br><span class="line">        <span class="comment">//查询某一天的营业数据</span></span><br><span class="line">        <span class="type">BusinessDataVO</span> <span class="variable">businessDataVO</span> <span class="operator">=</span> workspaceService.getBusinessData(LocalDateTime.of(date, LocalTime.MIN), LocalDateTime.of(date, LocalTime.MAX));</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">1</span>).setCellValue(date.toString());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">2</span>).setCellValue(businessDataVO.getTurnover());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">3</span>).setCellValue(businessDataVO.getValidOrderCount());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">4</span>).setCellValue(businessDataVO.getOrderCompletionRate());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">5</span>).setCellValue(businessDataVO.getUnitPrice());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">6</span>).setCellValue(businessDataVO.getNewUsers());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过输出流对象下载数据到客户端浏览器</span></span><br><span class="line">    <span class="type">ServletOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> response.getOutputStream();</span><br><span class="line">    excel.write(out);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//关闭资源</span></span><br><span class="line">    out.close();</span><br><span class="line">    excel.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-
-
-
 <h3 id="功能测试-1"><a href="#功能测试-1" class="headerlink" title="功能测试"></a>功能测试</h3><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304210743824.png" alt="image-20240304210743824"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/" itemprop="url">苍穹外卖-day11-数据统计,图形报表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-04T00:41:48+08:00">
-                2024-03-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/" itemprop="url" rel="index">
-                    <span itemprop="name">苍穹外卖</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.7k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  13
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="数据统计"><a href="#数据统计" class="headerlink" title="数据统计"></a>数据统计</h1><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304011805226.png" alt="image-20240304011805226"></p>
-<h1 id="Apache-ECharts"><a href="#Apache-ECharts" class="headerlink" title="Apache ECharts"></a>Apache ECharts</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Apache ECharts是一款基于Javascript的数据可视化图标，提供直观、生动、可交互，可个性化定制的数据可视化图表。</p>
-<p>官网地址：<a target="_blank" rel="noopener" href="https://echarts.apache.org/zh/index.html">https://echarts.apache.org/zh/index.html</a></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304012202089.png" alt="image-20240304012202089"></p>
-<p>效果展示：</p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304012218649.png" alt="image-20240304012218649"></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304012224570.png" alt="image-20240304012224570"></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304012344585.png" alt="image-20240304012344585"></p>
-<h2 id="入门案例"><a href="#入门案例" class="headerlink" title="入门案例"></a>入门案例</h2><p>Apache Echarts官方提供的快速入门：<a target="_blank" rel="noopener" href="https://echarts.apache.org/handbook/zh/get-started/">https://echarts.apache.org/handbook/zh/get-started/</a></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304012540268.png" alt="image-20240304012540268"></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304013108917.png" alt="image-20240304013108917"></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304014538199.png" alt="image-20240304014538199"></p>
-<p>总结：使用Echarts，重点在于研究当前图表所需的数据格式。通常是需要后端提供符合格式要求的动态数据，然后响应给前端来展示图表。</p>
-<h1 id="营业额统计"><a href="#营业额统计" class="headerlink" title="营业额统计"></a>营业额统计</h1><h2 id="需求分析和设计"><a href="#需求分析和设计" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304014833202.png" alt="image-20240304014833202"></p>
-<p>业务规则：</p>
-<ul>
-<li>营业额指的是订单状态已完成的订单金额总计。</li>
-<li>基于可视化报表的折线图展示营业额数据，x轴为日期，Y轴为营业额</li>
-<li>根据时间选择区间，展示每天的营业额数据</li>
-</ul>
-<p><strong>接口设计</strong>：</p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304112249920.png" alt="image-20240304112249920"></p>
-<h2 id="需求分析和设计-1"><a href="#需求分析和设计-1" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p>根据接口定义设计对应的VO：</p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304112754173.png" alt="image-20240304112754173"></p>
-<h2 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>ReportController</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.admin;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数据统计相关接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/admin/report&quot;)</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;数据统计相关接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ReportController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ReportService reportService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 营业额统计</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/turnoverStatistics&quot;)</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;营业额统计&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;TurnoverReportVO&gt; <span class="title function_">turnoverStatistics</span><span class="params">(</span></span><br><span class="line"><span class="params">        <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span> LocalDate begin,</span></span><br><span class="line"><span class="params">        <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span> LocalDate end)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;营业额数据统计：&#123;&#125;，&#123;&#125;&quot;</span>,begin,end);</span><br><span class="line">        <span class="type">TurnoverReportVO</span>  <span class="variable">turnoverReportVO</span> <span class="operator">=</span> reportService.getTurnoverStatistics(begin,end);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(turnoverReportVO);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportService</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.vo.TurnoverReportVO;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ReportService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计指定时间区间内的营业额数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    TurnoverReportVO <span class="title function_">getTurnoverStatistics</span><span class="params">(LocalDate begin, LocalDate end)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportServiceImpl</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ReportServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">ReportService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> OrderMapper orderMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计指定时间区间内的营业额数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> TurnoverReportVO <span class="title function_">getTurnoverStatistics</span><span class="params">(LocalDate begin, LocalDate end)</span> &#123;</span><br><span class="line">        <span class="comment">//当前集合用于存放从begin到end范围内的每天的日期</span></span><br><span class="line">        List&lt;LocalDate&gt; dateList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        dateList.add(begin);</span><br><span class="line"></span><br><span class="line"><span class="comment">//        在Java中，对于日期对象（如LocalDate、LocalDateTime等），当你将它添加到列表（如dateList）时，实际上添加的是一个引用到该日期对象的引用。但是，值得注意的是，LocalDate和LocalDateTime这样的日期时间类是不可变的。这意味着，一旦一个LocalDate实例被创建，它的值就不能改变。如果你调用它的plusDays方法（或其他任何修改日期时间的方法），它会返回一个新的LocalDate实例，而原始的实例保持不变。</span></span><br><span class="line"><span class="comment">//        因此，在你的代码片段中，每次循环时调用begin.plusDays(1)会创建一个新的LocalDate对象，并且更新begin变量引用这个新的对象。然后，你将这个新的对象添加到dateList中。所以，尽管begin变量本身是一个引用变量，但由于LocalDate的不可变性，你实际上每次都在向列表中添加一个新的、不同的LocalDate对象。</span></span><br><span class="line">        <span class="keyword">while</span> (!begin.equals(end)) &#123;</span><br><span class="line">            <span class="comment">//日期计算，计算指定日期的后一天对应的日期</span></span><br><span class="line">            begin = begin.plusDays(<span class="number">1</span>);</span><br><span class="line">            dateList.add(begin);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        List&lt;Double&gt; turnoverList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (LocalDate date : dateList) &#123;</span><br><span class="line">            <span class="comment">//查询date日期对应的营业额数据，营业额是指：状态为“已完成”的订单金额合计</span></span><br><span class="line">            <span class="type">LocalDateTime</span> <span class="variable">beginTime</span> <span class="operator">=</span> LocalDateTime.of(date, LocalTime.MIN);</span><br><span class="line">            <span class="type">LocalDateTime</span> <span class="variable">endTime</span> <span class="operator">=</span> LocalDateTime.of(date, LocalTime.MAX);</span><br><span class="line"></span><br><span class="line">            <span class="type">Map</span> <span class="variable">map</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">            map.put(<span class="string">&quot;begin&quot;</span>,beginTime);</span><br><span class="line">            map.put(<span class="string">&quot;end&quot;</span>,endTime);</span><br><span class="line">            map.put(<span class="string">&quot;status&quot;</span>, Orders.COMPLETED);</span><br><span class="line">            <span class="type">Double</span> <span class="variable">turnover</span> <span class="operator">=</span> orderMapper.sumByMap(map);</span><br><span class="line">            turnover = turnover == <span class="literal">null</span> ? <span class="number">0.0</span> : turnover;</span><br><span class="line">            turnoverList.add(turnover);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//封装返回结果</span></span><br><span class="line">        <span class="keyword">return</span> TurnoverReportVO</span><br><span class="line">            .builder()</span><br><span class="line">            .dateList(StringUtils.join(dateList, <span class="string">&#x27;,&#x27;</span>)) <span class="comment">//list中每个元素取出来，转化为字符串</span></span><br><span class="line">            .turnoverList(StringUtils.join(turnoverList, <span class="string">&#x27;,&#x27;</span>))</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>orderMapper</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据动态条件来统计营业额数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> map</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">Double <span class="title function_">sumByMap</span><span class="params">(Map map)</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>orderMapper.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;sumByMap&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;java.lang.Double&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.Map&quot;</span>&gt;</span></span><br><span class="line">    select sum(amount) from orders</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;begin != null&quot;</span>&gt;</span>and order_time <span class="symbol">&amp;gt;</span> #&#123;begin&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;end != null&quot;</span>&gt;</span>and order_time <span class="symbol">&amp;lt;</span> #&#123;end&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;status != null&quot;</span>&gt;</span>and status = #&#123;status&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304130559620.png" alt="image-20240304130559620"></p>
-<h1 id="用户统计"><a href="#用户统计" class="headerlink" title="用户统计"></a>用户统计</h1><h2 id="需求分析和设计-2"><a href="#需求分析和设计-2" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304130744657.png" alt="image-20240304130744657"></p>
-<p>业务规则：</p>
-<ul>
-<li>基于可视化报表的折线图来展示用户数据，x轴为日期，Y轴为用户数</li>
-<li>根据时间选择区间，展示每天的用户总量和新增用户量数据</li>
-</ul>
-<p><strong>接口设计</strong></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304133851944.png" alt="image-20240304133851944"></p>
-<h2 id="代码开发-1"><a href="#代码开发-1" class="headerlink" title="代码开发"></a>代码开发</h2><p><strong>ReportController</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用户统计</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/userStatistics&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;用户统计&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;UserReportVO&gt; <span class="title function_">userStatistics</span><span class="params">(</span></span><br><span class="line"><span class="params">    <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span> LocalDate begin,</span></span><br><span class="line"><span class="params">    <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span> LocalDate end)</span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;用户数据统计：&#123;&#125;&quot;</span>,begin,end);</span><br><span class="line">    <span class="type">UserReportVO</span> <span class="variable">userReportVO</span> <span class="operator">=</span> reportService.getUserStatistics(begin,end);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Result.success(userReportVO);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportService</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计指定时间区间内的用户数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">UserReportVO <span class="title function_">getUserStatistics</span><span class="params">(LocalDate begin, LocalDate end)</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportServiceImpl</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计指定时间区间内的用户数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> UserReportVO <span class="title function_">getUserStatistics</span><span class="params">(LocalDate begin, LocalDate end)</span> &#123;</span><br><span class="line">    <span class="comment">//存放在begin和end之间的每天对应的日期</span></span><br><span class="line">    List&lt;LocalDate&gt; dateList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    dateList.add(begin);</span><br><span class="line">    <span class="keyword">while</span> (!begin.equals(end)) &#123;</span><br><span class="line">        <span class="comment">//日期计算，计算指定日期的后一天对应的日期</span></span><br><span class="line">        begin = begin.plusDays(<span class="number">1</span>);</span><br><span class="line">        dateList.add(begin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//存放每天的新增用户数量</span></span><br><span class="line">    <span class="comment">//select count(id) from user where create_time &lt; ? and create_time &gt; ?</span></span><br><span class="line">    List&lt;Integer&gt; newUserList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="comment">//存放每天的总用户数量</span></span><br><span class="line">    <span class="comment">//select count(id) from user where create_time &lt; ?</span></span><br><span class="line">    List&lt;Integer&gt; totalUserList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (LocalDate date : dateList) &#123;</span><br><span class="line">        <span class="comment">//查询date日期对应的营业额数据，营业额是指：状态为“已完成”的订单金额合计</span></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">beginTime</span> <span class="operator">=</span> LocalDateTime.of(date, LocalTime.MIN);</span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">endTime</span> <span class="operator">=</span> LocalDateTime.of(date, LocalTime.MAX);</span><br><span class="line"></span><br><span class="line">        <span class="type">Map</span> <span class="variable">map</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        map.put(<span class="string">&quot;end&quot;</span>,endTime);</span><br><span class="line"></span><br><span class="line">        <span class="type">Integer</span> <span class="variable">totalUser</span> <span class="operator">=</span> userMapper.countByMap(map);</span><br><span class="line">        totalUserList.add(totalUser);</span><br><span class="line"></span><br><span class="line">        map.put(<span class="string">&quot;begin&quot;</span>,beginTime);</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">newUser</span> <span class="operator">=</span> userMapper.countByMap(map);</span><br><span class="line">        newUserList.add(newUser);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> UserReportVO.builder()</span><br><span class="line">        .dateList(StringUtils.join(dateList, <span class="string">&#x27;,&#x27;</span>))</span><br><span class="line">        .newUserList(StringUtils.join(newUserList, <span class="string">&#x27;,&#x27;</span>))</span><br><span class="line">        .totalUserList(StringUtils.join(totalUserList, <span class="string">&#x27;,&#x27;</span>))</span><br><span class="line">        .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>UserMapper</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据动态条件统计用户数量</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> map</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">Integer <span class="title function_">countByMap</span><span class="params">(Map map)</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>UserMapper.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;countByMap&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;java.lang.Integer&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.Map&quot;</span>&gt;</span></span><br><span class="line">    select count(id) from user</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;begin != null&quot;</span>&gt;</span></span><br><span class="line">            and create_time <span class="symbol">&amp;gt;</span> #&#123;begin&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;end != null&quot;</span>&gt;</span></span><br><span class="line">            and create_time <span class="symbol">&amp;lt;</span> #&#123;end&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="功能测试-1"><a href="#功能测试-1" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304143222436.png" alt="image-20240304143222436"></p>
-<h1 id="订单统计"><a href="#订单统计" class="headerlink" title="订单统计"></a>订单统计</h1><h2 id="需求分析和设计-3"><a href="#需求分析和设计-3" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304143650130.png" alt="image-20240304143650130"></p>
-<p>业务规则：</p>
-<ul>
-<li>有效订单指的是状态为“已完成”的订单</li>
-<li>基于可视化报表的折线图展示订单数据，x轴为日期，Y轴为订单数量</li>
-<li>根据时间选择区间，展示每天的订单总数和有效订单数</li>
-<li>展示所选时间区间内的有效订单数、总订单数、订单完成率 &#x3D; 有效订单数 &#x2F;总订单数 * 100 %</li>
-</ul>
-<p><strong>接口设计</strong>：</p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304144203906.png" alt="image-20240304144203906"></p>
-<h2 id="代码开发-2"><a href="#代码开发-2" class="headerlink" title="代码开发"></a>代码开发</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304144517287.png" alt="image-20240304144517287"></p>
-<p><strong>ReportController</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计指定时间区间内的订单数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/odersStatistics&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;订单统计&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;OrderReportVO&gt; <span class="title function_">orderStatistics</span><span class="params">(</span></span><br><span class="line"><span class="params">    <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span> LocalDate begin,</span></span><br><span class="line"><span class="params">    <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span> LocalDate end)</span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;订单数据统计：&#123;&#125;,&#123;&#125;&quot;</span>,begin,end);</span><br><span class="line">    <span class="type">OrderReportVO</span> <span class="variable">orderReportVO</span> <span class="operator">=</span> reportService.getOrderStatistics(begin,end);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Result.success(orderReportVO);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportServiceImpl</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 统计指定时间区间内的订单数据</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> OrderReportVO <span class="title function_">getOrderStatistics</span><span class="params">(LocalDate begin, LocalDate end)</span> &#123;</span><br><span class="line">    <span class="comment">//存放在begin和end之间的每天对应的日期</span></span><br><span class="line">    List&lt;LocalDate&gt; dateList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    dateList.add(begin);</span><br><span class="line">    <span class="keyword">while</span> (!begin.equals(end)) &#123;</span><br><span class="line">        <span class="comment">//日期计算，计算指定日期的后一天对应的日期</span></span><br><span class="line">        begin = begin.plusDays(<span class="number">1</span>);</span><br><span class="line">        dateList.add(begin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    List&lt;Integer&gt; orderCountList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; validOrderCountList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历dateList集合,查询每天的有效订单数和订单总数</span></span><br><span class="line">    <span class="keyword">for</span> (LocalDate date : dateList) &#123;</span><br><span class="line">        <span class="comment">//查询date日期对应的营业额数据，营业额是指：状态为“已完成”的订单金额合计</span></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">beginTime</span> <span class="operator">=</span> LocalDateTime.of(date, LocalTime.MIN);</span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">endTime</span> <span class="operator">=</span> LocalDateTime.of(date, LocalTime.MAX);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//查询每天的订单总数 select count(id) from orders where order_time &gt; ? and order_time &lt; ?</span></span><br><span class="line">        <span class="type">Integer</span> <span class="variable">orderCount</span> <span class="operator">=</span> getOrderCount(beginTime, endTime, <span class="literal">null</span>);</span><br><span class="line">        orderCountList.add(orderCount);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//查询每天的有效订单数 select count(id) from orders where order_time &gt; ? and order_time &lt; ? and status = ?</span></span><br><span class="line">        <span class="type">Integer</span> <span class="variable">validOrderCount</span> <span class="operator">=</span> getOrderCount(beginTime, endTime, Orders.COMPLETED);</span><br><span class="line">        validOrderCountList.add(validOrderCount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算时间区间内的订单总数量</span></span><br><span class="line">    <span class="type">Integer</span> <span class="variable">totalOrderCount</span> <span class="operator">=</span> orderCountList.stream().reduce(Integer::sum).get();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算时间区间内的有效订单数量</span></span><br><span class="line">    <span class="type">Integer</span> <span class="variable">validOrderCount</span> <span class="operator">=</span> validOrderCountList.stream().reduce(Integer::sum).get();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算订单完成率</span></span><br><span class="line">    <span class="type">Double</span> <span class="variable">orderCompletionRate</span> <span class="operator">=</span> <span class="number">0.0</span>;</span><br><span class="line">    <span class="keyword">if</span> (totalOrderCount != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//计算订单完成率</span></span><br><span class="line">        orderCompletionRate = validOrderCount.doubleValue() / totalOrderCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">OrderReportVO</span> <span class="variable">orderReportVO</span> <span class="operator">=</span> OrderReportVO.builder()</span><br><span class="line">        .dateList(StringUtils.join(dateList, <span class="string">&#x27;,&#x27;</span>))</span><br><span class="line">        .orderCountList(StringUtils.join(orderCountList, <span class="string">&#x27;,&#x27;</span>))</span><br><span class="line">        .validOrderCountList(StringUtils.join(validOrderCountList, <span class="string">&#x27;,&#x27;</span>))</span><br><span class="line">        .totalOrderCount(totalOrderCount)</span><br><span class="line">        .validOrderCount(validOrderCount)</span><br><span class="line">        .orderCompletionRate(orderCompletionRate)</span><br><span class="line">        .build();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> orderReportVO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据条件统计订单数量</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> status</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> Integer <span class="title function_">getOrderCount</span><span class="params">(LocalDateTime begin, LocalDateTime end, Integer status)</span> &#123;</span><br><span class="line">    <span class="type">Map</span> <span class="variable">map</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">    map.put(<span class="string">&quot;begin&quot;</span>, begin);</span><br><span class="line">    map.put(<span class="string">&quot;end&quot;</span>, end);</span><br><span class="line">    map.put(<span class="string">&quot;status&quot;</span>, status);</span><br><span class="line"></span><br><span class="line">    <span class="type">Integer</span> <span class="variable">integer</span> <span class="operator">=</span> orderMapper.countByMap(map);</span><br><span class="line">    <span class="keyword">return</span> integer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportService</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 统计指定时间区间内的订单数据</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">OrderReportVO <span class="title function_">getOrderStatistics</span><span class="params">(LocalDate begin, LocalDate end)</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>OrderMapper</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据动态条件统计订单数量</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> map</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">Integer <span class="title function_">countByMap</span><span class="params">(Map map)</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>OrderMapper.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;countByMap&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;java.lang.Integer&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.Map&quot;</span>&gt;</span></span><br><span class="line">    select count(id) from orders</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;begin != null&quot;</span>&gt;</span>and order_time <span class="symbol">&amp;gt;</span> #&#123;begin&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;end != null&quot;</span>&gt;</span>and order_time <span class="symbol">&amp;lt;</span> #&#123;end&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;status != null&quot;</span>&gt;</span>and status = #&#123;status&#125;<span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="功能测试-2"><a href="#功能测试-2" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304152249706.png" alt="image-20240304152249706"></p>
-<h1 id="销量排名Top10"><a href="#销量排名Top10" class="headerlink" title="销量排名Top10"></a>销量排名Top10</h1><h2 id="需求分析和设计-4"><a href="#需求分析和设计-4" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304153058597.png" alt="image-20240304153058597"></p>
-<p><strong>业务规则：</strong></p>
-<ul>
-<li>根据时间选择区间，展示销量前10的商品（包括菜品和套餐）</li>
-<li>基于可视化报表的柱状图降序展示商品销量</li>
-<li>此处的销量为商品销售的份数</li>
-</ul>
-<p><strong>接口设计：</strong></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304154130097.png" alt="image-20240304154130097"></p>
-<p><strong>根据销量排名接口的返回结果设计VO：</strong></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304154259462.png" alt="image-20240304154259462"></p>
-<h2 id="代码开发-3"><a href="#代码开发-3" class="headerlink" title="代码开发"></a>代码开发</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计菜品和套餐的TOP10销售数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/top10&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;销量TOP10&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;SalesTop10ReportVO&gt; <span class="title function_">top10</span><span class="params">(</span></span><br><span class="line"><span class="params">    <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span> LocalDate begin,</span></span><br><span class="line"><span class="params">    <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span> LocalDate end)</span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;销量排名top10：&#123;&#125;,&#123;&#125;&quot;</span>,begin,end);</span><br><span class="line"></span><br><span class="line">    <span class="type">SalesTop10ReportVO</span> <span class="variable">salesTop10ReportVO</span> <span class="operator">=</span>  reportService.getSalesTop10(begin,end);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Result.success(salesTop10ReportVO);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportService</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计指定时间区间内的销量排名top10</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">SalesTop10ReportVO <span class="title function_">getSalesTop10</span><span class="params">(LocalDate begin, LocalDate end)</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportServiceImpl</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计指定时间区间内的销量排名top10</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> SalesTop10ReportVO <span class="title function_">getSalesTop10</span><span class="params">(LocalDate begin, LocalDate end)</span> &#123;</span><br><span class="line">    <span class="type">LocalDateTime</span> <span class="variable">beginTime</span> <span class="operator">=</span> LocalDateTime.of(begin, LocalTime.MIN);</span><br><span class="line">    <span class="type">LocalDateTime</span> <span class="variable">endTime</span> <span class="operator">=</span> LocalDateTime.of(end, LocalTime.MAX);</span><br><span class="line"></span><br><span class="line">    List&lt;GoodsSalesDTO&gt; salesTop = orderMapper.getSalesTop(beginTime, endTime);</span><br><span class="line"></span><br><span class="line">    List&lt;String&gt; names = salesTop.stream().map(GoodsSalesDTO::getName).collect(Collectors.toList());</span><br><span class="line">    <span class="type">String</span> <span class="variable">nameList</span> <span class="operator">=</span> StringUtils.join(names, <span class="string">&quot;,&quot;</span>);</span><br><span class="line"></span><br><span class="line">    List&lt;Integer&gt; numbers = salesTop.stream().map(GoodsSalesDTO::getNumber).collect(Collectors.toList());</span><br><span class="line">    <span class="type">String</span> <span class="variable">numberList</span> <span class="operator">=</span> StringUtils.join(numbers, <span class="string">&quot;,&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> SalesTop10ReportVO.builder()</span><br><span class="line">        .nameList(nameList)</span><br><span class="line">        .numberList(numberList)</span><br><span class="line">        .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>OrderMapper</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 统计指定时间区间内的销量排名前10</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">List&lt;GoodsSalesDTO&gt; <span class="title function_">getSalesTop</span><span class="params">(LocalDateTime begin,LocalDateTime end)</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>OrderMapper.xml</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">&quot;getSalesTop&quot;</span> resultType=<span class="string">&quot;com.sky.dto.GoodsSalesDTO&quot;</span>&gt;</span><br><span class="line">    select od.name, sum(od.number) as number</span><br><span class="line">    from sky_take_out.order_detail od,</span><br><span class="line">sky_take_out.orders o</span><br><span class="line">    &lt;where&gt;</span><br><span class="line">    od.order_id = o.id</span><br><span class="line">    and o.status = <span class="number">5</span></span><br><span class="line">    &lt;<span class="keyword">if</span> test=<span class="string">&quot;begin!= null&quot;</span>&gt;and o.order_time &amp;gt; #&#123;begin&#125;&lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">        &lt;<span class="keyword">if</span> test=<span class="string">&quot;end != null&quot;</span>&gt;and o.order_time &amp;lt; #&#123;end&#125;&lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">            &lt;/where&gt;</span><br><span class="line">            group by od.name</span><br><span class="line">            order by number desc</span><br><span class="line">            limit <span class="number">0</span>,<span class="number">10</span>;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="功能测试-3"><a href="#功能测试-3" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day11-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1-%E5%9B%BE%E5%BD%A2%E6%8A%A5%E8%A1%A8/image-20240304162246940.png" alt="image-20240304162246940"></p>
 
           
         
@@ -5167,7 +5444,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5236,7 +5513,11 @@
 				  
 				  
 					<li class="recent_posts_li">
-					  <a href="/2024/03/22/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day07-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0-xxl-job/" title="学成在线-day07-断点续传 xxl-job" target="_blank">学成在线-day07-断点续传 xxl-job</a>
+					  <a href="/2024/03/24/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day09-%E8%AF%BE%E7%A8%8B%E5%8F%91%E5%B8%83/" title="学成在线-day09-课程发布" target="_blank">学成在线-day09-课程发布</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/22/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day07-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0-xxl-job/" title="学成在线-day07-断点续传 xxl-job + 学成在线-day08-视频处理-技术方案" target="_blank">学成在线-day07-断点续传 xxl-job + 学成在线-day08-视频处理-技术方案</a>
 					</li>
 				  
 					<li class="recent_posts_li">
@@ -5249,10 +5530,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/03/19/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day04-JSR303%E6%A0%A1%E9%AA%8C/" title="学成在线-day04-JSR303校验" target="_blank">学成在线-day04-JSR303校验</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/17/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day03-%E8%AF%BE%E7%A8%8B%E6%9F%A5%E8%AF%A2%E3%80%81%E6%96%B0%E5%A2%9E%E8%AF%BE%E7%A8%8B%E3%80%81%E5%89%8D%E5%90%8E%E7%AB%AF%E8%81%94%E8%B0%83/" title="学成在线-day03-课程查询、新增课程、前后端联调" target="_blank">学成在线-day03-课程查询、新增课程、前后端联调</a>
 					</li>
 				  
 				</ul>
@@ -5299,7 +5576,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">207.8k</span>
+    <span title="Site words total count">226.3k</span>
   
 </div>
 
