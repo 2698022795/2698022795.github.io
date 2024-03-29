@@ -297,6 +297,378 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/" itemprop="url">微服务-day06-rabbitMQ</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-11T23:04:28+08:00">
+                2024-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="消息可靠性问题"><a href="#消息可靠性问题" class="headerlink" title="消息可靠性问题"></a>消息可靠性问题</h1><ol>
+<li>消费者和MQ通信异常</li>
+<li>MQ出现bug挂了</li>
+<li>交易服务挂了，订单状态更新失败</li>
+</ol>
+<h1 id="发送者的可靠性"><a href="#发送者的可靠性" class="headerlink" title="发送者的可靠性"></a>发送者的可靠性</h1><h2 id="生产者重连"><a href="#生产者重连" class="headerlink" title="生产者重连"></a>生产者重连</h2><p>有的时候由于网络波动，可能会出现客户端连接MQ失败的情况。通过配置我们可以开启连接失败后的重连机制：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">connection-timeout:</span> <span class="string">1s</span> <span class="comment"># 设置MQ的连接超时时间</span></span><br><span class="line">    <span class="attr">template:</span></span><br><span class="line">      <span class="attr">retry:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 开启超时重试机制</span></span><br><span class="line">        <span class="attr">initial-interval:</span> <span class="string">1000ms</span> <span class="comment"># 失败后的初始等待时间</span></span><br><span class="line">        <span class="attr">multiplier:</span> <span class="number">1</span> <span class="comment"># 失败后下次的等待时长倍数，下次等待时长 = initial-interval * multiplier</span></span><br><span class="line">        <span class="attr">max-attempts:</span> <span class="number">3</span> <span class="comment"># 最大重试次数</span></span><br></pre></td></tr></table></figure>
+
+<p>注意<br>        当网络不稳定的时候，利用重试机制可以有效提高消息发送的成功率。不过SpringAMQP提供的重试机制是<strong>阻塞式</strong>的重试，也就是说多次重试等待的过程中，当前线程是被阻塞的，会影响业务性能。<br>        如果对于业务性能有要求，建议<strong>禁用</strong>重试机制。如果一定要使用，请合理配置等待时长和重试次数，当然也可以考虑使用<strong>异步</strong>线程来执行发送消息的代码。</p>
+<h2 id="生产者确认"><a href="#生产者确认" class="headerlink" title="生产者确认"></a>生产者确认</h2><p>RabbitMQ有Publisher Confirm和Publisher Return两种机制。开启确认机制后，在MQ成功收到消息后会返回确认消息给生产者。返回的结果有以下几种情况：</p>
+<ul>
+<li>消息投递到了MQ，但是路由失败。此时会通过PublisherReturn返回路由异常原因，然后返回ACK，告知投递成功。</li>
+<li>临时消息投递到了MQ，并且入队成功，返回ACK，告知投递成功</li>
+<li>持久消息投递到了MQ，并且入队完成持久化，返回ACK，告知投递成功</li>
+<li>其他情况都会返回NACK，告知投递失败</li>
+</ul>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312131407485.png" alt="image-20240312131407485"></p>
+<p>实现步骤</p>
+<ol>
+<li><p>在publisher这个微服务的application.yaml中添加配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">publisher-confirm-type:</span> <span class="string">correlated</span> <span class="comment"># 开启publisher confirm机制，并设置confirm类型</span></span><br><span class="line">    <span class="attr">publisher-returns:</span> <span class="literal">true</span> <span class="comment"># 开启publisher return机制</span></span><br></pre></td></tr></table></figure>
+
+<p>这里<code>publisher-confirm-type</code>有三种模式可选：</p>
+<ul>
+<li><code>none</code>：关闭confirm机制</li>
+<li><code>simple</code>：同步阻塞等待MQ的回执</li>
+<li><code>correlated</code>：MQ异步回调返回回执</li>
+</ul>
+<p>一般我们推荐使用<code>correlated</code>，回调机制。</p>
+</li>
+<li><p>每个 rabbitTemplate 只能配置一个ReturnCallback，因此需要在项目启动过程中配置。</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312131919068.png" alt="image-20240312131919068"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.publisher.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.ReturnedMessage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.core.RabbitTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.PostConstruct;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MqConfig</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span>&#123;</span><br><span class="line">        rabbitTemplate.setReturnsCallback(<span class="keyword">new</span> <span class="title class_">RabbitTemplate</span>.ReturnsCallback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">returnedMessage</span><span class="params">(ReturnedMessage returned)</span> &#123;</span><br><span class="line">                log.error(<span class="string">&quot;触发return callback,&quot;</span>);</span><br><span class="line">                log.debug(<span class="string">&quot;exchange: &#123;&#125;&quot;</span>, returned.getExchange());</span><br><span class="line">                log.debug(<span class="string">&quot;routingKey: &#123;&#125;&quot;</span>, returned.getRoutingKey());</span><br><span class="line">                log.debug(<span class="string">&quot;message: &#123;&#125;&quot;</span>, returned.getMessage());</span><br><span class="line">                log.debug(<span class="string">&quot;replyCode: &#123;&#125;&quot;</span>, returned.getReplyCode());</span><br><span class="line">                log.debug(<span class="string">&quot;replyText: &#123;&#125;&quot;</span>, returned.getReplyText());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送消息，指定消息ID，消息ConfirmCallback</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312132058059.png" alt="image-20240312132058059"></p>
+</li>
+</ol>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312134209676.png" alt="image-20240312134209676"></p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312134309448.png" alt="image-20240312134309448"></p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312134352110.png" alt="image-20240312134352110"></p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312134609434.png" alt="image-20240312134609434"></p>
+<h1 id="MQ的可靠性"><a href="#MQ的可靠性" class="headerlink" title="MQ的可靠性"></a>MQ的可靠性</h1><p>在默认情况下，RabbitMQ会将接收到的消息保存到内存中以降低消息收发的延迟。这样会导致两个问题：</p>
+<ul>
+<li>一旦MQ宕机，内存中的消息会丢失</li>
+<li>内存空间有限，当消费者故障或者处理过慢时，会导致消息积压，引发MQ阻塞</li>
+</ul>
+<h2 id="数据持久化"><a href="#数据持久化" class="headerlink" title="数据持久化"></a>数据持久化</h2><p>MQ早期，3.6版本之前的技术。</p>
+<p>RabbitMQ实现数据持久化包括三个方面：</p>
+<ul>
+<li><p>交换机持久化</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312140018619.png" alt="image-20240312140018619"></p>
+</li>
+<li><p>队列持久化</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312140131208.png" alt="image-20240312140131208"></p>
+</li>
+<li><p>消息持久化</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312140220907.png" alt="image-20240312140220907"></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testPageOut</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">Message</span> <span class="variable">msg</span> <span class="operator">=</span> MessageBuilder</span><br><span class="line">        .withBody(<span class="string">&quot;hello&quot;</span>.getBytes(StandardCharsets.UTF_8))</span><br><span class="line">        .setDeliveryMode(MessageDeliveryMode.PERSISTENT).build();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++) &#123;</span><br><span class="line">        rabbitTemplate.convertAndSend(<span class="string">&quot;simple.queue&quot;</span>,msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Lazy-Queue"><a href="#Lazy-Queue" class="headerlink" title="Lazy Queue"></a>Lazy Queue</h2><p>3.6版本之后的技术。也就是惰性队列。</p>
+<p>惰性队列的特征如下：</p>
+<ul>
+<li>接收到消息后直接存入磁盘而非内存（内存只保留最近的消息，默认2048条）</li>
+<li>消费者要消费消息时才会从磁盘中读取并加载到内存</li>
+<li>支持数百万条的消息存储</li>
+</ul>
+<p>在3.12版本后，所有队列都是Lazy Queue模式，无法更改。</p>
+<p>要设置一个队列为惰性队列，只需要在声明队列时，指定x-queue-mode属性为lazy即可。</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312142539723.png" alt="image-20240312142539723"></p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312142856713.png" alt="image-20240312142856713"></p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312143302816.png" alt="image-20240312143302816"></p>
+<h1 id="消费者的可靠性"><a href="#消费者的可靠性" class="headerlink" title="消费者的可靠性"></a>消费者的可靠性</h1><h2 id="消费者确认机制"><a href="#消费者确认机制" class="headerlink" title="消费者确认机制"></a>消费者确认机制</h2><p>为了确认消费者是否成功处理消息，RabbitMQ提供了消费者确认机制（Consumer Acknowledgement）。当消费者处理消息结束后，应该向RabbitMQ发送一个回执，告知Rabbit MQ自己的消息处理状态。回执有三种可选值：</p>
+<ul>
+<li><strong>ack</strong>：成功处理消息，RabbitMQ从队列中删除该消息</li>
+<li><strong>nack</strong>：消息处理失败，RabbitMQ需要再次投递消息</li>
+<li><strong>reject</strong>：消息处理失败并拒绝该消息，RabbitMQ从队列中删除该消息</li>
+</ul>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312143714470.png" alt="image-20240312143714470"></p>
+<p>SPringAMQP已经实现了消息确认功能，并允许我们通过配置文件选择ACK处理方式，有三种方式：</p>
+<ul>
+<li>None：不处理。即消息投递给消费者后立刻ack，消息会立刻从MQ删除。非常不安全，不建议使用</li>
+<li>manual：手动模式。需要自己在业务代码中调用api，发送ack或reject，存在业务入侵，但更灵活</li>
+<li>auto：自动模式。SpringAMQP利用AOP对我们的消息处理逻辑做了环绕增强，当业务正常执行时则自动返回ack。<ul>
+<li>当业务出现异常时，根据异常判断返回不同结果：<ul>
+<li>如果是业务异常，会自动返回nack</li>
+<li>如果是消息处理或检验异常，自动返回reject</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312144237321.png" alt="image-20240312144237321"></p>
+<h2 id="消费失败处理"><a href="#消费失败处理" class="headerlink" title="消费失败处理"></a>消费失败处理</h2><p>当消费者出现异常后，消息会不断requeue（重新入队）到队列，再重新发送给消费者，然后再次异常，再次requeue，无限循环，导致mq的消息处理飙升，带来不必要的压力。</p>
+<p>我们可以利用Spring的retry机制，在消费者出现异常时利用本地重试，而不是无限制的requeue到mq队列：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312145619539.png" alt="image-20240312145619539"></p>
+<p>在开启重试模式后，重试次数耗尽，如果消息依旧失败，则需要有MessageRevocerer接口来处理，它包含三种不同的实现：</p>
+<ul>
+<li>RejectAndDontRequeueRecover：重试耗尽后， 直接reject，丢弃消息。默认就是这种方式</li>
+<li>ImmediateRequeueMessageRecoverer：重试耗尽后，返回nack，消息重新入队</li>
+<li>RepublishMessageRecover：重试耗尽后，将失败消息投递到指定的交换机</li>
+</ul>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312150404991.png" alt="image-20240312150404991"></p>
+<p>将失败处理策略改为RepublishMessageRecover</p>
+<ol>
+<li>首先，定义接收失败消息的交换机、队列及其绑定关系，此处略：</li>
+<li>然后，定义RepublishMessageRecover</li>
+</ol>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312150559772.png" alt="image-20240312150559772"></p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312151818893.png" alt="image-20240312151818893"></p>
+<h2 id="业务幂等性"><a href="#业务幂等性" class="headerlink" title="业务幂等性"></a>业务幂等性</h2><p>幂等是一个数学概念，用函数表达式来描述是这样的：f(x) &#x3D; f(f(x))。在程序开发中，则是指同一个业务，执行一次或多次对业务状态的影响是一致的。</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312152640581.png" alt="image-20240312152640581"></p>
+<p>唯一消息id</p>
+<p>方案一，给每个消息都设置一个唯一id，利用id区分是否是重复消息</p>
+<ol>
+<li>每一条消息都生成一个唯一的id，与消息一起投递给消费者。</li>
+<li>消费者接收到消息后处理自己的业务，业务处理完成后将消息ID保存到数据库</li>
+<li>如果下次又收到相同消息，去数据库查询判断是否存在，存在则为重复消息放弃处理。</li>
+</ol>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312153407046.png" alt="image-20240312153407046"></p>
+<p>方案二，是结合业务逻辑，基于业务本身做判断。以我们的业务为例：我们要在支付后修改订单状态为已支付，应该在修改订单状态前先查询订单状态，判断状态是否是未支付。只有未支付订单才需要修改，其他状态不做处理：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312154523630.png" alt="image-20240312154523630"></p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312155700448.png" alt="image-20240312155700448"></p>
+<h1 id="延迟消息"><a href="#延迟消息" class="headerlink" title="延迟消息"></a>延迟消息</h1><p><strong>延迟消息</strong>：生产者发送消息时指定一个时间，消费者不会立刻收到消息，而是在指定时间之后才收到消息。</p>
+<p><strong>延迟任务</strong>：设置在一定时间后才执行的任务。</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312161312805.png" alt="image-20240312161312805"></p>
+<h2 id="死信交换机"><a href="#死信交换机" class="headerlink" title="死信交换机"></a>死信交换机</h2><p>当一个队列中的消息满足下列情况之一时，就会成为死信（dead letter）：</p>
+<ul>
+<li>消费者使用basic.reject或basic.nack声明消费失败，并且消息的requeue参数设置为false</li>
+<li>消息是一个过期消息（达到了队列或消息本身设置的过期时间），超时无人消费</li>
+<li>要投递的队列消息堆满了，最早的消息可能成为死信</li>
+</ul>
+<p>如果队列通过dead-letter-exchange属性指定了一个交换机，那么该队列中的死信就会投递到这个交换机中。这个交换机成为死信交换机（Dead Letter Exchange，简称DLX）。</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312161831908.png" alt="image-20240312161831908"></p>
+<h2 id="延迟信息插件"><a href="#延迟信息插件" class="headerlink" title="延迟信息插件"></a>延迟信息插件</h2><p>死信交换机缺点：设置的死信交换机和队列太多，管理复杂，麻烦。</p>
+<p>且它本来不是用来做这个操作的。</p>
+<p>RabbitMQ的官方也推出了一个插件，原生支持延迟消息功能。该插件的原理是设计了一种支持延迟消息功能的交换机，当消息投递到交换机后可以暂存一段时间，到期后再投递到队列。</p>
+<p>插件下载地址：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/rabbitmq/rabbitmq-delayed-message-exchange">https://github.com/rabbitmq/rabbitmq-delayed-message-exchange</a></p>
+<p>由于我们安装的MQ是<code>3.8</code>版本，因此这里下载<code>3.8.17</code>版本：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312163855601.png" alt="image-20240312163855601"></p>
+<p>当然，也可以直接使用课前资料提供好的插件：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312163930621.png" alt="image-20240312163930621"></p>
+<p>因为我们是基于Docker安装，所以需要先查看RabbitMQ的插件目录对应的数据卷。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume inspect mq-plugins</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;CreatedAt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2024-06-19T09:22:59+08:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;Driver&quot;</span><span class="punctuation">:</span> <span class="string">&quot;local&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;Labels&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;Mountpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/var/lib/docker/volumes/mq-plugins/_data&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;Name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;mq-plugins&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;Options&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;Scope&quot;</span><span class="punctuation">:</span> <span class="string">&quot;local&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>插件目录被挂载到了<code>/var/lib/docker/volumes/mq-plugins/_data</code>这个目录，我们上传插件到该目录下。</p>
+<p>接下来执行命令，安装插件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mq rabbitmq-plugins enable rabbitmq_delayed_message_exchange</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312164153404.png" alt="image-20240312164153404"></p>
+<h3 id="声明延迟交换机"><a href="#声明延迟交换机" class="headerlink" title="声明延迟交换机"></a>声明延迟交换机</h3><p>基于注解方式：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312164349718.png" alt="image-20240312164349718"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(bindings = @QueueBinding(</span></span><br><span class="line"><span class="meta">        value = @Queue(name = &quot;delay.queue&quot;, durable = &quot;true&quot;),</span></span><br><span class="line"><span class="meta">        exchange = @Exchange(name = &quot;delay.direct&quot;, delayed = &quot;true&quot;),</span></span><br><span class="line"><span class="meta">        key = &quot;delay&quot;</span></span><br><span class="line"><span class="meta">))</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listenDelayMessage</span><span class="params">(String msg)</span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;接收到delay.queue的延迟消息：&#123;&#125;&quot;</span>, msg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基于<code>@Bean</code>的方式：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312164408592.png" alt="image-20240312164408592"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.consumer.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DelayExchangeConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> DirectExchange <span class="title function_">delayExchange</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ExchangeBuilder</span><br><span class="line">                .directExchange(<span class="string">&quot;delay.direct&quot;</span>) <span class="comment">// 指定交换机类型和名称</span></span><br><span class="line">                .delayed() <span class="comment">// 设置delay的属性为true</span></span><br><span class="line">                .durable(<span class="literal">true</span>) <span class="comment">// 持久化</span></span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">delayedQueue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;delay.queue&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">delayQueueBinding</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(delayedQueue()).to(delayExchange()).with(<span class="string">&quot;delay&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="发送延迟消息"><a href="#发送延迟消息" class="headerlink" title="发送延迟消息"></a>发送延迟消息</h3><p>发送消息时，必须通过x-delay属性设定延迟时间：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312164501195.png" alt="image-20240312164501195"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testPublisherDelayMessage</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// 1.创建消息</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="string">&quot;hello, delayed message&quot;</span>;</span><br><span class="line">    <span class="comment">// 2.发送消息，利用消息后置处理器添加消息头</span></span><br><span class="line">    rabbitTemplate.convertAndSend(<span class="string">&quot;delay.direct&quot;</span>, <span class="string">&quot;delay&quot;</span>, message, <span class="keyword">new</span> <span class="title class_">MessagePostProcessor</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Message <span class="title function_">postProcessMessage</span><span class="params">(Message message)</span> <span class="keyword">throws</span> AmqpException &#123;</span><br><span class="line">            <span class="comment">// 添加延迟消息属性</span></span><br><span class="line">            message.getMessageProperties().setDelay(<span class="number">5000</span>);</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong></p>
+<p>延迟消息插件内部会维护一个本地数据库表，同时使用Elang Timers功能实现计时。如果消息的延迟时间设置较长，可能会导致堆积的延迟消息非常多，会带来较大的CPU开销，同时延迟消息的时间会存在误差。</p>
+<p>因此，<strong>不建议设置延迟时间过长的延迟消息</strong>。</p>
+<h2 id="取消超时订单"><a href="#取消超时订单" class="headerlink" title="取消超时订单"></a>取消超时订单</h2><p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312170034464.png" alt="image-20240312170034464"></p>
+<p>假如订单超时支付时间为30分钟，理论上说我们应该在下单时发送一条延迟消息，延迟时间为30分钟。这样就可以在接收到消息时检验订单支付状态，关闭未支付订单。</p>
+<p>但是大多数情况下用户支付都会在1分钟内完成，我们发送的消息却要在MQ中停留30分钟，额外消耗了MQ的资源。因此，我们最好多检测几次订单支付状态，而不是在最后第30分钟才检测。</p>
+<p>例如：我们在用户下单后的第10秒、20秒、30秒、45秒、60秒、1分30秒、2分、…30分分别设置延迟消息，如果提前发现订单已经支付，则后续的检测取消即可。</p>
+<p>这样就可以有效避免对MQ资源的浪费了。</p>
+<p>接下来，我们就在交易服务中利用延迟消息实现订单超时取消功能。其大概思路如下：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312170138579.png" alt="image-20240312170138579"></p>
+<p>优化后的实现思路如下：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312170146743.png" alt="image-20240312170146743"></p>
+<p>由于我们要多次发送延迟消息，因此需要先定义一个记录消息延迟时间的消息体，处于通用性考虑，我们将其定义到<code>hm-common</code>模块下：</p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312170710881.png" alt="image-20240312170710881"></p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.common.domain;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hmall.common.utils.CollUtils;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MultiDelayMessage</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 消息体</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> T data;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 记录延迟时间的集合</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Long&gt; delayMillis;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MultiDelayMessage</span><span class="params">(T data, List&lt;Long&gt; delayMillis)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.data = data;</span><br><span class="line">        <span class="built_in">this</span>.delayMillis = delayMillis;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; MultiDelayMessage&lt;T&gt; <span class="title function_">of</span><span class="params">(T data, Long ... delayMillis)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MultiDelayMessage</span>&lt;&gt;(data, CollUtils.newArrayList(delayMillis));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取并移除下一个延迟时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 队列中的第一个延迟时间</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> Long <span class="title function_">removeNextDelay</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> delayMillis.remove(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否还有下一个延迟时间</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasNextDelay</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !delayMillis.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>无论是消息发送还是接收都是在交易服务完成，因此我们在<code>trade-service</code>中定义一个常量类，用于记录交换机、队列、RoutingKey等常量：</p>
+<p>内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hmall.trade.constants;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">MqConstants</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">DELAY_EXCHANGE</span> <span class="operator">=</span> <span class="string">&quot;trade.delay.topic&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">DELAY_ORDER_QUEUE</span> <span class="operator">=</span> <span class="string">&quot;trade.order.delay.queue&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">DELAY_ORDER_ROUTING_KEY</span> <span class="operator">=</span> <span class="string">&quot;order.query&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="发送延迟消息-1"><a href="#发送延迟消息-1" class="headerlink" title="发送延迟消息"></a>发送延迟消息</h3><p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312172613818.png" alt="image-20240312172613818"></p>
+<p><img src="/2024/03/11/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day06-rabbitMQ/image-20240312172644940.png" alt="image-20240312172644940"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/10/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day05-rabbitMQ/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -5119,277 +5491,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/" itemprop="url">苍穹外卖-day12-数据统计</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-04T16:25:39+08:00">
-                2024-03-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/" itemprop="url" rel="index">
-                    <span itemprop="name">苍穹外卖</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="数据报表"><a href="#数据报表" class="headerlink" title="数据报表"></a>数据报表</h1><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304185718012.png" alt="image-20240304185718012"></p>
-<h1 id="工作台"><a href="#工作台" class="headerlink" title="工作台"></a>工作台</h1><h2 id="需求分析和设计"><a href="#需求分析和设计" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p> 工作台是系统运营的数据看板， 并提供快捷操作入口，可以有效提高商家的工作效率。</p>
-<p>工作台展示的数据：</p>
-<ul>
-<li>进入数据</li>
-<li>订单管理</li>
-<li>菜品总览</li>
-<li>套餐总览</li>
-<li>订单信息</li>
-</ul>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304190903243.png" alt="image-20240304190903243"></p>
-<p>名词解释：</p>
-<ul>
-<li>营业额：已完成订单的总金额</li>
-<li>有效订单：已完成订单的数量</li>
-<li>订单完成率：有效订单数&#x2F;总订单数 * 100%</li>
-<li>平均客单价：营业额&#x2F;有效订单数</li>
-<li>新增用户：新增用户的数量</li>
-</ul>
-<p><strong>接口设计</strong></p>
-<ul>
-<li>今日数据接口</li>
-<li>订单管理接口</li>
-<li>菜品总览接口</li>
-<li>套餐总览接口</li>
-<li>订单搜索（已完成）</li>
-<li>各个状态的订单数量统计（已完成）</li>
-</ul>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304191802637.png" alt="image-20240304191802637"></p>
-<p><strong>今日数据的接口设计：</strong></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304191959537.png" alt="image-20240304191959537"></p>
-<p><strong>订单管理的接口设计：</strong></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304192054014.png" alt="image-20240304192054014"></p>
-<p><strong>菜品总览的接口设计：</strong></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304192132813.png" alt="image-20240304192132813"></p>
-<p><strong>套餐总览的接口设计：</strong></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304192154803.png" alt="image-20240304192154803"></p>
-<h2 id="代码导入"><a href="#代码导入" class="headerlink" title="代码导入"></a>代码导入</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304192915915.png" alt="image-20240304192915915"></p>
-<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304192930839.png" alt="image-20240304192930839"></p>
-<h2 id="Apache-POI"><a href="#Apache-POI" class="headerlink" title="Apache POI"></a>Apache POI</h2><p>Apache POI是一个处理Miscrosoft Office各种文件格式的开源项目。简单来说就是，我们可以用POI在Java程序中对Miscrosoft Office各种文件进行读写操作。</p>
-<p>一般情况下，POI都是操作Excel文件。</p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304194119767.png" alt="image-20240304194119767"></p>
-<p>Apache POI的应用场景：</p>
-<ul>
-<li>银行网银系统导出交易明细</li>
-<li>各种业务系统导出Excel报表</li>
-<li>批量导入业务数据</li>
-</ul>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304194154240.png" alt="image-20240304194154240"></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304194228057.png" alt="image-20240304194228057"></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304194246336.png" alt="image-20240304194246336"></p>
-<h2 id="入门案例"><a href="#入门案例" class="headerlink" title="入门案例"></a>入门案例</h2><p>Apache POI的maven坐标：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- poi --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;poi&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;poi&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>编写案例代码：</p>
-<p><strong>写入excel文件内容</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.XSSFRow;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.XSSFSheet;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.XSSFWorkbook;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用POI操作Excel文件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">POITest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过POI创建Excel文件并且写入文件内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">write</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">//在内存中创建一个excel文件</span></span><br><span class="line">        <span class="type">XSSFWorkbook</span> <span class="variable">excel</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XSSFWorkbook</span>();</span><br><span class="line">        <span class="comment">//在Excel文件中创建一个sheet页</span></span><br><span class="line">        <span class="type">XSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> excel.createSheet(<span class="string">&quot;info&quot;</span>);</span><br><span class="line">        <span class="comment">//在Sheet中创建行对象,rownum编号从0开始</span></span><br><span class="line">        <span class="type">XSSFRow</span> <span class="variable">row</span> <span class="operator">=</span> sheet.createRow(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">//创建单元格，给文件写入内容</span></span><br><span class="line">        row.createCell(<span class="number">1</span>).setCellValue(<span class="string">&quot;姓名&quot;</span>);</span><br><span class="line">        row.createCell(<span class="number">2</span>).setCellValue(<span class="string">&quot;城市&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建一个新行</span></span><br><span class="line">        row = sheet.createRow(<span class="number">2</span>);</span><br><span class="line">        row.createCell(<span class="number">1</span>).setCellValue(<span class="string">&quot;吴康惠&quot;</span>);</span><br><span class="line">        row.createCell(<span class="number">2</span>).setCellValue(<span class="string">&quot;杭州&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建一个新行</span></span><br><span class="line">        row = sheet.createRow(<span class="number">3</span>);</span><br><span class="line">        row.createCell(<span class="number">1</span>).setCellValue(<span class="string">&quot;陈梦婷&quot;</span>);</span><br><span class="line">        row.createCell(<span class="number">2</span>).setCellValue(<span class="string">&quot;上海&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//通过输出流将内存中的excel文件写入到磁盘</span></span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;E:\\info.xlsx&quot;</span>));</span><br><span class="line">        excel.write(out);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭资源</span></span><br><span class="line">        out.close();</span><br><span class="line">        excel.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        write();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>读取excel文件内容</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.XSSFRow;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.XSSFSheet;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xssf.usermodel.XSSFWorkbook;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用POI操作Excel文件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">POITest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过POI读取Excel文件中的内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">read</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">FileInputStream</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;E:\\info.xlsx&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//读取磁盘上已经存在的excel文件，并将其封装为excel</span></span><br><span class="line">        <span class="type">XSSFWorkbook</span> <span class="variable">excel</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XSSFWorkbook</span>(file);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//读取excel文件中的第一个sheet页</span></span><br><span class="line">        <span class="type">XSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> excel.getSheetAt(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取Sheet页中最后一行的行号</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">lastRowNum</span> <span class="operator">=</span> sheet.getLastRowNum();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;=  lastRowNum; i++) &#123;</span><br><span class="line">            <span class="comment">//获取第一行</span></span><br><span class="line">            <span class="type">XSSFRow</span> <span class="variable">row</span> <span class="operator">=</span> sheet.getRow(i);</span><br><span class="line">            <span class="comment">//获得单元格</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">cellValue1</span> <span class="operator">=</span> row.getCell(<span class="number">1</span>).getStringCellValue();</span><br><span class="line">            <span class="type">String</span> <span class="variable">cellValue2</span> <span class="operator">=</span> row.getCell(<span class="number">2</span>).getStringCellValue();</span><br><span class="line">            System.out.println(cellValue1 + <span class="string">&quot; &quot;</span> +  cellValue2);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//关闭资源</span></span><br><span class="line">        excel.close();</span><br><span class="line">        file.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        read();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="导出运营数据Excel报表"><a href="#导出运营数据Excel报表" class="headerlink" title="导出运营数据Excel报表"></a>导出运营数据Excel报表</h2><h3 id="需求分析和设计-1"><a href="#需求分析和设计-1" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h3><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304201916592.png" alt="image-20240304201916592"></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304202038081.png" alt="image-20240304202038081"></p>
-<p>业务规则：</p>
-<ul>
-<li>导出Excel形式的报表文件</li>
-<li>导出最近30天的运营数据（通过输出流向客户端写出文件）</li>
-</ul>
-<p><strong>接口设计</strong></p>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304202329131.png" alt="image-20240304202329131"></p>
-<p>注意：当前接口是没有返回数据的，因为报表导出功能本质上是文件下载，服务端会通过输出流将Excel文件下载到客户端浏览器。</p>
-<h3 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h3><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304202458088.png" alt="image-20240304202458088"></p>
-<p>实现步骤：</p>
-<ol>
-<li>设计Excel模板文件（包含了各种合并单元格和背景颜色）</li>
-<li>查询近30天的运营数据</li>
-<li>将查询到的运营数据写入到模板文件</li>
-<li>通过输出流将Excel文件下载到客户端浏览器</li>
-</ol>
-<p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304202855053.png" alt="image-20240304202855053"></p>
-<p><strong>ReportController</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 导出运营数据报表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;导出运营数据报表&quot;)</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/export&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(HttpServletResponse response)</span>&#123;</span><br><span class="line">    reportService.exportBusinessData(response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportService</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 导出运营数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">exportBusinessData</span><span class="params">(HttpServletResponse response)</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ReportServiceImpl</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 导出运营数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">exportBusinessData</span><span class="params">(HttpServletResponse response)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="comment">//1. 查询数据库，获取营业数据 -- 查询最近30天的运营数据</span></span><br><span class="line">    <span class="type">LocalDate</span> <span class="variable">dateBegin</span> <span class="operator">=</span> LocalDate.now().minusDays(<span class="number">30</span>);</span><br><span class="line">    <span class="type">LocalDate</span> <span class="variable">dateEnd</span> <span class="operator">=</span> LocalDate.now().minusDays(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">LocalDateTime</span> <span class="variable">beginTime</span> <span class="operator">=</span> LocalDateTime.of(dateBegin, LocalTime.MIN);</span><br><span class="line">    <span class="type">LocalDateTime</span> <span class="variable">endTime</span> <span class="operator">=</span> LocalDateTime.of(dateBegin, LocalTime.MAX);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//查询概览数据</span></span><br><span class="line">    <span class="type">BusinessDataVO</span> <span class="variable">businessData</span> <span class="operator">=</span> workspaceService.getBusinessData(beginTime, endTime);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2. 通过POI将数据写入到Excel文件中</span></span><br><span class="line">    <span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="built_in">this</span>.getClass().getClassLoader().getResourceAsStream(<span class="string">&quot;template/运营数据报表模板&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//基于模板文件创建一个新的excel文件</span></span><br><span class="line">    <span class="type">XSSFWorkbook</span> <span class="variable">excel</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XSSFWorkbook</span>(in);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3. 通过输出流将Excel文件下载至客户端浏览器</span></span><br><span class="line">    <span class="type">XSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> excel.getSheet(<span class="string">&quot;Sheet1&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//填充数据 -- 时间</span></span><br><span class="line">    sheet.getRow(<span class="number">1</span>).getCell(<span class="number">1</span>).setCellValue(<span class="string">&quot;时间：&quot;</span> + dateBegin + <span class="string">&quot;至&quot;</span> + dateEnd);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//填充数据 -- 营业额 | 订单完成率 | 新增用户数</span></span><br><span class="line">    sheet.getRow(<span class="number">3</span>).getCell(<span class="number">2</span>).setCellValue(businessData.getTurnover());</span><br><span class="line">    sheet.getRow(<span class="number">3</span>).getCell(<span class="number">4</span>).setCellValue(businessData.getOrderCompletionRate());</span><br><span class="line">    sheet.getRow(<span class="number">3</span>).getCell(<span class="number">6</span>).setCellValue(businessData.getNewUsers());</span><br><span class="line"></span><br><span class="line">    <span class="comment">//填充数据 -- 有效订单数 | 平均客单价</span></span><br><span class="line">    sheet.getRow(<span class="number">4</span>).getCell(<span class="number">2</span>).setCellValue(businessData.getValidOrderCount());</span><br><span class="line">    sheet.getRow(<span class="number">4</span>).getCell(<span class="number">4</span>).setCellValue(businessData.getUnitPrice());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//填充明细数据</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">30</span>; i++) &#123;</span><br><span class="line">        <span class="type">LocalDate</span> <span class="variable">date</span> <span class="operator">=</span> dateBegin.plusDays(i);</span><br><span class="line">        <span class="comment">//查询某一天的营业数据</span></span><br><span class="line">        <span class="type">BusinessDataVO</span> <span class="variable">businessDataVO</span> <span class="operator">=</span> workspaceService.getBusinessData(LocalDateTime.of(date, LocalTime.MIN), LocalDateTime.of(date, LocalTime.MAX));</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">1</span>).setCellValue(date.toString());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">2</span>).setCellValue(businessDataVO.getTurnover());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">3</span>).setCellValue(businessDataVO.getValidOrderCount());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">4</span>).setCellValue(businessDataVO.getOrderCompletionRate());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">5</span>).setCellValue(businessDataVO.getUnitPrice());</span><br><span class="line">        sheet.getRow(<span class="number">7</span> + i).getCell(<span class="number">6</span>).setCellValue(businessDataVO.getNewUsers());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过输出流对象下载数据到客户端浏览器</span></span><br><span class="line">    <span class="type">ServletOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> response.getOutputStream();</span><br><span class="line">    excel.write(out);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//关闭资源</span></span><br><span class="line">    out.close();</span><br><span class="line">    excel.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="功能测试-1"><a href="#功能测试-1" class="headerlink" title="功能测试"></a>功能测试</h3><p><img src="/2024/03/04/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day12-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1/image-20240304210743824.png" alt="image-20240304210743824"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -5444,7 +5545,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5513,7 +5614,11 @@
 				  
 				  
 					<li class="recent_posts_li">
-					  <a href="/2024/03/24/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day09-%E8%AF%BE%E7%A8%8B%E5%8F%91%E5%B8%83/" title="学成在线-day09-课程发布" target="_blank">学成在线-day09-课程发布</a>
+					  <a href="/2024/03/29/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" title="微服务技术总结" target="_blank">微服务技术总结</a>
+					</li>
+				  
+					<li class="recent_posts_li">
+					  <a href="/2024/03/24/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day09-%E8%AF%BE%E7%A8%8B%E5%8F%91%E5%B8%83/" title="学成在线-day09-课程发布 + day10-页面静态化、认证授权、SpringSecurity" target="_blank">学成在线-day09-课程发布 + day10-页面静态化、认证授权、SpringSecurity</a>
 					</li>
 				  
 					<li class="recent_posts_li">
@@ -5526,10 +5631,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" title="学成在线-day05-项目实战" target="_blank">学成在线-day05-项目实战</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/19/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day04-JSR303%E6%A0%A1%E9%AA%8C/" title="学成在线-day04-JSR303校验" target="_blank">学成在线-day04-JSR303校验</a>
 					</li>
 				  
 				</ul>
@@ -5576,7 +5677,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">226.3k</span>
+    <span title="Site words total count">244.7k</span>
   
 </div>
 
