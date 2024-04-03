@@ -145,7 +145,7 @@
 <meta property="og:image" content="http://2698022795.github.io/2024/03/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/image-20240303212612276.png">
 <meta property="og:image" content="http://2698022795.github.io/2024/03/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/image-20240304194119767.png">
 <meta property="article:published_time" content="2024-03-27T07:43:10.000Z">
-<meta property="article:modified_time" content="2024-03-31T05:54:40.826Z">
+<meta property="article:modified_time" content="2024-04-01T06:25:53.392Z">
 <meta property="article:author" content="waterdance">
 <meta property="article:tag" content="Java,Python,Linux,C++,算法,编程技术">
 <meta name="twitter:card" content="summary">
@@ -654,9 +654,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">CategoryMapper</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> category</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AutoFill(value=OperationType.INSERT)</span></span><br><span class="line">    <span class="meta">@Insert(&quot;insert into category(type, name, sort, status, create_time, update_time, create_user, update_user)&quot; +</span></span><br><span class="line"><span class="meta">            &quot; VALUES&quot; +</span></span><br><span class="line"><span class="meta">            &quot; (#&#123;type&#125;, #&#123;name&#125;, #&#123;sort&#125;, #&#123;status&#125;, #&#123;createTime&#125;, #&#123;updateTime&#125;, #&#123;createUser&#125;, #&#123;updateUser&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(Category category)</span>;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据id修改分类</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> category</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AutoFill(value=OperationType.UPDATE)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Category category)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="2-接收multipart-form-data类型的数据"><a href="#2-接收multipart-form-data类型的数据" class="headerlink" title="2. 接收multipart&#x2F;form-data类型的数据"></a>2. 接收multipart&#x2F;form-data类型的数据</h2><p>使用MultipartFile类型接受该数据</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通用接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/admin/common&quot;)</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;通用接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CommonController</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 文件上传</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;文件上传&quot;)</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;upload&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;String&gt; <span class="title function_">upload</span><span class="params">(MultipartFile file)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;文件上传：&#123;&#125;&quot;</span>,file);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通用接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/admin/common&quot;)</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;通用接口&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CommonController</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 文件上传</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;文件上传&quot;)</span></span><br><span class="line">    <span class="meta">@PostMapping(value = &quot;upload&quot;, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;String&gt; <span class="title function_">upload</span><span class="params">(MultipartFile file)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;文件上传：&#123;&#125;&quot;</span>,file);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="3-上传图片到阿里云并返回图片路径"><a href="#3-上传图片到阿里云并返回图片路径" class="headerlink" title="3. 上传图片到阿里云并返回图片路径"></a>3. 上传图片到阿里云并返回图片路径</h2><ol>
 <li><p>编辑application-dev.yaml文件，配置阿里云OSS服务相关参数</p>
@@ -1069,7 +1067,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1138,6 +1136,10 @@
 				  
 				  
 					<li class="recent_posts_li">
+					  <a href="/2024/04/03/%E5%86%85%E5%8A%9F-day02-redis%E7%AF%87/" title="内功-day02-redis篇" target="_blank">内功-day02-redis篇</a>
+					</li>
+				  
+					<li class="recent_posts_li">
 					  <a href="/2024/03/31/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" title="学成在线技术总结" target="_blank">学成在线技术总结</a>
 					</li>
 				  
@@ -1151,10 +1153,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/03/24/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day09-%E8%AF%BE%E7%A8%8B%E5%8F%91%E5%B8%83/" title="学成在线-day09-课程发布 + day10-页面静态化、认证授权、SpringSecurity" target="_blank">学成在线-day09-课程发布 + day10-页面静态化、认证授权、SpringSecurity</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/22/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day07-%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0-xxl-job/" title="学成在线-day07-断点续传 xxl-job + 学成在线-day08-视频处理-技术方案" target="_blank">学成在线-day07-断点续传 xxl-job + 学成在线-day08-视频处理-技术方案</a>
 					</li>
 				  
 				</ul>
@@ -1217,7 +1215,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">268.1k</span>
+    <span title="Site words total count">278k</span>
   
 </div>
 
