@@ -297,6 +297,437 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/" itemprop="url">苍穹外卖-day06-微信登录、商品浏览</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-27T15:32:51+08:00">
+                2024-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/" itemprop="url" rel="index">
+                    <span itemprop="name">苍穹外卖</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="微信登录、商品浏览"><a href="#微信登录、商品浏览" class="headerlink" title="微信登录、商品浏览"></a>微信登录、商品浏览</h1><p>从使用者角度来看，分为两个端，一个是提供给商家来使用的，我们称之为管理端，还有一个是给点餐用户使用的，我们称之为用户端。用户端实际上是通过微信小程序来实现。我们今天要开发的是用户端的两个功能，一个是微信登录，另一个是商品浏览。</p>
+<p><strong>实现效果</strong></p>
+<p>当点餐用户进入小程序之后，小程序会弹出这个窗口，即获取当前微信用户的昵称、头像，然后用户既可以点击允许，这个时候我们就可以获取用户相关的信息，完成登录。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227153826569.png" alt="image-20240227153826569"></p>
+<p>登录成功之后就会进入首页面，首页面会展示对应的商品，商品只有两种，一种是菜品、一种是套餐。它是按照不同的分类来展示的，不同的分类下面挂着相应的菜品或套餐，我们这边分别展示套餐和菜品的相应结果。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227153911199.png" alt="image-20240227153911199"></p>
+<p>我们今天要完成的是客户端的微信登录和商品浏览功能。</p>
+<h1 id="HttpClient"><a href="#HttpClient" class="headerlink" title="HttpClient"></a>HttpClient</h1><p>使用它就可以在Java中构造请求并发送请求，后面要实现微信登录，在实现功能时会使用HttpClient来请求微信的某个接口，最终实现微信登录。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>HttpClient时Apache Jakarta Common下的子项目，可以用来提供高效的、最新的、功能丰富的支持HTTP协议的客户端编程工具包，并且它支持HTTP协议最新的版本和建议。</p>
+<ul>
+<li><p>HttpClient时客户端编程工具包</p>
+</li>
+<li><p>可以在Java程序中通过HttpClient工具包构建Http请求，并且可以发送HttpClient请求</p>
+</li>
+<li><p>如果要使用这个依赖的话，要添加如下的依赖坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpclient<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.5.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>核心API：</p>
+<ul>
+<li>HttpClient（接口，设计了可以发送http请求的方法）</li>
+<li>HttpClients（可以创建HttpClient实现类对象）</li>
+<li>CloseableHttpClient（实现类，实现了HttpClient接口的方法）</li>
+<li>HttpGet（Http Get请求）</li>
+<li>HttpPost（Http Post请求）</li>
+</ul>
+<p>发送请求步骤：</p>
+<ul>
+<li><p>创建HttpClient对象</p>
+</li>
+<li><p>创建Http请求对象（如果要发送get方式请求，就需要构造httpget对象，同理，如果要发送post方式请求，就需要构造httppost对象）</p>
+</li>
+<li><p>调用HttpClient的execute方法发送请求</p>
+</li>
+</ul>
+<h2 id="入门案例"><a href="#入门案例" class="headerlink" title="入门案例"></a>入门案例</h2><p>在sky-common包下已经导入了aliyun-sdk-oss坐标，它其实底层使用了httpclient依赖，已经导入了对应的jar包。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227155419091.png" alt="image-20240227155419091"></p>
+<h2 id="发送GET方式请求"><a href="#发送GET方式请求" class="headerlink" title="发送GET方式请求"></a>发送GET方式请求</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HttpClientTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过httpclient发送GET方式的请求</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGET</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">//创建HttpClient对象(是HttpClient接口的实现类）</span></span><br><span class="line">        <span class="type">CloseableHttpClient</span> <span class="variable">httpClient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建Http请求对象(设置请求url）</span></span><br><span class="line">        <span class="type">HttpGet</span> <span class="variable">httpGet</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(<span class="string">&quot;http://localhost:8080/user/shop/status&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//发送请求,接收响应结果</span></span><br><span class="line">        <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpClient.execute(httpGet);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取服务端返回的状态码</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">statusCode</span> <span class="operator">=</span> response.getStatusLine().getStatusCode();</span><br><span class="line">        System.out.println(<span class="string">&quot;服务端返回的状态码为：&quot;</span> + statusCode);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取响应体(它是HttpEntity类）</span></span><br><span class="line">        <span class="type">HttpEntity</span> <span class="variable">entity</span> <span class="operator">=</span> response.getEntity();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//用EntityUtils解析HttpEntity类对象的内容</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">body</span> <span class="operator">=</span> EntityUtils.toString(entity);</span><br><span class="line">        System.out.println(<span class="string">&quot;服务端返回的数据为：&quot;</span> + body);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//关闭资源</span></span><br><span class="line">        response.close();</span><br><span class="line">        httpClient.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过httpclient发送POST方式的请求</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testPOST</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227161833300.png" alt="image-20240227161833300"></p>
+<h2 id="发送POST方式请求"><a href="#发送POST方式请求" class="headerlink" title="发送POST方式请求"></a>发送POST方式请求</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpPost;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.entity.StringEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"><span class="keyword">import</span> org.json.JSONException;</span><br><span class="line"><span class="keyword">import</span> org.json.JSONObject;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.UnsupportedEncodingException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HttpClientTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过httpclinet发送POST方式的请求,POST要提交JSON格式的数据，包含用户名和密码</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testPOST</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//创建httpclient对象</span></span><br><span class="line">        <span class="type">CloseableHttpClient</span> <span class="variable">httpClient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建请求对象</span></span><br><span class="line">        <span class="type">HttpPost</span> <span class="variable">httpPost</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpPost</span>(<span class="string">&quot;http://localhost:8080/admin/employee/login&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建JSON对象，对应请求体，请求体中存储对应的键值对</span></span><br><span class="line">        <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>();</span><br><span class="line">        jsonObject.put(<span class="string">&quot;username&quot;</span>,<span class="string">&quot;admin&quot;</span>);</span><br><span class="line">        jsonObject.put(<span class="string">&quot;password&quot;</span>,<span class="string">&quot;123456&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">StringEntity</span> <span class="variable">entity</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringEntity</span>(jsonObject.toString());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置请求参数</span></span><br><span class="line">        entity.setContentEncoding(<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置请求体的数据格式</span></span><br><span class="line">        entity.setContentType(<span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">        <span class="comment">//将请求体数据entity放到httpPost中</span></span><br><span class="line">        httpPost.setEntity(entity);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//发送请求</span></span><br><span class="line">        <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpClient.execute(httpPost);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//解析返回结果</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">statusCode</span> <span class="operator">=</span> response.getStatusLine().getStatusCode();</span><br><span class="line">        System.out.println(<span class="string">&quot;服务端返回的状态码为: &quot;</span> + statusCode);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取响应体（它是httpEntity类对象）</span></span><br><span class="line">        <span class="type">HttpEntity</span> <span class="variable">entity1</span> <span class="operator">=</span> response.getEntity();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//用EntityUtils解析HttpEntity类对象的内容</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">body</span> <span class="operator">=</span> EntityUtils.toString(entity1);</span><br><span class="line">        System.out.println(<span class="string">&quot;服务端返回的数据为：&quot;</span> + body);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//关闭资源</span></span><br><span class="line">        response.close();</span><br><span class="line">        httpClient.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227165020563.png" alt="image-20240227165020563"></p>
+<p>为了方便在项目中使用它，我们在项目sky-common中封装了HttpClientUtil工具类，里面有doGet方法，doPost方法，doPost4Json方法。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227165701177.png" alt="image-20240227165701177"></p>
+<h1 id="微信小程序开发"><a href="#微信小程序开发" class="headerlink" title="微信小程序开发"></a>微信小程序开发</h1><p>用户端时基于微信小程序开发的，讲一下它的完整开发流程。</p>
+<h2 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h2><p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227170358065.png" alt="image-20240227170358065"></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/cgi-bin/wx?token=&lang=zh_CN">https://mp.weixin.qq.com/cgi-bin/wx?token=&amp;lang=zh_CN</a></p>
+<p><strong>开放注册范围</strong></p>
+<p><font color="red"><strong>个人是没有权限开通支付功能的</strong></font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227170636131.png" alt="image-20240227170636131"></p>
+<p><strong>开发支持</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227170717321.png" alt="image-20240227170717321"></p>
+<p><strong>介绍</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240227170758028.png" alt="image-20240227170758028"></p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="注册小程序"><a href="#注册小程序" class="headerlink" title="注册小程序"></a>注册小程序</h3><p>注册地址：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/wxopen/waregister?action=step1">https://mp.weixin.qq.com/wxopen/waregister?action=step1</a></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228114809590.png" alt="image-20240228114809590"></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228115457266.png" alt="image-20240228115457266"></p>
+<h3 id="完善小程序信息"><a href="#完善小程序信息" class="headerlink" title="完善小程序信息"></a>完善小程序信息</h3><p><font color="red">完善小程序信息、小程序类目</font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228115852988.png" alt="image-20240228115852988"></p>
+<p>获取APPID和AppSecret </p>
+<p>（appID：wx1d1f9482fef7f19e）</p>
+<p>（密钥：xxx）</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228120100017.png" alt="image-20240228120100017"></p>
+<h3 id="下载开发者工具"><a href="#下载开发者工具" class="headerlink" title="下载开发者工具"></a>下载开发者工具</h3><p>下载地址： <a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html">https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html</a></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228120158680.png" alt="image-20240228120158680"></p>
+<p>下载并安装开发者工具</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228120734805.png" alt="image-20240228120734805"></p>
+<p><strong>开发界面介绍</strong></p>
+<p><strong>左侧-模拟器，最终在手机上显示的效果</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228120947976.png" alt="image-20240228120947976"></p>
+<p><strong>右侧-调试器，调试小程序，小程序发送了何种请求，服务端响应回来的数据是什么，它实际上跟浏览器的调试工具是一样的，即它们用的是同一个内核。</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228121022625.png" alt="image-20240228121022625"></p>
+<p><strong>中间-编辑器，主要对代码进行编辑操作的区域</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228121250712.png" alt="image-20240228121250712"></p>
+<p><strong>设置选择显示哪些界面</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228121430392.png" alt="image-20240228121430392"></p>
+<p><font color="red">在本地设置中勾选不校验合法域名，我们现在在开发阶段，小程序有可能要发出请求，最终请求到我们本地后端的tomcat服务器，如果不勾选不校验合法域名，请求是发送不出去的。</font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228121549279.png" alt="image-20240228121549279"></p>
+<h2 id="入门案例-1"><a href="#入门案例-1" class="headerlink" title="入门案例"></a>入门案例</h2><p>操作步骤：</p>
+<ul>
+<li><p>了解小程序目录结构</p>
+</li>
+<li><p>编写小程序代码</p>
+</li>
+<li><p>编译小程序（在开发工具模拟器中可以查看效果）</p>
+</li>
+</ul>
+<h3 id="了解小程序目录结构"><a href="#了解小程序目录结构" class="headerlink" title="了解小程序目录结构"></a>了解小程序目录结构</h3><p>小程序包含一个描述整体程序的app和多个描述各自页面的page。一个小程序主体部分由三个文件组成，必须放在项目的根目录，如下：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>必需</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>app.js</td>
+<td>是</td>
+<td>小程序逻辑</td>
+</tr>
+<tr>
+<td>app.json</td>
+<td>是</td>
+<td>小程序公共配置</td>
+</tr>
+<tr>
+<td>app.wxss</td>
+<td>否</td>
+<td>小程序公共样式表</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228122652914.png" alt="image-20240228122652914"></p>
+<p>一个小程序可能有多个页面，商品浏览页面，购物车页面，订单支付页面，商品详情页面。这些页面会放在pages中。一个小程序页面由四个文件组成：</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>必需</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>js</td>
+<td>是</td>
+<td>页面逻辑</td>
+</tr>
+<tr>
+<td>wxml</td>
+<td>是</td>
+<td>页面结构</td>
+</tr>
+<tr>
+<td>json</td>
+<td>否</td>
+<td>页面配置</td>
+</tr>
+<tr>
+<td>wxss</td>
+<td>否</td>
+<td>页面样式表</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228122700305.png" alt="image-20240228122700305"></p>
+<h3 id="内容讲解"><a href="#内容讲解" class="headerlink" title="内容讲解"></a>内容讲解</h3><p>app.json内容中的pages设置了当前页面的文件路径，实际上是page&#x2F;index目录下的index.wxml文件。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228124635317.png" alt="image-20240228124635317"></p>
+<p>index.wxml就类似于html，模拟器中的Weixin字段是由index.wxml来决定的。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228125651655.png" alt="image-20240228125651655"></p>
+<p>在模拟器中动态设置显示的值，现在index.wxml中编写对应的变量，再在index.js中设置data，编写键值对msg设置对应的值。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228125909677.png" alt="image-20240228125909677"></p>
+<p>在index.wxml中创建获取用户信息按钮，给按钮设置显示样式bind:tag，挂靠方法getUserInfo，在index.js中设置对应的方法实现。</p>
+<p>方法的具体实现细节如下：使用微信小程序内置对象wx，调用这个对象的getUserProfile方法，调用该方法时会在模拟器中弹出获取昵称、头像等页面信息，该方法会获取当前微信用户的信息。success属性对应一个回调函数，类似于lambda表达式，res是返回值，通过console在控制台输出返回值中包含的用户信息。</p>
+<p><font color="red">注：微信版本更新之后，这个小程序会不弹框，要修改基础库，在右上角 详细-&gt;本地设置-&gt;调试基础库 建议选择基础库版本在2.21.2~2.27.0版本之间头像，昵称都能获取。</font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228131640243.png" alt="image-20240228131640243"></p>
+<h3 id="获取用户的昵称、头像"><a href="#获取用户的昵称、头像" class="headerlink" title="获取用户的昵称、头像"></a><strong>获取用户的昵称、头像</strong></h3><p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228133125216.png" alt="image-20240228133125216"></p>
+<p>上述的功能并不是微信登录，微信登录要获取当前微信用户的唯一标识，即openid，要获取openid，就需要微信小程序首先获得授权码（用户授权给我们），然后我们使用获得的授权码向微信服务器发送请求，最终获取到当前微信用户的openId。</p>
+<p>下面演示如何获取微信用户的授权码（只能使用一次，用户每次返回的授权码是不同的）。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228134325727.png" alt="image-20240228134325727"></p>
+<h3 id="向服务器发送GET请求"><a href="#向服务器发送GET请求" class="headerlink" title="向服务器发送GET请求"></a><strong>向服务器发送GET请求</strong></h3><p>在index.wxml中编写发送请求按钮，挂载wxLogin方法，在index.js中实现wxLogin方法，调用wx.request方法，设置url，请求方式method以及成功后获取的值res.data。在模拟器中点击发送请求按钮，会向url地址以method方式发送请求，返回的值Result的json数据格式封装在res.data中。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228152755836.png" alt="image-20240228152755836"></p>
+<h3 id="发布小程序"><a href="#发布小程序" class="headerlink" title="发布小程序"></a>发布小程序</h3><p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228153324209.png" alt="image-20240228153324209"></p>
+<p>目前上传的版本是开发者版本，可以在微信小程序网页端查询。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228153502527.png" alt="image-20240228153502527"></p>
+<p>他是开发版本，我们在微信小程序中是搜索不到这个小程序的。</p>
+<h1 id="微信登录"><a href="#微信登录" class="headerlink" title="微信登录"></a>微信登录</h1><h2 id="导入小程序代码"><a href="#导入小程序代码" class="headerlink" title="导入小程序代码"></a>导入小程序代码</h2><p>开发小程序本质上属于前端的开发。本项目侧重后端开发。对于小程序的代码，我们已经提供好了。直接导入到微信开发者工具中使用即可。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228154535876.png" alt="image-20240228154535876"></p>
+<p><font color="red">确保AppID是自己的ID。</font></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228154724267.png" alt="image-20240228154724267"></p>
+<p><strong>项目代码整体结构</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228155000326.png" alt="image-20240228155000326"></p>
+<p>可以通过vendor.js修改对应后端请求的端口号。</p>
+<h2 id="微信登录流程"><a href="#微信登录流程" class="headerlink" title="微信登录流程"></a>微信登录流程</h2><p>微信登录：<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html">https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html</a></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228155242039.png" alt="image-20240228155242039"></p>
+<ol>
+<li>在小程序端，使用wx.login()获取授权码，再使用wx.request()向本地编写的后端服务发送授权码</li>
+<li>后端服务要调用微信接口服务，需要向微信接口传输以下几个参数，appid，appsecret，code。（通过httpclient实现该功能）</li>
+<li>微信接口服务向后端服务返回相应的数据，即session_key和openId（微信用户的唯一标识）。</li>
+<li>后端服务要自定义登录状态，记录当前微信用户的一些信息，如openid存到数据库，同时还可以为微信用户产生一个token，即一个令牌，因为后续小程序还要持续不断的请求后端服务，如添加购物车，下单等，这个时候都需要知道小程序的微信用户是谁。因此，后端服务会将令牌返回给小程序。</li>
+<li>小程序存储自定义登录状态。</li>
+<li>后续发起各种业务请求，如添加购物车，浏览商品，查看订单，查询历史订单，一系列的业务请求，这个时候它就要将自定义的登录状态给他带过去，请求后端服务，也就是开发者服务器。</li>
+<li>后端服务要解析token，解析完之后就知道当前微信用户，进行相应业务操作，返回业务数据。</li>
+</ol>
+<p>在postman中向微信接口服务发送请求：<a target="_blank" rel="noopener" href="https://api.weixin.qq.com/sns/jscode2session?appid=wx1d1f9482fef7f19e&secret=2aaa22b5aeafd21e2d8742d72e99cdd1&js_code=0f1Jgz100T0aER1o1k400rlBAK0Jgz1g&grant_type=authorization_code%EF%BC%8C%E5%BE%AE%E4%BF%A1%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1%E4%BC%9A%E8%BF%94%E5%9B%9E%E5%AF%B9%E5%BA%94%E7%9A%84session_key%E5%92%8Copenid%E3%80%82">https://api.weixin.qq.com/sns/jscode2session?appid=wx1d1f9482fef7f19e&amp;secret=2aaa22b5aeafd21e2d8742d72e99cdd1&amp;js_code=0f1Jgz100T0aER1o1k400rlBAK0Jgz1g&amp;grant_type=authorization_code，微信接口服务会返回对应的session_key和openid。</a></p>
+<p>发送的请求要求填写四个参数，其中grant_type的值要求固定为authorization_code。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228225958639.png" alt="image-20240228225958639"></p>
+<h2 id="需求分析和设计"><a href="#需求分析和设计" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p><strong>产品原型：</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228230305932.png" alt="image-20240228230305932"></p>
+<p>用户名账号登录要注册账号，设置密码，使用注册的账号密码登录。</p>
+<p>微信登录不用注册，直接来获得微信用户的唯一标识，知道当前的微信用户是谁即可。</p>
+<p>业务规则：</p>
+<ul>
+<li>基于微信登录实现小程序的登录功能</li>
+<li><font color="red">如果是新用户需要自动完成注册，把用户返回的信息保存到自定义的数据库当中。</font></li>
+</ul>
+<p><strong>接口设计</strong></p>
+<p>要完成微信登录，要获得openId；要获得openId，就要先获得授权码code；接口应该小程序和后端发送请求，并且把授权码发过来，然后我们使用授权码请求微信接口服务，需要给用户返回令牌，令牌中包含用户的唯一标识，后续用户操作都要携带令牌，验证他是合法用户。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228231445814.png" alt="image-20240228231445814"></p>
+<p>数据库设计（user表）：</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228231818854.png" alt="image-20240228231818854"></p>
+<p>(不同的小程序，我们能够使用的权限是不同的，如果是以个人注册的小程序，没有权限获取到微信用户注册的手机号的，如果是以企业的资质注册的小程序，可以拿到微信用户的手机号)</p>
+<h2 id="代码开发"><a href="#代码开发" class="headerlink" title="代码开发"></a>代码开发</h2><p>配置微信登录所需的配置项：</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228232754608.png" alt="image-20240228232754608"></p>
+<p>配置为微信用户生成jwt令牌时使用的配置项（管理端和用户端有不同的jwt令牌规则，注意token-name已经提前跟前端沟通好了，前端会通过请求头带过来token，然后我们按照获取这个参数的值来校验即可）</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228233039039.png" alt="image-20240228233039039"></p>
+<p>我们在这里设置了对应的配置属性类，程序启动时，@Component注解将其自动作为Bean对象注入到IOC容器中，同时@ConfigurationProperties(prefix&#x3D;”xxx”)会让该Bean对象从yml文件的对应配置项中获取属性值。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240228234536502.png" alt="image-20240228234536502"></p>
+<p><strong>UserContrller</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.controller.user;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.constant.JwtClaimsConstant;</span><br><span class="line"><span class="keyword">import</span> com.sky.dto.UserLoginDTO;</span><br><span class="line"><span class="keyword">import</span> com.sky.entity.User;</span><br><span class="line"><span class="keyword">import</span> com.sky.properties.JwtProperties;</span><br><span class="line"><span class="keyword">import</span> com.sky.result.Result;</span><br><span class="line"><span class="keyword">import</span> com.sky.service.UserService;</span><br><span class="line"><span class="keyword">import</span> com.sky.utils.JwtUtil;</span><br><span class="line"><span class="keyword">import</span> com.sky.vo.UserLoginVO;</span><br><span class="line"><span class="keyword">import</span> io.swagger.annotations.Api;</span><br><span class="line"><span class="keyword">import</span> io.swagger.annotations.ApiOperation;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PostMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestBody;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user/user&quot;)</span>  <span class="comment">//用户端的用户模块</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;C端用户相关接口&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JwtProperties jwtProperties;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 微信登录</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userLoginDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ApiOperation(&quot;微信登录&quot;)</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/login&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result&lt;UserLoginVO&gt; <span class="title function_">login</span><span class="params">(<span class="meta">@RequestBody</span> UserLoginDTO userLoginDTO)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;微信用户登录：&#123;&#125;&quot;</span>,userLoginDTO.getCode());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//微信登录</span></span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userService.wxLogin(userLoginDTO);</span><br><span class="line"></span><br><span class="line">        HashMap&lt;String, Object&gt; claims = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        claims.put(JwtClaimsConstant.USER_ID,user.getId());  <span class="comment">//用户的唯一标识，用户的主键ID</span></span><br><span class="line">        <span class="comment">//为微信用户生成jwt令牌</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> JwtUtil.createJWT(jwtProperties.getUserSecretKey(), jwtProperties.getUserTtl(), claims);</span><br><span class="line"></span><br><span class="line">        <span class="type">UserLoginVO</span> <span class="variable">userLoginVO</span> <span class="operator">=</span> UserLoginVO.builder()</span><br><span class="line">            .id(user.getId())</span><br><span class="line">            .openid(user.getOpenid())</span><br><span class="line">            .token(token)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.success(userLoginVO);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>UserService接口</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.dto.UserLoginDTO;</span><br><span class="line"><span class="keyword">import</span> com.sky.entity.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 微信登录，返回用户对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userLoginDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    User <span class="title function_">wxLogin</span><span class="params">(UserLoginDTO userLoginDTO)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>UserServiceImpl类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.sky.constant.MessageConstant;</span><br><span class="line"><span class="keyword">import</span> com.sky.dto.UserLoginDTO;</span><br><span class="line"><span class="keyword">import</span> com.sky.entity.User;</span><br><span class="line"><span class="keyword">import</span> com.sky.exception.LoginFailedException;</span><br><span class="line"><span class="keyword">import</span> com.sky.mapper.UserMapper;</span><br><span class="line"><span class="keyword">import</span> com.sky.properties.WeChatProperties;</span><br><span class="line"><span class="keyword">import</span> com.sky.service.UserService;</span><br><span class="line"><span class="keyword">import</span> com.sky.utils.HttpClientUtil;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> WeChatProperties weChatProperties;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//微信服务接口地址</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String WX_LOGIN=<span class="string">&quot;https://api.weixin.qq.com/sns/jscode2session&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 微信登录</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userLoginDTO</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">wxLogin</span><span class="params">(UserLoginDTO userLoginDTO)</span> &#123;</span><br><span class="line">        <span class="comment">//传统的用户登录是检查自己的用户表，检查用户名和密码是否正确，现在是微信服务，需要先调用微信服务器接口，获得当前微信用户的openid。</span></span><br><span class="line">        <span class="comment">//调用微信接口服务，获取当前微信用户的openid。</span></span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">openid</span> <span class="operator">=</span> getOpenid(userLoginDTO.getCode());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(openid == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">LoginFailedException</span>(MessageConstant.LOGIN_FAILED);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断当前用户是否为新用户</span></span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userMapper.getByOpenId(openid);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果是新用户，自动完成注册</span></span><br><span class="line">        <span class="keyword">if</span>(user == <span class="literal">null</span>)&#123;</span><br><span class="line">            user = User.builder()</span><br><span class="line">                    .openid(openid)</span><br><span class="line">                    .createTime(LocalDateTime.now())</span><br><span class="line">                    .build();</span><br><span class="line">            userMapper.insert(user);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//返回这个用户对象</span></span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 调用微信接口服务，获取微信用户的openid</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> code</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String <span class="title function_">getOpenid</span><span class="params">(String code)</span>&#123;</span><br><span class="line">        Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;appid&quot;</span>,weChatProperties.getAppid());</span><br><span class="line">        map.put(<span class="string">&quot;secret&quot;</span>,weChatProperties.getSecret());</span><br><span class="line">        map.put(<span class="string">&quot;js_code&quot;</span>,code);</span><br><span class="line">        map.put(<span class="string">&quot;grant_type&quot;</span>,<span class="string">&quot;authorization_code&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> HttpClientUtil.doGet(WX_LOGIN, map);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断openid是否为空，如果为空，表示登录失败，抛出业务异常</span></span><br><span class="line">        <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> JSON.parseObject(json);</span><br><span class="line">        <span class="type">String</span> <span class="variable">openid</span> <span class="operator">=</span> jsonObject.getString(<span class="string">&quot;openid&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> openid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>UserMapper类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.entity.User;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Insert;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Mapper;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Select;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserMapper</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据openid查询用户</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> openid</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Select(&quot;select * from User where openid = #&#123;openId&#125; &quot;)</span></span><br><span class="line">    User <span class="title function_">getByOpenId</span><span class="params">(String openid)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入用户对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(User user)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>UserMapper.xml</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span><br><span class="line">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">&quot;com.sky.mapper.UserMapper&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;insert id=<span class="string">&quot;insert&quot;</span> useGeneratedKeys=<span class="string">&quot;true&quot;</span> keyProperty=<span class="string">&quot;id&quot;</span>&gt;</span><br><span class="line">        insert into <span class="title function_">user</span> <span class="params">(openid, name, phone, sex, id_number, avatar, create_time)</span> VALUES</span><br><span class="line">                        (#&#123;openid&#125;,#&#123;name&#125;,#&#123;phone&#125;,#&#123;sex&#125;,#&#123;idNumber&#125;,#&#123;avatar&#125;,#&#123;createTime&#125;)</span><br><span class="line">    &lt;/insert&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229123908275.png" alt="image-20240229123908275"></p>
+<p>登录成功后，后续每一次请求，都会在请求头中把token带过去，但是它的请求头的键是authentication，值是登录成功是返回给小程序端的token。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229123949741.png" alt="image-20240229123949741"></p>
+<p>接下来要编写拦截器来校验用户端，也就是小程序端发送过来的请求，校验其token是否合法。</p>
+<p>复制客户端拦截器，修改部分代码</p>
+<p><strong>JwtTokenUserInterceptor</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sky.interceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sky.constant.JwtClaimsConstant;</span><br><span class="line"><span class="keyword">import</span> com.sky.context.BaseContext;</span><br><span class="line"><span class="keyword">import</span> com.sky.properties.JwtProperties;</span><br><span class="line"><span class="keyword">import</span> com.sky.utils.JwtUtil;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Claims;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.method.HandlerMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * jwt令牌校验的拦截器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtTokenUserInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JwtProperties jwtProperties;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 校验jwt</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handler</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;当前线程的id:&quot;</span> + Thread.currentThread().getId());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断当前拦截到的是Controller的方法还是其他资源</span></span><br><span class="line">        <span class="keyword">if</span> (!(handler <span class="keyword">instanceof</span> HandlerMethod)) &#123;</span><br><span class="line">            <span class="comment">//当前拦截到的不是动态方法，直接放行</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1、从请求头中获取令牌</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> request.getHeader(jwtProperties.getUserTokenName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2、校验令牌</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            log.info(<span class="string">&quot;jwt校验:&#123;&#125;&quot;</span>, token);</span><br><span class="line">            <span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> JwtUtil.parseJWT(jwtProperties.getUserSecretKey(), token);</span><br><span class="line">            <span class="type">Long</span> <span class="variable">userId</span> <span class="operator">=</span> Long.valueOf(claims.get(JwtClaimsConstant.USER_ID).toString());</span><br><span class="line">            log.info(<span class="string">&quot;当前用户id：&quot;</span>, userId);</span><br><span class="line">            BaseContext.setCurrentId(userId);</span><br><span class="line">            <span class="comment">//3、通过，放行</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            <span class="comment">//4、不通过，响应401状态码</span></span><br><span class="line">            response.setStatus(<span class="number">401</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229124703282.png" alt="image-20240229124703282"></p>
+<p><strong>注册拦截器，排除不用的部分</strong></p>
+<p><strong>WebMvcConfiguration</strong></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229124744445.png" alt="image-20240229124744445"></p>
+<h1 id="导入商品浏览功能代码"><a href="#导入商品浏览功能代码" class="headerlink" title="导入商品浏览功能代码"></a>导入商品浏览功能代码</h1><p>从技术层面来说仍然属于CRUD范围。分析需求，使用的接口。</p>
+<h2 id="需求分析和设计-1"><a href="#需求分析和设计-1" class="headerlink" title="需求分析和设计"></a>需求分析和设计</h2><p>用户进入苍穹外卖小程序之前要先进行微信登录，登录之后，会进入到下面这个页面。</p>
+<p><strong>产品原型</strong></p>
+<p>左侧：套餐分类、菜品分类。</p>
+<p>右侧：菜品。菜品展示还有区别，有的菜品有规格选择，有的菜品是+号。</p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229125411899.png" alt="image-20240229125411899"></p>
+<p><strong>接口分析</strong></p>
+<ol>
+<li>查询分类（左侧分类数据要查询，对应查询分类的接口。）</li>
+<li>根据分类id查询菜品（右侧菜品要查，根据某个菜品的分类ID查询对应的菜品。）</li>
+<li>根据分类id查询套餐（根据分类ID查套餐的数据。）</li>
+<li>根据套餐id查询包含的菜品（根据套餐ID查询他具体包含哪些菜品。）</li>
+</ol>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229125830802.png" alt="image-20240229125830802"></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229130002753.png" alt="image-20240229130002753"></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229130532936.png" alt="image-20240229130532936"></p>
+<p><img src="/2024/02/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day06-%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%E3%80%81%E5%95%86%E5%93%81%E6%B5%8F%E8%A7%88/image-20240229130554697.png" alt="image-20240229130554697"></p>
+<h2 id="代码导入和功能测试"><a href="#代码导入和功能测试" class="headerlink" title="代码导入和功能测试"></a>代码导入和功能测试</h2><p>(已完成)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/24/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-day05-redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4878,468 +5309,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/" itemprop="url">javeweb-day06-登录认证</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-12T19:34:18+08:00">
-                2024-02-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaweb/" itemprop="url" rel="index">
-                    <span itemprop="name">javaweb</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  16
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="基础登录功能"><a href="#基础登录功能" class="headerlink" title="基础登录功能"></a>基础登录功能</h1><p>判断用户输入的用户名和密码是否正确</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213121002402.png" alt="image-20240213121002402"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213121908243.png" alt="image-20240213121908243"></p>
-<h1 id="登录校验（重点）"><a href="#登录校验（重点）" class="headerlink" title="登录校验（重点）"></a>登录校验（重点）</h1><p><strong>联调测试</strong></p>
-<p><strong>问题</strong></p>
-<ul>
-<li>在未登录的情况下，我们也可以直接访问部门管理、员工管理等功能。</li>
-</ul>
-<p><strong>理想实现操作</strong></p>
-<ul>
-<li>在服务器接收到浏览器发送过来的请求之后，要先校验用户是否登录，如果用户已经登录了，直接执行业务操作即可。</li>
-<li>如果用户并没有登录，此时不允许执行相关操作，直接给前端响应一个错误的结果，最终跳转到登录页面，要求登录成功之后再来访问相应的数据。</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213122931243.png" alt="image-20240213122931243"></p>
-<p>HTTP请求是无状态的，即上一次业务操作与下一次业务操作是相互分隔的。所以服务器无法判断用户是否登录。</p>
-<p>解决办法：在服务器端存储登录标记，一旦员工登录成功，就存储相应的登录标记。根据用户是否登录执行不同的操作。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213123143360.png" alt="image-20240213123143360"></p>
-<p>每次操作都要判断用户是否登录，会导致后端的代码量上升，因此，我们产生了统一拦截的技术。通过统一拦截，我们可以拦截浏览器发送的所有请求，拦截到之后，就可以对请求进行校验，校验员工是否登录。如果拦截到请求后，没有获取到对应的登录标记，或者登录标记是有问题的，则直接给前端响应错误信息，前端会自动跳转到登录页面。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213123345266.png" alt="image-20240213123345266"></p>
-<p><strong>登陆标记</strong></p>
-<ul>
-<li>用户登录成功之后，每一次请求后，都可以获取到该标记。（会话技术）</li>
-</ul>
-<p><strong>统一拦截</strong></p>
-<ul>
-<li>过滤器Filter（servlet技术）</li>
-<li>拦截器Interceptor（spring技术）</li>
-</ul>
-<h2 id="会话技术"><a href="#会话技术" class="headerlink" title="会话技术"></a>会话技术</h2><ul>
-<li><p>会话：用户打开浏览器，访问web浏览器的资源，会话建立，直到有任何一方断开连接，会话结束。在一次会话中可以包含多次请求和响应。</p>
-</li>
-<li><p>会话跟踪：一种维护浏览器状态的方法，服务器需要识别多次请求是否来自于同一浏览器，以便在同一次会话的多次请求间共享数据。</p>
-</li>
-<li><p>会话跟踪方案：</p>
-<ul>
-<li>客户端会话跟踪技术：Cookie（浏览器）</li>
-<li>服务端会话跟踪技术：Session（服务器）</li>
-<li>令牌技术</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213123837098.png" alt="image-20240213123837098"></p>
-</li>
-</ul>
-<p><strong>会话跟踪方案对比</strong></p>
-<p> 服务器通过响应头直接设置Set-cookie:name&#x3D;value，响应头返回给浏览器，浏览器会自动解析这个响应头，然后拿到响应头对应的cookie，将其存储在浏览器本地，在后续的每一次请求，浏览器都会将存储的cookie值通过请求头携带到服务端，在Tomcat中，提供了cookie操作的api，可以很方便的设置。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213130050761.png" alt="image-20240213130050761"></p>
-<p><strong>SessionController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SessionController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置Cookie（服务器给浏览器设置响应数据）</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/c1&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">cookie1</span><span class="params">(HttpServletResponse response)</span>&#123;</span><br><span class="line">        response.addCookie(<span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;login_username&quot;</span>,<span class="string">&quot;itheima&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/c2&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">cookie2</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">        Cookie[] cookies = request.getCookies();</span><br><span class="line">        <span class="keyword">for</span> (Cookie cookie : cookies) &#123;</span><br><span class="line">            <span class="keyword">if</span>(cookie.getName().equals(<span class="string">&quot;login_username&quot;</span>))&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;login_username:&quot;</span> + cookie.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>优点：HTTP协议中支持的技术</p>
-<p>缺点：</p>
-<ul>
-<li>移动端APP无法使用Cookie</li>
-<li>不安全，用户可以自己禁用Cookie</li>
-<li>Cookie不能跨域</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213131523089.png" alt="image-20240213131523089"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213131651459.png" alt="image-20240213131651459"></p>
-<p>优点：存储在服务端，安全</p>
-<p>缺点：</p>
-<ul>
-<li><p>现在开发的服务器一般都部署在集群上，同一个项目部署多份，用户访问负载均衡的服务器，它负责将请求均匀的发送给后端的服务器。如果使用session，出现单点故障就寄了。</p>
-</li>
-<li><p>Cookie当中的缺点。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213132732677.png" alt="image-20240213132732677"></p>
-</li>
-</ul>
-<p><strong>SessionController类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Result;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SessionController</span> &#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/s1&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">session1</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;HttpSession-s1:&#123;&#125;&quot;</span>,session.hashCode());</span><br><span class="line"></span><br><span class="line">        session.setAttribute(<span class="string">&quot;loginUser&quot;</span>,<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/s2&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">session2</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">        <span class="type">HttpSession</span> <span class="variable">session</span> <span class="operator">=</span> request.getSession();</span><br><span class="line">        log.info(<span class="string">&quot;HttpSession-s2:&#123;&#125;&quot;</span>,session.hashCode());</span><br><span class="line"></span><br><span class="line">        <span class="type">Object</span> <span class="variable">loginUser</span> <span class="operator">=</span> session.getAttribute(<span class="string">&quot;loginUser&quot;</span>);</span><br><span class="line">        log.info(<span class="string">&quot;logUser:&#123;&#125;&quot;</span>,loginUser);</span><br><span class="line">        <span class="keyword">return</span> Result.success(loginUser);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="JWT令牌（主流）"><a href="#JWT令牌（主流）" class="headerlink" title="JWT令牌（主流）"></a>JWT令牌（主流）</h2><p>令牌就是用户身份的标识，本质就是一个字符串，通过令牌技术跟踪会话，浏览器发送请求，在请求登录接口的时候，如果登录成功，就生成一个令牌，令牌就是用户的合法身份凭证，在响应数据的时候，就可以把这个令牌响应给前端，接下来前端程序接收到这个令牌之后，就需要将这个令牌存储起来，令牌可以存储在cookie或者其他存储空间，后续的每一次请求，都需要将令牌携带到服务端，服务端需要校验令牌有效性，如果令牌有效，则说明用户已经执行了登录操作，如果令牌是无效的，则用户之前并未执行登录操作。</p>
-<p>如果想要在多次会话之间共享数据，可以将数据存储在令牌当中。</p>
-<p>优点：</p>
-<ul>
-<li>支持PC，移动端</li>
-<li>解决集群环境下的认证问题</li>
-<li>减轻服务器端存储压力</li>
-</ul>
-<p>缺点：需要自己编程实现</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213133400789.png" alt="image-20240213133400789"></p>
-<ul>
-<li><p>全称：JSON Web Token（<a target="_blank" rel="noopener" href="https://jwt.io/%EF%BC%89">https://jwt.io/）</a></p>
-</li>
-<li><p>定义了一种简洁的、自包含的格式，用于在通信双方以json数据格式安全的传输信息。由于数字签名的存在，这些信息是可靠的。</p>
-</li>
-<li><p>组成：</p>
-<ul>
-<li><p>第一部分：Header（头）：记录令牌类型、签名算法等。例如：{“alg”:”HS256”,”type”:”JWT”}</p>
-<p>在生成JWT的时候，要先进行Base64编码（是一种基于64个可打印字符（A-Z a-Z 0-9 + &#x2F;）来表示二进制数据的编码方式。</p>
-</li>
-<li><p>第二部分：Payload（有效载荷），携带了一些自定义信息、默认信息等。例如:{“id”:”1”,”username”:”Tom”}，也进行了Base64编码。</p>
-</li>
-<li><p>第三部分：Signature（签名），防止Token被篡改、确保安全性。将header，payload，并加入指定密钥，通过指定签名算法计算而来。</p>
-</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213134135704.png" alt="image-20240213134135704"></p>
-</li>
-<li><p>场景：登录认证。</p>
-<ul>
-<li><p>登录成功后，生成令牌。</p>
-</li>
-<li><p>后续每个请求，都要携带JWT令牌，系统在每次请求处理之前，先校验令牌，通过后，再处理</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213134329360.png" alt="image-20240213134329360"></p>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>JWT-生成</strong></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213134519464.png" alt="image-20240213134519464"></p>
-<p>pom.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>test单元测试（生成JWT令牌）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testGenJwt</span><span class="params">()</span>&#123;</span><br><span class="line">    Map&lt;String,Object&gt; claims = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    claims.put(<span class="string">&quot;id&quot;</span>,<span class="number">1</span>);</span><br><span class="line">    claims.put(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;tom&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">        .signWith(SignatureAlgorithm.HS256, <span class="string">&quot;itheima&quot;</span>) <span class="comment">//签名算法，其中itheima是密钥，用于第三部分加密</span></span><br><span class="line">        .setClaims(claims)  <span class="comment">//自定义内容（载荷）</span></span><br><span class="line">        .setExpiration(<span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis()) <span class="comment">// 设置JWT令牌的有效期为1h</span></span><br><span class="line">        .compact();</span><br><span class="line"></span><br><span class="line">    System.out.println(jwt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>（解析JWT令牌）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testParseJwt</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> Jwts.parser().setSigningKey(<span class="string">&quot;itheima&quot;</span>).parseClaimsJws(<span class="string">&quot;eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidG9tIiwiaWQiOjEsImV4cCI6MTcwNzgwNDA5Mn0.KCv1P2sm4hAMjEfW1OSDhk9iitL-oBlCvotb2OLWavo&quot;</span>).getBody();</span><br><span class="line"></span><br><span class="line">	System.out.println(claims);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>思路</p>
-<ul>
-<li>令牌生成：登录成功后，生成JWT令牌，并返回给前端。</li>
-<li>令牌校验：在请求到达服务端后，对令牌进行统一拦截，校验。</li>
-</ul>
-<p><strong>登录-生成令牌</strong></p>
-<p>步骤</p>
-<ul>
-<li>引入JWT令牌操作工具类。</li>
-<li>登录完成后，调用工具类生成JWT令牌，并返回。</li>
-</ul>
-<p><strong>JwtUtils.java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Claims;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.Jwts;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.SignatureAlgorithm;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">signKey</span> <span class="operator">=</span> <span class="string">&quot;itheima&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Long</span> <span class="variable">expire</span> <span class="operator">=</span> <span class="number">43200000L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生成JWT令牌</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> claims JWT第二部分负载 payload 中存储的内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">generateJwt</span><span class="params">(Map&lt;String, Object&gt; claims)</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">                .addClaims(claims)</span><br><span class="line">                .signWith(SignatureAlgorithm.HS256, signKey)</span><br><span class="line">                .setExpiration(<span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis() + expire))</span><br><span class="line">                .compact();</span><br><span class="line">        <span class="keyword">return</span> jwt;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解析JWT令牌</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jwt JWT令牌</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> JWT第二部分负载 payload 中存储的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Claims <span class="title function_">parseJWT</span><span class="params">(String jwt)</span>&#123;</span><br><span class="line">        <span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> Jwts.parser()</span><br><span class="line">                .setSigningKey(signKey)</span><br><span class="line">                .parseClaimsJws(jwt)</span><br><span class="line">                .getBody();</span><br><span class="line">        <span class="keyword">return</span> claims;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213142444360.png" alt="image-20240213142444360"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213142542418.png" alt="image-20240213142542418"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213142641695.png" alt="image-20240213142641695"></p>
-<h2 id="过滤器Filter"><a href="#过滤器Filter" class="headerlink" title="过滤器Filter"></a>过滤器Filter</h2><ul>
-<li><p>概念：Filter过滤器，是JavaWeb三大组件（Servlet、Filter、Linstener）之一。</p>
-</li>
-<li><p>过滤器可以把对资源的请求拦截下来，从而实现一些比较特殊的功能。</p>
-</li>
-<li><p>过滤器一般完成一些通用的操作，比如：登录校验、统一编码处理、敏感字符处理等。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213143033277.png" alt="image-20240213143033277"></p>
-</li>
-</ul>
-<h3 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h3><ol>
-<li><p>定义Filter：定义一个类，实现Filter接口，并重写其所有方法。</p>
-</li>
-<li><p>配置Filter：Filter类上加@WebFilter注解，配置拦截资源的路径。引导类上加@ServletComponentScan开启Servlet组件支持。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213143454407.png" alt="image-20240213143454407"></p>
-</li>
-</ol>
-<h3 id="详解-执行流程、拦截路径、过滤器链"><a href="#详解-执行流程、拦截路径、过滤器链" class="headerlink" title="详解(执行流程、拦截路径、过滤器链)"></a>详解(执行流程、拦截路径、过滤器链)</h3><p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213153026983.png" alt="image-20240213153026983"></p>
-<p>先执行放行前逻辑——放行——执行服务器代码——执行放行后逻辑。</p>
-<p>疑问</p>
-<ul>
-<li>放行后会访问对应资源，资源访问完成后，还会回到Filter中吗？会</li>
-<li>如果回到Filter中，是重新执行还是执行放行之后的逻辑呢？执行放行后逻辑</li>
-</ul>
-<p><strong>Filter拦截路径</strong></p>
-<ul>
-<li><p>Filter可以根据需求，配置不同的拦截资源路径</p>
-<table>
-<thead>
-<tr>
-<th>拦截路径</th>
-<th>urlPatterns值</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>拦截具体路径</td>
-<td>&#x2F;login</td>
-<td>只有访问&#x2F;login路径时，才会被拦截</td>
-</tr>
-<tr>
-<td>目录拦截</td>
-<td>&#x2F;emps&#x2F;*</td>
-<td>访问&#x2F;emps下的所有资源，都会被拦截</td>
-</tr>
-<tr>
-<td>拦截所有</td>
-<td>&#x2F;*</td>
-<td>访问所有资源，都会被拦截</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<p><strong>过滤器链</strong></p>
-<ul>
-<li><p>介绍：一个web应用中，可以配置多个过滤器，这多个过滤器就形成了一个过滤器链。</p>
-</li>
-<li><p>顺序：注解配置的filter，优先级默认是按照过滤器类名（字符串）的自然排序。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213154743954.png" alt="image-20240213154743954"></p>
-</li>
-</ul>
-<p><strong>小结</strong></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213154815641.png" alt="image-20240213154815641"></p>
-<h3 id="登录校验-Filter"><a href="#登录校验-Filter" class="headerlink" title="登录校验-Filter"></a>登录校验-Filter</h3><p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213154957750.png" alt="image-20240213154957750"></p>
-<p>思考</p>
-<ul>
-<li>所有的请求，拦截到了之后，都需要校验令牌吗？有一个例外，登录请求</li>
-<li>拦截到请求后，什么情况下才可以放行，执行业务操作？有令牌，且令牌校验通过（合法）；否则都返回未登录错误结果</li>
-</ul>
-<p>步骤</p>
-<ul>
-<li>获取请求url。</li>
-<li>判断请求url中是否包含login，如果包含，说明是登录操作，放行。</li>
-<li>获取请求头中的令牌（token）。</li>
-<li>判断令牌是否存在，如果不存在，返回错误结果（未登录）。</li>
-<li>解析token，如果解析失败，返回错误结果（未登录）。</li>
-<li>放行。</li>
-</ul>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213155513342.png" alt="image-20240213155513342"></p>
-<p><strong>LoginCheckFilter类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.filter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Result;</span><br><span class="line"><span class="keyword">import</span> com.example.utils.JwtUtils;</span><br><span class="line"><span class="keyword">import</span> com.github.pagehelper.util.StringUtil;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> netscape.javascript.JSObject;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.StringUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebFilter;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@WebFilter(urlPatterns =  &quot;/*&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginCheckFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="comment">//1. 获取请求url。</span></span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">req</span> <span class="operator">=</span> (HttpServletRequest) servletRequest;</span><br><span class="line">        <span class="type">HttpServletResponse</span> <span class="variable">resp</span> <span class="operator">=</span> (HttpServletResponse) servletResponse;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 判断请求url中是否包含login，如果包含，说明是登录操作，放行。</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> req.getRequestURI().toString();</span><br><span class="line">        log.info(<span class="string">&quot;请求的url：&#123;&#125;&quot;</span>,url);</span><br><span class="line">        <span class="keyword">if</span>(url.contains(<span class="string">&quot;login&quot;</span>))&#123;</span><br><span class="line">            log.info(<span class="string">&quot;登录操作，放行....&quot;</span>);</span><br><span class="line">            filterChain.doFilter(servletRequest, servletResponse);</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3. 获取请求头中的令牌（token）。</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> req.getHeader(<span class="string">&quot;token&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4. 判断令牌是否存在，如果不存在，返回错误结果（未登录）。</span></span><br><span class="line">        <span class="keyword">if</span>(!StringUtils.hasLength(jwt))&#123;</span><br><span class="line">            log.info(<span class="string">&quot;请求头token为空，返回未登录的信息&quot;</span>);</span><br><span class="line">            <span class="type">Result</span> <span class="variable">error</span> <span class="operator">=</span> Result.error(<span class="string">&quot;NOT_LOGIN&quot;</span>);</span><br><span class="line">            <span class="comment">//手动转换 对象 --阿里巴巴fastjson</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">notlogin</span> <span class="operator">=</span> JSONObject.toJSONString(error);</span><br><span class="line">            resp.getWriter().write(notlogin);</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5. 解析token，如果解析失败，返回错误结果（未登录）。</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            JwtUtils.parseJWT(jwt);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123; <span class="comment">//jwt解析失败</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            log.info(<span class="string">&quot;解析令牌失败。返回未登录错误信息&quot;</span>);</span><br><span class="line">            <span class="type">Result</span> <span class="variable">error</span> <span class="operator">=</span> Result.error(<span class="string">&quot;NOT_LOGIN&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">notlogin</span> <span class="operator">=</span> JSONObject.toJSONString(error);</span><br><span class="line">            resp.getWriter().write(notlogin);</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//6. 放行。</span></span><br><span class="line">        log.info(<span class="string">&quot;令牌合法，放行&quot;</span>);</span><br><span class="line">        filterChain.doFilter(servletRequest, servletResponse);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="拦截器Interceptor"><a href="#拦截器Interceptor" class="headerlink" title="拦截器Interceptor"></a>拦截器Interceptor</h2><h3 id="简介-快速入门"><a href="#简介-快速入门" class="headerlink" title="简介 &amp; 快速入门"></a>简介 &amp; 快速入门</h3><ul>
-<li>概念：是一种动态拦截方法调用的机制，类似于过滤器。Spring框架中提供的，用来动态拦截控制器方法的执行。</li>
-<li>作用：拦截请求，在请求的方法调用前后，根据业务需要执行预先设定的代码。</li>
-</ul>
-<ol>
-<li><p>定义拦截器，实现HandlerInterceptor接口，并重写其中所有方法。</p>
-</li>
-<li><p>注册拦截器。</p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213194352886.png" alt="image-20240213194352886"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213194419268.png" alt="image-20240213194419268"></p>
-<p><strong>LoginCheckInterceptor.java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.interceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginCheckInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//目标资源方法运行前运行，返回true；放行，返回false，不放行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;preHandle...&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//目标资源方法运行后运行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;postHandle...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">// 视图渲染完毕后运行，最后运行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;afterCompletion...&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>WebConfig.java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.interceptor.LoginCheckInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span> <span class="comment">//配置类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> LoginCheckInterceptor loginCheckInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">        registry.addInterceptor(loginCheckInterceptor).addPathPatterns(<span class="string">&quot;/**&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li><p>拦截器可以根据需求，配置不同的拦截路径：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.interceptor.LoginCheckInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.InterceptorRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span> <span class="comment">//配置类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> LoginCheckInterceptor loginCheckInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;       registry.addInterceptor(loginCheckInterceptor).addPathPatterns(<span class="string">&quot;/**&quot;</span>).excludePathPatterns(<span class="string">&quot;/login&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>拦截路径</th>
-<th>含义</th>
-<th>举例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&#x2F;*</td>
-<td>一级路径</td>
-<td>能匹配&#x2F;depts,&#x2F;emps,&#x2F;login，不能匹配&#x2F;depts&#x2F;1</td>
-</tr>
-<tr>
-<td>&#x2F;**</td>
-<td>任意级路径</td>
-<td>能匹配&#x2F;depts,&#x2F;depts&#x2F;1,&#x2F;depts&#x2F;1&#x2F;2</td>
-</tr>
-<tr>
-<td>&#x2F;depts&#x2F;*</td>
-<td>&#x2F;depts下的一级路径</td>
-<td>能匹配&#x2F;depts&#x2F;1，不能匹配&#x2F;depts&#x2F;1&#x2F;2，&#x2F;depts</td>
-</tr>
-<tr>
-<td>&#x2F;depts&#x2F;**</td>
-<td>&#x2F;depts下的任意级路径</td>
-<td>能匹配&#x2F;depts,&#x2F;depts&#x2F;1,depts&#x2F;1&#x2F;2;不能匹配&#x2F;emps</td>
-</tr>
-</tbody></table>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213202921519.png" alt="image-20240213202921519"></p>
-</li>
-</ul>
-<p><strong>Filter与Interceptor</strong></p>
-<ul>
-<li>接口规范不同：过滤器需要实现Filter接口，而拦截器需要实现HandlerInterceptor接口。</li>
-<li>拦截范围不同：过滤器Filter会拦截所有资源，而Interceptor只会拦截Spring环境中的资源。</li>
-</ul>
-<h3 id="登录校验-Interceptor"><a href="#登录校验-Interceptor" class="headerlink" title="登录校验 - Interceptor"></a>登录校验 - Interceptor</h3><p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213203640091.png" alt="image-20240213203640091"></p>
-<p><strong>LoginCheckInterceptor类</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.interceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.example.pojo.Result;</span><br><span class="line"><span class="keyword">import</span> com.example.utils.JwtUtils;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.HandlerInterceptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginCheckInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//目标资源方法运行前运行，返回true；放行，返回false，不放行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;preHandle...&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1. 获取请求url。</span></span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">req</span> <span class="operator">=</span> (HttpServletRequest) request;</span><br><span class="line">        <span class="type">HttpServletResponse</span> <span class="variable">resp</span> <span class="operator">=</span> (HttpServletResponse) response;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 判断请求url中是否包含login，如果包含，说明是登录操作，放行。</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> req.getRequestURI().toString();</span><br><span class="line">        log.info(<span class="string">&quot;请求的url：&#123;&#125;&quot;</span>,url);</span><br><span class="line">        <span class="keyword">if</span>(url.contains(<span class="string">&quot;login&quot;</span>))&#123;</span><br><span class="line">            log.info(<span class="string">&quot;登录操作，放行....&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3. 获取请求头中的令牌（token）。</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> req.getHeader(<span class="string">&quot;token&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4. 判断令牌是否存在，如果不存在，返回错误结果（未登录）。</span></span><br><span class="line">        <span class="keyword">if</span>(!StringUtils.hasLength(jwt))&#123;</span><br><span class="line">            log.info(<span class="string">&quot;请求头token为空，返回未登录的信息&quot;</span>);</span><br><span class="line">            <span class="type">Result</span> <span class="variable">error</span> <span class="operator">=</span> Result.error(<span class="string">&quot;NOT_LOGIN&quot;</span>);</span><br><span class="line">            <span class="comment">//手动转换 对象 --阿里巴巴fastjson</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">notlogin</span> <span class="operator">=</span> JSONObject.toJSONString(error);</span><br><span class="line">            resp.getWriter().write(notlogin);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5. 解析token，如果解析失败，返回错误结果（未登录）。</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            JwtUtils.parseJWT(jwt);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123; <span class="comment">//jwt解析失败</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            log.info(<span class="string">&quot;解析令牌失败。返回未登录错误信息&quot;</span>);</span><br><span class="line">            <span class="type">Result</span> <span class="variable">error</span> <span class="operator">=</span> Result.error(<span class="string">&quot;NOT_LOGIN&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">notlogin</span> <span class="operator">=</span> JSONObject.toJSONString(error);</span><br><span class="line">            resp.getWriter().write(notlogin);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//6. 放行。</span></span><br><span class="line">        log.info(<span class="string">&quot;令牌合法，放行&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//目标资源方法运行后运行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;postHandle...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">// 视图渲染完毕后运行，最后运行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;afterCompletion...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213205958788.png" alt="image-20240213205958788"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240213210058206.png" alt="image-20240213210058206"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240214120014045.png" alt="image-20240214120014045"></p>
-<p><img src="/2024/02/12/javeweb-day06-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81/image-20240214120254171.png" alt="image-20240214120254171"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -5394,7 +5363,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5463,6 +5432,10 @@
 				  
 				  
 					<li class="recent_posts_li">
+					  <a href="/2024/04/17/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day10-%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83/" title="学成在线-day10-认证授权" target="_blank">学成在线-day10-认证授权</a>
+					</li>
+				  
+					<li class="recent_posts_li">
 					  <a href="/2024/04/03/%E5%86%85%E5%8A%9F-day02-redis%E7%AF%87/" title="内功-day02-redis篇" target="_blank">内功-day02-redis篇</a>
 					</li>
 				  
@@ -5476,10 +5449,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/03/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" title="苍穹外卖技术总结" target="_blank">苍穹外卖技术总结</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/24/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day09-%E8%AF%BE%E7%A8%8B%E5%8F%91%E5%B8%83/" title="学成在线-day09-课程发布 + day10-页面静态化、认证授权、SpringSecurity" target="_blank">学成在线-day09-课程发布 + day10-页面静态化、认证授权、SpringSecurity</a>
 					</li>
 				  
 				</ul>
@@ -5526,7 +5495,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">278k</span>
+    <span title="Site words total count">304.6k</span>
   
 </div>
 
