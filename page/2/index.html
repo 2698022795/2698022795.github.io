@@ -297,6 +297,366 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="章北海">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url">学成在线-day05-项目实战</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+			
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-20T18:08:18+08:00">
+                2024-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">学成在线</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="实战环境"><a href="#实战环境" class="headerlink" title="实战环境"></a><strong>实战环境</strong></h1><h2 id="实战流程"><a href="#实战流程" class="headerlink" title="实战流程"></a><strong>实战流程</strong></h2><p>项目实战是模拟企业实际开发的场景，自己参考文档独立完成开发任务，项目实战可以有效的培养自己面对需求进行分析与开发的能力。</p>
+<p>实战流程如下：</p>
+<p>1、由组长将实战的初始代码提交至本组git仓库。</p>
+<p>2、每位成员从此仓库clone项目。</p>
+<p>3、小组共同讨论实战功能需求及接口。</p>
+<p>4、根据自己小组的情况进行分工，每人至少写一个接口并测试通过、提交至仓库。</p>
+<p><strong>注意：每人在开发接口时创建自己的service、controller接口和类，不要出现多人共用同一个文件的情况。</strong></p>
+<p>5、待功能开发完毕小组成员拉下全部代码，进行交叉测试，测试出来的bug信息记录在word文档上提交给组长由组长汇总。</p>
+<p>6、根据bug记录进行修复自己接口中的bug，修复完成并测试没有问题后提交给Git。</p>
+<p>7、整体流程测试，包括如下：</p>
+<p>1）从网上找一门详细的课程信息(包括课程大纲) 添加到系统中。</p>
+<p>功能包括：添加课程、添加课程计划、添加师资信息。</p>
+<p>2）演示修改课程、修改课程计划及修改师资信息功能。</p>
+<p>3）演示课程计划上移、下移功能。</p>
+<p>4）演示删除课程计划、删除师资、删除课程功能。</p>
+<p>8、项目评比</p>
+<p><strong>小组推荐一名成员作工作汇总，老师根据团队协作情况、功能完成情况、演讲能力进行打分（满分10分）。</strong></p>
+<h2 id="创建Git远程仓库"><a href="#创建Git远程仓库" class="headerlink" title="创建Git远程仓库"></a><strong>创建Git远程仓库</strong></h2><p>因为组员无法访问组长虚拟机中的gogs所以由组长在自己的电脑上安装gogs，这里提供windwos版本安装包，如果安装有问题也可以使用公网的git仓库，比如码云。</p>
+<p>组长解压 软件工具目录下的gogs_0.12.10_windows_amd64.zip，安装gogs</p>
+<p>解压后cmd进入gogs安装目录，输入gogs.exe web</p>
+<p>自动打开安装界面：</p>
+<p>第一步填写数据库信息</p>
+<p>输入虚拟机中的数据库地址和账号、密码，数据库名称为gogs_windows，需要提前在数据库中创建gogs_windows数据库</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image002.gif" alt="img"></p>
+<p>第二步应用基本设置：</p>
+<p>仓库目录可以设置在gogs的安装目录下</p>
+<p>域名为虚拟域名，组长和组员在自己的hosts文件中配置该域名及对应的组长电脑的IP地址。</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image004.gif" alt="img"></p>
+<p>下边配置日志路径 ，日志路径可以设置在gogs的安装目录下</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image006.gif" alt="img"></p>
+<p>下边配置管理员账号和密码：gogs&#x2F;gogs</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image008.gif" alt="img"></p>
+<p>输入完毕点击立即安装</p>
+<p>安装完毕自动跳转到 <a target="_blank" rel="noopener" href="http://group1.xuecheng.com:3000/">http://group1.xuecheng.com:3000/</a></p>
+<p>组长使用管理员账号密码登录，登录后参考 学成在线项目开发环境配置文档去创建组织及仓库，仓库的代码是老师下发的实战基础代码。</p>
+<p>组长为组员创建git账号，创建完成将账号和密码发给每位组员。</p>
+<p>组员需要记住自己的git账号和密码，</p>
+<h2 id="拉取代码"><a href="#拉取代码" class="headerlink" title="拉取代码"></a><strong>拉取代码</strong></h2><p>组员拉取本组git远程仓库的代码，根据任务分工开始协作开发。</p>
+<p>例如：本组的git仓库地址为<a target="_blank" rel="noopener" href="http://group1.xuecheng.com:3000/xuecheng-plus-group01/xuecheng-plus-project.git">http://group1.xuecheng.com:3000/xuecheng-plus-group01/xuecheng-plus-project.git</a></p>
+<p>本组全体成员拉取此仓库的代码，根据任务分工开始协作开发。</p>
+<h1 id="删除课程计划"><a href="#删除课程计划" class="headerlink" title="删除课程计划"></a><strong>删除课程计划</strong></h1><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a><strong>需求分析</strong></h2><p>课程计划添加成功，如果课程还没有提交时可以删除课程计划。</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image010.gif" alt="img"></p>
+<p>删除第一级别的大章节时要求大章节下边没有小章节时方可删除。</p>
+<p>删除第二级别的小章节的同时需要将teachplan_media表关联的信息也删除。</p>
+<h4 id="接口定义"><a href="#接口定义" class="headerlink" title="接口定义"></a>接口定义</h4><ul>
+<li>删除课程计划的接口示例如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JSON</span><br><span class="line">删除结点</span><br><span class="line">Request URL: /content/teachplan/<span class="number">246</span></span><br><span class="line">Request Method: DELETE</span><br><span class="line">如果失败：</span><br><span class="line">&#123;<span class="string">&quot;errCode&quot;</span>:<span class="string">&quot;120409&quot;</span>,<span class="string">&quot;errMessage&quot;</span>:<span class="string">&quot;课程计划信息还有子级信息，无法操作&quot;</span>&#125;</span><br><span class="line">如果成功：状态码<span class="number">200</span>，不返回信息</span><br></pre></td></tr></table></figure>
+
+<p>我这里没管这个错误状态码，因为与之前编写的异常模型类不符合</p>
+<ul>
+<li>定义接口如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JAVA</span><br><span class="line"><span class="meta">@ApiOperation(&quot;课程计划删除&quot;)</span></span><br><span class="line"><span class="meta">@DeleteMapping(&quot;/content/teachplan/&#123;teachplanId&#125;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteTeachplan</span><span class="params">(<span class="meta">@PathVariable</span> Long teachplanId)</span> &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接口开发"><a href="#接口开发" class="headerlink" title="接口开发"></a>接口开发</h4><ul>
+<li>定义删除课程计划的接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JAVA</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">deleteTeachplan</span><span class="params">(Long teachplanId)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对应的接口实现</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteTeachplan</span><span class="params">(Long teachplanId)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (teachplanId == <span class="literal">null</span>)</span><br><span class="line">        XueChengPlusException.cast(<span class="string">&quot;课程计划id为空&quot;</span>);</span><br><span class="line">    <span class="type">Teachplan</span> <span class="variable">teachplan</span> <span class="operator">=</span> teachplanMapper.selectById(teachplanId);</span><br><span class="line">    <span class="comment">// 判断当前课程计划是章还是节</span></span><br><span class="line">    <span class="type">Integer</span> <span class="variable">grade</span> <span class="operator">=</span> teachplan.getGrade();</span><br><span class="line">    <span class="comment">// 当前课程计划为章</span></span><br><span class="line">    <span class="keyword">if</span> (grade == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// 查询当前课程计划下是否有小节</span></span><br><span class="line">        LambdaQueryWrapper&lt;Teachplan&gt; queryWrapper = <span class="keyword">new</span> <span class="title class_">LambdaQueryWrapper</span>&lt;&gt;();</span><br><span class="line">        <span class="comment">// select * from teachplan where parentid = &#123;当前章计划id&#125;</span></span><br><span class="line">        queryWrapper.eq(Teachplan::getParentid, teachplanId);</span><br><span class="line">        <span class="comment">// 获取一下查询的条目数</span></span><br><span class="line">        <span class="type">Integer</span> <span class="variable">count</span> <span class="operator">=</span> teachplanMapper.selectCount(queryWrapper);</span><br><span class="line">        <span class="comment">// 如果当前章下还有小节，则抛异常</span></span><br><span class="line">        <span class="keyword">if</span> (count &gt; <span class="number">0</span>)</span><br><span class="line">            XueChengPlusException.cast(<span class="string">&quot;课程计划信息还有子级信息，无法操作&quot;</span>);</span><br><span class="line">        teachplanMapper.deleteById(teachplanId);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 课程计划为节</span></span><br><span class="line">        teachplanMapper.deleteById(teachplanId);</span><br><span class="line">        LambdaQueryWrapper&lt;TeachplanMedia&gt; queryWrapper = <span class="keyword">new</span> <span class="title class_">LambdaQueryWrapper</span>&lt;&gt;();</span><br><span class="line">        queryWrapper.eq(TeachplanMedia::getTeachplanId, teachplanId);</span><br><span class="line">        teachplanMediaMapper.delete(queryWrapper);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>完善Controller层接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JAVA</span><br><span class="line">复制成功<span class="meta">@ApiOperation(&quot;课程计划删除&quot;)</span></span><br><span class="line"><span class="meta">@DeleteMapping(&quot;/teachplan/&#123;teachplanId&#125;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteTeachplan</span><span class="params">(<span class="meta">@PathVariable</span> Long teachplanId)</span> &#123;</span><br><span class="line">    teachplanService.deleteTeachplan(teachplanId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接口测试"><a href="#接口测试" class="headerlink" title="接口测试"></a>接口测试</h4><ul>
+<li>删除有子计划的章节</li>
+<li>删除没有子计划的章节和小节</li>
+<li>删除有媒资信息的小节后，去数据库中查看对应的媒资信息是否真的被删除</li>
+</ul>
+<h2 id="接口定义-1"><a href="#接口定义-1" class="headerlink" title="接口定义"></a><strong>接口定义</strong></h2><p>删除课程计划的接口定义：</p>
+<p>传入课程计划id进行删除操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Request URL: /content/teachplan/<span class="number">246</span></span><br><span class="line">Request Method: DELETE</span><br><span class="line"></span><br><span class="line">如果失败返回：</span><br><span class="line">&#123;<span class="string">&quot;errCode&quot;</span>:<span class="string">&quot;120409&quot;</span>,<span class="string">&quot;errMessage&quot;</span>:<span class="string">&quot;课程计划信息还有子级信息，无法操作&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">如果成功：状态码<span class="number">200</span>，不返回信息</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="接口测试-1"><a href="#接口测试-1" class="headerlink" title="接口测试"></a><strong>接口测试</strong></h2><p>首先使用httpclient工具进行测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">### 删除课程计划</span><br><span class="line">DELETE &#123;&#123;content_host&#125;&#125;/content/teachplan/<span class="number">43</span></span><br></pre></td></tr></table></figure>
+
+<p>分以下情况测试：</p>
+<p>1、删除大章节，大章节下有小章节时不允许删除。</p>
+<p>2、删除大章节，大单节下没有小章节时可以正常删除。</p>
+<p>3、删除小章节，同时将关联的信息进行删除。</p>
+<h2 id="课程计划排序"><a href="#课程计划排序" class="headerlink" title="课程计划排序"></a><strong>课程计划排序</strong></h2><h2 id="需求分析-1"><a href="#需求分析-1" class="headerlink" title="需求分析"></a><strong>需求分析</strong></h2><p>课程计划新增后默认排在同级别最后，课程计划排序功能是可以灵活调整课程计划的显示顺序，如下图：</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image012.gif" alt="img"></p>
+<p>上移表示将课程计划向上移动。</p>
+<p>下移表示将课程计划向下移动。</p>
+<p>向上移动后和上边同级的课程计划交换位置，可以将两个课程计划的排序字段值进行交换。</p>
+<p>向下移动后和下边同级的课程计划交换位置，可以将两个课程计划的排序字段值进行交换。</p>
+<h2 id="接口定义-2"><a href="#接口定义-2" class="headerlink" title="接口定义"></a><strong>接口定义</strong></h2><p>接口示例如下：</p>
+<p>向下移动：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Request URL: http:<span class="comment">//localhost:8601/api/content/teachplan/movedown/43</span></span><br><span class="line">Request Method: POST</span><br></pre></td></tr></table></figure>
+
+<p>参数1：movedown 为 移动类型，表示向下移动<br> 参数2：43为课程计划id</p>
+<p>向上移动：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Java</span><br><span class="line">Request URL: http:<span class="comment">//localhost:8601/api/content/teachplan/moveup/43</span></span><br><span class="line">Request Method: POST</span><br></pre></td></tr></table></figure>
+
+<p>参数1：moveup 为 移动类型，表示向上移动<br> 参数2：43为课程计划id</p>
+<p>每次移动传递两个参数：</p>
+<p>1、移动类型: movedown和moveup</p>
+<p>2、课程计划id</p>
+<ul>
+<li>定义接口如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@ApiOperation(&quot;课程计划排序&quot;)</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/teachplan/&#123;moveType&#125;/&#123;teachplanId&#125;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">orderByTeachplan</span><span class="params">(<span class="meta">@PathVariable</span> String moveType, <span class="meta">@PathVariable</span> Long teachplanId)</span> &#123;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接口开发-1"><a href="#接口开发-1" class="headerlink" title="接口开发"></a>接口开发</h4><ul>
+<li>定义课程计划排序接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">orderByTeachplan</span><span class="params">(String moveType, Long teachplanId)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编写对应的实现方法<ul>
+<li>写的稍微复杂了些，其实也可以简化，在lt和orderby的前面加上判断条件就可以，但是可读性会降低</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">orderByTeachplan</span><span class="params">(String moveType, Long teachplanId)</span> &#123;</span><br><span class="line">    <span class="type">Teachplan</span> <span class="variable">teachplan</span> <span class="operator">=</span> teachplanMapper.selectById(teachplanId);</span><br><span class="line">    <span class="comment">// 获取层级和当前orderby，章节移动和小节移动的处理方式不同</span></span><br><span class="line">    <span class="type">Integer</span> <span class="variable">grade</span> <span class="operator">=</span> teachplan.getGrade();</span><br><span class="line">    <span class="type">Integer</span> <span class="variable">orderby</span> <span class="operator">=</span> teachplan.getOrderby();</span><br><span class="line">    <span class="comment">// 章节移动是比较同一课程id下的orderby</span></span><br><span class="line">    <span class="type">Long</span> <span class="variable">courseId</span> <span class="operator">=</span> teachplan.getCourseId();</span><br><span class="line">    <span class="comment">// 小节移动是比较同一章节id下的orderby</span></span><br><span class="line">    <span class="type">Long</span> <span class="variable">parentid</span> <span class="operator">=</span> teachplan.getParentid();</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&quot;moveup&quot;</span>.equals(moveType)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (grade == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// 章节上移，找到上一个章节的orderby，然后与其交换orderby</span></span><br><span class="line">            <span class="comment">// SELECT * FROM teachplan WHERE courseId = 117 AND grade = 1  AND orderby &lt; 1 ORDER BY orderby DESC LIMIT 1</span></span><br><span class="line">            LambdaQueryWrapper&lt;Teachplan&gt; queryWrapper = <span class="keyword">new</span> <span class="title class_">LambdaQueryWrapper</span>&lt;&gt;();</span><br><span class="line">            queryWrapper.eq(Teachplan::getGrade, <span class="number">1</span>)</span><br><span class="line">                    .eq(Teachplan::getCourseId, courseId)</span><br><span class="line">                    .lt(Teachplan::getOrderby, orderby)</span><br><span class="line">                    .orderByDesc(Teachplan::getOrderby)</span><br><span class="line">                    .last(<span class="string">&quot;LIMIT 1&quot;</span>);</span><br><span class="line">            <span class="type">Teachplan</span> <span class="variable">tmp</span> <span class="operator">=</span> teachplanMapper.selectOne(queryWrapper);</span><br><span class="line">            exchangeOrderby(teachplan, tmp);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (grade == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="comment">// 小节上移</span></span><br><span class="line">            <span class="comment">// SELECT * FROM teachplan WHERE parentId = 268 AND orderby &lt; 5 ORDER BY orderby DESC LIMIT 1</span></span><br><span class="line">            LambdaQueryWrapper&lt;Teachplan&gt; queryWrapper = <span class="keyword">new</span> <span class="title class_">LambdaQueryWrapper</span>&lt;&gt;();</span><br><span class="line">            queryWrapper.eq(Teachplan::getParentid, parentid)</span><br><span class="line">                    .lt(Teachplan::getOrderby, orderby)</span><br><span class="line">                    .orderByDesc(Teachplan::getOrderby)</span><br><span class="line">                    .last(<span class="string">&quot;LIMIT 1&quot;</span>);</span><br><span class="line">            <span class="type">Teachplan</span> <span class="variable">tmp</span> <span class="operator">=</span> teachplanMapper.selectOne(queryWrapper);</span><br><span class="line">            exchangeOrderby(teachplan, tmp);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;movedown&quot;</span>.equals(moveType)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (grade == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// 章节下移</span></span><br><span class="line">            <span class="comment">// SELECT * FROM teachplan WHERE courseId = 117 AND grade = 1 AND orderby &gt; 1 ORDER BY orderby ASC LIMIT 1</span></span><br><span class="line">            LambdaQueryWrapper&lt;Teachplan&gt; queryWrapper = <span class="keyword">new</span> <span class="title class_">LambdaQueryWrapper</span>&lt;&gt;();</span><br><span class="line">            queryWrapper.eq(Teachplan::getCourseId, courseId)</span><br><span class="line">                    .eq(Teachplan::getGrade, grade)</span><br><span class="line">                    .gt(Teachplan::getOrderby, orderby)</span><br><span class="line">                    .orderByAsc(Teachplan::getOrderby)</span><br><span class="line">                    .last(<span class="string">&quot;LIMIT 1&quot;</span>);</span><br><span class="line">            <span class="type">Teachplan</span> <span class="variable">tmp</span> <span class="operator">=</span> teachplanMapper.selectOne(queryWrapper);</span><br><span class="line">            exchangeOrderby(teachplan, tmp);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (grade == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="comment">// 小节下移</span></span><br><span class="line">            <span class="comment">// SELECT * FROM teachplan WHERE parentId = 268 AND orderby &gt; 1 ORDER BY orderby ASC LIMIT 1</span></span><br><span class="line">            LambdaQueryWrapper&lt;Teachplan&gt; queryWrapper = <span class="keyword">new</span> <span class="title class_">LambdaQueryWrapper</span>&lt;&gt;();</span><br><span class="line">            queryWrapper.eq(Teachplan::getParentid, parentid)</span><br><span class="line">                    .gt(Teachplan::getOrderby, orderby)</span><br><span class="line">                    .orderByAsc(Teachplan::getOrderby)</span><br><span class="line">                    .last(<span class="string">&quot;LIMIT 1&quot;</span>);</span><br><span class="line">            <span class="type">Teachplan</span> <span class="variable">tmp</span> <span class="operator">=</span> teachplanMapper.selectOne(queryWrapper);</span><br><span class="line">            exchangeOrderby(teachplan, tmp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 交换两个Teachplan的orderby</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> teachplan </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> tmp </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">exchangeOrderby</span><span class="params">(Teachplan teachplan, Teachplan tmp)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (tmp == <span class="literal">null</span>)</span><br><span class="line">        XueChengPlusException.cast(<span class="string">&quot;已经到头啦，不能再移啦&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 交换orderby，更新</span></span><br><span class="line">        <span class="type">Integer</span> <span class="variable">orderby</span> <span class="operator">=</span> teachplan.getOrderby();</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">tmpOrderby</span> <span class="operator">=</span> tmp.getOrderby();</span><br><span class="line">        teachplan.setOrderby(tmpOrderby);</span><br><span class="line">        tmp.setOrderby(orderby);</span><br><span class="line">        teachplanMapper.updateById(tmp);</span><br><span class="line">        teachplanMapper.updateById(teachplan);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>完善Controller</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@ApiOperation(&quot;课程计划排序&quot;)</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/teachplan/&#123;moveType&#125;/&#123;teachplanId&#125;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">orderByTeachplan</span><span class="params">(<span class="meta">@PathVariable</span> String moveType, <span class="meta">@PathVariable</span> Long teachplanId)</span> &#123;</span><br><span class="line">    teachplanService.orderByTeachplan(moveType, teachplanId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="接口测试-2"><a href="#接口测试-2" class="headerlink" title="接口测试"></a><strong>接口测试</strong></h2><p>该功能可直接进行前后端联调，可以立即看到 效果。</p>
+<p>1、向上移动测试</p>
+<p> 先找一个上边有课程计划的进行测试，向上移动后两个交换顺序。</p>
+<p>再找最上边的课程计划向上移动，操作后位置不变因为已经在最上边了。</p>
+<p>2、向下移动测试</p>
+<p>先找一个下边有课程计划的进行测试，向下移动后两个交换顺序。</p>
+<p>再找最下边的课程计划向下移动，操作后位置不变因为已经在最下边了。</p>
+<h2 id="师资管理"><a href="#师资管理" class="headerlink" title="师资管理"></a><strong>师资管理</strong></h2><h2 id="需求分析-2"><a href="#需求分析-2" class="headerlink" title="需求分析"></a><strong>需求分析</strong></h2><p>在课程计划维护界面点击下一步进入师资管理界面：</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image014.gif" alt="img"></p>
+<p>点击添加教师打开添加界面，如下图，不用实现上传照片。</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image016.gif" alt="img"></p>
+<p>添加成功查询教师信息如下：</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image018.gif" alt="img"></p>
+<p>在这个界面可以删除老师，也可以点击编辑，修改教师信息：</p>
+<p><img src="/2024/03/20/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day05-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/clip_image020.gif" alt="img"></p>
+<p>注意：</p>
+<p>只允许向机构自己的课程中添加老师、删除老师。</p>
+<p>机构id统一使用：1232141425L</p>
+<h2 id="接口定义-3"><a href="#接口定义-3" class="headerlink" title="接口定义"></a><strong>接口定义</strong></h2><h2 id="查询教师接口请求示例"><a href="#查询教师接口请求示例" class="headerlink" title="查询教师接口请求示例"></a>查询教师接口请求示例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Java</span><br><span class="line">get /courseTeacher/list/<span class="number">75</span></span><br><span class="line"><span class="number">75</span>为课程id，请求参数为课程id</span><br><span class="line"></span><br><span class="line">响应结果</span><br><span class="line">[&#123;<span class="string">&quot;id&quot;</span>:<span class="number">23</span>,<span class="string">&quot;courseId&quot;</span>:<span class="number">75</span>,<span class="string">&quot;teacherName&quot;</span>:<span class="string">&quot;张老师&quot;</span>,<span class="string">&quot;position&quot;</span>:<span class="string">&quot;讲师&quot;</span>,<span class="string">&quot;introduction&quot;</span>:<span class="string">&quot;张老师教师简介张老师教师简介张老师教师简介张老师教师简介&quot;</span>,<span class="string">&quot;photograph&quot;</span>:<span class="literal">null</span>,<span class="string">&quot;createDate&quot;</span>:<span class="literal">null</span>&#125;]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2、添加教师请求示例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">post  /courseTeacher</span><br><span class="line"></span><br><span class="line">请求参数：</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;courseId&quot;</span>: <span class="number">75</span>,</span><br><span class="line">  <span class="string">&quot;teacherName&quot;</span>: <span class="string">&quot;王老师&quot;</span>,</span><br><span class="line">  <span class="string">&quot;position&quot;</span>: <span class="string">&quot;教师职位&quot;</span>,</span><br><span class="line">  <span class="string">&quot;introduction&quot;</span>: <span class="string">&quot;教师简介&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">响应结果：</span><br><span class="line">&#123;<span class="string">&quot;id&quot;</span>:<span class="number">24</span>,<span class="string">&quot;courseId&quot;</span>:<span class="number">75</span>,<span class="string">&quot;teacherName&quot;</span>:<span class="string">&quot;王老师&quot;</span>,<span class="string">&quot;position&quot;</span>:<span class="string">&quot;教师职位&quot;</span>,<span class="string">&quot;introduction&quot;</span>:<span class="string">&quot;教师简介&quot;</span>,<span class="string">&quot;photograph&quot;</span>:<span class="literal">null</span>,<span class="string">&quot;createDate&quot;</span>:<span class="literal">null</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、修改教师</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Java</span><br><span class="line">put /courseTeacher</span><br><span class="line">请求参数：</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;id&quot;</span>: <span class="number">24</span>,</span><br><span class="line">  <span class="string">&quot;courseId&quot;</span>: <span class="number">75</span>,</span><br><span class="line">  <span class="string">&quot;teacherName&quot;</span>: <span class="string">&quot;王老师&quot;</span>,</span><br><span class="line">  <span class="string">&quot;position&quot;</span>: <span class="string">&quot;教师职位&quot;</span>,</span><br><span class="line">  <span class="string">&quot;introduction&quot;</span>: <span class="string">&quot;教师简介&quot;</span>,</span><br><span class="line">  <span class="string">&quot;photograph&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">  <span class="string">&quot;createDate&quot;</span>: <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line">响应：</span><br><span class="line">&#123;<span class="string">&quot;id&quot;</span>:<span class="number">24</span>,<span class="string">&quot;courseId&quot;</span>:<span class="number">75</span>,<span class="string">&quot;teacherName&quot;</span>:<span class="string">&quot;王老师&quot;</span>,<span class="string">&quot;position&quot;</span>:<span class="string">&quot;教师职位&quot;</span>,<span class="string">&quot;introduction&quot;</span>:<span class="string">&quot;教师简介&quot;</span>,<span class="string">&quot;photograph&quot;</span>:<span class="literal">null</span>,<span class="string">&quot;createDate&quot;</span>:<span class="literal">null</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>4、删除教师</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">delete /ourseTeacher/course/<span class="number">75</span>/<span class="number">26</span></span><br><span class="line"></span><br><span class="line"><span class="number">75</span>:课程id</span><br><span class="line"><span class="number">26</span>:教师id，即course_teacher表的主键</span><br><span class="line">请求参数：课程id、教师id</span><br><span class="line"></span><br><span class="line">响应：状态码<span class="number">200</span>，不返回信息</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="接口测试-3"><a href="#接口测试-3" class="headerlink" title="接口测试"></a><strong>接口测试</strong></h2><p>1、添加教师</p>
+<p>2、查询教师</p>
+<p>3、修改教师</p>
+<p>4、删除教师</p>
+<h2 id="删除课程"><a href="#删除课程" class="headerlink" title="删除课程"></a><strong>删除课程</strong></h2><h2 id="需求分析-3"><a href="#需求分析-3" class="headerlink" title="需求分析"></a><strong>需求分析</strong></h2><p>课程的审核状态为未提交时方可删除。</p>
+<p>删除课程需要删除课程相关的基本信息、营销信息、课程计划、课程教师信息。</p>
+<h2 id="接口定义-4"><a href="#接口定义-4" class="headerlink" title="接口定义"></a><strong>接口定义</strong></h2><p>删除课程接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">delete  /course/<span class="number">87</span></span><br><span class="line"><span class="number">87</span>为课程id</span><br><span class="line">请求参数：课程id</span><br><span class="line">响应：状态码<span class="number">200</span>，不返回信息</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="接口测试-4"><a href="#接口测试-4" class="headerlink" title="接口测试"></a><strong>接口测试</strong></h2><p>找到一门课程进行删除，删除后从数据库确认课程基本信息、课程营销信息、课程计划、课程计划关联信息、课程师资是否删除成功。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/19/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day04-JSR303%E6%A0%A1%E9%AA%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4902,497 +5262,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2698022795.github.io/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="章北海">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/" itemprop="url">微服务-day03-docker2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-			
-		  
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-06T19:39:11+08:00">
-                2024-03-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index">
-                    <span itemprop="name">微服务</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306200309171.png" alt="image-20240306200309171"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306195130841.png" alt="image-20240306195130841"></p>
-<p>先停掉虚拟机中的MySQL，确保你的虚拟机已经安装Docker，且网络开通的情况下，执行下面命令即可安装MySQL：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql \</span><br><span class="line">  -p <span class="number">3306</span>:<span class="number">3306</span> \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> \</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306200747495.png" alt="image-20240306200747495"></p>
-<p>当我们利用Docker安装应用时，Docker会自动搜索并下载应用<strong>镜像（image）</strong>。镜像不仅包含应用本身，还包含应用运行所需要的环境、配置、系统函数库。Docker会在运行镜像时创建一个隔离环境，称为<strong>容器（container）</strong>。</p>
-<p><strong>镜像仓库</strong>：存储和管理镜像的平台，Docker官方维护了一个公共仓库：<a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a>。</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202136723.png" alt="image-20240306202136723"></p>
-<p>启动docker，即启动docker的守护进程。</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202441652.png" alt="image-20240306202441652"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306201813839.png" alt="image-20240306201813839"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306201934304.png" alt="image-20240306201934304"></p>
-<h2 id="命令解读"><a href="#命令解读" class="headerlink" title="命令解读"></a>命令解读</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql \</span><br><span class="line">  -p <span class="number">3306</span>:<span class="number">3306</span> \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=<span class="number">123456</span> \</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong>docker run</strong> ：创建并运行一个容器，**-d** 是让容器在后台运行</p>
-</li>
-<li><p><strong>–name</strong> <strong>mysql</strong> ：给容器起个名字，必须唯一</p>
-</li>
-<li><p><strong>-p 3306:3306</strong> ：设置端口映射（宿主机和容器的端口映射）</p>
-</li>
-<li><p><strong>-e KEY&#x3D;VALUE</strong> ：是设置环境变量</p>
-</li>
-<li><p><strong>mysql</strong> ：指定运行的镜像的名字</p>
-</li>
-</ul>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306202941360.png" alt="image-20240306202941360"></p>
-<p>镜像名称一般分两部分组成：[repository]:[tag]。</p>
-<ul>
-<li><p>其中repository就是镜像名</p>
-</li>
-<li><p>tag是镜像的版本</p>
-</li>
-</ul>
-<p>在没有指定tag时，默认是latest，代表最新版本的镜像</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203130328.png" alt="image-20240306203130328"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203157297.png" alt="image-20240306203157297"></p>
-<h1 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h1><p>Docker最常见的命令就是操作镜像、容器的命令，详见官方文档：<a target="_blank" rel="noopener" href="https://docs.docker.com/">https://docs.docker.com/</a></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306203417693.png" alt="image-20240306203417693"></p>
-<p>可以把打包的镜像通过docker save保存至本地。</p>
-<p>案例：查看DockerHub，拉取Nginx镜像，创建并运行Nginx容器</p>
-<p>需求：</p>
-<ul>
-<li><p>在DockerHub中搜索Nginx镜像，查看镜像的名称</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306204926400.png" alt="image-20240306204926400"></p>
-</li>
-<li><p>拉取Nginx镜像（docker pull nginx）</p>
-</li>
-<li><p>查看本地镜像列表（docker images）</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306204628426.png" alt="image-20240306204628426"></p>
-</li>
-<li><p>创建并运行Nginx容器（docker run -d –name nginx -p 80:80 nginx）</p>
-</li>
-<li><p>查看容器（docker ps）</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205440312.png" alt="image-20240306205440312"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205740883.png" alt="image-20240306205740883"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210018638.png" alt="image-20240306210018638"></p>
-</li>
-<li><p>停止容器（docker stop）</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205846076.png" alt="image-20240306205846076"></p>
-</li>
-<li><p>再次启动容器（docker start nginx）</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210051059.png" alt="image-20240306210051059"></p>
-</li>
-<li><p>查看容器日志（docker logs  nginx）</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210346893.png" alt="image-20240306210346893"></p>
-</li>
-<li><p>进入Nginx容器（docker exec -it nginx bash）<br><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210611228.png" alt="image-20240306210611228"></p>
-</li>
-<li><p>删除容器（docker rm mysql2）</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306210839826.png" alt="image-20240306210839826"></p>
-</li>
-<li><p>加载本地镜像（docker load -i xxx.tar）</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205303088.png" alt="image-20240306205303088"></p>
-</li>
-<li><p>删除镜像（docker rmi xxx:xxx）</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205204179.png" alt="image-20240306205204179"></p>
-</li>
-<li><p>打包镜像至本地（docker save -o nginx.tar nginx:latest）最后一个参数是镜像名:版本号</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306205050594.png" alt="image-20240306205050594"></p>
-</li>
-</ul>
-<h1 id="命名别名"><a href="#命名别名" class="headerlink" title="命名别名"></a>命名别名</h1><p><strong>给命令起别名</strong></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211154566.png" alt="image-20240306211154566"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211127808.png" alt="image-20240306211127808"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211210643.png" alt="image-20240306211210643"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211241213.png" alt="image-20240306211241213"></p>
-<h1 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h1><p>案例1-利用Nginx容器部署静态资源</p>
-<p>需求：</p>
-<ul>
-<li><p>创建Nginx容器，修改nginx容器内的html目录下的index.html文件，查看变化</p>
-</li>
-<li><p>将静态资源部署到nginx的html目录</p>
-</li>
-</ul>
-<p><strong>数据卷（volume）</strong>是一个虚拟目录，是<strong>容器内目录</strong>与<strong>宿主机目录</strong>之间映射的桥梁。</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211729107.png" alt="image-20240306211729107"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211952333.png" alt="image-20240306211952333"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306211945189.png" alt="image-20240306211945189"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306212013727.png" alt="image-20240306212013727"></p>
-<table>
-<thead>
-<tr>
-<th><strong>命令</strong></th>
-<th><strong>说明</strong></th>
-<th><strong>文档地址</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>docker volume create</td>
-<td>创建数据卷</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_create/">docker volume create</a></td>
-</tr>
-<tr>
-<td>docker volume ls</td>
-<td>查看所有数据卷</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_ls/">docker volume ls</a></td>
-</tr>
-<tr>
-<td>docker volume rm</td>
-<td>删除指定数据卷</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_prune/">docker volume rm</a></td>
-</tr>
-<tr>
-<td>docker volume inspect</td>
-<td>查看某个数据卷的详情</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_inspect/">docker volume inspect</a></td>
-</tr>
-<tr>
-<td>docker volume prune</td>
-<td>清除数据卷</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/volume_prune/">docker volume prune</a></td>
-</tr>
-</tbody></table>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306224049549.png" alt="image-20240306224049549"></p>
-<p>提示：</p>
-<ul>
-<li><p>在执行docker run命令时，使用 <strong>-v</strong> <strong>数据卷:容器内目录</strong> 可以完成数据卷挂载</p>
-</li>
-<li><p>当创建容器时，如果挂载了数据卷且数据卷不存在，会自动创建数据卷</p>
-</li>
-</ul>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306215341815.png" alt="image-20240306215341815"></p>
-<p>案例2-mysql容器的数据挂载</p>
-<p>需求：</p>
-<ul>
-<li><p>查看mysql容器，判断是否有数据卷挂载</p>
-</li>
-<li><p>基于<strong>宿主机目录</strong>实现MySQL数据目录、配置文件、初始化脚本的挂载（查阅官方镜像文档）</p>
-</li>
-</ul>
-<p>①挂载&#x2F;root&#x2F;mysql&#x2F;data到容器内的&#x2F;var&#x2F;lib&#x2F;mysql目录</p>
-<p>②挂载&#x2F;root&#x2F;mysql&#x2F;init到容器内的&#x2F;docker-entrypoint-initdb.d目录，携带课前资料准备的SQL脚本</p>
-<p>③挂载&#x2F;root&#x2F;mysql&#x2F;conf到容器内的&#x2F;etc&#x2F;mysql&#x2F;conf.d目录，携带课前资料准备的配置文件</p>
-<ul>
-<li><p>在执行docker run命令时，使用 <strong>-v</strong> <strong>本地目录</strong> <strong>:</strong> <strong>容器内目录</strong> 可以完成本地目录挂载</p>
-</li>
-<li><p>l本地目录必须以“**&#x2F;<strong>”或 “</strong>.&#x2F;**” 开头，如果直接以名称开头，会被识别为数据卷而非本地目录</p>
-<ul>
-<li><p>-v mysql : &#x2F;var&#x2F;lib&#x2F;mysql 会被识别为一个数据卷叫mysql</p>
-</li>
-<li><p>-v .&#x2F;mysql : &#x2F;var&#x2F;lib&#x2F;mysql 会被识别为当前目录下的mysql目录</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="自定义镜像"><a href="#自定义镜像" class="headerlink" title="自定义镜像"></a>自定义镜像</h1><p><font color="red">自定义镜像的核心：Dockerfile和基础镜像。Dockerfile决定了镜像的打包步骤，基础镜像是后续分层打包其他镜像的基础。</font></p>
-<p>镜像就是包含了应用程序、程序运行的系统函数库、运行配置等文件的文件包。构建镜像的过程其实就是把上述文件打包的过程。</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306230455069.png" alt="image-20240306230455069"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306230935661.png" alt="image-20240306230935661"></p>
-<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p><strong>Dockerfile</strong>就是一个文本文件，其中包含一个个的**指令(Instruction)**，用指令来说明要执行什么操作来构建镜像。将来Docker可以根据Dockerfile帮我们构建镜像。常见指令如下：</p>
-<table>
-<thead>
-<tr>
-<th><strong>指令</strong></th>
-<th><strong>说明</strong></th>
-<th><strong>示例</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FROM</td>
-<td>指定基础镜像</td>
-<td>FROM centos:6</td>
-</tr>
-<tr>
-<td>ENV</td>
-<td>设置环境变量，可在后面指令使用</td>
-<td>ENV key value</td>
-</tr>
-<tr>
-<td>COPY</td>
-<td>拷贝本地文件到镜像的指定目录</td>
-<td>COPY .&#x2F;jre11.tar.gz &#x2F;tmp</td>
-</tr>
-<tr>
-<td>RUN</td>
-<td>执行Linux的shell命令，一般是安装过程的命令</td>
-<td>RUN tar -zxvf &#x2F;tmp&#x2F;jre11.tar.gz  &amp;&amp; EXPORTS  path&#x3D;&#x2F;tmp&#x2F;jre11:$path</td>
-</tr>
-<tr>
-<td>EXPOSE</td>
-<td>指定容器运行时监听的端口，是给镜像使用者看的</td>
-<td>EXPOSE 8080</td>
-</tr>
-<tr>
-<td>ENTRYPOINT</td>
-<td>镜像中应用的启动命令，容器运行时调用</td>
-<td>ENTRYPOINT java -jar xx.jar</td>
-</tr>
-</tbody></table>
-<p>我们可以基于Ubuntu基础镜像，利用Dockerfile描述镜像结构</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定基础镜像</span></span><br><span class="line">FROM ubuntu:<span class="number">16.04</span></span><br><span class="line"><span class="comment"># 配置环境变量，JDK的安装目录、容器内时区</span></span><br><span class="line">ENV JAVA_DIR=/usr/local</span><br><span class="line"><span class="comment"># 拷贝jdk和java项目的包</span></span><br><span class="line"><span class="built_in">COPY</span> ./jdk8.tar.gz <span class="variable">$JAVA_DIR</span>/</span><br><span class="line"><span class="built_in">COPY</span> ./docker<span class="literal">-demo</span>.jar /tmp/app.jar</span><br><span class="line"><span class="comment"># 安装JDK</span></span><br><span class="line">RUN <span class="built_in">cd</span> <span class="variable">$JAVA_DIR</span> \ &amp;&amp; tar <span class="literal">-xf</span> ./jdk8.tar.gz \ &amp;&amp; <span class="built_in">mv</span> ./jdk1.<span class="number">8.0</span>_144 ./java8</span><br><span class="line"><span class="comment"># 配置环境变量</span></span><br><span class="line">ENV JAVA_HOME=<span class="variable">$JAVA_DIR</span>/java8</span><br><span class="line">ENV PATH=<span class="variable">$PATH:</span><span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="comment"># 入口，java项目的启动命令</span></span><br><span class="line">ENTRYPOINT [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;/app.jar&quot;</span>]</span><br></pre></td></tr></table></figure>
-
-<p>也可以直接基于JDK为基础镜像，省略前面的步骤：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础镜像</span></span><br><span class="line">FROM openjdk:<span class="number">11.0</span><span class="literal">-jre-buster</span></span><br><span class="line"><span class="comment"># 拷贝jar包</span></span><br><span class="line"><span class="built_in">COPY</span> docker<span class="literal">-demo</span>.jar /app.jar</span><br><span class="line"><span class="comment"># 入口</span></span><br><span class="line">ENTRYPOINT [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;/app.jar&quot;</span>]</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306231938328.png" alt="image-20240306231938328"></p>
-<p>当编写好了Dockerfile，可以利用下面命令来构建镜像</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build <span class="literal">-t</span> myImage:<span class="number">1.0</span> .</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>-t：是给镜像起名，格式依然是repository:tag的格式，不指定tag时，默认为latest</p>
-</li>
-<li><p>. ：是指定Dockerfile所在目录，如果就在当前目录，则指定为”.”</p>
-</li>
-</ul>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306232249665.png" alt="image-20240306232249665"></p>
-<ol>
-<li><strong>docker load -i jdk.tar</strong></li>
-</ol>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306233103657.png" alt="image-20240306233103657"></p>
-<ol start="2">
-<li>(进入到dockerfile文件所在目录)<strong>docker build -t docker-demo .</strong></li>
-</ol>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306233436422.png" alt="image-20240306233436422"></p>
-<ol start="3">
-<li><strong>docker run -d –name dd -p 8080:8080 docker-demo</strong></li>
-</ol>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306234347787.png" alt="image-20240306234347787"></p>
-<ol start="4">
-<li><strong>docker logs -f dd</strong>(查看容器运行日志)</li>
-</ol>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306232329884.png" alt="image-20240306232329884"></p>
-<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>默认情况下，所有容器都是以bridge方式连接到Docker的一个虚拟网桥上：</p>
-<p>即容器（运行的镜像）都是在同个网段内的。</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240306235252569.png" alt="image-20240306235252569"></p>
-<p>加入自定义网络的容器才可以通过<strong>容器名</strong>互相访问（不需要IP地址就可以访问其他容器），Docker的网络操作命令如下：</p>
-<table>
-<thead>
-<tr>
-<th><strong>命令</strong></th>
-<th><strong>说明</strong></th>
-<th><strong>文档地址</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>docker network create</td>
-<td>创建一个网络</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_create/">docker   network create</a></td>
-</tr>
-<tr>
-<td>docker network ls</td>
-<td>查看所有网络</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_ls/">docker   network ls</a></td>
-</tr>
-<tr>
-<td>docker network rm</td>
-<td>删除指定网络</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_rm/">docker   network rm</a></td>
-</tr>
-<tr>
-<td>docker network prune</td>
-<td>清除未使用的网络</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_prune/">docker   network prune</a></td>
-</tr>
-<tr>
-<td>docker network connect</td>
-<td>使指定容器连接加入某网络</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_connect/">docker   network connect</a></td>
-</tr>
-<tr>
-<td>docker network disconnect</td>
-<td>使指定容器连接离开某网络</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_disconnect/">docker   network disconnect</a></td>
-</tr>
-<tr>
-<td>docker network inspect</td>
-<td>查看网络详细信息</td>
-<td><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/network_inspect/">docker   network inspect</a></td>
-</tr>
-</tbody></table>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000318503.png" alt="image-20240307000318503"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000348752.png" alt="image-20240307000348752"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000222937.png" alt="image-20240307000222937"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307000514681.png" alt="image-20240307000514681"></p>
-<h1 id="项目部署"><a href="#项目部署" class="headerlink" title="项目部署"></a>项目部署</h1><h2 id="部署Java应用"><a href="#部署Java应用" class="headerlink" title="部署Java应用"></a>部署Java应用</h2><p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001419724.png" alt="image-20240307001419724"></p>
-<ol>
-<li><p>打包hm-service成jar包，将jar包和dockerfile上传到服务器。</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001523682.png" alt="image-20240307001523682"></p>
-</li>
-<li><p>在服务器通过上传的jar包和dockerfile生成自定义镜像。</p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307001707848.png" alt="image-20240307001707848"></p>
-</li>
-</ol>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307002359738.png" alt="image-20240307002359738"></p>
-<p><img src="/2024/03/06/%E5%BE%AE%E6%9C%8D%E5%8A%A1-day03-docker2/image-20240307002606022.png" alt="image-20240307002606022"></p>
-<h2 id="部署前端"><a href="#部署前端" class="headerlink" title="部署前端"></a>部署前端</h2><p>需求：创建一个新的nginx容器，将课前资料提供的nginx.conf、html目录与容器挂载</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -5442,7 +5316,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5453,7 +5327,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -5511,6 +5385,10 @@
 				  
 				  
 					<li class="recent_posts_li">
+					  <a href="/2024/07/04/%E9%BB%91%E9%A9%AC%E5%A4%B4%E6%9D%A1-day01-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E7%BB%84%E6%88%90/" title="黑马头条-day01-微服务架构组成" target="_blank">黑马头条-day01-微服务架构组成</a>
+					</li>
+				  
+					<li class="recent_posts_li">
 					  <a href="/2024/04/17/%E5%AD%A6%E6%88%90%E5%9C%A8%E7%BA%BF-day10-%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83/" title="学成在线-day10-认证授权" target="_blank">学成在线-day10-认证授权</a>
 					</li>
 				  
@@ -5524,10 +5402,6 @@
 				  
 					<li class="recent_posts_li">
 					  <a href="/2024/03/29/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" title="微服务技术总结" target="_blank">微服务技术总结</a>
-					</li>
-				  
-					<li class="recent_posts_li">
-					  <a href="/2024/03/27/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" title="苍穹外卖技术总结" target="_blank">苍穹外卖技术总结</a>
 					</li>
 				  
 				</ul>
@@ -5574,7 +5448,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">304.6k</span>
+    <span title="Site words total count">304.9k</span>
   
 </div>
 
